@@ -559,7 +559,7 @@ function Studio() {
           </Reveal>
         ))}
       </div>
-      <p className="quote-line">"Artmonia-ya girən hər kəs burada qalmaq istəyir"</p>
+      <p className="quote-line">&ldquo;Artmonia-ya girən hər kəs burada qalmaq istəyir&rdquo;</p>
     </section>
   );
 }
@@ -585,7 +585,7 @@ function Results() {
         <Reveal className="result-copy" variant="from-right">
           <h3>Fatimə</h3>
           <p>
-            Köhnə saytda "təbriklər" kimi qısa data vardı. Yeni təqdimatda bu hissə real əvvəl/sonra hekayəsi üçün
+            Köhnə saytda &ldquo;təbriklər&rdquo; kimi qısa data vardı. Yeni təqdimatda bu hissə real əvvəl/sonra hekayəsi üçün
             genişləndirilib: səviyyə, müddət, mentor qeydi və portfolyo nəticəsi.
           </p>
           <a href="#lead" className="text-link">
@@ -596,7 +596,7 @@ function Results() {
       <div className="testimonial-rail">
         {testimonials.map((item) => (
           <blockquote key={item.name}>
-            "{item.quote}"
+            &ldquo;{item.quote}&rdquo;
             <cite>
               {item.name} <span>{item.role}</span>
             </cite>
@@ -1217,7 +1217,7 @@ function AuditPrivacyFooter() {
       </div>
       <div className="footer-bottom">
         <span>© 2026 Artmonia Academy.</span>
-        <span className="footer-quote">"İstək varsa, yol da var." - Leonardo da Vinçi</span>
+        <span className="footer-quote">&ldquo;İstək varsa, yol da var.&rdquo; - Leonardo da Vinçi</span>
       </div>
     </footer>
   );
