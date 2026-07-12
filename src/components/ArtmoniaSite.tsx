@@ -1,5 +1,9 @@
 "use client";
 
+/* Static art assets need exact CSS-driven cropping and reveal effects. */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   comparison,
@@ -237,7 +241,7 @@ function NavAtelierAnimation() {
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
-    let closeTimer: ReturnType<typeof window.setTimeout> | undefined;
+    let closeTimer: number | undefined;
 
     const wakeStage = () => {
       if (closeTimer) window.clearTimeout(closeTimer);
