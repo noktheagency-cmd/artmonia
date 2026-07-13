@@ -194,8 +194,8 @@ function Header() {
   return (
     <header className="site-header">
       <a className="brand" href="#top" aria-label="Artmonia ana səhifə">
-        <img className="brand-logo brand-logo-light" src="/assets/artmonia-logo.png" alt="Artmonia" />
-        <img className="brand-logo brand-logo-dark" src="/assets/artmonia-logo-dark.png" alt="Artmonia" />
+        <img className="brand-logo brand-logo-light" src="/assets/artmonia-logo.webp" alt="Artmonia" />
+        <img className="brand-logo brand-logo-dark" src="/assets/artmonia-logo-dark.webp" alt="Artmonia" />
       </a>
       <nav className="desktop-nav" aria-label="Əsas naviqasiya">
         {navItems.map((item) => (
@@ -353,7 +353,7 @@ function NavAtelierAnimation() {
         <div className="statue-burst">
           <div className="statue-halo" />
           <div className="real-statue-wrap">
-            <img className="real-statue" src="/assets/artmonia-real-statue-hands.png" alt="" aria-hidden="true" />
+            <img className="real-statue" src="/assets/artmonia-real-statue-hands.webp" alt="" aria-hidden="true" />
             <i className="real-eye-glow real-eye-left" />
             <i className="real-eye-glow real-eye-right" />
           </div>
@@ -423,7 +423,7 @@ function ProblemTransformation() {
         <div className="problem-orbit" aria-label="Artmonia problemlər karuseli">
           <div className="orbit-aura" />
           <div className="thinking-figure" aria-hidden="true">
-            <img className="question-avatar real-girl-avatar" src="/assets/problem-center-girl.png" alt="" />
+            <img className="question-avatar real-girl-avatar" src="/assets/problem-center-girl.webp" alt="" />
             <div className="problem-shadow" />
           </div>
           <div className="orbit-wheel">
@@ -550,8 +550,8 @@ function Studio() {
           </div>
         </Reveal>
         <Reveal className="studio-collage" variant="from-right">
-          <img className="collage-main" src="/assets/studio-room.png" alt="İşıqlı rəsm studiyası və molbert" />
-          <img className="collage-side" src="/assets/studio-brushes.png" alt="Rəngli rəsm fırçaları" />
+          <img className="collage-main" src="/assets/studio-room.webp" alt="İşıqlı rəsm studiyası və molbert" loading="lazy" decoding="async" />
+          <img className="collage-side" src="/assets/studio-brushes.webp" alt="Rəngli rəsm fırçaları" loading="lazy" decoding="async" />
         </Reveal>
       </div>
       <div className="studio-cards">
@@ -612,12 +612,12 @@ function Results() {
 }
 
 const moduleArtworks = [
-  "/assets/module-proportion.png",
-  "/assets/module-light-shadow.png",
-  "/assets/module-color.png",
-  "/assets/module-composition.png",
-  "/assets/module-portrait.png",
-  "/assets/module-final-project.png"
+  "/assets/module-proportion.webp",
+  "/assets/module-light-shadow.webp",
+  "/assets/module-color.webp",
+  "/assets/module-composition.webp",
+  "/assets/module-portrait.webp",
+  "/assets/module-final-project.webp"
 ];
 
 function Curriculum() {
@@ -633,7 +633,7 @@ function Curriculum() {
             key={item.title}
             className="module-card"
           >
-            <div className="module-card-media"><img src={moduleArtworks[index]} alt="" /></div>
+            <div className="module-card-media"><img src={moduleArtworks[index]} alt="" loading="lazy" decoding="async" /></div>
             <div className="module-card-content">
               <small>{item.week}</small>
               <h3>{item.title}</h3>
@@ -1007,9 +1007,9 @@ function PriceCalculator() {
 }
 
 const teacherPortraits = [
-  { name: "Vaqif Əsrər", role: "Peşəkar akademik müəllim", line: "Akademik təməl və beynəlxalq baxış.", image: "/assets/teacher-vaqif.png", tone: "ochre" },
-  { name: "Əsmər Ramazanova", role: "Akademik müəllim", line: "Qara qələm, forma və intizam.", image: "/assets/teacher-esmer.png", tone: "ink" },
-  { name: "Əminə Cəmaləddinova", role: "Həvəskar rəsm müəllimi", line: "Art terapiya ilə yaradıcı yol.", image: "/assets/teacher-emine.png", tone: "meadow" }
+  { name: "Vaqif Əsrər", role: "Peşəkar akademik müəllim", line: "Akademik təməl və beynəlxalq baxış.", image: "/assets/teacher-vaqif.webp", tone: "ochre" },
+  { name: "Əsmər Ramazanova", role: "Akademik müəllim", line: "Qara qələm, forma və intizam.", image: "/assets/teacher-esmer.webp", tone: "ink" },
+  { name: "Əminə Cəmaləddinova", role: "Həvəskar rəsm müəllimi", line: "Art terapiya ilə yaradıcı yol.", image: "/assets/teacher-emine.webp", tone: "meadow" }
 ];
 
 function TeachersAtelier() {
@@ -1023,7 +1023,7 @@ function TeachersAtelier() {
       <div className="teacher-poster-stage">
         {teacherPortraits.map((teacher, index) => (
           <Reveal key={teacher.name} className={`teacher-poster teacher-poster-${teacher.tone}`} variant={index === 1 ? "boom" : index === 0 ? "from-left" : "from-right"}>
-            <div className="teacher-poster-image"><img src={teacher.image} alt={teacher.name} /></div>
+            <div className="teacher-poster-image"><img src={teacher.image} alt={teacher.name} loading="lazy" decoding="async" /></div>
             <div className="teacher-poster-caption"><span>{teacher.role}</span><strong>{teacher.name}</strong><p>{teacher.line}</p></div>
           </Reveal>
         ))}
@@ -1078,7 +1078,7 @@ function TeachersResources() {
               <CloseIcon />
             </button>
             <div className="article-hero">
-              <img src={article.image} alt="" />
+              <img src={article.image} alt="" decoding="async" />
               <div className="article-hero-copy">
                 <span>{article.type}</span>
                 <h2 id="article-reader-title">{article.title}</h2>
@@ -1201,7 +1201,7 @@ function AuditPrivacyFooter() {
             Akademiyaya qoşul <ArrowIcon />
           </a>
         </div>
-        <img className="footer-top-portrait" src="/assets/footer-cta-portrait.png" alt="Rəngli Artmonia portreti" />
+        <img className="footer-top-portrait" src="/assets/footer-cta-portrait.webp" alt="Rəngli Artmonia portreti" loading="lazy" decoding="async" />
       </div>
       <div className="footer-contact-map">
         <div className="footer-map-frame">
