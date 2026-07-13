@@ -50,7 +50,7 @@ export const courses = [
     title: "Rəng & Boyama",
     duration: "10 həftə",
     text: "Yağlı boya, akrilik və akvarel texnikaları ilə rəng nəzəriyyəsi.",
-    image: "/assets/curriculum-shadow-sculpture.png"
+    image: "/assets/curriculum-shadow-sculpture.webp"
   },
   {
     title: "Rəqəmsal Sənət",
@@ -258,7 +258,7 @@ export const resources = [
     type: "Məqalə",
     title: "Kompozisiyanın 3 Qızıl Qaydası",
     text: "Hər rəsmin güclü olmasının arxasında dayanan sadə prinsiplər.",
-    image: "/assets/article-composition.png",
+    image: "/assets/article-composition.webp",
     lead: "Yaxşı kompozisiya tamaşaçının baxışını təsadüfə buraxmır. O, gözü əsərin əsas nöqtəsinə aparır, orada saxlayır və sonra bütün səth boyunca ritmlə hərəkət etdirir.",
     sections: [
       { heading: "1. Diqqət mərkəzini əvvəl seç", body: "Rəsmə başlamazdan əvvəl ən vacib formanı müəyyən et. Ən güclü kontrast, ən aydın kənar və ən çox detal həmin nöqtəyə yaxın olmalıdır. Hər hissə eyni dərəcədə danışanda əsərdə heç nə eşidilmir." },
@@ -270,7 +270,7 @@ export const resources = [
     type: "Məqalə",
     title: "Rəng Harmoniyası: Başlanğıc Bələdçisi",
     text: "Rəngləri necə uyğunlaşdırmağı öyrən - sadə və aydın.",
-    image: "/assets/article-color-harmony-crisp.jpg",
+    image: "/assets/article-color-harmony-crisp.webp",
     lead: "Rəng harmoniyası çox rəng istifadə etmək deyil; rənglər arasında aydın münasibət qurmaqdır. Məhdud palitra qərar verməyi asanlaşdırır və əsəri daha peşəkar göstərir.",
     sections: [
       { heading: "Dominant rəngi müəyyən et", body: "Palitrada bir rəng əsas səsi daşısın, digərləri onu dəstəkləsin. Dominant rəng səthin böyük hissəsində görünə, vurğu rəngi isə az istifadə olunaraq diqqəti idarə edə bilər." },
@@ -282,7 +282,7 @@ export const resources = [
     type: "Məqalə",
     title: "Portretdə Proporsiyalar",
     text: "Üz quruluşunu ölçü və istiqamət xətləri ilə düzgün qur.",
-    image: "/assets/article-portrait-proportions.png",
+    image: "/assets/article-portrait-proportions.webp",
     lead: "Oxşarlıq detallardan əvvəl quruluşdan yaranır. Göz, burun və dodağı ayrıca gözəl çəkmək kifayət deyil; onların bir-birinə olan məsafəsi düzgün olmalıdır.",
     sections: [
       { heading: "Baş formasını sadələşdir", body: "Əvvəl kəlləni yumurta və ya qutu kimi düşün. Mərkəz xətti üzün hansı istiqamətə döndüyünü, qaş xətti isə başın yuxarı-aşağı bucağını göstərir." },
@@ -294,7 +294,7 @@ export const resources = [
     type: "Texnika",
     title: "Akril boya ilə rəsm çəkmək: Yeni başlayanlar üçün bələdçi",
     text: "Lazımi materiallar, texnikalar və ilk addımlar haqqında məlumat.",
-    image: "/assets/article-acrylic-technique.png",
+    image: "/assets/article-acrylic-technique.webp",
     lead: "Akril boya sürətli quruyur, qat-qat işləməyə imkan verir və həm nazik, həm də qalın faktura yarada bilir. Düzgün ardıcıllıqla işləyəndə bu sürət üstünlüyə çevrilir.",
     sections: [
       { heading: "Sadə material dəsti", body: "Başlamaq üçün titan ağ, ultramarin, kadmium qırmızı, sarı və tünd qəhvəyi kifayətdir. İki sintetik fırça, palitra, su qabı və qalın kağız və ya kətan seç." },
@@ -306,7 +306,7 @@ export const resources = [
     type: "Texnika",
     title: "Portre rəsm texnikası: Üz proporsiyalarını düzgün çəkmək",
     text: "Üz proporsiyaları, işıq-kölgə texnikası və peşəkar məsləhətlər.",
-    image: "/assets/article-portrait-technique.png",
+    image: "/assets/article-portrait-technique.webp",
     lead: "Portret texnikasının məqsədi hər detalı köçürmək deyil, insanın xarakterini daşıyan böyük forma və işıq münasibətini qorumaqdır.",
     sections: [
       { heading: "Böyük kütlələrlə başla", body: "Saç, üz və boyun sahələrini üç böyük forma kimi yerləşdir. Siluetin düzgünlüyünü yoxla; başın eni, hündürlüyü və çiyinlə əlaqəsi oturmadan üz detallarına keçmə." },
@@ -318,7 +318,7 @@ export const resources = [
     type: "Sənət tarixi",
     title: "Dünyaca məşhur 10 rəsm əsəri və onların hekayələri",
     text: "Mona Lizadan Ulduzlu gecəyə qədər məşhur əsərlərin hekayələri.",
-    image: "/assets/quiz-starry-bg.png",
+    image: "/assets/quiz-starry-bg.webp",
     lead: "Bəzi əsərlər yalnız gözəl təsvir olduqları üçün deyil, dövrünün baxışını dəyişdirdikləri üçün yadda qalır. Bu on əsər rəssamlığın necə yeniləndiyini qısa xəritə kimi göstərir.",
     sections: [
       { heading: "İntibahdan romantizmə", body: "Leonardo da Vinçinin “Mona Liza”sı sirli ifadə və sfumato keçidləri ilə portreti dəyişdi. Botticellinin “Veneranın doğuluşu” mifoloji gözəlliyi yenidən mərkəzə gətirdi. Velaskesin “Las Meninas”ı isə tamaşaçı, model və rəssam arasındakı sərhədi sual altına aldı." },
