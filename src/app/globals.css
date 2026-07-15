@@ -13454,3 +13454,27 @@ html.theme-dark .teacher-atelier-heading > p:last-child {
   font-size: 11px;
   text-transform: none;
 }
+
+/* Keep the problem prompt compact and remove the section frame. */
+.split-band,
+.problem-showcase {
+  border: 0 !important;
+}
+
+.problem-showcase {
+  box-shadow: none !important;
+}
+
+.problem-showcase::before {
+  display: none !important;
+  content: none;
+  border: 0 !important;
+}
+
+.problem-question h2 {
+  max-width: none;
+  font-size: clamp(40px, 4.2vw, 64px) !important;
+  line-height: 0.96;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
