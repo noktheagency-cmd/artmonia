@@ -1060,7 +1060,7 @@ function RegistrationLead() {
         <img
           className="registration-artwork"
           src="/assets/registration-artwork.png"
-          alt="Şəhər mənzərəsi rəsm əsəri"
+          alt="Portret üzərində çalışan rəssam"
           loading="lazy"
           decoding="async"
         />
