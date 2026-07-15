@@ -13173,3 +13173,138 @@ main,
   display: none !important;
   content: none;
 }
+
+/* Align diagnostic, package, and calculator edges with the section above. */
+@media (min-width: 981px) {
+  .quiz-pricing {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+}
+
+.quiz-pricing > .quiz-card,
+.quiz-pricing > .pricing-wrap,
+.quiz-pricing > .price-calculator {
+  width: 100%;
+  max-width: none;
+}
+
+/* A shorter, calmer teacher section with one consistent card treatment. */
+.teacher-atelier {
+  padding: 64px 48px 68px;
+}
+
+.teacher-atelier-heading {
+  width: 100%;
+  max-width: none;
+  justify-items: center;
+  text-align: center;
+}
+
+.teacher-atelier-heading h2 {
+  width: 100%;
+  max-width: none;
+  margin: 10px auto 14px;
+  font-size: clamp(36px, 3.1vw, 48px);
+  line-height: 1.05;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.teacher-atelier-heading > p:last-child {
+  margin-inline: auto;
+}
+
+.teacher-poster-stage {
+  width: min(1040px, 100%);
+  margin-top: 30px;
+  gap: 14px;
+}
+
+.teacher-poster,
+.teacher-poster:nth-child(1),
+.teacher-poster:nth-child(2),
+.teacher-poster:nth-child(3) {
+  height: auto;
+  padding: 7px;
+  border: 1px solid var(--site-border);
+  color: var(--brand-navy);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: none;
+  transform: none;
+}
+
+.teacher-poster-caption,
+.teacher-poster:nth-child(1) .teacher-poster-caption,
+.teacher-poster:nth-child(2) .teacher-poster-caption,
+.teacher-poster:nth-child(3) .teacher-poster-caption {
+  grid-template-rows: auto auto 1fr;
+  min-height: 132px;
+  padding: 14px 12px 12px;
+  gap: 5px;
+  color: var(--brand-navy);
+  background: #ffffff;
+  text-align: left;
+}
+
+.teacher-poster-caption span,
+.teacher-poster:nth-child(1) .teacher-poster-caption span,
+.teacher-poster:nth-child(2) .teacher-poster-caption span,
+.teacher-poster:nth-child(3) .teacher-poster-caption span {
+  color: var(--brand-purple);
+  opacity: 1;
+}
+
+.teacher-poster-caption strong,
+.teacher-poster:nth-child(1) .teacher-poster-caption strong,
+.teacher-poster:nth-child(2) .teacher-poster-caption strong,
+.teacher-poster:nth-child(3) .teacher-poster-caption strong {
+  min-height: 0;
+  color: var(--brand-navy);
+  font-size: clamp(22px, 1.7vw, 27px);
+}
+
+.teacher-poster-caption p,
+.teacher-poster:nth-child(1) .teacher-poster-caption p,
+.teacher-poster:nth-child(2) .teacher-poster-caption p,
+.teacher-poster:nth-child(3) .teacher-poster-caption p {
+  color: var(--site-copy);
+  opacity: 1;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.teacher-poster:hover,
+.teacher-poster:nth-child(1):hover,
+.teacher-poster:nth-child(2):hover,
+.teacher-poster:nth-child(3):hover {
+  border-color: rgba(105, 41, 242, 0.24);
+  box-shadow: 0 12px 28px rgba(12, 2, 89, 0.08);
+  transform: translateY(-3px);
+}
+
+/* The “Gözləmə. Başla.” CTA sits directly on the page canvas. */
+.footer-top,
+html.theme-dark .footer-top {
+  border: 0 !important;
+}
+
+@media (max-width: 980px) {
+  .teacher-atelier {
+    padding: 56px 28px 60px;
+  }
+
+  .teacher-atelier-heading h2 {
+    font-size: clamp(32px, 5.2vw, 42px);
+  }
+}
+
+@media (max-width: 640px) {
+  .teacher-atelier {
+    padding: 50px 18px 54px;
+  }
+
+  .teacher-atelier-heading h2 {
+    white-space: normal;
+  }
+}
