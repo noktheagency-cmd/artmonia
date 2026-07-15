@@ -13709,3 +13709,35 @@ html.theme-dark .price-calculator-result a {
     margin-top: 8px !important;
   }
 }
+
+/* Scroll-driven entrance sequence: every section waits for its viewport turn. */
+.scroll-section,
+.scroll-block {
+  opacity: 0;
+  transform: translate3d(0, 48px, 0);
+  transition:
+    opacity 1100ms cubic-bezier(0.2, 0.75, 0.2, 1),
+    transform 1100ms cubic-bezier(0.2, 0.75, 0.2, 1);
+  transition-delay: var(--scroll-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.scroll-block {
+  transform: translate3d(0, 32px, 0);
+  transition-duration: 950ms;
+}
+
+.scroll-section.is-scroll-visible,
+.scroll-block.is-scroll-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-section,
+  .scroll-block {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
