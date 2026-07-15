@@ -13629,3 +13629,83 @@ html.theme-dark .price-calculator-result a {
   color: var(--brand-navy) !important;
   background: var(--brand-orange) !important;
 }
+
+/* Remove the oversized empty bands between consecutive page sections. */
+@media (min-width: 981px) {
+  main > .about-system,
+  main > .split-band,
+  main > #program,
+  main > .studio-section,
+  main > .curriculum-section,
+  main > .quiz-pricing,
+  main > .teacher-atelier,
+  main > .registration-section {
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .about-system {
+    padding-bottom: 64px !important;
+  }
+
+  .problem-showcase {
+    min-height: 680px !important;
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .atelier-panel {
+    min-height: 0 !important;
+    margin-top: 10px !important;
+    padding-top: 52px !important;
+    padding-bottom: 52px !important;
+  }
+
+  #program {
+    padding-top: 52px !important;
+    padding-bottom: 52px !important;
+  }
+
+  .studio-section {
+    padding-top: 52px !important;
+    padding-bottom: 36px !important;
+  }
+
+  .curriculum-section {
+    padding-top: 44px !important;
+    padding-bottom: 52px !important;
+  }
+
+  .quiz-pricing {
+    padding-top: 48px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .teacher-atelier {
+    padding-top: 42px !important;
+    padding-bottom: 42px !important;
+  }
+
+  .registration-section {
+    padding-top: 54px !important;
+    padding-bottom: 54px !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .problem-showcase,
+  .atelier-panel,
+  #program,
+  .studio-section,
+  .curriculum-section,
+  .quiz-pricing,
+  .teacher-atelier,
+  .registration-section {
+    padding-top: 42px !important;
+    padding-bottom: 42px !important;
+  }
+
+  .atelier-panel {
+    margin-top: 8px !important;
+  }
+}
