@@ -13309,11 +13309,16 @@ html.theme-dark .footer-top {
   }
 }
 
-/* Give the diagnostic, package, and calculator group the same generous page span. */
+/* Keep the diagnostic group broad without letting it crowd the page edges. */
 @media (min-width: 981px) {
   .quiz-pricing {
-    width: min(1450px, calc(100% - 40px)) !important;
-    max-width: 1450px !important;
+    width: min(1350px, calc(100% - 64px)) !important;
+    max-width: 1350px !important;
+  }
+
+  .teacher-atelier {
+    width: min(1350px, calc(100% - 64px)) !important;
+    max-width: 1350px !important;
   }
 }
 
