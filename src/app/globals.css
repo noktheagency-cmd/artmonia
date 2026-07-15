@@ -13312,8 +13312,8 @@ html.theme-dark .footer-top {
 /* Keep the diagnostic group broad without letting it crowd the page edges. */
 @media (min-width: 981px) {
   .quiz-pricing {
-    width: min(1280px, calc(100% - 64px)) !important;
-    max-width: 1280px !important;
+    width: min(1200px, calc(100% - 64px)) !important;
+    max-width: 1200px !important;
   }
 
   .teacher-atelier {
@@ -13520,4 +13520,112 @@ main > .registration-section {
   .curriculum-section {
     padding-top: 44px !important;
   }
+}
+
+/* Flat diagnostic composition with a branded blue calculator. */
+.quiz-pricing .quiz-card,
+.quiz-pricing .pricing-wrap,
+.quiz-pricing .price-calculator,
+.quiz-pricing .packages,
+.quiz-pricing .package,
+.quiz-pricing .package.featured,
+.quiz-pricing .package:hover,
+.quiz-pricing .package.is-active,
+.quiz-pricing .price-calculator-controls,
+.quiz-pricing .price-calculator-result,
+.quiz-pricing .choice-row button,
+.quiz-pricing .choice-row button:hover,
+.quiz-pricing .choice-row button.selected,
+.quiz-pricing .price-calculator-result a:hover {
+  box-shadow: none !important;
+}
+
+.price-calculator,
+html.theme-dark .price-calculator {
+  border: 0;
+  color: var(--brand-white) !important;
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-navy)) !important;
+}
+
+.price-calculator .small-label,
+.price-calculator-copy h2 em,
+html.theme-dark .price-calculator .small-label,
+html.theme-dark .price-calculator-copy h2 em {
+  color: var(--brand-orange) !important;
+}
+
+.price-calculator-copy h2,
+html.theme-dark .price-calculator-copy h2 {
+  color: var(--brand-white) !important;
+}
+
+.price-calculator-copy > p:last-child,
+html.theme-dark .price-calculator-copy > p:last-child {
+  color: rgba(255, 255, 255, 0.74) !important;
+}
+
+.price-calculator-controls,
+html.theme-dark .price-calculator-controls {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: var(--brand-white) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.price-calculator-controls legend,
+html.theme-dark .price-calculator-controls legend {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.price-calculator .choice-row button,
+html.theme-dark .price-calculator .choice-row button {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: var(--brand-white) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.price-calculator .choice-row button:hover,
+.price-calculator .choice-row button.selected,
+html.theme-dark .price-calculator .choice-row button:hover,
+html.theme-dark .price-calculator .choice-row button.selected {
+  border-color: var(--brand-orange) !important;
+  color: var(--brand-navy) !important;
+  background: var(--brand-orange) !important;
+}
+
+.price-calculator .choice-row button small {
+  color: var(--brand-orange) !important;
+}
+
+.price-calculator .choice-row button:hover small,
+.price-calculator .choice-row button.selected small {
+  color: rgba(12, 2, 89, 0.72) !important;
+}
+
+.price-calculator-result,
+html.theme-dark .price-calculator-result {
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: var(--brand-white) !important;
+  background: rgba(12, 2, 89, 0.72) !important;
+}
+
+.price-calculator-result > div {
+  border-bottom-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.price-calculator-result span {
+  color: rgba(255, 255, 255, 0.68) !important;
+}
+
+.price-calculator-result strong {
+  color: var(--brand-white) !important;
+}
+
+.price-calculator-result em {
+  color: var(--brand-orange) !important;
+}
+
+.price-calculator-result a,
+html.theme-dark .price-calculator-result a {
+  color: var(--brand-navy) !important;
+  background: var(--brand-orange) !important;
 }
