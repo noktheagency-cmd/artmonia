@@ -61,22 +61,24 @@ function Reveal({
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
-    const revealFallback = window.setTimeout(() => node.classList.add("is-visible"), 900);
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      node.classList.add("is-visible");
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          window.clearTimeout(revealFallback);
           node.classList.add("is-visible");
           observer.disconnect();
         }
       },
-      { threshold: 0.04, rootMargin: "0px 0px -6% 0px" }
+      { threshold: 0.05, rootMargin: "0px 0px -4% 0px" }
     );
     observer.observe(node);
-    return () => {
-      window.clearTimeout(revealFallback);
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -340,7 +342,7 @@ function NavAtelierAnimation() {
 
 function Hero() {
   return (
-    <section className="hero section-shell" id="top">
+    <section className="hero section-shell scroll-section" id="top">
       <div className="hero-copy">
         <div className="monogram-row">
           <span />
@@ -387,7 +389,7 @@ function Hero() {
 
 function AboutArtmonia() {
   return (
-    <section className="about-system" id="academy">
+    <section className="about-system scroll-section" id="academy">
       <div className="about-system-shell">
         <Reveal className="about-system-visual" variant="from-left">
           <div className="about-photo-wrap">
@@ -444,7 +446,7 @@ function AboutArtmonia() {
 
 function ProblemTransformation() {
   return (
-    <section className="split-band" id="problem">
+    <section className="split-band scroll-section" id="problem">
       <Reveal className="problem-showcase" variant="boom">
         <div className="problem-orbit" aria-label="Artmonia problemlər karuseli">
           <div className="orbit-aura" />
@@ -498,7 +500,12 @@ function ProblemTransformation() {
           <h2>Proqram sənə nə verir?</h2>
           <div className="transformation-grid">
             {transformations.map((item, index) => (
-              <article key={item.title} className={`stage-card stage-card-${index + 1}`} style={{ "--step": index } as React.CSSProperties}>
+              <article
+                key={item.title}
+                className={`stage-card stage-card-${index + 1} scroll-block`}
+                data-scroll-order={index}
+                style={{ "--step": index } as React.CSSProperties}
+              >
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </article>
@@ -512,7 +519,7 @@ function ProblemTransformation() {
 
 function Programs() {
   return (
-    <section className="section-shell" id="program">
+    <section className="section-shell scroll-section" id="program">
       <Reveal className="section-heading wide" variant="from-right">
         <p>Proqramlar</p>
         <h2>Peşəkar kurslar,<br />müasir nəticə.</h2>
@@ -546,7 +553,7 @@ function Programs() {
 
 function Studio() {
   return (
-    <section className="studio-section">
+    <section className="studio-section scroll-section">
       <div className="studio-grid">
         <Reveal className="studio-copy" variant="from-left">
           <p className="small-label">Məkanımız</p>
@@ -575,14 +582,14 @@ function Studio() {
           </Reveal>
         ))}
       </div>
-      <p className="quote-line">&ldquo;Artmonia-ya girən hər kəs burada qalmaq istəyir&rdquo;</p>
+      <p className="quote-line scroll-block">&ldquo;Artmonia-ya girən hər kəs burada qalmaq istəyir&rdquo;</p>
     </section>
   );
 }
 
 function Results() {
   return (
-    <section className="section-shell results" id="results">
+    <section className="section-shell results scroll-section" id="results">
       <Reveal className="section-heading" variant="from-left">
         <p>Nəticələr</p>
         <h2>Tələbə nəticələri görünən inkişaf kimi təqdim olunur.</h2>
@@ -634,7 +641,7 @@ const moduleArtworks = [
 
 function Curriculum() {
   return (
-    <section className="curriculum-section">
+    <section className="curriculum-section scroll-section">
       <Reveal className="section-heading wide" variant="from-top">
         <p>Kurikulum</p>
         <h2>
@@ -646,7 +653,8 @@ function Curriculum() {
         {curriculum.map((item, index) => (
           <article
             key={item.title}
-            className="module-card"
+            className="module-card scroll-block"
+            data-scroll-order={index}
           >
             <div className="module-card-media"><img src={moduleArtworks[index]} alt="" loading="lazy" decoding="async" /></div>
             <div className="module-card-content">
@@ -810,6 +818,39 @@ function QuizProblemArt({ problem }: { problem: QuizProblem }) {
   );
 }
 
+function usePageScrollReveals() {
+  useEffect(() => {
+    const targets = Array.from(document.querySelectorAll<HTMLElement>(".scroll-section, .scroll-block"));
+    if (!targets.length) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      targets.forEach((target) => target.classList.add("is-scroll-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-scroll-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.04, rootMargin: "0px 0px -3% 0px" }
+    );
+
+    targets.forEach((target) => {
+      const order = Number(target.dataset.scrollOrder ?? 0);
+      const delay = Math.min(Math.max(order, 0), 5) * 85;
+      target.style.setProperty("--scroll-delay", `${delay}ms`);
+      observer.observe(target);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+}
+
 function QuizGenreIcon({ genre }: { genre: QuizGenre }) {
   const icon = {
     portrait: (
@@ -858,7 +899,7 @@ function DiagnosticQuiz() {
   };
 
   return (
-    <section className="quiz-pricing" id="diagnostic">
+    <section className="quiz-pricing scroll-section" id="diagnostic">
       <Reveal className="quiz-card" variant="from-left">
         <div className="quiz-card-head">
           <p className="small-label">Diaqnostika</p>
@@ -1103,7 +1144,7 @@ const teacherPortraits = [
 
 function TeachersAtelier() {
   return (
-    <section className="teacher-atelier" id="teachers">
+    <section className="teacher-atelier scroll-section" id="teachers">
       <Reveal className="teacher-atelier-heading" variant="from-left">
         <p className="small-label">Müəllim heyəti</p>
         <h2>İlhamı <em>istiqamətə</em> çevirən insanlar.</h2>
@@ -1130,7 +1171,7 @@ function RegistrationLead() {
   };
 
   return (
-    <section className="registration-section" id="lead">
+    <section className="registration-section scroll-section" id="lead">
       <Reveal className="lead-panel" variant="boom">
         <p className="small-label">Ön qeydiyyat</p>
         <h2>Yerini ayır.</h2>
@@ -1172,8 +1213,8 @@ function RegistrationLead() {
 
 function AuditPrivacyFooter() {
   return (
-    <footer className="site-footer" id="contact">
-      <div className="footer-top">
+    <footer className="site-footer scroll-section" id="contact">
+      <div className="footer-top scroll-block">
         <div>
           <h2>Gözləmə. Başla.</h2>
           <p>Növbəti qrup tezliklə başlayır. Yerini indi ayır və rəsm səyahətinə başla.</p>
@@ -1183,7 +1224,7 @@ function AuditPrivacyFooter() {
         </div>
         <img className="footer-top-portrait" src="/assets/footer-cta-portrait.webp" alt="Rəngli Artmonia portreti" loading="lazy" decoding="async" />
       </div>
-      <div className="footer-contact-map">
+      <div className="footer-contact-map scroll-block" data-scroll-order="1">
         <div className="footer-map-frame">
           <iframe
             title="Artmonia Academy xəritədə"
@@ -1199,7 +1240,7 @@ function AuditPrivacyFooter() {
           <p className="footer-location">{contact.address}</p>
         </address>
       </div>
-      <div className="footer-bottom">
+      <div className="footer-bottom scroll-block" data-scroll-order="2">
         <span>© 2026 Artmonia Academy.</span>
         <span className="footer-quote">&ldquo;İstək varsa, yol da var.&rdquo; - Leonardo da Vinçi</span>
       </div>
@@ -1209,6 +1250,7 @@ function AuditPrivacyFooter() {
 
 export default function ArtmoniaSite() {
   useTiltTargets();
+  usePageScrollReveals();
 
   return (
     <>
