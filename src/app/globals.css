@@ -13312,14 +13312,50 @@ html.theme-dark .footer-top {
 /* Keep the diagnostic group broad without letting it crowd the page edges. */
 @media (min-width: 981px) {
   .quiz-pricing {
-    width: min(1350px, calc(100% - 64px)) !important;
-    max-width: 1350px !important;
+    width: min(1280px, calc(100% - 64px)) !important;
+    max-width: 1280px !important;
   }
 
   .teacher-atelier {
-    width: min(1350px, calc(100% - 64px)) !important;
-    max-width: 1350px !important;
+    width: min(1280px, calc(100% - 64px)) !important;
+    max-width: 1280px !important;
   }
+}
+
+/* The teacher section sits directly on the page canvas. */
+.teacher-atelier,
+html.theme-dark .teacher-atelier {
+  color: var(--brand-navy) !important;
+  background: transparent !important;
+}
+
+.teacher-atelier::before,
+html.theme-dark .teacher-atelier::before,
+.teacher-atelier::after,
+html.theme-dark .teacher-atelier::after {
+  display: none !important;
+  content: none;
+  background: transparent !important;
+}
+
+.teacher-atelier-heading .small-label,
+html.theme-dark .teacher-atelier-heading .small-label {
+  color: var(--brand-purple) !important;
+}
+
+.teacher-atelier-heading h2,
+html.theme-dark .teacher-atelier-heading h2 {
+  color: var(--brand-navy) !important;
+}
+
+.teacher-atelier-heading h2 em,
+html.theme-dark .teacher-atelier-heading h2 em {
+  color: var(--brand-purple) !important;
+}
+
+.teacher-atelier-heading > p:last-child,
+html.theme-dark .teacher-atelier-heading > p:last-child {
+  color: rgba(12, 2, 89, 0.72) !important;
 }
 
 #pricing,
