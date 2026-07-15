@@ -12121,6 +12121,64 @@ body::before {
     grid-template-columns: 1fr;
   }
 }
+
+/* Diagnostic and package copy must always have room to breathe. */
+.quiz-card,
+.pricing-wrap {
+  height: auto;
+  min-height: 0;
+}
+
+.quiz-card {
+  overflow: visible;
+}
+
+.pricing-wrap {
+  grid-template-rows: auto minmax(560px, auto) auto;
+}
+
+.quiz-window {
+  min-height: 430px;
+}
+
+.packages {
+  min-height: 560px;
+}
+
+.package,
+.package.featured {
+  min-height: 560px;
+  overflow: visible;
+}
+
+.quiz-pane,
+.quiz-options button,
+.quiz-options button > strong,
+.package,
+.package h3,
+.package p,
+.package li,
+.package a {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .pricing-wrap {
+    grid-template-rows: auto minmax(590px, auto) auto;
+  }
+
+  .packages,
+  .package,
+  .package.featured {
+    min-height: 590px;
+  }
+
+  .quiz-window {
+    min-height: 430px;
+  }
+}
+
 /* Compact program matrix: three rows across two balanced columns. */
 #program .course-marquee {
   width: min(1160px, 100%);
