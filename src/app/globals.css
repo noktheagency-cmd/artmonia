@@ -13167,3 +13167,9 @@ main,
   margin: 0;
   padding: 0;
 }
+
+/* Remove the tall orange backdrop from the studio section. */
+.studio-section::before {
+  display: none !important;
+  content: none;
+}
