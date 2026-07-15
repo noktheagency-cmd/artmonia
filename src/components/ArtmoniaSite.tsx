@@ -10,15 +10,12 @@ import {
   contact,
   courses,
   curriculum,
-  faq,
   formFields,
-  futureFlows,
   galleryImages,
   heroStats,
   navItems,
   packages,
   painPoints,
-  resources,
   studioCards,
   studioFeatures,
   testimonials,
@@ -30,15 +27,6 @@ function ArrowIcon() {
     <svg aria-hidden="true" viewBox="0 0 24 24" className="icon">
       <path d="M5 12h13" />
       <path d="m13 6 6 6-6 6" />
-    </svg>
-  );
-}
-
-function CloseIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="icon">
-      <path d="M6 6l12 12" />
-      <path d="M18 6 6 18" />
     </svg>
   );
 }
@@ -95,17 +83,22 @@ function Reveal({
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
+    const revealFallback = window.setTimeout(() => node.classList.add("is-visible"), 900);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          window.clearTimeout(revealFallback);
           node.classList.add("is-visible");
           observer.disconnect();
         }
       },
-      { threshold: 0.16 }
+      { threshold: 0.04, rootMargin: "0px 0px -6% 0px" }
     );
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      window.clearTimeout(revealFallback);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -252,7 +245,7 @@ function NavAtelierAnimation() {
       if (closeTimer) window.clearTimeout(closeTimer);
       closeTimer = window.setTimeout(() => {
         stage.classList.remove("is-awake");
-      }, 120);
+      }, 620);
     };
 
     const handlePointerEnter = () => {
@@ -416,9 +409,66 @@ function Hero() {
   );
 }
 
+function AboutArtmonia() {
+  return (
+    <section className="about-system" id="academy">
+      <div className="about-system-shell">
+        <Reveal className="about-system-visual" variant="from-left">
+          <div className="about-photo-wrap">
+            <img
+              className="about-photo"
+              src="/assets/about-art-system.webp"
+              alt="Artmonia Academy-də klassik heykəl üzərində akademik rəsm məşqi edən tələbə"
+            />
+            <img className="about-brush-wave" src="/assets/brand-brush-wave.png" alt="" aria-hidden="true" />
+            <img className="about-splatter" src="/assets/brand-paint-splatter.png" alt="" aria-hidden="true" />
+            <div className="about-image-note" aria-hidden="true">
+              <span>Sistem</span>
+              <i />
+              <span>Rəhbərlik</span>
+              <i />
+              <span>Nəticə</span>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal className="about-system-copy" variant="from-right">
+          <p className="small-label">Haqqımızda</p>
+          <h2>
+            <em>Artmonia</em> — sənət sistemi.
+          </h2>
+          <p className="about-system-lead">
+            Biz inanırıq ki, hər kəs rəsm çəkə bilər — düzgün sistem və doğru rəhbərlik olduqda. Artmonia Academy
+            peşəkar rəssamlar tərəfindən yaradılmış strukturlaşdırılmış proqramdır.
+          </p>
+
+          <div className="about-principles" aria-label="Artmonia tədris prinsipləri">
+            <div>
+              <span>Sistem</span>
+              <p>Hər mərhələ bir-birini tamamlayan aydın planla qurulur.</p>
+            </div>
+            <div>
+              <span>Rəhbərlik</span>
+              <p>Mentor rəyi hər xətti daha dəqiq qərara çevirir.</p>
+            </div>
+            <div>
+              <span>Praktika</span>
+              <p>Ardıcıl məşq görünən və ölçülən nəticə yaradır.</p>
+            </div>
+          </div>
+
+          <svg className="about-line-art" aria-hidden="true" viewBox="0 0 520 92" preserveAspectRatio="none">
+            <path d="M4 67C91 12 151 82 234 43C315 5 394 20 516 63" />
+          </svg>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function ProblemTransformation() {
   return (
-    <section className="split-band" id="academy">
+    <section className="split-band" id="problem">
       <Reveal className="problem-showcase" variant="boom">
         <div className="problem-orbit" aria-label="Artmonia problemlər karuseli">
           <div className="orbit-aura" />
@@ -648,10 +698,10 @@ function Curriculum() {
 }
 
 const quizProblems = [
-  { id: "no-system", label: "Sistemsizəm", icon: "🎯" },
-  { id: "no-colors", label: "Rəngləri bilmirəm", icon: "🎨" },
-  { id: "no-goal", label: "Məqsədim yoxdur", icon: "🧭" },
-  { id: "no-basics", label: "Əsasları bilmirəm", icon: "📐" },
+  { id: "no-system", label: "Sistemsizəm" },
+  { id: "no-colors", label: "Rəngləri bilmirəm" },
+  { id: "no-goal", label: "Məqsədim yoxdur" },
+  { id: "no-basics", label: "Əsasları bilmirəm" },
 ] as const;
 
 const quizGenres = [
@@ -755,6 +805,17 @@ const quizResults = {
 type QuizProblem = (typeof quizProblems)[number]["id"];
 type QuizGenre = (typeof quizGenres)[number]["id"];
 
+function QuizProblemArt({ problem }: { problem: QuizProblem }) {
+  return (
+    <span className={`quiz-problem-art ${problem}`} aria-hidden="true">
+      <i />
+      <i />
+      <i />
+      <b />
+    </span>
+  );
+}
+
 function DiagnosticQuiz() {
   const [step, setStep] = useState(0);
   const [problem, setProblem] = useState<QuizProblem | null>(null);
@@ -768,7 +829,7 @@ function DiagnosticQuiz() {
   };
 
   return (
-    <section className="quiz-pricing">
+    <section className="quiz-pricing" id="diagnostic">
       <Reveal className="quiz-card" variant="from-left">
         <div className="quiz-card-head">
           <p className="small-label">Diaqnostika</p>
@@ -798,19 +859,19 @@ function DiagnosticQuiz() {
             <div className="quiz-pane">
               <h3>Əsas problemin nədir?</h3>
               <p>Sənə ən çox uyğun olan variantı seç.</p>
-              <div className="quiz-options">
+              <div className="quiz-options problem-options">
                 {quizProblems.map((item) => (
                   <button
                     key={item.id}
                     type="button"
-                    className={problem === item.id ? "active" : ""}
+                    className={`${problem === item.id ? "active " : ""}quiz-problem-option ${item.id}`}
                     onClick={() => {
                       setProblem(item.id);
                       setStep(2);
                     }}
                   >
-                    <span>{item.icon}</span>
-                    {item.label}
+                    <QuizProblemArt problem={item.id} />
+                    <strong>{item.label}</strong>
                   </button>
                 ))}
               </div>
@@ -926,8 +987,8 @@ function Pricing() {
         </div>
         {comparison.map((row) => (
           <div className="comparison-row" key={row[0]}>
-            {row.map((cell) => (
-              <span key={cell}>{cell}</span>
+            {row.map((cell, cellIndex) => (
+              <span key={`${row[0]}-${cellIndex}`}>{cell}</span>
             ))}
           </div>
         ))}
@@ -1014,7 +1075,7 @@ const teacherPortraits = [
 
 function TeachersAtelier() {
   return (
-    <section className="teacher-atelier" id="academy">
+    <section className="teacher-atelier" id="teachers">
       <Reveal className="teacher-atelier-heading" variant="from-left">
         <p className="small-label">Müəllim heyəti</p>
         <h2>İlhamı <em>istiqamətə</em> çevirən insanlar.</h2>
@@ -1032,101 +1093,8 @@ function TeachersAtelier() {
   );
 }
 
-function TeachersResources() {
-  const [activeResource, setActiveResource] = useState<number | null>(null);
-  const article = activeResource === null ? null : resources[activeResource];
-
-  useEffect(() => {
-    if (activeResource === null) return;
-
-    const previousOverflow = document.body.style.overflow;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveResource(null);
-    };
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", closeOnEscape);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [activeResource]);
-
-  return (
-    <section className="people-resources" id="resources">
-      <Reveal className="section-heading" variant="from-left">
-        <p>Pulsuz resurslar</p>
-        <h2>Məşqini dərinləşdirən materiallar və bloq.</h2>
-      </Reveal>
-      <div className="resources-grid">
-        {resources.map((resource, index) => (
-          <Reveal key={resource.title} className="resource-card" variant="flip">
-            <span>{resource.type}</span>
-            <h3>{resource.title}</h3>
-            <p>{resource.text}</p>
-            <button type="button" className="resource-open" onClick={() => setActiveResource(index)} aria-haspopup="dialog">
-              Oxu <ArrowIcon />
-            </button>
-          </Reveal>
-        ))}
-      </div>
-      {article ? (
-        <div className="article-overlay" onMouseDown={(event) => event.currentTarget === event.target && setActiveResource(null)}>
-          <article className="article-reader" role="dialog" aria-modal="true" aria-labelledby="article-reader-title">
-            <button type="button" className="article-close" onClick={() => setActiveResource(null)} aria-label="Məqaləni bağla" autoFocus>
-              <CloseIcon />
-            </button>
-            <div className="article-hero">
-              <img src={article.image} alt="" decoding="async" />
-              <div className="article-hero-copy">
-                <span>{article.type}</span>
-                <h2 id="article-reader-title">{article.title}</h2>
-              </div>
-            </div>
-            <div className="article-content">
-              <p className="article-lead">{article.lead}</p>
-              <div className="article-sections">
-                {article.sections.map((section) => (
-                  <section key={section.heading}>
-                    <h3>{section.heading}</h3>
-                    <p>{section.body}</p>
-                  </section>
-                ))}
-              </div>
-            </div>
-          </article>
-        </div>
-      ) : null}
-    </section>
-  );
-}
-
-function FutureFlows() {
-  return (
-    <section className="future-section">
-      <Reveal className="future-panel" variant="boom">
-        <div>
-          <p className="small-label">Növbəti mərhələ</p>
-          <h2>Kabinet, login və register backend-siz vizual xəritədə saxlanılıb.</h2>
-          <p>
-            Bu mərhələdə backend edilmir. Köhnə saytdakı bütün auth/kabinet/admin məlumatları gələcək inkişaf üçün
-            arxitektura notu kimi təqdim olunur.
-          </p>
-        </div>
-        <ul>
-          {futureFlows.map((flow) => (
-            <li key={flow}>{flow}</li>
-          ))}
-        </ul>
-      </Reveal>
-    </section>
-  );
-}
-
-function FAQLead() {
+function RegistrationLead() {
   const [sent, setSent] = useState(false);
-  const [openFaq, setOpenFaq] = useState(0);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -1134,31 +1102,8 @@ function FAQLead() {
   };
 
   return (
-    <section className="faq-lead" id="faq">
-      <div className="faq-column">
-        <Reveal className="section-heading" variant="from-left">
-          <p>FAQ</p>
-          <h2>Tez-tez verilən suallar</h2>
-        </Reveal>
-        <div className="faq-list" data-faq-accordion>
-          {faq.map((item, index) => (
-            <Reveal key={item.q} className="faq-item" variant={index % 2 === 0 ? "from-left" : "from-right"}>
-              <details open={openFaq === index}>
-                <summary
-                  onClick={(event) => {
-                    event.preventDefault();
-                    setOpenFaq(openFaq === index ? -1 : index);
-                  }}
-                >
-                  {item.q}
-                </summary>
-                <p>{item.a}</p>
-              </details>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-      <Reveal className="lead-panel" id="lead" variant="boom">
+    <section className="registration-section" id="lead">
+      <Reveal className="lead-panel" variant="boom">
         <p className="small-label">Ön qeydiyyat</p>
         <h2>Yerini ayır.</h2>
         <form onSubmit={onSubmit}>
@@ -1236,15 +1181,14 @@ export default function ArtmoniaSite() {
       <Header />
       <NavAtelierAnimation />
       <main>
+        <AboutArtmonia />
         <ProblemTransformation />
         <Programs />
         <Studio />
         <Curriculum />
         <DiagnosticQuiz />
         <TeachersAtelier />
-        <TeachersResources />
-        <FutureFlows />
-        <FAQLead />
+        <RegistrationLead />
       </main>
       <AuditPrivacyFooter />
     </>
