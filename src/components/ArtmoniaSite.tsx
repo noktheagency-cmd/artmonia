@@ -41,28 +41,6 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
-function ThemeIcon({ theme }: { theme: "light" | "dark" }) {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="theme-icon">
-      {theme === "dark" ? (
-        <>
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2.4M12 19.6V22M4.93 4.93l1.7 1.7M17.37 17.37l1.7 1.7M2 12h2.4M19.6 12H22M4.93 19.07l1.7-1.7M17.37 6.63l1.7-1.7" />
-        </>
-      ) : (
-        <path d="M20.8 14.2A7.4 7.4 0 0 1 9.8 3.2 8.8 8.8 0 1 0 20.8 14.2Z" />
-      )}
-    </svg>
-  );
-}
-
-function applyTheme(theme: "light" | "dark") {
-  if (typeof document === "undefined") return;
-  document.documentElement.dataset.theme = theme;
-  document.documentElement.classList.toggle("theme-dark", theme === "dark");
-  document.documentElement.classList.toggle("theme-light", theme === "light");
-}
-
 function Reveal({
   children,
   className = "",
@@ -166,29 +144,11 @@ function useTiltTargets() {
 
 function Header() {
   const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem("artmonia-theme");
-    const initial = stored === "dark" || stored === "light" ? stored : "light";
-    setTheme(initial);
-    applyTheme(initial);
-  }, []);
-
-  const toggleTheme = () => {
-    setTheme((current) => {
-      const next = current === "dark" ? "light" : "dark";
-      window.localStorage.setItem("artmonia-theme", next);
-      applyTheme(next);
-      return next;
-    });
-  };
 
   return (
     <header className="site-header">
       <a className="brand" href="#top" aria-label="Artmonia ana səhifə">
         <img className="brand-logo brand-logo-light" src="/assets/artmonia-logo.webp" alt="Artmonia" />
-        <img className="brand-logo brand-logo-dark" src="/assets/artmonia-logo-dark.webp" alt="Artmonia" />
       </a>
       <nav className="desktop-nav" aria-label="Əsas naviqasiya">
         {navItems.map((item) => (
@@ -198,15 +158,6 @@ function Header() {
         ))}
       </nav>
       <div className="header-actions">
-        <button
-          className="theme-toggle"
-          type="button"
-          onClick={toggleTheme}
-          aria-label={theme === "dark" ? "Light mode" : "Dark mode"}
-          title={theme === "dark" ? "Light mode" : "Dark mode"}
-        >
-          <ThemeIcon theme={theme} />
-        </button>
         <a className="nav-cta" href="#lead">
           Qeydiyyat <ArrowIcon />
         </a>
