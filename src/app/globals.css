@@ -11202,10 +11202,6 @@ html.theme-dark .comparison-head {
     flex-direction: column;
   }
 
-  .lead-panel > h2 {
-    white-space: normal;
-  }
-
   .registration-artwork {
     order: 2;
     width: 100%;
