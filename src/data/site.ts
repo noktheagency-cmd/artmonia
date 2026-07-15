@@ -1,8 +1,6 @@
 export const navItems = [
   { label: "Proqram", href: "#program" },
   { label: "Akademiya", href: "#academy" },
-  { label: "Blog", href: "#resources" },
-  { label: "FAQ", href: "#faq" },
   { label: "Əlaqə", href: "#contact" }
 ];
 
@@ -412,13 +410,6 @@ export const formFields = [
   { label: "Email", type: "email", placeholder: "email@nümunə.az", name: "email" },
   { label: "Format", type: "select", name: "interest", options: ["Online", "Offline"] },
   { label: "Səviyyə", type: "select", name: "level", options: ["Başlayan", "Orta", "İrəliləmiş"] }
-];
-
-export const futureFlows = [
-  "Kabinet: Email ilə daxil ol, telefon ilə OTP, şifrə sıfırlama, qeydiyyat və təsdiq statusu.",
-  "Auth: Admin girişi, email, şifrə, şifrəni unutdum axını.",
-  "Admin: Kampaniyalar, yeni kampaniya, başlıq, təsvir, endirim faizi, badge text, end date, aktiv/deaktiv, silmə.",
-  "Online kurslar: xarici online.artmoniya.com platformasına keçid."
 ];
 
 export const privacy = [

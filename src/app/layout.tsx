@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Artmonia Academy - Modern Rəssamlıq Akademiyası",
+  title: "Artmonia Academy | Sənətə sistemli başlanğıc",
   description:
-    "Artmonia Academy üçün klassik-modern, responsiv Next.js frontend konsepti: proqramlar, nəticələr, müəllimlər, FAQ və qeydiyyat axını.",
+    "Akademik rəsm, rəng, kompozisiya və portfolyo hazırlığı üçün mentor dəstəkli Artmonia Academy proqramları.",
   openGraph: {
     title: "Artmonia Academy",
-    description: "Sistem. Rəy. Nəticə - modern klassik rəssamlıq akademiyası.",
+    description: "Fırçanı tut, sənətkar ol. Sistemli tədris, mentor rəyi və görünən nəticə.",
     type: "website"
   }
 };
