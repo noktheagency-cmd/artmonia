@@ -11159,6 +11159,27 @@ html.theme-dark .comparison-head {
   }
 }
 
+/* Keep the teacher introduction centered as one readable unit. */
+.teacher-atelier-heading {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  max-width: 840px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.teacher-atelier-heading h2,
+.teacher-atelier-heading > p:last-child {
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.teacher-atelier-heading > p:last-child {
+  max-width: 620px;
+}
+
 /* Registration: keep the headline on one line and use the open space for the artwork. */
 .lead-panel {
   display: grid;
