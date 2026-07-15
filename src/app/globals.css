@@ -12530,3 +12530,56 @@ html.theme-dark .footer-contact .footer-location {
 .footer-bottom {
   border-top-color: var(--site-border);
 }
+
+/* Keep every diagnostic label and package line fully visible. */
+.quiz-options button {
+  overflow: visible;
+}
+
+.problem-options .quiz-problem-option {
+  display: grid;
+  grid-template-rows: minmax(78px, 1fr) auto;
+  align-items: center;
+  min-height: 176px;
+}
+
+.problem-options .quiz-problem-art {
+  top: auto;
+  left: auto;
+  justify-self: center;
+  width: 98px;
+  transform: none;
+}
+
+.problem-options .quiz-problem-option > strong {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  width: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.problem-options .quiz-problem-option:hover .quiz-problem-art,
+.problem-options .quiz-problem-option.active .quiz-problem-art {
+  transform: translateY(-4px) rotate(-2deg) scale(1.04);
+}
+
+.package,
+.package.featured {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.package ul {
+  min-height: 0;
+  overflow: visible;
+}
+
+@media (max-width: 560px) {
+  .problem-options .quiz-problem-option {
+    min-height: 0;
+  }
+}
