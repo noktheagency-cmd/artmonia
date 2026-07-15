@@ -13028,3 +13028,110 @@ main,
     min-height: 0;
   }
 }
+
+/* Keep the navigation above the opening scene and start the hero at the viewport edge. */
+.site-header {
+  position: fixed !important;
+  top: 16px;
+  left: 50%;
+  z-index: 1000 !important;
+  transform: translateX(-50%);
+}
+
+.nav-atelier {
+  width: 100% !important;
+  max-width: none !important;
+  margin-top: 0 !important;
+  border-radius: 0;
+}
+
+/* Transparent problem panels need explicit readable foreground colors. */
+.problem-showcase,
+.problem-question,
+.problem-question h2,
+.transformation-copy,
+.transformation-copy h2 {
+  color: var(--brand-navy) !important;
+}
+
+.problem-question > p:last-child,
+.transformation-grid article p {
+  color: rgba(12, 2, 89, 0.72) !important;
+}
+
+.problem-question .small-label,
+.transformation-copy .small-label {
+  color: var(--brand-purple) !important;
+}
+
+/* Four calm transformation cards with stable spacing and a restrained hover state. */
+.transformation-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.transformation-grid article {
+  min-height: 0;
+  padding: 20px 22px !important;
+  gap: 8px;
+  overflow: visible;
+  border: 1px solid rgba(12, 2, 89, 0.14);
+  border-radius: 12px;
+  color: var(--brand-navy);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: none;
+  animation: none;
+  transform: none;
+  transition: border-color 220ms ease, background-color 220ms ease, color 220ms ease;
+}
+
+.transformation-grid article::before,
+.transformation-grid article::after {
+  display: none;
+}
+
+.transformation-grid article:hover {
+  padding: 20px 22px !important;
+  border-color: rgba(105, 41, 242, 0.3);
+  color: var(--brand-navy);
+  background: rgba(105, 41, 242, 0.07);
+  box-shadow: none;
+  transform: none;
+}
+
+/* Program artwork fills its complete media cell with no baseline or bottom gap. */
+#program .course-card,
+#program .course-card.media-right {
+  align-items: stretch;
+  overflow: hidden;
+}
+
+#program .course-media {
+  position: relative;
+  align-self: stretch;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+#program .course-media img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  vertical-align: bottom;
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    top: 10px;
+  }
+
+  .transformation-grid {
+    grid-template-columns: 1fr;
+  }
+}
