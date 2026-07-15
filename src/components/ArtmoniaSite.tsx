@@ -924,6 +924,16 @@ function DiagnosticQuiz() {
 }
 
 function Pricing() {
+  const [activePackage, setActivePackage] = useState(1);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActivePackage((current) => (current + 1) % packages.length);
+    }, 7000);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
   return (
     <>
     <Reveal className="pricing-wrap" id="pricing" variant="from-right">
@@ -931,11 +941,12 @@ function Pricing() {
         <p>Paketlər</p>
         <h2>Sənə uyğun paketi seç.</h2>
       </div>
-      <div className="packages">
-        {packages.map((pack) => (
+      <div className="packages" aria-live="polite">
+        {packages.map((pack, index) => (
           <article
             key={pack.title}
-            className={pack.highlight ? "package featured" : "package"}
+            className={`${pack.highlight ? "package featured" : "package"} ${activePackage === index ? "is-active" : ""}`}
+            aria-hidden={activePackage !== index}
           >
             {pack.highlight ? <span className="package-badge">{pack.highlight}</span> : null}
             <h3>{pack.title}</h3>
@@ -948,6 +959,23 @@ function Pricing() {
             </ul>
             <a href="#lead">{pack.cta}</a>
           </article>
+        ))}
+        <div className="package-orbit" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+      <div className="package-tabs" aria-label="Paket seçimi">
+        {packages.map((pack, index) => (
+          <button
+            key={pack.title}
+            type="button"
+            className={activePackage === index ? "active" : ""}
+            onClick={() => setActivePackage(index)}
+          >
+            {pack.title}
+          </button>
         ))}
       </div>
       <div className="comparison">
