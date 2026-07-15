@@ -12982,3 +12982,49 @@ main,
     background-size: 560px auto;
   }
 }
+
+/* Let the diagnostic composition occupy the full section without a beige slab. */
+.quiz-pricing {
+  align-items: stretch;
+  background: transparent !important;
+}
+
+.quiz-pricing > .quiz-card,
+.quiz-pricing > .pricing-wrap {
+  min-height: clamp(720px, 56vw, 820px);
+}
+
+.quiz-pricing > .price-calculator {
+  min-height: clamp(420px, 32vw, 520px);
+}
+
+/* Section canvases stay transparent so the page background remains visible. */
+.split-band,
+#program,
+.studio-section,
+.curriculum-section,
+.registration-section,
+.site-footer,
+.problem-showcase,
+.atelier-panel,
+.lead-panel,
+.footer-top,
+.footer-contact-map,
+.footer-bottom,
+.footer-contact,
+.footer-map-frame {
+  background: transparent !important;
+}
+
+.registration-section::before,
+.registration-section::after {
+  background: transparent !important;
+}
+
+@media (max-width: 980px) {
+  .quiz-pricing > .quiz-card,
+  .quiz-pricing > .pricing-wrap,
+  .quiz-pricing > .price-calculator {
+    min-height: 0;
+  }
+}
