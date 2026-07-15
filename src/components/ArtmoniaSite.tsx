@@ -495,17 +495,8 @@ function ProblemTransformation() {
         </div>
       </Reveal>
       <Reveal className="atelier-panel" variant="boom">
-        <div
-          className="sketch-result-board scroll-sketch"
-          aria-label="Sketch to result animation"
-          onPointerMove={(event) => {
-            const rect = event.currentTarget.getBoundingClientRect();
-            event.currentTarget.style.setProperty("--reveal-x", `${event.clientX - rect.left}px`);
-            event.currentTarget.style.setProperty("--reveal-y", `${event.clientY - rect.top}px`);
-          }}
-        >
+        <div className="sketch-result-board scroll-sketch" aria-label="Artmonia rəsm materialları">
           <img src={galleryImages[1].src} alt={galleryImages[1].alt} />
-          <img className="cursor-reveal-image" src={galleryImages[1].src} alt="" aria-hidden="true" />
           <div className="board-wash" />
           <div className="sketch-stage">
             <span className="sketch-label">Sketch To Result</span>
@@ -551,30 +542,36 @@ function Programs() {
         <h2>Peşəkar kurslar, klassik təməl və müasir nəticə.</h2>
       </Reveal>
       <div className="course-marquee" aria-hidden="true">
-        <span>Akademik rəsm</span>
-        <span>Rəng</span>
-        <span>Kompozisiya</span>
-        <span>Portret</span>
-        <span>Portfolyo</span>
+        <div className="course-marquee-track">
+          <div className="course-marquee-group">
+            <span>Akademik rəsm</span>
+            <i />
+            <span>Rəng</span>
+            <i />
+            <span>Kompozisiya</span>
+          </div>
+        </div>
       </div>
       <div className="courses-grid">
         {courses.map((course, index) => (
           <Reveal
             key={course.title}
-            className="course-card"
+            className={`course-card ${index % 2 === 0 ? "media-left" : "media-right"}`}
             variant={index % 2 === 0 ? "from-left" : "from-right"}
-            style={{ "--course-image": `url(${course.image})`, "--step": index } as React.CSSProperties}
-            onPointerMove={(event) => {
-              const rect = event.currentTarget.getBoundingClientRect();
-              event.currentTarget.style.setProperty("--course-x", `${event.clientX - rect.left}px`);
-              event.currentTarget.style.setProperty("--course-y", `${event.clientY - rect.top}px`);
-            }}
+            style={{ "--step": index } as React.CSSProperties}
           >
+            <div className="course-media">
+              <img src={course.image} alt={`${course.title} proqramı üçün nümunə sənət işi`} loading="lazy" />
+              <span>{course.duration}</span>
+            </div>
             <div className="course-copy">
+              <span className="course-label">Artmonia proqramı</span>
               <h3>{course.title}</h3>
               <p>{course.text}</p>
+              <a href="#lead">
+                Proqramı seç <ArrowIcon />
+              </a>
             </div>
-            <strong>{course.duration}</strong>
           </Reveal>
         ))}
       </div>
@@ -675,7 +672,10 @@ function Curriculum() {
     <section className="curriculum-section">
       <Reveal className="section-heading wide" variant="from-top">
         <p>Kurikulum</p>
-        <h2>6 modul. 6 həftə. Hər həftə dərs + tapşırıq + fərdi feedback.</h2>
+        <h2>
+          <span>6 modul. 6 həftə.</span>
+          <span>Hər həftə dərs + tapşırıq + fərdi feedback.</span>
+        </h2>
       </Reveal>
       <div className="timeline module-grid">
         {curriculum.map((item, index) => (

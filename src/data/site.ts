@@ -48,7 +48,7 @@ export const courses = [
     title: "Rəng & Boyama",
     duration: "10 həftə",
     text: "Yağlı boya, akrilik və akvarel texnikaları ilə rəng nəzəriyyəsi.",
-    image: "/assets/curriculum-shadow-sculpture.webp"
+    image: "/assets/module-color.webp"
   },
   {
     title: "Rəqəmsal Sənət",
@@ -60,13 +60,13 @@ export const courses = [
     title: "Kompozisiya",
     duration: "6 həftə",
     text: "Vizual tarazlıq, ritm və baxışı idarə etmək sənəti.",
-    image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=1400&q=85"
+    image: "/assets/module-composition.webp"
   },
   {
     title: "Portret Sənəti",
     duration: "8 həftə",
     text: "İnsan üzünün anatomiyası, ifadə və işıq-kölgə ustalığı.",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1400&q=85"
+    image: "/assets/module-portrait.webp"
   },
   {
     title: "Portfolyo Hazırlığı",
