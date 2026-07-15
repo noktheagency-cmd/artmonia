@@ -13135,3 +13135,31 @@ main,
     grid-template-columns: 1fr;
   }
 }
+
+/* Program cards end exactly at the artwork edge: no lower shadow or spacing strip. */
+#program .courses-grid {
+  row-gap: 0;
+}
+
+#program .course-card,
+#program .course-card.media-right,
+#program .course-card:hover {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+#program .course-media {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+#program .course-media img {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+}
