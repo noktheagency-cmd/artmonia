@@ -12650,3 +12650,75 @@ html.theme-dark .footer-contact .footer-location {
     min-height: 142px;
   }
 }
+
+/* Both diagnostic questions use the same centered icon-and-label card system. */
+.quiz-window .quiz-pane > p {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.problem-options .quiz-problem-option,
+.quiz-options:not(.problem-options) > button {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 52px auto;
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
+  min-height: 150px;
+  padding: 15px;
+  text-align: center;
+}
+
+.problem-options .quiz-problem-art,
+.quiz-genre-icon {
+  grid-column: 1;
+  grid-row: 1;
+  display: block;
+  width: 52px;
+  height: 52px;
+  padding: 12px;
+  box-sizing: border-box;
+  border: 1px solid currentColor;
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.quiz-genre-icon {
+  color: var(--brand-purple);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.problem-options .quiz-problem-option > strong,
+.quiz-options:not(.problem-options) > button > strong {
+  grid-column: 1;
+  grid-row: 2;
+  display: block;
+  width: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #27323a;
+  background: transparent;
+  box-shadow: none;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.quiz-options:not(.problem-options) > button:hover .quiz-genre-icon,
+.quiz-options:not(.problem-options) > button.active .quiz-genre-icon {
+  color: var(--brand-navy);
+  background: var(--brand-orange);
+}
+
+@media (max-width: 560px) {
+  .quiz-options {
+    grid-template-columns: 1fr;
+  }
+
+  .problem-options .quiz-problem-option,
+  .quiz-options:not(.problem-options) > button {
+    min-height: 142px;
+  }
+}
