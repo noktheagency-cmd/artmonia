@@ -9764,7 +9764,7 @@ body::before {
 }
 
 .quiz-window {
-  background-image: url("/assets/quiz-starry-night.webp");
+  background-image: url("/assets/quiz-starry-bg.webp");
   background-size: cover;
   background-position: center;
 }
@@ -12908,5 +12908,77 @@ html.theme-dark .footer-bottom {
     font-size: 10px;
     white-space: normal;
     overflow-wrap: break-word;
+  }
+}
+
+/* White gallery canvas with restrained Artmonia paint marks behind the scenes. */
+html,
+body,
+html.theme-dark body {
+  background-color: #ffffff;
+}
+
+body {
+  position: relative;
+  isolation: isolate;
+}
+
+.brush-field {
+  z-index: 0;
+  overflow: hidden;
+}
+
+.site-header,
+.nav-atelier,
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.brush-field::before {
+  display: block;
+  inset: 0;
+  width: auto;
+  aspect-ratio: auto;
+  opacity: 0.075;
+  background:
+    url("/assets/brand-paint-splatter.png") right -110px top 10vh / clamp(280px, 34vw, 500px) auto no-repeat,
+    url("/assets/brand-paint-splatter.png") left -120px bottom 7vh / clamp(240px, 28vw, 410px) auto no-repeat;
+  animation: brandBackdropDrift 20s ease-in-out infinite;
+}
+
+.brush-field::after {
+  display: block;
+  inset: 0;
+  opacity: 0.045;
+  background: url("/assets/brand-brush-wave.png") left -16vw center / min(66vw, 980px) auto no-repeat;
+  transform: rotate(-4deg);
+  animation: brandBackdropWave 24s ease-in-out infinite;
+}
+
+@keyframes brandBackdropDrift {
+  50% {
+    transform: translate3d(-1.5vw, 2vh, 0) rotate(3deg);
+  }
+}
+
+@keyframes brandBackdropWave {
+  50% {
+    transform: translate3d(2vw, -1.5vh, 0) rotate(-2deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .brush-field::before {
+    opacity: 0.055;
+    background-position: right -90px top 13vh, left -100px bottom 10vh;
+    background-size: 250px auto, 220px auto;
+  }
+
+  .brush-field::after {
+    opacity: 0.032;
+    background-position: left -210px center;
+    background-size: 560px auto;
   }
 }
