@@ -645,10 +645,10 @@ const quizProblems = [
 ] as const;
 
 const quizGenres = [
-  { id: "portrait", label: "Portret", icon: "👤" },
-  { id: "landscape", label: "Mənzərə", icon: "🏞️" },
-  { id: "abstract", label: "Abstrakt", icon: "🌀" },
-  { id: "still-life", label: "Natürmort", icon: "🍎" },
+  { id: "portrait", label: "Portret" },
+  { id: "landscape", label: "Mənzərə" },
+  { id: "abstract", label: "Abstrakt" },
+  { id: "still-life", label: "Natürmort" },
 ] as const;
 
 const quizResults = {
@@ -785,6 +785,41 @@ function QuizProblemArt({ problem }: { problem: QuizProblem }) {
   );
 }
 
+function QuizGenreIcon({ genre }: { genre: QuizGenre }) {
+  const icon = {
+    portrait: (
+      <>
+        <circle cx="12" cy="8" r="3.5" />
+        <path d="M5.5 20c.8-3.7 3.1-5.5 6.5-5.5s5.7 1.8 6.5 5.5" />
+      </>
+    ),
+    landscape: (
+      <>
+        <circle cx="17.2" cy="6.8" r="1.8" />
+        <path d="m3.8 19 5.4-6 3.2 3.5 2.5-2.8L20.2 19H3.8Z" />
+      </>
+    ),
+    abstract: (
+      <>
+        <path d="M5 8.4c1.3-3.3 5.7-4.8 8.6-2.6 2.1 1.5 5.4 1.2 5.4 4.2 0 2.8-3 3-4.4 4.8-1.6 2.1-.1 4.4-3 4.4-3.2 0-2.8-3.3-4.6-4.9C5.6 13 4 11.7 5 8.4Z" />
+        <path d="m8 10 7.8 4" />
+      </>
+    ),
+    "still-life": (
+      <>
+        <path d="M8.2 7.2h7.6M9.2 7.2l.8 3.1v5.5c0 1.3.9 2.2 2 2.2s2-.9 2-2.2v-5.5l.8-3.1" />
+        <path d="M5 19h14" />
+      </>
+    ),
+  }[genre];
+
+  return (
+    <svg className={`quiz-genre-icon ${genre}`} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      {icon}
+    </svg>
+  );
+}
+
 function DiagnosticQuiz() {
   const [step, setStep] = useState(0);
   const [problem, setProblem] = useState<QuizProblem | null>(null);
@@ -860,8 +895,8 @@ function DiagnosticQuiz() {
                       setStep(3);
                     }}
                   >
-                    <span>{item.icon}</span>
-                    {item.label}
+                    <QuizGenreIcon genre={item.id} />
+                    <strong>{item.label}</strong>
                   </button>
                 ))}
               </div>
