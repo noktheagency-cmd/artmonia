@@ -12793,6 +12793,27 @@ html.theme-dark .comparison-head {
   }
 }
 
+/* Keep the teacher introduction centered as one readable unit. */
+.teacher-atelier-heading {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  max-width: 840px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.teacher-atelier-heading h2,
+.teacher-atelier-heading > p:last-child {
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.teacher-atelier-heading > p:last-child {
+  max-width: 620px;
+}
+
 /* Registration: keep the headline on one line and use the open space for the artwork. */
 .lead-panel {
   display: grid;
@@ -12830,14 +12851,102 @@ html.theme-dark .comparison-head {
   grid-row: 1 / 4;
 }
 
+/* Keep the diagnostic and pricing carousel as a matched desktop pair. */
+.quiz-pricing,
+html.theme-dark .quiz-pricing {
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.quiz-card,
+.pricing-wrap,
+html.theme-dark .quiz-card,
+html.theme-dark .pricing-wrap {
+  width: auto;
+  min-height: 720px;
+  height: 720px;
+  margin: 0;
+}
+
+.pricing-wrap {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  align-self: stretch;
+}
+
+.packages,
+html.theme-dark .packages {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 0;
+  padding: 18px;
+  border: 1px solid rgba(190, 142, 66, 0.22);
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(255, 253, 248, 0.72), rgba(244, 238, 228, 0.38));
+  overflow: hidden;
+}
+
+.packages::after {
+  display: none;
+}
+
+.package,
+.package.featured,
+html.theme-dark .package,
+html.theme-dark .package.featured {
+  position: relative;
+  display: grid;
+  align-content: start;
+  grid-area: 1 / 1;
+  min-height: 100%;
+  padding: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(44px) scale(0.96) rotate(2deg);
+  transition: opacity 520ms ease, transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.package.is-active {
+  z-index: 3;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0) scale(1) rotate(0);
+}
+
+.package-orbit {
+  display: flex;
+}
+
+.package-tabs {
+  display: grid;
+}
+
+@media (max-width: 820px) {
+  .quiz-pricing,
+  html.theme-dark .quiz-pricing {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-card,
+  .pricing-wrap,
+  html.theme-dark .quiz-card,
+  html.theme-dark .pricing-wrap {
+    min-height: auto;
+    height: auto;
+  }
+
+  .packages,
+  html.theme-dark .packages {
+    min-height: 500px;
+  }
+}
+
 @media (max-width: 820px) {
   .lead-panel {
     display: flex;
     flex-direction: column;
-  }
-
-  .lead-panel > h2 {
-    white-space: normal;
   }
 
   .registration-artwork {
