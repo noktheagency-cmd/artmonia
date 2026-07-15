@@ -490,19 +490,8 @@ function Programs() {
     <section className="section-shell" id="program">
       <Reveal className="section-heading wide" variant="from-right">
         <p>Proqramlar</p>
-        <h2>Peşəkar kurslar, klassik təməl və müasir nəticə.</h2>
+        <h2>Peşəkar kurslar,<br />müasir nəticə.</h2>
       </Reveal>
-      <div className="course-marquee" aria-hidden="true">
-        <div className="course-marquee-track">
-          <div className="course-marquee-group">
-            <span>Akademik rəsm</span>
-            <i />
-            <span>Rəng</span>
-            <i />
-            <span>Kompozisiya</span>
-          </div>
-        </div>
-      </div>
       <div className="courses-grid">
         {courses.map((course, index) => (
           <Reveal
