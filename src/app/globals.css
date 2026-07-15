@@ -12081,6 +12081,46 @@ body::before {
     padding: 28px 20px;
   }
 }
+
+/* Final alignment pass for the diagnostic, package carousel, and calculator. */
+.quiz-pricing {
+  grid-template-columns: minmax(0, 0.45fr) minmax(0, 0.55fr);
+  row-gap: 24px;
+}
+
+.quiz-card,
+.pricing-wrap {
+  position: relative;
+  top: auto;
+  min-height: 620px;
+  height: 620px;
+}
+
+.pricing-wrap {
+  margin: 0;
+}
+
+.quiz-window {
+  min-height: 280px;
+}
+
+.price-calculator {
+  width: 100%;
+  min-height: 0;
+  align-self: stretch;
+}
+
+@media (max-width: 980px) {
+  .quiz-card,
+  .pricing-wrap {
+    min-height: auto;
+    height: auto;
+  }
+
+  .price-calculator {
+    grid-template-columns: 1fr;
+  }
+}
 /* Compact program matrix: three rows across two balanced columns. */
 #program .course-marquee {
   width: min(1160px, 100%);
