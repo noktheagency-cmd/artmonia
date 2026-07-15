@@ -12722,3 +12722,191 @@ html.theme-dark .footer-contact .footer-location {
     min-height: 142px;
   }
 }
+
+/* One shared page gutter for every contained top-level section. */
+.about-system,
+.split-band,
+#program,
+.studio-section,
+.curriculum-section,
+.quiz-pricing,
+.teacher-atelier,
+.registration-section,
+.site-footer {
+  width: min(var(--site-width), calc(100% - 56px)) !important;
+  max-width: var(--site-width) !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.about-system *,
+.split-band *,
+#program *,
+.studio-section *,
+.curriculum-section *,
+.quiz-pricing *,
+.teacher-atelier *,
+.registration-section *,
+.site-footer * {
+  min-width: 0;
+}
+
+.about-system h1,
+.about-system h2,
+.about-system h3,
+.split-band h1,
+.split-band h2,
+.split-band h3,
+#program h1,
+#program h2,
+#program h3,
+.studio-section h1,
+.studio-section h2,
+.studio-section h3,
+.curriculum-section h1,
+.curriculum-section h2,
+.curriculum-section h3,
+.quiz-pricing h1,
+.quiz-pricing h2,
+.quiz-pricing h3,
+.teacher-atelier h1,
+.teacher-atelier h2,
+.teacher-atelier h3,
+.registration-section h1,
+.registration-section h2,
+.registration-section h3,
+.site-footer h1,
+.site-footer h2,
+.site-footer h3 {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.lead-panel > h2 {
+  white-space: normal;
+}
+
+.curriculum-section .section-heading h2 {
+  width: 100%;
+  max-width: none;
+  font-size: clamp(38px, 3vw, 44px);
+}
+
+.curriculum-section .section-heading h2 span {
+  display: block;
+}
+
+.footer-contact a,
+.footer-location,
+.footer-quote {
+  overflow-wrap: anywhere;
+}
+
+/* The copyright and quote are the only edge-to-edge closing band. */
+.site-footer {
+  overflow: visible;
+}
+
+.footer-bottom,
+html.theme-dark .footer-bottom {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  max-width: 100vw;
+  margin-top: 20px;
+  margin-left: -50vw;
+  padding: 22px max(28px, calc((100vw - 1240px) / 2));
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+  background: var(--site-canvas);
+  box-sizing: border-box;
+}
+
+@media (max-width: 980px) {
+  .about-system,
+  .split-band,
+  #program,
+  .studio-section,
+  .curriculum-section,
+  .quiz-pricing,
+  .teacher-atelier,
+  .registration-section,
+  .site-footer {
+    width: calc(100% - 32px) !important;
+  }
+
+  .curriculum-section .section-heading h2 span {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-system,
+  .split-band,
+  #program,
+  .studio-section,
+  .curriculum-section,
+  .quiz-pricing,
+  .teacher-atelier,
+  .registration-section,
+  .site-footer {
+    width: calc(100% - 20px) !important;
+  }
+
+  .footer-bottom,
+  html.theme-dark .footer-bottom {
+    align-items: flex-start;
+    gap: 8px;
+    padding: 18px 16px;
+  }
+
+  .quiz-pricing .small-label {
+    letter-spacing: 0.08em;
+  }
+
+  .pricing-wrap,
+  .packages,
+  html.theme-dark .pricing-wrap,
+  html.theme-dark .packages {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .packages,
+  html.theme-dark .packages {
+    padding: 10px;
+  }
+
+  .package,
+  .package.featured,
+  html.theme-dark .package,
+  html.theme-dark .package.featured {
+    width: 100% !important;
+    max-width: 100%;
+    padding: 22px 18px;
+    box-sizing: border-box;
+  }
+
+  .package p,
+  .package a,
+  .package-badge {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  .package-tabs {
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .package-tabs button {
+    min-width: 0;
+    padding: 10px 3px;
+    font-size: 10px;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+}
