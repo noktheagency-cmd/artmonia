@@ -924,16 +924,6 @@ function DiagnosticQuiz() {
 }
 
 function Pricing() {
-  const [activePackage, setActivePackage] = useState(1);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActivePackage((current) => (current + 1) % packages.length);
-    }, 5000);
-
-    return () => window.clearInterval(timer);
-  }, []);
-
   return (
     <>
     <Reveal className="pricing-wrap" id="pricing" variant="from-right">
@@ -941,12 +931,11 @@ function Pricing() {
         <p>Paketlər</p>
         <h2>Sənə uyğun paketi seç.</h2>
       </div>
-      <div className="packages" aria-live="polite">
-        {packages.map((pack, index) => (
+      <div className="packages">
+        {packages.map((pack) => (
           <article
             key={pack.title}
-            className={`${pack.highlight ? "package featured" : "package"} ${activePackage === index ? "is-active" : ""}`}
-            aria-hidden={activePackage !== index}
+            className={pack.highlight ? "package featured" : "package"}
           >
             {pack.highlight ? <span className="package-badge">{pack.highlight}</span> : null}
             <h3>{pack.title}</h3>
@@ -959,23 +948,6 @@ function Pricing() {
             </ul>
             <a href="#lead">{pack.cta}</a>
           </article>
-        ))}
-        <div className="package-orbit" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-      </div>
-      <div className="package-tabs" aria-label="Paket seçimi">
-        {packages.map((pack, index) => (
-          <button
-            key={pack.title}
-            type="button"
-            className={activePackage === index ? "active" : ""}
-            onClick={() => setActivePackage(index)}
-          >
-            {pack.title}
-          </button>
         ))}
       </div>
       <div className="comparison">
@@ -1106,6 +1078,13 @@ function RegistrationLead() {
       <Reveal className="lead-panel" variant="boom">
         <p className="small-label">Ön qeydiyyat</p>
         <h2>Yerini ayır.</h2>
+        <img
+          className="registration-artwork"
+          src="/assets/registration-artwork.png"
+          alt="Şəhər mənzərəsi rəsm əsəri"
+          loading="lazy"
+          decoding="async"
+        />
         <form onSubmit={onSubmit}>
           {formFields.map((field) => (
             <label key={field.name}>
