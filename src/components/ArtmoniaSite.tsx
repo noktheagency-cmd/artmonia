@@ -757,13 +757,42 @@ type QuizProblem = (typeof quizProblems)[number]["id"];
 type QuizGenre = (typeof quizGenres)[number]["id"];
 
 function QuizProblemArt({ problem }: { problem: QuizProblem }) {
+  const icon = {
+    "no-system": (
+      <>
+        <path d="M7 6.5h10M7 12h10M7 17.5h6" />
+        <circle cx="4" cy="6.5" r="1" />
+        <circle cx="4" cy="12" r="1" />
+        <circle cx="4" cy="17.5" r="1" />
+      </>
+    ),
+    "no-colors": (
+      <>
+        <path d="M12 3.5a8.5 8.5 0 1 0 0 17h1.15a1.85 1.85 0 0 0 1.85-1.85c0-.6-.28-1.16-.76-1.52a1.85 1.85 0 0 1 1.09-3.34H17a3.5 3.5 0 0 0 3.5-3.5A6.8 6.8 0 0 0 12 3.5Z" />
+        <circle cx="7.9" cy="10" r=".8" />
+        <circle cx="11.6" cy="7.7" r=".8" />
+        <circle cx="16" cy="10.2" r=".8" />
+      </>
+    ),
+    "no-goal": (
+      <>
+        <circle cx="12" cy="12" r="7.5" />
+        <circle cx="12" cy="12" r="3.2" />
+        <path d="m15.5 8.5 4-4M16.2 4.5h3.3v3.3" />
+      </>
+    ),
+    "no-basics": (
+      <>
+        <path d="m6.2 17.8 1.1-4.1L16.9 4l3.1 3.1-9.7 9.6-4.1 1.1Z" />
+        <path d="m14.8 6.1 3.1 3.1M5 20h14" />
+      </>
+    ),
+  }[problem];
+
   return (
-    <span className={`quiz-problem-art ${problem}`} aria-hidden="true">
-      <i />
-      <i />
-      <i />
-      <b />
-    </span>
+    <svg className={`quiz-problem-art ${problem}`} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      {icon}
+    </svg>
   );
 }
 
@@ -800,7 +829,6 @@ function DiagnosticQuiz() {
             <div className="quiz-pane quiz-intro">
               <span className="quiz-orb">✦</span>
               <h3>Hansı proqram sənə uyğundur?</h3>
-              <p>Orijinal Artmonia testindəki cavab məntiqi ilə səviyyəni və yönünü tez seç.</p>
               <button type="button" className="quiz-primary" onClick={() => setStep(1)}>
                 Testi başla
               </button>
