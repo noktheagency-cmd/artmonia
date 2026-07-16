@@ -15530,3 +15530,10 @@ main > section::after,
 .studio-cards .studio-card:nth-child(3) > span {
   color: rgba(12, 2, 89, 0.72);
 }
+
+/* Keep the decorative brush photo in the desktop studio collage only. */
+@media (max-width: 640px) {
+  .studio-collage .collage-side {
+    display: none;
+  }
+}
