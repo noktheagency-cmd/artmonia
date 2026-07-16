@@ -15116,3 +15116,24 @@ html.theme-dark .price-calculator-result a {
     bottom: clamp(82px, 11vh, 104px) !important;
   }
 }
+
+/* Keep every page section flat; shadows remain reserved for controls and cards. */
+.nav-atelier,
+main > section,
+.collection-page > section,
+.site-footer {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.nav-atelier::before,
+.nav-atelier::after,
+main > section::before,
+main > section::after,
+.collection-page > section::before,
+.collection-page > section::after,
+.site-footer::before,
+.site-footer::after {
+  box-shadow: none !important;
+  filter: none !important;
+}
