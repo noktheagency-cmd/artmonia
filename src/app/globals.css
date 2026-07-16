@@ -15296,4 +15296,75 @@ main > section::after,
     right: 7% !important;
     width: auto !important;
   }
+
+  .statue-reveal .statue-stage::before,
+  .statue-reveal .statue-stage::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: clamp(230px, 22vw, 360px);
+    aspect-ratio: 1;
+    pointer-events: none;
+    background: url("/assets/brand-paint-splatter.png") center / contain no-repeat;
+  }
+
+  .statue-reveal .statue-stage::before {
+    top: 30%;
+    left: clamp(-170px, -9vw, -92px);
+    opacity: 0.14;
+    transform: rotate(-14deg);
+  }
+
+  .statue-reveal .statue-stage::after {
+    right: clamp(-170px, -9vw, -92px);
+    bottom: 5%;
+    opacity: 0.11;
+    transform: rotate(164deg) scale(0.88);
+  }
+
+  .statue-reveal .statue-copy span {
+    color: var(--brand-navy) !important;
+  }
+
+  .statue-reveal .statue-copy strong {
+    color: rgba(12, 2, 89, 0.66) !important;
+  }
+
+  .statue-reveal .paper-left .paper-info span {
+    color: var(--brand-coral) !important;
+  }
+
+  .statue-reveal .paper-right .paper-info span {
+    color: var(--brand-purple) !important;
+  }
+
+  .statue-reveal .paper-info strong,
+  .statue-reveal .paper-right .paper-info strong {
+    color: var(--brand-navy) !important;
+  }
+
+  .statue-reveal .intro-paper-copy p {
+    color: rgba(12, 2, 89, 0.66) !important;
+  }
+
+  .statue-reveal .rip {
+    opacity: 0.44;
+    background: linear-gradient(
+      180deg,
+      rgba(105, 41, 242, 0.42),
+      rgba(242, 142, 20, 0.32),
+      rgba(243, 113, 38, 0.22)
+    );
+  }
+
+  .statue-reveal .intro-actions .primary {
+    color: var(--brand-white);
+    background: var(--brand-purple);
+  }
+
+  .statue-reveal .intro-actions .ghost {
+    border-color: rgba(105, 41, 242, 0.34);
+    color: var(--brand-navy);
+    background: rgba(255, 255, 255, 0.78);
+  }
 }
