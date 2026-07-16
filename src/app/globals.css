@@ -15282,3 +15282,9 @@ main > section::after,
   min-height: 100% !important;
   object-fit: cover !important;
 }
+
+/* Keep the pre-registration panel flat: remove the offset purple shadow layer. */
+.registration-section .lead-panel,
+.registration-section .lead-panel:hover {
+  box-shadow: none !important;
+}
