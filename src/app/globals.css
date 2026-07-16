@@ -15288,3 +15288,12 @@ main > section::after,
 .registration-section .lead-panel:hover {
   box-shadow: none !important;
 }
+
+/* Center the torn-paper composition precisely inside the desktop hero stage. */
+@media (min-width: 861px) {
+  .statue-reveal .torn-paper {
+    left: 7% !important;
+    right: 7% !important;
+    width: auto !important;
+  }
+}
