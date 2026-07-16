@@ -15519,3 +15519,14 @@ main > section::after,
     transform: none !important;
   }
 }
+
+/* Preserve full text contrast on the orange studio benefit card. */
+.studio-cards .studio-card:nth-child(3),
+.studio-cards .studio-card:nth-child(3) h3,
+.studio-cards .studio-card:nth-child(3) p {
+  color: var(--brand-navy);
+}
+
+.studio-cards .studio-card:nth-child(3) > span {
+  color: rgba(12, 2, 89, 0.72);
+}
