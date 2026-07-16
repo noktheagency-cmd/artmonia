@@ -223,7 +223,7 @@ function NavAtelierAnimation() {
       if (closeTimer) window.clearTimeout(closeTimer);
       closeTimer = window.setTimeout(() => {
         stage.classList.remove("is-awake");
-      }, 620);
+      }, 120);
     };
 
     const handlePointerEnter = () => {

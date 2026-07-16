@@ -14358,3 +14358,407 @@ html.theme-dark .price-calculator-result a {
     animation: none !important;
   }
 }
+
+/* Legacy light sculpture hero, restored from the pre-brand-colour version. */
+.nav-atelier.statue-reveal {
+  --ink: #17130f;
+  --paper: #f7f1e4;
+  --paper-deep: #e4d6bf;
+  --gold: #c79a4b;
+  --wine: #74312e;
+  --sage: #69715c;
+  --dark-ink: #1c1712;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 100svh !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 0 26px !important;
+  border-radius: 0 !important;
+  overflow: hidden;
+  color: var(--dark-ink) !important;
+  background:
+    radial-gradient(circle at var(--cursor-x, 50%) var(--cursor-y, 50%), rgba(199, 154, 75, 0.24), transparent 22%),
+    radial-gradient(circle at 16% 18%, rgba(116, 49, 46, 0.12), transparent 30%),
+    radial-gradient(circle at 82% 74%, rgba(92, 110, 89, 0.16), transparent 32%),
+    linear-gradient(135deg, #efe8da 0%, #fbf6eb 48%, #d9d1c0 100%) !important;
+  box-shadow: none !important;
+}
+
+.nav-atelier.statue-reveal::before,
+.nav-atelier.statue-reveal::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  width: auto;
+  height: auto;
+  pointer-events: none;
+  transform: none;
+  filter: none;
+}
+
+.nav-atelier.statue-reveal::before {
+  z-index: 0;
+  opacity: 0.38;
+  background-image:
+    linear-gradient(102deg, transparent 0 44%, rgba(31, 24, 18, 0.13) 45%, transparent 46%),
+    linear-gradient(18deg, transparent 0 58%, rgba(31, 24, 18, 0.09) 59%, transparent 60%),
+    radial-gradient(ellipse at 52% 47%, transparent 0 32%, rgba(199, 154, 75, 0.14) 33%, transparent 38%);
+  animation: marbleDrift 15s ease-in-out infinite alternate;
+}
+
+.nav-atelier.statue-reveal::after {
+  z-index: 1;
+  opacity: 1;
+  background:
+    repeating-linear-gradient(90deg, rgba(23, 19, 15, 0.045) 0 1px, transparent 1px 74px),
+    repeating-linear-gradient(0deg, rgba(23, 19, 15, 0.035) 0 1px, transparent 1px 74px);
+  mask-image: radial-gradient(circle at center, #000 0 54%, transparent 72%);
+}
+
+.statue-reveal .statue-stage {
+  min-height: 100svh !important;
+  width: min(1200px, calc(100% - 32px)) !important;
+  height: auto !important;
+  margin: 0 auto;
+  padding: 0 !important;
+  display: grid;
+  place-items: center;
+  perspective: 1400px;
+}
+
+.statue-reveal .statue-copy {
+  top: clamp(124px, 15vh, 168px) !important;
+  width: min(900px, 92vw);
+}
+
+.statue-reveal .statue-copy span {
+  color: var(--dark-ink) !important;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(38px, 5vw, 76px) !important;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.9 !important;
+}
+
+.statue-reveal .statue-copy strong {
+  margin-top: 18px;
+  color: rgba(28, 23, 18, 0.72) !important;
+  font-size: 12px !important;
+  letter-spacing: 0.28em;
+}
+
+.statue-reveal .torn-paper {
+  inset: clamp(250px, 29vh, 310px) 7% 8vh !important;
+  top: auto !important;
+  left: auto !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  border: 0;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 38px 80px rgba(38, 29, 20, 0.24));
+  transform: none !important;
+  animation: paperBreath 6s ease-in-out infinite !important;
+}
+
+.statue-reveal .paper-half {
+  width: auto;
+  height: auto !important;
+  min-height: 430px !important;
+  max-height: none !important;
+  color: var(--dark-ink) !important;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(199, 154, 75, 0.22), transparent 34%),
+    radial-gradient(circle at 86% 80%, rgba(92, 110, 89, 0.16), transparent 38%),
+    linear-gradient(180deg, rgba(255, 250, 239, 0.92), rgba(230, 220, 203, 0.96)),
+    repeating-linear-gradient(0deg, transparent 0 24px, rgba(28, 23, 18, 0.045) 25px) !important;
+  border: 1px solid rgba(28, 23, 18, 0.14);
+  border-radius: 0 !important;
+  transition: transform 1.55s cubic-bezier(0.22, 0.78, 0.22, 1), filter 1.25s ease;
+}
+
+.statue-reveal .paper-half::before {
+  content: none;
+}
+
+.statue-reveal .paper-left {
+  padding: 56px 74px 56px 44px !important;
+  background-color: transparent;
+}
+
+.statue-reveal .paper-right {
+  padding: 56px 44px 56px 74px !important;
+  color: var(--dark-ink) !important;
+  background-color: transparent;
+}
+
+.statue-reveal .paper-info span,
+.statue-reveal .paper-right .paper-info span {
+  margin-bottom: 18px;
+  color: rgba(28, 23, 18, 0.55) !important;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+}
+
+.statue-reveal .paper-info strong,
+.statue-reveal .paper-right .paper-info strong {
+  color: var(--dark-ink) !important;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 3.15vw, 54px) !important;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.94 !important;
+}
+
+.statue-reveal .intro-paper-copy p {
+  margin-top: 18px;
+  color: rgba(28, 23, 18, 0.68) !important;
+  font-size: clamp(14px, 1.12vw, 18px);
+  line-height: 1.55;
+}
+
+.statue-reveal .rip {
+  width: 28px;
+  background: linear-gradient(180deg, rgba(199, 154, 75, 0.34), rgba(255, 250, 239, 0.3), rgba(116, 49, 46, 0.16));
+  opacity: 0.52;
+}
+
+.statue-reveal .intro-actions {
+  top: auto !important;
+  bottom: clamp(18px, 3.2vh, 34px) !important;
+  width: auto !important;
+  gap: 12px;
+}
+
+.statue-reveal .intro-actions .button {
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  box-shadow: 0 16px 34px rgba(42, 31, 20, 0.18);
+}
+
+.statue-reveal .intro-actions .primary {
+  color: #f7f1e4;
+  background: #17130f;
+}
+
+.statue-reveal .intro-actions .ghost {
+  border-color: rgba(28, 23, 18, 0.28);
+  color: #1c1712;
+  background: rgba(255, 250, 239, 0.48);
+}
+
+.statue-reveal .statue-burst {
+  width: min(720px, 78vw) !important;
+  height: min(560px, 62vh) !important;
+  transform: translateY(155px) scale(0.72);
+}
+
+.statue-reveal .real-statue-wrap {
+  width: min(650px, 62vw) !important;
+  bottom: -2% !important;
+  filter: none;
+}
+
+.statue-reveal .statue-halo {
+  border: 0;
+  background:
+    radial-gradient(circle, rgba(255, 232, 156, 0.42), transparent 44%),
+    conic-gradient(from 20deg, transparent, rgba(199, 154, 75, 0.36), transparent, rgba(116, 49, 46, 0.26), transparent);
+  box-shadow: none;
+}
+
+.statue-reveal .real-eye-glow {
+  background: #ffe28b;
+  box-shadow: 0 0 0 rgba(255, 199, 72, 0);
+}
+
+.statue-reveal .statue-metrics {
+  z-index: 10;
+  bottom: clamp(92px, 11.5vh, 126px) !important;
+  width: auto;
+}
+
+.statue-reveal .statue-metrics span {
+  min-width: 116px;
+  padding: 13px 16px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: #f7f1e4;
+  background: rgba(28, 23, 18, 0.88);
+  font-size: 10px;
+}
+
+.statue-reveal .statue-metrics strong {
+  color: #f7f1e4;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+@media (max-width: 860px) {
+  .statue-reveal .statue-stage {
+    width: min(calc(100% - 20px), 560px) !important;
+  }
+
+  .statue-reveal .statue-copy {
+    top: 8vh !important;
+  }
+
+  .statue-reveal .statue-copy strong {
+    font-size: 10px !important;
+    line-height: 1.6;
+  }
+
+  .statue-reveal .torn-paper {
+    inset: 19vh 0 12vh !important;
+  }
+
+  .statue-reveal .paper-half {
+    min-height: 500px !important;
+  }
+
+  .statue-reveal .paper-left {
+    padding: 40px 28px 40px 18px !important;
+  }
+
+  .statue-reveal .paper-right {
+    padding: 40px 18px 40px 28px !important;
+  }
+
+  .statue-reveal .paper-info strong,
+  .statue-reveal .paper-right .paper-info strong {
+    font-size: clamp(24px, 9vw, 42px) !important;
+  }
+
+  .statue-reveal .statue-burst {
+    width: min(440px, 96vw) !important;
+    height: min(470px, 58vh) !important;
+  }
+
+  .statue-reveal .real-statue-wrap {
+    width: min(360px, 84vw) !important;
+    bottom: 2% !important;
+  }
+
+  .statue-reveal .statue-metrics {
+    width: min(340px, 92vw);
+    gap: 8px;
+  }
+
+  .statue-reveal .statue-metrics span {
+    min-width: 0;
+    flex: 1;
+    padding: 10px 8px;
+    font-size: 8px;
+  }
+
+  .statue-reveal .statue-metrics strong {
+    font-size: 23px;
+  }
+}
+
+@media (max-width: 640px) and (hover: none) {
+  .nav-atelier.statue-reveal {
+    min-height: 100svh !important;
+    height: 100svh !important;
+    max-height: none !important;
+  }
+
+  .statue-reveal .statue-stage {
+    width: min(calc(100% - 20px), 560px) !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    padding: 0 !important;
+  }
+
+  .statue-reveal .statue-copy {
+    top: 8vh !important;
+    width: min(900px, 92vw);
+  }
+
+  .statue-reveal .statue-copy span {
+    font-size: clamp(38px, 12vw, 58px) !important;
+  }
+
+  .statue-reveal .intro-actions {
+    top: auto !important;
+    bottom: 18px !important;
+    width: calc(100% - 24px) !important;
+  }
+
+  .statue-reveal .torn-paper {
+    inset: 19vh 0 12vh !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+    filter: drop-shadow(0 24px 48px rgba(38, 29, 20, 0.2));
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .statue-reveal .paper-half {
+    width: auto;
+    height: auto !important;
+    min-height: 500px !important;
+    max-height: none !important;
+  }
+
+  .statue-reveal .paper-left {
+    padding: 40px 28px 40px 18px !important;
+    animation: mobileTearLeft 7s cubic-bezier(0.22, 0.78, 0.22, 1) infinite !important;
+  }
+
+  .statue-reveal .paper-right {
+    padding: 40px 18px 40px 28px !important;
+    animation: mobileTearRight 7s cubic-bezier(0.22, 0.78, 0.22, 1) infinite !important;
+  }
+
+  .statue-reveal .paper-info span {
+    margin-bottom: 18px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+
+  .statue-reveal .paper-info strong,
+  .statue-reveal .paper-right .paper-info strong {
+    font-size: clamp(24px, 9vw, 42px) !important;
+    line-height: 0.94 !important;
+  }
+
+  .statue-reveal .intro-paper-copy p {
+    margin-top: 18px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .statue-reveal .rip {
+    width: 28px;
+  }
+
+  .statue-reveal .statue-burst {
+    width: min(440px, 96vw) !important;
+    height: min(470px, 58vh) !important;
+    animation: mobileBust 7s cubic-bezier(0.22, 0.78, 0.22, 1) infinite !important;
+  }
+
+  .statue-reveal .real-statue-wrap {
+    width: min(360px, 84vw) !important;
+    bottom: 2% !important;
+  }
+
+  .statue-reveal .real-eye-glow {
+    animation: mobileEyeGlow 7s ease-in-out infinite !important;
+  }
+
+  .statue-reveal .statue-metrics {
+    display: flex;
+    bottom: clamp(82px, 11vh, 104px) !important;
+  }
+}
