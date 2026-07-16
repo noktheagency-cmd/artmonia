@@ -13,7 +13,6 @@ import {
   formFields,
   galleryImages,
   heroStats,
-  navItems,
   packages,
   painPoints,
   studioCards,
@@ -21,22 +20,13 @@ import {
   testimonials,
   transformations
 } from "@/data/site";
+import SiteHeader from "@/components/SiteHeader";
 
 function ArrowIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" className="icon">
       <path d="M5 12h13" />
       <path d="m13 6 6 6-6 6" />
-    </svg>
-  );
-}
-
-function MenuIcon({ open }: { open: boolean }) {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="menu-svg">
-      <path className={open ? "line line-one open" : "line line-one"} d="M4 7h16" />
-      <path className={open ? "line line-two open" : "line line-two"} d="M4 12h16" />
-      <path className={open ? "line line-three open" : "line line-three"} d="M4 17h16" />
     </svg>
   );
 }
@@ -142,68 +132,6 @@ function useTiltTargets() {
     });
     return () => cleanups.forEach((cleanup) => cleanup());
   }, []);
-}
-
-function Header() {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <header className="site-header">
-      <a className="brand" href="#top" aria-label="Artmonia ana səhifə">
-        <img className="brand-logo brand-logo-light" src="/assets/artmonia-logo.webp" alt="Artmonia" />
-      </a>
-      <nav className="desktop-nav" aria-label="Əsas naviqasiya">
-        {navItems.map((item) =>
-          item.href === "#program" ? (
-            <div className="nav-program-menu" key={item.href}>
-              <a className="nav-program-trigger" href={item.href} aria-haspopup="true">
-                {item.label}
-                <span aria-hidden="true">⌄</span>
-              </a>
-              <div className="nav-program-dropdown">
-                <a href="#pricing">Dərs paketləri</a>
-                <a href="#calculator">Qiymət</a>
-              </div>
-            </div>
-          ) : (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          )
-        )}
-      </nav>
-      <div className="header-actions">
-        <a className="nav-cta" href="#lead">
-          Qeydiyyat <ArrowIcon />
-        </a>
-      </div>
-      <button className="menu-button" type="button" onClick={() => setOpen((value) => !value)} aria-label="Menyunu aç">
-        <MenuIcon open={open} />
-      </button>
-      <div className={open ? "mobile-nav open" : "mobile-nav"}>
-        {navItems.map((item) =>
-          item.href === "#program" ? (
-            <div className="mobile-program-group" key={item.href}>
-              <a href={item.href} onClick={() => setOpen(false)}>
-                {item.label}
-              </a>
-              <div className="mobile-program-links">
-                <a href="#pricing" onClick={() => setOpen(false)}>Dərs paketləri</a>
-                <a href="#calculator" onClick={() => setOpen(false)}>Qiymət</a>
-              </div>
-            </div>
-          ) : (
-            <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
-              {item.label}
-            </a>
-          )
-        )}
-        <a href="#lead" onClick={() => setOpen(false)}>
-          Qeydiyyat
-        </a>
-      </div>
-    </header>
-  );
 }
 
 function NavAtelierAnimation() {
@@ -1255,7 +1183,7 @@ export default function ArtmoniaSite() {
   return (
     <>
       <BrushField />
-      <Header />
+      <SiteHeader />
       <NavAtelierAnimation />
       <main>
         <AboutArtmonia />

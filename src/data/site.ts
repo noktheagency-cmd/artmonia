@@ -1,7 +1,9 @@
 export const navItems = [
-  { label: "Proqram", href: "#program" },
-  { label: "Akademiya", href: "#academy" },
-  { label: "Əlaqə", href: "#contact" }
+  { label: "Proqram", href: "/#program" },
+  { label: "Akademiya", href: "/#academy" },
+  { label: "Nəticələr", href: "/neticeler" },
+  { label: "Mükafatlar", href: "/mukafatlar" },
+  { label: "Əlaqə", href: "/#contact" }
 ];
 
 export const heroStats = [
