@@ -15537,3 +15537,30 @@ main > section::after,
     display: none;
   }
 }
+
+/* Tighten the mobile torn-paper hero without changing the statue or its reveal. */
+@media (max-width: 640px) {
+  .nav-atelier.statue-reveal {
+    height: clamp(580px, 80svh, 660px) !important;
+    min-height: clamp(580px, 80svh, 660px) !important;
+    max-height: 660px !important;
+  }
+
+  .statue-reveal .torn-paper {
+    inset: 174px 0 76px !important;
+  }
+
+  .statue-reveal .paper-left {
+    padding: 24px 22px 24px 14px !important;
+  }
+
+  .statue-reveal .paper-right {
+    padding: 24px 14px 24px 22px !important;
+  }
+
+  .statue-reveal .paper-info strong,
+  .statue-reveal .paper-right .paper-info strong {
+    font-size: clamp(19px, 6.2vw, 24px) !important;
+    line-height: 0.98 !important;
+  }
+}
