@@ -16039,3 +16039,245 @@ main > section::after,
   font-size: 12px;
   font-weight: 700;
 }
+
+/* Real paper depth: the sheet starts closed, then opens along one fibrous tear. */
+.statue-reveal .torn-paper {
+  --tear-overlap: clamp(13px, 1.15vw, 19px);
+  perspective: 1800px;
+  transform-style: preserve-3d;
+  isolation: isolate;
+  filter:
+    drop-shadow(0 2px 1px rgba(255, 255, 255, 0.82))
+    drop-shadow(0 26px 36px rgba(35, 21, 67, 0.16))
+    drop-shadow(0 54px 76px rgba(35, 21, 67, 0.1)) !important;
+}
+
+.statue-reveal .paper-half {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  border-color: rgba(66, 48, 88, 0.13) !important;
+  background:
+    radial-gradient(circle at 18% 13%, rgba(255, 255, 255, 0.98), transparent 28%),
+    radial-gradient(circle at 82% 78%, rgba(105, 41, 242, 0.035), transparent 36%),
+    repeating-linear-gradient(8deg, rgba(83, 65, 99, 0.025) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(98deg, rgba(255, 255, 255, 0.42) 0 1px, transparent 1px 8px),
+    linear-gradient(108deg, #ffffff 0%, #fdfbff 46%, #f7f2fb 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.98),
+    inset 0 -1px 0 rgba(73, 52, 91, 0.12),
+    inset 0 -18px 30px rgba(77, 54, 104, 0.035),
+    0 10px 24px rgba(35, 21, 67, 0.07);
+  transition:
+    transform 1.18s cubic-bezier(0.2, 0.76, 0.22, 1),
+    filter 0.9s ease,
+    box-shadow 0.9s ease;
+}
+
+.statue-reveal .paper-half::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.32;
+  background:
+    repeating-linear-gradient(4deg, transparent 0 10px, rgba(76, 55, 92, 0.055) 10px 10.7px, transparent 10.7px 18px),
+    repeating-linear-gradient(94deg, transparent 0 13px, rgba(255, 255, 255, 0.68) 13px 13.8px, transparent 13.8px 24px);
+  mix-blend-mode: multiply;
+}
+
+.statue-reveal .paper-half::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  width: 38px;
+  pointer-events: none;
+  opacity: 0.26;
+  transition: opacity 0.5s ease, filter 0.75s ease;
+}
+
+.statue-reveal .paper-left {
+  z-index: 2;
+  width: calc(100% + var(--tear-overlap)) !important;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    99.2% 3%,
+    100% 6.5%,
+    98.4% 10%,
+    99.5% 14.5%,
+    97.8% 19%,
+    99.4% 23%,
+    98.1% 28%,
+    100% 33%,
+    98.6% 38%,
+    99.6% 43%,
+    97.9% 48%,
+    99.4% 53%,
+    98.3% 58%,
+    100% 63.5%,
+    98.5% 68.5%,
+    99.6% 73%,
+    97.7% 78.5%,
+    99.2% 83%,
+    98.4% 88%,
+    100% 92%,
+    98.6% 96%,
+    100% 100%,
+    0 100%
+  );
+}
+
+.statue-reveal .paper-right {
+  z-index: 1;
+  left: calc(-1 * var(--tear-overlap));
+  width: calc(100% + var(--tear-overlap)) !important;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 100%,
+    0 100%,
+    1.4% 96%,
+    0 92%,
+    1.6% 88%,
+    0.8% 83%,
+    2.3% 78.5%,
+    0.4% 73%,
+    1.5% 68.5%,
+    0 63.5%,
+    1.7% 58%,
+    0.6% 53%,
+    2.1% 48%,
+    0.4% 43%,
+    1.4% 38%,
+    0 33%,
+    1.9% 28%,
+    0.6% 23%,
+    2.2% 19%,
+    0.5% 14.5%,
+    1.6% 10%,
+    0 6.5%,
+    0.8% 3%
+  );
+}
+
+.statue-reveal .paper-left::after {
+  right: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(67, 45, 83, 0.025) 45%, rgba(47, 31, 59, 0.28) 100%);
+}
+
+.statue-reveal .paper-right::after {
+  left: 0;
+  background: linear-gradient(90deg, rgba(47, 31, 59, 0.28) 0%, rgba(67, 45, 83, 0.025) 55%, transparent 100%);
+}
+
+.statue-reveal .paper-info {
+  position: relative;
+  z-index: 3;
+}
+
+.statue-reveal .rip {
+  z-index: 4;
+  top: -1%;
+  bottom: -1%;
+  width: 34px !important;
+  opacity: 0.18;
+  transform: scaleX(0.34);
+  background:
+    repeating-linear-gradient(162deg, transparent 0 5px, rgba(62, 42, 75, 0.24) 5px 6px, transparent 6px 11px),
+    linear-gradient(90deg, rgba(63, 44, 76, 0.03), rgba(45, 29, 55, 0.2), rgba(255, 255, 255, 0.74));
+  filter: blur(0.15px);
+  transition: opacity 0.48s ease, transform 0.72s ease, filter 0.72s ease;
+}
+
+.statue-reveal .rip::before,
+.statue-reveal .rip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.statue-reveal .rip::before {
+  background: repeating-linear-gradient(18deg, transparent 0 7px, rgba(255, 255, 255, 0.82) 7px 8px, transparent 8px 14px);
+}
+
+.statue-reveal .rip::after {
+  opacity: 0.55;
+  background: repeating-linear-gradient(174deg, transparent 0 10px, rgba(66, 43, 76, 0.2) 10px 11px, transparent 11px 17px);
+}
+
+.statue-reveal.is-awake .paper-half,
+.statue-reveal:hover .paper-half,
+.statue-stage:hover .paper-half {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.98),
+    inset 0 -2px 0 rgba(58, 38, 72, 0.16),
+    inset 0 -20px 34px rgba(77, 54, 104, 0.05),
+    0 28px 50px rgba(35, 21, 67, 0.16);
+}
+
+.statue-reveal.is-awake .paper-half::after,
+.statue-reveal:hover .paper-half::after,
+.statue-stage:hover .paper-half::after {
+  opacity: 0.92;
+  filter: blur(0.35px);
+}
+
+.statue-reveal.is-awake .rip,
+.statue-reveal:hover .rip,
+.statue-stage:hover .rip {
+  opacity: 0.88;
+  transform: scaleX(1);
+  filter: drop-shadow(0 0 3px rgba(39, 24, 48, 0.24));
+}
+
+@keyframes paperTugLeft {
+  from { transform: translate3d(-21vw, 14px, 28px) rotateY(-38deg) rotateZ(-4deg); }
+  to { transform: translate3d(-23vw, 18px, 52px) rotateY(-44deg) rotateZ(-5deg); }
+}
+
+@keyframes paperTugRight {
+  from { transform: translate3d(21vw, 14px, 28px) rotateY(38deg) rotateZ(4deg); }
+  to { transform: translate3d(23vw, 18px, 52px) rotateY(44deg) rotateZ(5deg); }
+}
+
+@keyframes mobileTearLeft {
+  0%, 24%, 100% { transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0); }
+  32% { transform: translate3d(-5vw, 1px, 6px) rotateY(-10deg) rotateZ(-1deg); }
+  45%, 76% { transform: translate3d(-23vw, 6px, 26px) rotateY(-38deg) rotateZ(-5deg); }
+}
+
+@keyframes mobileTearRight {
+  0%, 24%, 100% { transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0); }
+  32% { transform: translate3d(5vw, 1px, 6px) rotateY(10deg) rotateZ(1deg); }
+  45%, 76% { transform: translate3d(23vw, 6px, 26px) rotateY(38deg) rotateZ(5deg); }
+}
+
+@keyframes mobilePaperFibers {
+  0%, 24%, 100% { opacity: 0.16; transform: scaleX(0.32); }
+  32% { opacity: 0.55; transform: scaleX(0.64); }
+  45%, 76% { opacity: 0.9; transform: scaleX(1); }
+}
+
+@media (max-width: 640px) and (hover: none) {
+  .statue-reveal .torn-paper {
+    --tear-overlap: 11px;
+    perspective: 1200px;
+  }
+
+  .statue-reveal .rip {
+    animation: mobilePaperFibers 7s ease-in-out infinite !important;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statue-reveal .paper-half,
+  .statue-reveal .rip {
+    animation: none !important;
+    transition: none !important;
+  }
+}
