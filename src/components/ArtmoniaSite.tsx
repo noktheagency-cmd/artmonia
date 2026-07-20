@@ -9,13 +9,11 @@ import {
   comparison,
   contact,
   courses,
-  curriculum,
   formFields,
   galleryImages,
   heroStats,
   packages,
   painPoints,
-  studioCards,
   studioFeatures,
   testimonials,
   transformations
@@ -489,7 +487,6 @@ function Programs() {
 
 function Studio() {
   const dynamicStudioFeatures = useSiteContentValue("studio_features", studioFeatures);
-  const dynamicStudioCards = useSiteContentValue("studio_cards", studioCards);
   return (
     <section className="studio-section scroll-section">
       <div className="studio-grid">
@@ -511,16 +508,6 @@ function Studio() {
           <img className="collage-side" src="/assets/studio-brushes.webp" alt="Rəngli rəsm fırçaları" loading="lazy" decoding="async" />
         </Reveal>
       </div>
-      <div className="studio-cards">
-        {dynamicStudioCards.map((card) => (
-          <Reveal key={card.title} className="studio-card" variant="flip">
-            <span>Artmonia</span>
-            <h3>{card.title}</h3>
-            <p>{card.text}</p>
-          </Reveal>
-        ))}
-      </div>
-      <p className="quote-line scroll-block">&ldquo;Artmonia-ya girən hər kəs burada qalmaq istəyir&rdquo;</p>
     </section>
   );
 }
@@ -563,47 +550,6 @@ function Results() {
               {item.name} <span>{item.role}</span>
             </cite>
           </blockquote>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-const moduleArtworks = [
-  "/assets/module-proportion.webp",
-  "/assets/module-light-shadow.webp",
-  "/assets/module-color.webp",
-  "/assets/module-composition.webp",
-  "/assets/module-portrait.webp",
-  "/assets/module-final-project.webp"
-];
-
-function Curriculum() {
-  const dynamicCurriculum = useSiteContentValue("curriculum", curriculum);
-  return (
-    <section className="curriculum-section scroll-section">
-      <Reveal className="section-heading wide" variant="from-top">
-        <p>Kurikulum</p>
-        <h2>
-          <span>6 modul. 6 həftə.</span>
-          <span>Hər həftə dərs + tapşırıq + fərdi feedback.</span>
-        </h2>
-      </Reveal>
-      <div className="timeline module-grid">
-        {dynamicCurriculum.map((item, index) => (
-          <article
-            key={item.title}
-            className="module-card scroll-block"
-            data-scroll-order={index}
-          >
-            <div className="module-card-media"><img src={moduleArtworks[index]} alt="" loading="lazy" decoding="async" /></div>
-            <div className="module-card-content">
-              <small>{item.week}</small>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-              <p className="module-topics">{item.topics.slice(0, 3).join(" · ")}</p>
-            </div>
-          </article>
         ))}
       </div>
     </section>
@@ -1222,7 +1168,6 @@ function ArtmoniaSiteInner() {
         <ProblemTransformation />
         <Programs />
         <Studio />
-        <Curriculum />
         <DiagnosticQuiz />
         <TeachersAtelier />
         <RegistrationLead />
