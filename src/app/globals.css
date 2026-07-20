@@ -15593,13 +15593,13 @@ main > section::after,
   0%, 20%, 100% {
     opacity: 0;
     filter: blur(10px);
-    transform: translateY(72px) scale(0.72);
+    transform: translateY(calc(72px + var(--mobile-hero-shift, 0px))) scale(0.72);
   }
 
   36%, 70% {
     opacity: 1;
     filter: blur(0);
-    transform: translateY(-58px) scale(0.86);
+    transform: translateY(calc(-58px + var(--mobile-hero-shift, 0px))) scale(0.86);
   }
 }
 
@@ -15617,18 +15617,19 @@ main > section::after,
   0%, 25%, 100% {
     opacity: 0.12;
     filter: blur(16px);
-    transform: translateY(72px) scale(0.72);
+    transform: translateY(calc(72px + var(--mobile-hero-shift, 0px))) scale(0.72);
   }
 
   48%, 78% {
     opacity: 1;
     filter: blur(0);
-    transform: translateY(-58px) scale(0.86);
+    transform: translateY(calc(-58px + var(--mobile-hero-shift, 0px))) scale(0.86);
   }
 }
 
 @media (max-width: 640px) {
   .nav-atelier.statue-reveal {
+    --mobile-hero-shift: clamp(38px, 5svh, 54px);
     height: 100svh !important;
     min-height: 100svh !important;
     max-height: none !important;
@@ -15641,7 +15642,7 @@ main > section::after,
 
   .statue-reveal .torn-paper {
     inset: auto !important;
-    top: 50% !important;
+    top: calc(50% + var(--mobile-hero-shift)) !important;
     left: 50% !important;
     width: min(350px, calc(100% - 24px)) !important;
     height: clamp(340px, 46svh, 390px) !important;
@@ -15658,17 +15659,41 @@ main > section::after,
   }
 
   .statue-reveal .paper-left {
-    padding: 24px 22px 24px 14px !important;
+    padding: 24px 22px 24px 18px !important;
   }
 
   .statue-reveal .paper-right {
-    padding: 24px 14px 24px 22px !important;
+    padding: 24px 18px 24px 22px !important;
+  }
+
+  .statue-reveal .paper-info {
+    width: 100%;
+    max-width: none;
+  }
+
+  .statue-reveal .paper-info span,
+  .statue-reveal .paper-right .paper-info span {
+    margin-bottom: 12px;
+    font-size: clamp(8px, 2.35vw, 9px) !important;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0.16em;
   }
 
   .statue-reveal .paper-info strong,
   .statue-reveal .paper-right .paper-info strong {
-    font-size: clamp(19px, 6.2vw, 24px) !important;
-    line-height: 0.98 !important;
+    max-width: 100%;
+    font-size: clamp(18px, 5.2vw, 21px) !important;
+    line-height: 1.04 !important;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .statue-reveal .intro-paper-copy p {
+    margin-top: 14px;
+    max-width: 100%;
+    font-size: clamp(11px, 3.05vw, 12px) !important;
+    line-height: 1.45;
   }
 
   .statue-reveal .statue-burst {
