@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700;800&display=swap");
-
 :root {
   --brand-purple: #6929f2;
   --brand-navy: #0c0259;
@@ -21,8 +19,8 @@
   --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 20px;
-  --serif: "Cormorant Garamond", Georgia, serif;
-  --sans: "Gilroy", "Manrope", Arial, sans-serif;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: "Segoe UI", Arial, sans-serif;
 }
 
 * {
@@ -5207,7 +5205,7 @@ main {
 
 .academy-seal span {
   display: block;
-  font-family: Georgia, serif;
+  font-family: var(--serif);
   font-size: 16px;
   font-style: italic;
 }
@@ -5249,7 +5247,7 @@ main {
 
 .center-manifest h1 {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: clamp(54px, 8vw, 128px);
   font-style: italic;
   font-weight: 400;
@@ -5351,7 +5349,7 @@ main {
 
 .kinetic-paper strong {
   margin-top: 8px;
-  font-family: Georgia, serif;
+  font-family: var(--serif);
   font-size: clamp(24px, 2.4vw, 36px);
   font-style: italic;
   font-weight: 400;
@@ -5411,7 +5409,7 @@ main {
 }
 
 .kinetic-stat strong {
-  font-family: Georgia, serif;
+  font-family: var(--serif);
   font-size: 36px;
   font-weight: 400;
   line-height: 1;
@@ -5558,7 +5556,7 @@ main {
 
 .statue-copy span {
   display: block;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: clamp(38px, 5vw, 76px);
   font-style: italic;
   line-height: .9;
@@ -5636,7 +5634,7 @@ main {
 
 .paper-info strong {
   display: block;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: clamp(28px, 3.15vw, 54px);
   font-style: italic;
   font-weight: 400;
@@ -6138,7 +6136,7 @@ main {
 .reveal-caption strong {
   display: block;
   margin-top: 8px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: clamp(20px, 2vw, 32px);
   font-style: italic;
   font-weight: 400;
@@ -6176,7 +6174,7 @@ main {
 }
 
 .statue-metrics strong {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: 30px;
   font-weight: 400;
   line-height: 1;
@@ -7847,14 +7845,9 @@ main {
   }
 }
 
-:root {
-  --brush-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg transform='rotate(-36 20 20)'%3E%3Cpath d='M18 4c2.2 0 4 1.8 4 4v15h-8V8c0-2.2 1.8-4 4-4Z' fill='%23d3a85e' stroke='%231b1713' stroke-width='1.3'/%3E%3Cpath d='M14 21h8l2.4 4.8c.7 1.4-.3 3.2-1.9 3.2h-9c-1.6 0-2.6-1.8-1.9-3.2L14 21Z' fill='%231b1713'/%3E%3Cpath d='M13 28h10c-.4 4.5-2 7.2-5 8-3-1-4.6-3.5-5-8Z' fill='%23742d25'/%3E%3Cpath d='M16 30c.4 1.6 1 2.8 2 3.5' fill='none' stroke='%23fff8ea' stroke-width='1' stroke-linecap='round' opacity='.8'/%3E%3C/g%3E%3C/svg%3E") 8 30;
-}
-
 html,
-body,
-body * {
-  cursor: var(--brush-cursor), auto;
+body {
+  cursor: default;
 }
 
 a,
@@ -7864,9 +7857,17 @@ select,
 input,
 textarea,
 [role="button"],
-.stage-card,
+.stage-card {
+  cursor: pointer;
+}
+
+input,
+textarea {
+  cursor: text;
+}
+
 .scroll-sketch {
-  cursor: var(--brush-cursor), pointer;
+  cursor: default;
 }
 
 .scroll-sketch {
@@ -7971,10 +7972,6 @@ textarea,
     -webkit-mask-image: radial-gradient(circle 135px at var(--reveal-x) var(--reveal-y), #000 0 68%, rgba(0, 0, 0, 0.18) 76%, transparent 100%);
     mask-image: radial-gradient(circle 135px at var(--reveal-x) var(--reveal-y), #000 0 68%, rgba(0, 0, 0, 0.18) 76%, transparent 100%);
   }
-}
-
-:root {
-  --brush-cursor: url("/assets/mona-lisa-cursor.png") 26 26;
 }
 
 @media (min-width: 981px) {
@@ -8459,7 +8456,7 @@ textarea,
   max-width: 34ch;
   margin: 0;
   color: var(--ink) !important;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: clamp(20px, 2vw, 29px) !important;
   line-height: 1.08;
 }
@@ -8506,7 +8503,7 @@ textarea,
 .footer-contact a {
   width: fit-content;
   color: var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: clamp(20px, 2vw, 29px);
   line-height: 1.12;
   text-decoration: none;
@@ -8540,7 +8537,7 @@ textarea,
 
 .footer-quote {
   color: var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: 14px;
   font-style: italic;
 }
@@ -10614,7 +10611,7 @@ body::before {
   max-width: 690px;
   margin: 0;
   color: inherit;
-  font-family: "Cormorant Garamond", Georgia, serif;
+  font-family: var(--serif);
   font-size: clamp(62px, 6.1vw, 106px);
   font-weight: 500;
   line-height: 0.85;
@@ -11436,7 +11433,7 @@ body::before {
 .course-marquee-group span {
   display: block;
   color: var(--brand-purple);
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--serif);
   font-size: clamp(42px, 5vw, 70px);
   font-style: italic;
   line-height: 1.12;
@@ -14376,7 +14373,7 @@ html.theme-dark .price-calculator-result a {
 .site-header .desktop-nav a,
 .site-header .mobile-nav a,
 .site-header .nav-cta {
-  font-family: "Manrope", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.025em;
@@ -14433,7 +14430,7 @@ html.theme-dark .price-calculator-result a {
 }
 
 .site-header .desktop-nav .nav-program-dropdown a {
-  font-family: "Manrope", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 11.5px;
   font-weight: 600;
 }
@@ -14622,7 +14619,7 @@ html.theme-dark .price-calculator-result a {
   align-items: center;
   gap: 10px;
   color: rgba(12, 2, 89, 0.7);
-  font-family: "Manrope", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 13px;
   font-weight: 600;
   transition: color 180ms ease;
@@ -14639,7 +14636,7 @@ html.theme-dark .price-calculator-result a {
   border-top: 1px solid rgba(12, 2, 89, 0.1);
   color: rgba(12, 2, 89, 0.54);
   background: #ffffff;
-  font-family: "Manrope", Arial, sans-serif;
+  font-family: var(--sans);
   font-size: 12px;
 }
 
@@ -14788,7 +14785,7 @@ html.theme-dark .price-calculator-result a {
 
 .statue-reveal .statue-copy span {
   color: var(--dark-ink) !important;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: clamp(38px, 5vw, 76px) !important;
   font-style: italic;
   font-weight: 400;
@@ -14860,7 +14857,7 @@ html.theme-dark .price-calculator-result a {
 .statue-reveal .paper-info strong,
 .statue-reveal .paper-right .paper-info strong {
   color: var(--dark-ink) !important;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: clamp(28px, 3.15vw, 54px) !important;
   font-style: italic;
   font-weight: 400;
@@ -14949,7 +14946,7 @@ html.theme-dark .price-calculator-result a {
 
 .statue-reveal .statue-metrics strong {
   color: #f7f1e4;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--serif);
   font-size: 30px;
   font-weight: 400;
 }
