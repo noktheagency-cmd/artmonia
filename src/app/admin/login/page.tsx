@@ -45,8 +45,8 @@ export default async function AdminLogin({
           </form>
         ) : (
           <div className="admin-demo-notice">
-            <strong>Demo rejimi aktivdir</strong>
-            <p>Supabase məlumatları əlavə edilənədək paneli demo kontentlə sınaya bilərsiniz.</p>
+            <strong>Önizləmə rejimi</strong>
+            <p>Paneli baxış məqsədilə aça bilərsiniz.</p>
             <Link href="/admin">Demo panelini aç</Link>
           </div>
         )}

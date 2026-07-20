@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const configured = isSupabaseConfigured();
-  let adminName = "Demo Admin";
+  let adminName = "Administrator";
   let messages: AdminMessage[] = [];
   let media: MediaAsset[] = [];
 
@@ -45,4 +45,3 @@ export default async function AdminPage() {
     />
   );
 }
-

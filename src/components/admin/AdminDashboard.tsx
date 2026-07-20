@@ -200,7 +200,7 @@ export default function AdminDashboard({
 
   async function uploadMedia(file: File): Promise<string | null> {
     if (!configured) {
-      flash("Media yükləmək üçün Supabase bağlantısını aktiv edin.");
+      flash("Media yükləmə hazır deyil.");
       return null;
     }
     if (file.size > 10 * 1024 * 1024) {
@@ -289,7 +289,6 @@ export default function AdminDashboard({
         <div className="admin-sidebar-bottom">
           <button type="button" className={view === "settings" ? "active" : ""} onClick={() => selectView("settings")}><Settings /> Parametrlər</button>
           <Link href="/" target="_blank"><Eye /> Sayta bax</Link>
-          <div className="admin-connection"><i className={configured ? "live" : ""} /><span>{configured ? "Supabase bağlıdır" : "Demo rejimi"}</span></div>
         </div>
       </aside>
 
@@ -355,13 +354,13 @@ export default function AdminDashboard({
 
           {view === "settings" ? (
             <section className="admin-view-section settings-view">
-              <div className="admin-page-title"><div><h1>Parametrlər</h1><p>Bağlantı vəziyyəti və admin hesabı.</p></div></div>
-              <div className="settings-grid"><article><span className={`settings-status ${configured ? "live" : ""}`}><i />{configured ? "Bağlantı aktivdir" : "Quraşdırma gözləyir"}</span><h3>Supabase</h3><p>{configured ? "Sayt kontenti, media və admin girişi Supabase ilə işləyir." : "Supabase dəyişənlərini .env.local faylına əlavə edin."}</p></article><article><span className="settings-number">ADMIN</span><h3>{adminName}</h3><p>Bu hesab sayt məzmununu dəyişmək və yayımlamaq səlahiyyətinə malikdir.</p></article></div>
+              <div className="admin-page-title"><div><h1>Parametrlər</h1><p>Admin hesabınızı idarə edin.</p></div></div>
+              <div className="settings-grid"><article><span className="settings-number">ADMIN</span><h3>{adminName}</h3><p>Bu hesab sayt məzmununu dəyişmək və yayımlamaq səlahiyyətinə malikdir.</p></article></div>
               {configured ? <form action={logout}><button className="logout-button" type="submit"><LogOut /> Çıxış et</button></form> : null}
             </section>
           ) : null}
         </main>
-        <footer className="admin-footer"><span>© 2026 Artmonia Academy</span><span><i className={configured ? "live" : ""} /> Sistem statusu: {configured ? "Normal" : "Demo"}</span></footer>
+        <footer className="admin-footer"><span>© 2026 Artmonia Academy</span></footer>
       </div>
 
       {editing ? (
