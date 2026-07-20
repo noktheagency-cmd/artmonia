@@ -1,45 +1,41 @@
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import StudentResultCard from "@/components/StudentResultCard";
-import { studentResults } from "@/data/studentResults";
+import { SiteContentProvider } from "@/components/SiteContentContext";
+import { collectionPageContent, type CollectionEntry } from "@/data/collections";
+import { getPublishedContent } from "@/lib/site-content";
 
 type CollectionPageProps = {
   type: "results" | "awards";
 };
 
-const pageContent = {
-  results: {
-    title: "Nəticələr",
-    description: "Tələbələrimizin inkişafını və tamamlanmış işlərini burada paylaşacağıq.",
-    emptyTitle: "Nəticələr hazırlanır",
-    emptyText: "Tələbə işləri əlavə edildikcə ad, vizual və qısa açıqlama ilə burada görünəcək."
-  },
-  awards: {
-    title: "Mükafatlar",
-    description: "Artmonia icmasının nailiyyətləri və mükafatları üçün ayrılmış məkan.",
-    emptyTitle: "Mükafatlar tezliklə burada",
-    emptyText: "Yeni nailiyyətlər olduqca bu səhifə yenilənəcək."
-  }
-} as const;
-
-export default function CollectionPage({ type }: CollectionPageProps) {
-  const content = pageContent[type];
-  const hasResults = type === "results" && studentResults.length > 0;
+export default async function CollectionPage({ type }: CollectionPageProps) {
+  const siteContent = await getPublishedContent();
+  const content = collectionPageContent[type];
+  const items = (siteContent[content.sectionKey] as unknown as CollectionEntry[] | undefined) ?? [];
 
   return (
-    <>
+    <SiteContentProvider content={siteContent}>
       <SiteHeader />
-      <main className="collection-page">
+      <main className={`collection-page collection-page--${type}`}>
         <section className="collection-intro" aria-labelledby="collection-title">
-          <h1 id="collection-title">{content.title}</h1>
-          <p>{content.description}</p>
+          <div className="collection-intro-title">
+            <h1 id="collection-title">{content.title}</h1>
+            <span aria-hidden="true" />
+          </div>
+          <div className="collection-intro-copy">
+            <p>{content.description}</p>
+            <Link className="collection-back collection-back--intro" href="/">
+              <span aria-hidden="true">←</span> Ana səhifəyə qayıt
+            </Link>
+          </div>
         </section>
 
         <section className="collection-content" aria-label={`${content.title} siyahısı`}>
-          {hasResults ? (
+          {items.length ? (
             <div className="student-results-grid">
-              {studentResults.map((result) => (
-                <StudentResultCard key={result.id} {...result} />
+              {items.map((result, index) => (
+                <StudentResultCard key={result.id} {...result} index={index} type={type} />
               ))}
             </div>
           ) : (
@@ -50,12 +46,8 @@ export default function CollectionPage({ type }: CollectionPageProps) {
             </div>
           )}
         </section>
-
-        <Link className="collection-back" href="/">
-          <span aria-hidden="true">←</span> Ana səhifəyə qayıt
-        </Link>
       </main>
       <footer className="collection-footer">© 2026 Artmonia Academy</footer>
-    </>
+    </SiteContentProvider>
   );
 }
