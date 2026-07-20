@@ -15538,16 +15538,123 @@ main > section::after,
   }
 }
 
-/* Tighten the mobile torn-paper hero without changing the statue or its reveal. */
+/* Wash the sculpture hero with an extremely light Artmonia purple. */
+.nav-atelier.statue-reveal {
+  background:
+    radial-gradient(circle at var(--cursor-x, 50%) var(--cursor-y, 50%), rgba(105, 41, 242, 0.1), transparent 25%),
+    radial-gradient(circle at 16% 18%, rgba(105, 41, 242, 0.055), transparent 31%),
+    radial-gradient(circle at 84% 76%, rgba(105, 41, 242, 0.065), transparent 34%),
+    linear-gradient(135deg, #f1ecfe 0%, #f8f5ff 52%, #eee7fd 100%) !important;
+}
+
+.nav-atelier.statue-reveal::before {
+  background-image:
+    linear-gradient(102deg, transparent 0 44%, rgba(105, 41, 242, 0.065) 45%, transparent 46%),
+    linear-gradient(18deg, transparent 0 58%, rgba(105, 41, 242, 0.05) 59%, transparent 60%),
+    radial-gradient(ellipse at 52% 47%, transparent 0 32%, rgba(105, 41, 242, 0.07) 33%, transparent 38%);
+}
+
+.nav-atelier.statue-reveal::after {
+  background:
+    repeating-linear-gradient(90deg, rgba(105, 41, 242, 0.028) 0 1px, transparent 1px 74px),
+    repeating-linear-gradient(0deg, rgba(105, 41, 242, 0.024) 0 1px, transparent 1px 74px);
+}
+
+.statue-reveal .paper-half,
+.statue-reveal .paper-right {
+  border-color: rgba(105, 41, 242, 0.1);
+  background:
+    radial-gradient(circle at 50% 38%, rgba(105, 41, 242, 0.045), transparent 43%),
+    linear-gradient(180deg, #ffffff 0%, #fdfbff 58%, #faf7ff 100%) !important;
+}
+
+/* Keep both halves and the revealed statue on the same mobile centre line. */
+@keyframes mobileHeroTearLeft {
+  0%, 18%, 100% {
+    transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0);
+  }
+
+  34%, 72% {
+    transform: translate3d(-23vw, 0, 0) rotateY(-30deg) rotateZ(-5deg);
+  }
+}
+
+@keyframes mobileHeroTearRight {
+  0%, 18%, 100% {
+    transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0);
+  }
+
+  34%, 72% {
+    transform: translate3d(23vw, 0, 0) rotateY(30deg) rotateZ(5deg);
+  }
+}
+
+@keyframes mobileHeroBustReveal {
+  0%, 20%, 100% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(72px) scale(0.72);
+  }
+
+  36%, 70% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(-58px) scale(0.86);
+  }
+}
+
+@keyframes mobileTearLeft {
+  0%, 25%, 100% { transform: none; }
+  48%, 78% { transform: translateX(-24vw) rotateY(-34deg) rotateZ(-7deg); }
+}
+
+@keyframes mobileTearRight {
+  0%, 25%, 100% { transform: none; }
+  48%, 78% { transform: translateX(24vw) rotateY(34deg) rotateZ(7deg); }
+}
+
+@keyframes mobileBust {
+  0%, 25%, 100% {
+    opacity: 0.12;
+    filter: blur(16px);
+    transform: translateY(72px) scale(0.72);
+  }
+
+  48%, 78% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(-58px) scale(0.86);
+  }
+}
+
 @media (max-width: 640px) {
   .nav-atelier.statue-reveal {
-    height: clamp(580px, 80svh, 660px) !important;
-    min-height: clamp(580px, 80svh, 660px) !important;
-    max-height: 660px !important;
+    height: 100svh !important;
+    min-height: 100svh !important;
+    max-height: none !important;
+  }
+
+  .statue-reveal .statue-stage {
+    height: 100% !important;
+    min-height: 100% !important;
   }
 
   .statue-reveal .torn-paper {
-    inset: 174px 0 76px !important;
+    inset: auto !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: min(350px, calc(100% - 24px)) !important;
+    height: clamp(340px, 46svh, 390px) !important;
+    min-height: 0 !important;
+    max-height: 390px !important;
+    transform: translate(-50%, -50%) !important;
+    animation: none !important;
+  }
+
+  .statue-reveal .paper-half {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
   }
 
   .statue-reveal .paper-left {
@@ -15562,5 +15669,12 @@ main > section::after,
   .statue-reveal .paper-right .paper-info strong {
     font-size: clamp(19px, 6.2vw, 24px) !important;
     line-height: 0.98 !important;
+  }
+
+  .statue-reveal .statue-burst {
+    align-self: center;
+    justify-self: center;
+    margin: 0;
+    transform-origin: center;
   }
 }
