@@ -21,6 +21,8 @@ import {
   transformations
 } from "@/data/site";
 import SiteHeader from "@/components/SiteHeader";
+import { SiteContentProvider, useSiteContentValue } from "@/components/SiteContentContext";
+import type { SiteContentMap } from "@/lib/site-content";
 
 function ArrowIcon() {
   return (
@@ -269,6 +271,8 @@ function NavAtelierAnimation() {
 }
 
 function Hero() {
+  const dynamicGalleryImages = useSiteContentValue("gallery_images", galleryImages);
+  const dynamicHeroStats = useSiteContentValue("hero_stats", heroStats);
   return (
     <section className="hero section-shell scroll-section" id="top">
       <div className="hero-copy">
@@ -292,7 +296,7 @@ function Hero() {
       </div>
       <div className="hero-stage">
         <div className="hero-frame" data-tilt>
-          <img src={galleryImages[0].src} alt={galleryImages[0].alt} />
+          <img src={dynamicGalleryImages[0].src} alt={dynamicGalleryImages[0].alt} />
           <div className="floating-card card-a">
             <span>01</span>
             Proporsiya
@@ -303,7 +307,7 @@ function Hero() {
           </div>
         </div>
         <div className="hero-stat-strip">
-          {heroStats.map((item) => (
+          {dynamicHeroStats.map((item) => (
             <div key={item.label}>
               <strong>{item.value}</strong>
               <span>{item.label}</span>
@@ -373,6 +377,9 @@ function AboutArtmonia() {
 }
 
 function ProblemTransformation() {
+  const dynamicPainPoints = useSiteContentValue("pain_points", painPoints);
+  const dynamicTransformations = useSiteContentValue("transformations", transformations);
+  const dynamicGalleryImages = useSiteContentValue("gallery_images", galleryImages);
   return (
     <section className="split-band scroll-section" id="problem">
       <Reveal className="problem-showcase" variant="boom">
@@ -383,7 +390,7 @@ function ProblemTransformation() {
             <div className="problem-shadow" />
           </div>
           <div className="orbit-wheel">
-            {painPoints.map((point, index) => (
+            {dynamicPainPoints.map((point, index) => (
               <article key={point} className={`orbit-thought thought-${index + 1}`}>
                 <div className="thought-bubble">
                   <p>{point}</p>
@@ -402,7 +409,7 @@ function ProblemTransformation() {
       </Reveal>
       <Reveal className="atelier-panel" variant="boom">
         <div className="sketch-result-board scroll-sketch" aria-label="Artmonia rəsm materialları">
-          <img src={galleryImages[1].src} alt={galleryImages[1].alt} />
+          <img src={dynamicGalleryImages[1].src} alt={dynamicGalleryImages[1].alt} />
           <div className="board-wash" />
           <div className="sketch-stage">
             <span className="sketch-label">Sketch To Result</span>
@@ -427,7 +434,7 @@ function ProblemTransformation() {
           <p className="small-label">Transformasiya</p>
           <h2>Proqram sənə nə verir?</h2>
           <div className="transformation-grid">
-            {transformations.map((item, index) => (
+            {dynamicTransformations.map((item, index) => (
               <article
                 key={item.title}
                 className={`stage-card stage-card-${index + 1} scroll-block`}
@@ -446,6 +453,7 @@ function ProblemTransformation() {
 }
 
 function Programs() {
+  const dynamicCourses = useSiteContentValue("courses", courses);
   return (
     <section className="section-shell scroll-section" id="program">
       <Reveal className="section-heading wide" variant="from-right">
@@ -453,7 +461,7 @@ function Programs() {
         <h2>Peşəkar kurslar,<br />müasir nəticə.</h2>
       </Reveal>
       <div className="courses-grid">
-        {courses.map((course, index) => (
+        {dynamicCourses.map((course, index) => (
           <Reveal
             key={course.title}
             className={`course-card ${index % 2 === 0 ? "media-left" : "media-right"}`}
@@ -480,6 +488,8 @@ function Programs() {
 }
 
 function Studio() {
+  const dynamicStudioFeatures = useSiteContentValue("studio_features", studioFeatures);
+  const dynamicStudioCards = useSiteContentValue("studio_cards", studioCards);
   return (
     <section className="studio-section scroll-section">
       <div className="studio-grid">
@@ -491,7 +501,7 @@ function Studio() {
             detal sənin yaradıcılığın üçün düşünülüb.
           </p>
           <div className="feature-line">
-            {studioFeatures.map((feature) => (
+            {dynamicStudioFeatures.map((feature) => (
               <span key={feature}>{feature}</span>
             ))}
           </div>
@@ -502,7 +512,7 @@ function Studio() {
         </Reveal>
       </div>
       <div className="studio-cards">
-        {studioCards.map((card) => (
+        {dynamicStudioCards.map((card) => (
           <Reveal key={card.title} className="studio-card" variant="flip">
             <span>Artmonia</span>
             <h3>{card.title}</h3>
@@ -516,6 +526,7 @@ function Studio() {
 }
 
 function Results() {
+  const dynamicTestimonials = useSiteContentValue("testimonials", testimonials);
   return (
     <section className="section-shell results scroll-section" id="results">
       <Reveal className="section-heading" variant="from-left">
@@ -545,7 +556,7 @@ function Results() {
         </Reveal>
       </div>
       <div className="testimonial-rail">
-        {testimonials.map((item) => (
+        {dynamicTestimonials.map((item) => (
           <blockquote key={item.name}>
             &ldquo;{item.quote}&rdquo;
             <cite>
@@ -568,6 +579,7 @@ const moduleArtworks = [
 ];
 
 function Curriculum() {
+  const dynamicCurriculum = useSiteContentValue("curriculum", curriculum);
   return (
     <section className="curriculum-section scroll-section">
       <Reveal className="section-heading wide" variant="from-top">
@@ -578,7 +590,7 @@ function Curriculum() {
         </h2>
       </Reveal>
       <div className="timeline module-grid">
-        {curriculum.map((item, index) => (
+        {dynamicCurriculum.map((item, index) => (
           <article
             key={item.title}
             className="module-card scroll-block"
@@ -921,15 +933,17 @@ function DiagnosticQuiz() {
 }
 
 function Pricing() {
+  const dynamicPackages = useSiteContentValue("packages", packages);
+  const dynamicComparison = useSiteContentValue("comparison", comparison);
   const [activePackage, setActivePackage] = useState(1);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActivePackage((current) => (current + 1) % packages.length);
+      setActivePackage((current) => (current + 1) % dynamicPackages.length);
     }, 7000);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [dynamicPackages.length]);
 
   return (
     <>
@@ -939,7 +953,7 @@ function Pricing() {
         <h2>Sənə uyğun paketi seç.</h2>
       </div>
       <div className="packages" aria-live="polite">
-        {packages.map((pack, index) => (
+        {dynamicPackages.map((pack, index) => (
           <article
             key={pack.title}
             className={`${pack.highlight ? "package featured" : "package"} ${activePackage === index ? "is-active" : ""}`}
@@ -964,7 +978,7 @@ function Pricing() {
         </div>
       </div>
       <div className="package-tabs" aria-label="Paket seçimi">
-        {packages.map((pack, index) => (
+        {dynamicPackages.map((pack, index) => (
           <button
             key={pack.title}
             type="button"
@@ -982,7 +996,7 @@ function Pricing() {
           <span>Standart</span>
           <span>Premium</span>
         </div>
-        {comparison.map((row) => (
+        {dynamicComparison.map((row) => (
           <div className="comparison-row" key={row[0]}>
             {row.map((cell, cellIndex) => (
               <span key={`${row[0]}-${cellIndex}`}>{cell}</span>
@@ -1091,11 +1105,26 @@ function TeachersAtelier() {
 }
 
 function RegistrationLead() {
+  const dynamicFormFields = useSiteContentValue("form_fields", formFields);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSent(true);
+    setSending(true);
+    setSubmitError("");
+    const form = event.currentTarget;
+    try {
+      const response = await fetch("/api/contact", { method: "POST", body: new FormData(form) });
+      if (!response.ok) throw new Error("Müraciət hazırda göndərilə bilmir.");
+      setSent(true);
+      form.reset();
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Xəta baş verdi.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -1111,7 +1140,8 @@ function RegistrationLead() {
           decoding="async"
         />
         <form onSubmit={onSubmit}>
-          {formFields.map((field) => (
+          <input className="form-honeypot" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+          {dynamicFormFields.map((field) => (
             <label key={field.name}>
               <span>{field.label}</span>
               {field.type === "select" ? (
@@ -1129,10 +1159,11 @@ function RegistrationLead() {
             <span>Məqsədin nədir?</span>
             <textarea name="goal" placeholder="Hobim üçün / Peşəkar olmaq istəyirəm..." />
           </label>
-          <button className="button primary" type="submit">
-            Qeydiyyatdan keç <ArrowIcon />
+          <button className="button primary" type="submit" disabled={sending}>
+            {sending ? "Göndərilir..." : "Qeydiyyatdan keç"} <ArrowIcon />
           </button>
-          {sent ? <p className="form-success">Müraciət qeydə alındı. Backend qoşulanda real göndərim aktiv olacaq.</p> : null}
+          {sent ? <p className="form-success">Müraciətiniz qəbul edildi. Tezliklə sizinlə əlaqə saxlayacağıq.</p> : null}
+          {submitError ? <p className="form-error">{submitError}</p> : null}
         </form>
       </Reveal>
     </section>
@@ -1140,6 +1171,7 @@ function RegistrationLead() {
 }
 
 function AuditPrivacyFooter() {
+  const dynamicContact = useSiteContentValue("contact", contact);
   return (
     <footer className="site-footer scroll-section" id="contact">
       <div className="footer-top scroll-block">
@@ -1163,9 +1195,9 @@ function AuditPrivacyFooter() {
         </div>
         <address className="footer-contact">
           <p className="footer-label">Əlaqə</p>
-          <a href={`tel:${contact.phone.replace(/\s/g, "")}`}>{contact.phone}</a>
-          <a href={`mailto:${contact.email}`}>{contact.email}</a>
-          <p className="footer-location">{contact.address}</p>
+          <a href={`tel:${dynamicContact.phone.replace(/\s/g, "")}`}>{dynamicContact.phone}</a>
+          <a href={`mailto:${dynamicContact.email}`}>{dynamicContact.email}</a>
+          <p className="footer-location">{dynamicContact.address}</p>
         </address>
       </div>
       <div className="footer-bottom scroll-block" data-scroll-order="2">
@@ -1176,7 +1208,7 @@ function AuditPrivacyFooter() {
   );
 }
 
-export default function ArtmoniaSite() {
+function ArtmoniaSiteInner() {
   useTiltTargets();
   usePageScrollReveals();
 
@@ -1197,5 +1229,13 @@ export default function ArtmoniaSite() {
       </main>
       <AuditPrivacyFooter />
     </>
+  );
+}
+
+export default function ArtmoniaSite({ content }: { content: SiteContentMap }) {
+  return (
+    <SiteContentProvider content={content}>
+      <ArtmoniaSiteInner />
+    </SiteContentProvider>
   );
 }

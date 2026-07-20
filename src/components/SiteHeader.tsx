@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navItems } from "@/data/site";
+import { useSiteContentValue } from "@/components/SiteContentContext";
 
 function HeaderArrowIcon() {
   return (
@@ -28,6 +29,7 @@ function MenuIcon({ open }: { open: boolean }) {
 }
 
 export default function SiteHeader() {
+  const dynamicNavItems = useSiteContentValue("nav_items", navItems);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -40,7 +42,7 @@ export default function SiteHeader() {
       </Link>
 
       <nav className="desktop-nav" aria-label="Əsas naviqasiya">
-        {navItems.map((item) =>
+        {dynamicNavItems.map((item) =>
           item.href.endsWith("#program") ? (
             <div className="nav-program-menu" key={item.href}>
               <Link className="nav-program-trigger" href={item.href} aria-haspopup="true">
@@ -83,7 +85,7 @@ export default function SiteHeader() {
       </button>
 
       <nav id="mobile-navigation" className={open ? "mobile-nav open" : "mobile-nav"} aria-label="Mobil naviqasiya">
-        {navItems.map((item) =>
+        {dynamicNavItems.map((item) =>
           item.href.endsWith("#program") ? (
             <div className="mobile-program-group" key={item.href}>
               <Link href={item.href} onClick={() => setOpen(false)}>
