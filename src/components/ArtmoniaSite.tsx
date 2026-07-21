@@ -5,6 +5,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import {
   contact,
   courses,
@@ -791,93 +792,109 @@ function DiagnosticQuiz() {
 
   return (
     <section className="quiz-pricing scroll-section" id="diagnostic">
-      <Reveal className="quiz-card" variant="from-left">
-        <div className="quiz-card-head">
-          <p className="small-label">Diaqnostika</p>
-          <h2>Sənə uyğun yolu tap.</h2>
-          <p>2 sadə suala cavab ver, biz sənin üçün ən uyğun modulu və paketi təklif edək.</p>
-        </div>
-        <div className="quiz-progress" aria-label={`Addım ${Math.min(step, 2)} / 2`}>
-          {[1, 2].map((item) => (
-            <span key={item} className={step >= item ? "active" : ""}>
-              {item}
-            </span>
-          ))}
-          <strong>{step === 0 ? "Başla" : step === 3 ? "Nəticə" : `Addım ${step}/2`}</strong>
-        </div>
-        <div className="quiz-window">
-          {step === 0 ? (
-            <div className="quiz-pane quiz-intro">
-              <span className="quiz-orb">✦</span>
-              <h3>Hansı proqram sənə uyğundur?</h3>
-              <button type="button" className="quiz-primary" onClick={() => setStep(1)}>
-                Testi başla
-              </button>
-            </div>
-          ) : null}
-          {step === 1 ? (
-            <div className="quiz-pane">
-              <h3>Əsas problemin nədir?</h3>
-              <p>Sənə ən çox uyğun olan variantı seç.</p>
-              <div className="quiz-options problem-options">
-                {quizProblems.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    className={`${problem === item.id ? "active " : ""}quiz-problem-option ${item.id}`}
-                    onClick={() => {
-                      setProblem(item.id);
-                      setStep(2);
-                    }}
-                  >
-                    <QuizProblemArt problem={item.id} />
-                    <strong>{item.label}</strong>
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : null}
-          {step === 2 ? (
-            <div className="quiz-pane">
-              <h3>Öyrənmək istədiyin janr?</h3>
-              <p>Ən çox maraqlandığın sahəni seç.</p>
-              <div className="quiz-options">
-                {quizGenres.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    className={genre === item.id ? "active" : ""}
-                    onClick={() => {
-                      setGenre(item.id);
-                      setStep(3);
-                    }}
-                  >
-                    <QuizGenreIcon genre={item.id} />
-                    <strong>{item.label}</strong>
-                  </button>
-                ))}
-              </div>
-              <button type="button" className="quiz-back" onClick={() => setStep(1)}>
-                ← Geri qayıt
-              </button>
-            </div>
-          ) : null}
-          {step === 3 && result ? (
-            <div className="quiz-pane quiz-result">
-              <span>Sənin üçün tövsiyə</span>
-              <strong>{result.module}</strong>
-              <p>{result.reason}</p>
-              <em>Uyğun paket: {result.package}</em>
-              <div className="quiz-actions">
-                <a href="#pricing">Paketləri gör</a>
-                <button type="button" onClick={resetQuiz}>
-                  Yenidən
+      <div className="diagnostic-duo">
+        <Reveal className="quiz-card diagnostic-compact" variant="from-left">
+          <div className="quiz-card-head">
+            <p className="small-label">Diaqnostika</p>
+            <h2>Sənə uyğun yolu tap.</h2>
+            <p>2 sadə suala cavab ver, biz sənin üçün ən uyğun modulu və paketi təklif edək.</p>
+          </div>
+          <div className="quiz-progress" aria-label={`Addım ${Math.min(step, 2)} / 2`}>
+            {[1, 2].map((item) => (
+              <span key={item} className={step >= item ? "active" : ""}>
+                {item}
+              </span>
+            ))}
+            <strong>{step === 0 ? "Başla" : step === 3 ? "Nəticə" : `Addım ${step}/2`}</strong>
+          </div>
+          <div className="quiz-window">
+            {step === 0 ? (
+              <div className="quiz-pane quiz-intro">
+                <span className="quiz-orb">✦</span>
+                <h3>Hansı proqram sənə uyğundur?</h3>
+                <button type="button" className="quiz-primary" onClick={() => setStep(1)}>
+                  Testi başla
                 </button>
               </div>
-            </div>
-          ) : null}
-        </div>
-      </Reveal>
+            ) : null}
+            {step === 1 ? (
+              <div className="quiz-pane">
+                <h3>Əsas problemin nədir?</h3>
+                <p>Sənə ən çox uyğun olan variantı seç.</p>
+                <div className="quiz-options problem-options">
+                  {quizProblems.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className={`${problem === item.id ? "active " : ""}quiz-problem-option ${item.id}`}
+                      onClick={() => {
+                        setProblem(item.id);
+                        setStep(2);
+                      }}
+                    >
+                      <QuizProblemArt problem={item.id} />
+                      <strong>{item.label}</strong>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+            {step === 2 ? (
+              <div className="quiz-pane">
+                <h3>Öyrənmək istədiyin janr?</h3>
+                <p>Ən çox maraqlandığın sahəni seç.</p>
+                <div className="quiz-options">
+                  {quizGenres.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className={genre === item.id ? "active" : ""}
+                      onClick={() => {
+                        setGenre(item.id);
+                        setStep(3);
+                      }}
+                    >
+                      <QuizGenreIcon genre={item.id} />
+                      <strong>{item.label}</strong>
+                    </button>
+                  ))}
+                </div>
+                <button type="button" className="quiz-back" onClick={() => setStep(1)}>
+                  ← Geri qayıt
+                </button>
+              </div>
+            ) : null}
+            {step === 3 && result ? (
+              <div className="quiz-pane quiz-result">
+                <span>Sənin üçün tövsiyə</span>
+                <strong>{result.module}</strong>
+                <p>{result.reason}</p>
+                <em>Uyğun paket: {result.package}</em>
+                <div className="quiz-actions">
+                  <a href="#pricing">Paketləri gör</a>
+                  <button type="button" onClick={resetQuiz}>
+                    Yenidən
+                  </button>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </Reveal>
+        <Reveal className="diagnostic-art-panel" variant="from-right">
+          <Image
+            src="/assets/artmonia-success-path.png"
+            alt="Fırça ilə çəkilən işıqlı yolda irəliləyən insan"
+            fill
+            sizes="(max-width: 900px) calc(100vw - 28px), 540px"
+            quality={92}
+            loading="eager"
+          />
+          <div className="diagnostic-art-copy">
+            <span>Artmonia istiqaməti</span>
+            <p>Artmonia ilə uğura gedən yolda daim irəli addımla.</p>
+          </div>
+        </Reveal>
+      </div>
       <Pricing />
     </section>
   );
