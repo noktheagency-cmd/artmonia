@@ -16043,6 +16043,25 @@ main > section::after,
 /* Real paper depth: the sheet starts closed, then opens along one fibrous tear. */
 .statue-reveal .torn-paper {
   --tear-overlap: clamp(13px, 1.15vw, 19px);
+  --paper-left-closed: polygon(
+    0 0, 100% 0, 100% 3%, 100% 6.5%, 100% 10%, 100% 14.5%, 100% 19%, 100% 23%, 100% 28%,
+    100% 33%, 100% 38%, 100% 43%, 100% 48%, 100% 53%, 100% 58%, 100% 63.5%, 100% 68.5%,
+    100% 73%, 100% 78.5%, 100% 83%, 100% 88%, 100% 92%, 100% 96%, 100% 100%, 0 100%
+  );
+  --paper-right-closed: polygon(
+    0 0, 100% 0, 100% 100%, 0 100%, 0 96%, 0 92%, 0 88%, 0 83%, 0 78.5%, 0 73%, 0 68.5%, 0 63.5%,
+    0 58%, 0 53%, 0 48%, 0 43%, 0 38%, 0 33%, 0 28%, 0 23%, 0 19%, 0 14.5%, 0 10%, 0 6.5%, 0 3%
+  );
+  --paper-left-torn: polygon(
+    0 0, 100% 0, 99.2% 3%, 100% 6.5%, 98.4% 10%, 99.5% 14.5%, 97.8% 19%, 99.4% 23%, 98.1% 28%,
+    100% 33%, 98.6% 38%, 99.6% 43%, 97.9% 48%, 99.4% 53%, 98.3% 58%, 100% 63.5%, 98.5% 68.5%,
+    99.6% 73%, 97.7% 78.5%, 99.2% 83%, 98.4% 88%, 100% 92%, 98.6% 96%, 100% 100%, 0 100%
+  );
+  --paper-right-torn: polygon(
+    0 0, 100% 0, 100% 100%, 0 100%, 1.4% 96%, 0 92%, 1.6% 88%, 0.8% 83%, 2.3% 78.5%, 0.4% 73%,
+    1.5% 68.5%, 0 63.5%, 1.7% 58%, 0.6% 53%, 2.1% 48%, 0.4% 43%, 1.4% 38%, 0 33%, 1.9% 28%,
+    0.6% 23%, 2.2% 19%, 0.5% 14.5%, 1.6% 10%, 0 6.5%, 0.8% 3%
+  );
   perspective: 1800px;
   transform-style: preserve-3d;
   isolation: isolate;
@@ -16069,6 +16088,7 @@ main > section::after,
     0 10px 24px rgba(35, 21, 67, 0.07);
   transition:
     transform 1.18s cubic-bezier(0.2, 0.76, 0.22, 1),
+    clip-path 0.46s cubic-bezier(0.32, 0, 0.18, 1),
     filter 0.9s ease,
     box-shadow 0.9s ease;
 }
@@ -16094,73 +16114,27 @@ main > section::after,
   bottom: 0;
   width: 38px;
   pointer-events: none;
-  opacity: 0.26;
+  opacity: 0;
   transition: opacity 0.5s ease, filter 0.75s ease;
 }
 
 .statue-reveal .paper-left {
   z-index: 2;
   width: calc(100% + var(--tear-overlap)) !important;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    99.2% 3%,
-    100% 6.5%,
-    98.4% 10%,
-    99.5% 14.5%,
-    97.8% 19%,
-    99.4% 23%,
-    98.1% 28%,
-    100% 33%,
-    98.6% 38%,
-    99.6% 43%,
-    97.9% 48%,
-    99.4% 53%,
-    98.3% 58%,
-    100% 63.5%,
-    98.5% 68.5%,
-    99.6% 73%,
-    97.7% 78.5%,
-    99.2% 83%,
-    98.4% 88%,
-    100% 92%,
-    98.6% 96%,
-    100% 100%,
-    0 100%
-  );
+  clip-path: var(--paper-left-closed);
+  border-right-color: transparent !important;
+  background-position: left top, left top, 0 0, 0 0, left top !important;
+  background-size: 200% 100%, 200% 100%, auto, auto, 200% 100% !important;
 }
 
 .statue-reveal .paper-right {
   z-index: 1;
   left: calc(-1 * var(--tear-overlap));
   width: calc(100% + var(--tear-overlap)) !important;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    100% 100%,
-    0 100%,
-    1.4% 96%,
-    0 92%,
-    1.6% 88%,
-    0.8% 83%,
-    2.3% 78.5%,
-    0.4% 73%,
-    1.5% 68.5%,
-    0 63.5%,
-    1.7% 58%,
-    0.6% 53%,
-    2.1% 48%,
-    0.4% 43%,
-    1.4% 38%,
-    0 33%,
-    1.9% 28%,
-    0.6% 23%,
-    2.2% 19%,
-    0.5% 14.5%,
-    1.6% 10%,
-    0 6.5%,
-    0.8% 3%
-  );
+  clip-path: var(--paper-right-closed);
+  border-left-color: transparent !important;
+  background-position: right top, right top, 0 0, 0 0, right top !important;
+  background-size: 200% 100%, 200% 100%, auto, auto, 200% 100% !important;
 }
 
 .statue-reveal .paper-left::after {
@@ -16183,7 +16157,7 @@ main > section::after,
   top: -1%;
   bottom: -1%;
   width: 34px !important;
-  opacity: 0.18;
+  opacity: 0;
   transform: scaleX(0.34);
   background:
     repeating-linear-gradient(162deg, transparent 0 5px, rgba(62, 42, 75, 0.24) 5px 6px, transparent 6px 11px),
@@ -16219,6 +16193,18 @@ main > section::after,
     0 28px 50px rgba(35, 21, 67, 0.16);
 }
 
+.statue-reveal.is-awake .paper-left,
+.statue-reveal:hover .paper-left,
+.statue-stage:hover .paper-left {
+  clip-path: var(--paper-left-torn);
+}
+
+.statue-reveal.is-awake .paper-right,
+.statue-reveal:hover .paper-right,
+.statue-stage:hover .paper-right {
+  clip-path: var(--paper-right-torn);
+}
+
 .statue-reveal.is-awake .paper-half::after,
 .statue-reveal:hover .paper-half::after,
 .statue-stage:hover .paper-half::after {
@@ -16245,15 +16231,56 @@ main > section::after,
 }
 
 @keyframes mobileTearLeft {
-  0%, 24%, 100% { transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0); }
-  32% { transform: translate3d(-5vw, 1px, 6px) rotateY(-10deg) rotateZ(-1deg); }
-  45%, 76% { transform: translate3d(-23vw, 6px, 26px) rotateY(-38deg) rotateZ(-5deg); }
+  0%, 24%, 100% {
+    clip-path: polygon(
+      0 0, 100% 0, 100% 3%, 100% 6.5%, 100% 10%, 100% 14.5%, 100% 19%, 100% 23%, 100% 28%,
+      100% 33%, 100% 38%, 100% 43%, 100% 48%, 100% 53%, 100% 58%, 100% 63.5%, 100% 68.5%,
+      100% 73%, 100% 78.5%, 100% 83%, 100% 88%, 100% 92%, 100% 96%, 100% 100%, 0 100%
+    );
+    transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0);
+  }
+  32% {
+    clip-path: polygon(
+      0 0, 100% 0, 99.2% 3%, 100% 6.5%, 98.4% 10%, 99.5% 14.5%, 97.8% 19%, 99.4% 23%, 98.1% 28%,
+      100% 33%, 98.6% 38%, 99.6% 43%, 97.9% 48%, 99.4% 53%, 98.3% 58%, 100% 63.5%, 98.5% 68.5%,
+      99.6% 73%, 97.7% 78.5%, 99.2% 83%, 98.4% 88%, 100% 92%, 98.6% 96%, 100% 100%, 0 100%
+    );
+    transform: translate3d(-5vw, 1px, 6px) rotateY(-10deg) rotateZ(-1deg);
+  }
+  45%, 76% {
+    clip-path: polygon(
+      0 0, 100% 0, 99.2% 3%, 100% 6.5%, 98.4% 10%, 99.5% 14.5%, 97.8% 19%, 99.4% 23%, 98.1% 28%,
+      100% 33%, 98.6% 38%, 99.6% 43%, 97.9% 48%, 99.4% 53%, 98.3% 58%, 100% 63.5%, 98.5% 68.5%,
+      99.6% 73%, 97.7% 78.5%, 99.2% 83%, 98.4% 88%, 100% 92%, 98.6% 96%, 100% 100%, 0 100%
+    );
+    transform: translate3d(-23vw, 6px, 26px) rotateY(-38deg) rotateZ(-5deg);
+  }
 }
 
 @keyframes mobileTearRight {
-  0%, 24%, 100% { transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0); }
-  32% { transform: translate3d(5vw, 1px, 6px) rotateY(10deg) rotateZ(1deg); }
-  45%, 76% { transform: translate3d(23vw, 6px, 26px) rotateY(38deg) rotateZ(5deg); }
+  0%, 24%, 100% {
+    clip-path: polygon(
+      0 0, 100% 0, 100% 100%, 0 100%, 0 96%, 0 92%, 0 88%, 0 83%, 0 78.5%, 0 73%, 0 68.5%,
+      0 63.5%, 0 58%, 0 53%, 0 48%, 0 43%, 0 38%, 0 33%, 0 28%, 0 23%, 0 19%, 0 14.5%, 0 10%, 0 6.5%, 0 3%
+    );
+    transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0);
+  }
+  32% {
+    clip-path: polygon(
+      0 0, 100% 0, 100% 100%, 0 100%, 1.4% 96%, 0 92%, 1.6% 88%, 0.8% 83%, 2.3% 78.5%, 0.4% 73%,
+      1.5% 68.5%, 0 63.5%, 1.7% 58%, 0.6% 53%, 2.1% 48%, 0.4% 43%, 1.4% 38%, 0 33%, 1.9% 28%,
+      0.6% 23%, 2.2% 19%, 0.5% 14.5%, 1.6% 10%, 0 6.5%, 0.8% 3%
+    );
+    transform: translate3d(5vw, 1px, 6px) rotateY(10deg) rotateZ(1deg);
+  }
+  45%, 76% {
+    clip-path: polygon(
+      0 0, 100% 0, 100% 100%, 0 100%, 1.4% 96%, 0 92%, 1.6% 88%, 0.8% 83%, 2.3% 78.5%, 0.4% 73%,
+      1.5% 68.5%, 0 63.5%, 1.7% 58%, 0.6% 53%, 2.1% 48%, 0.4% 43%, 1.4% 38%, 0 33%, 1.9% 28%,
+      0.6% 23%, 2.2% 19%, 0.5% 14.5%, 1.6% 10%, 0 6.5%, 0.8% 3%
+    );
+    transform: translate3d(23vw, 6px, 26px) rotateY(38deg) rotateZ(5deg);
+  }
 }
 
 @keyframes mobilePaperFibers {
@@ -16262,10 +16289,18 @@ main > section::after,
   45%, 76% { opacity: 0.9; transform: scaleX(1); }
 }
 
-@media (max-width: 640px) and (hover: none) {
+@media (max-width: 640px) {
   .statue-reveal .torn-paper {
     --tear-overlap: 11px;
     perspective: 1200px;
+  }
+
+  .statue-reveal .paper-left {
+    animation: mobileTearLeft 7s cubic-bezier(0.22, 0.78, 0.22, 1) infinite !important;
+  }
+
+  .statue-reveal .paper-right {
+    animation: mobileTearRight 7s cubic-bezier(0.22, 0.78, 0.22, 1) infinite !important;
   }
 
   .statue-reveal .rip {
