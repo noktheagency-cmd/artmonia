@@ -26,5 +26,10 @@ export async function getAdminSections(): Promise<SiteSectionRecord[]> {
   const supabase = await createClient();
   const { data, error } = await supabase.from("site_sections").select("*").order("sort_order");
   if (error || !data?.length) return defaultSections;
-  return data as SiteSectionRecord[];
+  const storedSections = data as SiteSectionRecord[];
+  const storedKeys = new Set(storedSections.map((section) => section.key));
+  return [
+    ...storedSections,
+    ...defaultSections.filter((section) => !storedKeys.has(section.key))
+  ].sort((a, b) => a.sort_order - b.sort_order);
 }

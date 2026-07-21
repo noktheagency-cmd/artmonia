@@ -1,9 +1,55 @@
 export const navItems = [
   { label: "Proqram", href: "/#program" },
   { label: "Akademiya", href: "/#academy" },
+  { label: "Yeniliklər", href: "/yenilikler" },
   { label: "Nəticələr", href: "/neticeler" },
   { label: "Mükafatlar", href: "/mukafatlar" },
   { label: "Əlaqə", href: "/#contact" }
+];
+
+export type NewsItem = {
+  id: string;
+  date: string;
+  category: string;
+  title: string;
+  excerpt: string;
+  body: string[];
+};
+
+export const newsItems: NewsItem[] = [
+  {
+    id: "yay-qrupuna-on-qeydiyyat",
+    date: "2026-07-21",
+    category: "Qəbul",
+    title: "Yay qrupuna ön qeydiyyat başladı",
+    excerpt: "Yay mövsümündə sənət yolçuluğunu bizimlə davam etdirmək istəyənlər üçün ön qeydiyyat açıqdır.",
+    body: [
+      "Yeni yay qruplarımız rəsm, anatomiya, rəngkarlıq, portret və kompozisiya istiqamətlərini sistemli məşğələlərlə bir araya gətirir. Dərslər fərqli səviyyələrə uyğun planlanır.",
+      "Yerlər məhduddur. Uyğun proqramı və dərs vaxtını birlikdə seçmək üçün ön qeydiyyat formasını doldura bilərsiniz. Komandamız sizinlə əlaqə saxlayacaq."
+    ]
+  },
+  {
+    id: "portfolio-hazirligi-yeni-qrup",
+    date: "2026-07-18",
+    category: "Proqram",
+    title: "Portfolio hazırlığı üçün yeni qrup açılır",
+    excerpt: "Portfolio qurmaq və qəbul prosesinə hazırlaşmaq istəyənlər üçün fokuslanmış yeni qrup formalaşır.",
+    body: [
+      "Proqramda iş seçimi, vizual ardıcıllıq, təqdimat dili və fərdi üslubun inkişafı mentor rəyi ilə mərhələli şəkildə işlənir.",
+      "Qrupa qoşulmaq üçün ön qeydiyyat zamanı məqsədinizi qeyd edin; sizə uyğun istiqamət və hazırlıq planı təqdim ediləcək."
+    ]
+  },
+  {
+    id: "aciq-studiya-gunu",
+    date: "2026-07-15",
+    category: "Görüş",
+    title: "Açıq studiya günü: məkan və müəllimlərlə tanışlıq",
+    excerpt: "Studiyanı kəşf edin, müəllimlərimizlə tanış olun və proqramlarla bağlı suallarınızı birbaşa cavablandıraq.",
+    body: [
+      "Açıq studiya günündə tədris mühitini, istifadə olunan materialları və tələbə işlərini yaxından görmək mümkündür.",
+      "İştirak üçün öncədən qeydiyyat kifayətdir. Görüş saatı müraciətdən sonra komanda tərəfindən dəqiqləşdiriləcək."
+    ]
+  }
 ];
 
 export const heroStats = [

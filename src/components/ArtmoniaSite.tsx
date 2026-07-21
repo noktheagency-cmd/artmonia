@@ -19,6 +19,7 @@ import {
   transformations
 } from "@/data/site";
 import SiteHeader from "@/components/SiteHeader";
+import HeroNewsRail from "@/components/HeroNewsRail";
 import { SiteContentProvider, useSiteContentValue } from "@/components/SiteContentContext";
 import type { SiteContentMap } from "@/lib/site-content";
 
@@ -218,6 +219,7 @@ function NavAtelierAnimation() {
   return (
     <section ref={stageRef} className="nav-atelier statue-reveal" aria-label="Artmonia Academy sculpture reveal animation">
       <div className="statue-atmosphere" />
+      <HeroNewsRail />
       <div className="statue-stage">
         <div className="statue-copy">
           <span>Artmonia Academy</span>
