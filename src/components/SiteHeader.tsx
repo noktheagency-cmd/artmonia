@@ -32,6 +32,13 @@ export default function SiteHeader() {
   const dynamicNavItems = useSiteContentValue("nav_items", navItems);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const visibleNavItems = dynamicNavItems.some((item) => item.href === "/yenilikler")
+    ? dynamicNavItems
+    : [
+        ...dynamicNavItems.slice(0, 2),
+        { label: "Yeniliklər", href: "/yenilikler" },
+        ...dynamicNavItems.slice(2)
+      ];
 
   const isActive = (href: string) => href.startsWith("/") && !href.includes("#") && pathname === href;
 
@@ -42,7 +49,7 @@ export default function SiteHeader() {
       </Link>
 
       <nav className="desktop-nav" aria-label="Əsas naviqasiya">
-        {dynamicNavItems.map((item) =>
+        {visibleNavItems.map((item) =>
           item.href.endsWith("#program") ? (
             <div className="nav-program-menu" key={item.href}>
               <Link className="nav-program-trigger" href={item.href} aria-haspopup="true">
@@ -84,7 +91,7 @@ export default function SiteHeader() {
       </button>
 
       <nav id="mobile-navigation" className={open ? "mobile-nav open" : "mobile-nav"} aria-label="Mobil naviqasiya">
-        {dynamicNavItems.map((item) =>
+        {visibleNavItems.map((item) =>
           item.href.endsWith("#program") ? (
             <div className="mobile-program-group" key={item.href}>
               <Link href={item.href} onClick={() => setOpen(false)}>

@@ -18,6 +18,7 @@ import {
   Mail,
   Medal,
   Menu,
+  Newspaper,
   Pencil,
   Search,
   Settings,
@@ -26,6 +27,7 @@ import {
   X
 } from "lucide-react";
 import CollectionEditor from "./CollectionEditor";
+import NewsEditor from "./NewsEditor";
 import JsonEditor from "./JsonEditor";
 import { createClient } from "@/lib/supabase/client";
 import { defaultSections, type JsonValue, type SiteSectionRecord } from "@/lib/admin-content";
@@ -55,11 +57,12 @@ export type MediaAsset = {
   created_at: string;
 };
 
-type View = "dashboard" | "homepage" | "results" | "awards" | "media" | "messages" | "settings";
+type View = "dashboard" | "homepage" | "news" | "results" | "awards" | "media" | "messages" | "settings";
 
 const nav = [
   { id: "dashboard" as const, label: "Ana panel", icon: LayoutDashboard },
   { id: "homepage" as const, label: "Ana səhifə", icon: Home },
+  { id: "news" as const, label: "Yeniliklər", icon: Newspaper },
   { id: "results" as const, label: "Nəticələr", icon: Medal },
   { id: "awards" as const, label: "Mükafatlar", icon: Award },
   { id: "media" as const, label: "Media", icon: ImageIcon },
@@ -112,14 +115,14 @@ export default function AdminDashboard({
   const fileRef = useRef<HTMLInputElement>(null);
 
   const unread = messages.filter((message) => message.status === "new").length;
-  const homepageSections = useMemo(() => sections.filter((section) => !["student_results", "awards"].includes(section.key)), [sections]);
+  const homepageSections = useMemo(() => sections.filter((section) => !["news_items", "student_results", "awards"].includes(section.key)), [sections]);
   const filteredSections = useMemo(() => {
     const query = search.trim().toLocaleLowerCase("az");
     if (!query) return homepageSections;
     return homepageSections.filter((section) => `${section.label} ${section.description}`.toLocaleLowerCase("az").includes(query));
   }, [homepageSections, search]);
 
-  function getSection(key: "student_results" | "awards") {
+  function getSection(key: "news_items" | "student_results" | "awards") {
     return sections.find((section) => section.key === key)
       ?? defaultSections.find((section) => section.key === key)!;
   }
@@ -265,6 +268,7 @@ export default function AdminDashboard({
 
   const dashboardLinks: Array<{ view: View; icon: typeof Home; title: string; text: string; count?: string }> = [
     { view: "homepage", icon: Home, title: "Ana səhifə", text: "Başlıqlar, kurslar, müəllimlər, qiymətlər və əlaqə məlumatları", count: `${homepageSections.length} bölmə` },
+    { view: "news", icon: Newspaper, title: "Yeniliklər", text: "Hero lentində və yeniliklər səhifəsində görünən xəbərləri idarə edin", count: `${countCollection(getSection("news_items"))} xəbər` },
     { view: "results", icon: Medal, title: "Nəticələr", text: "Tələbə işlərini şəkillə birlikdə əlavə edin və sıralayın", count: `${countCollection(getSection("student_results"))} nəticə` },
     { view: "awards", icon: Award, title: "Mükafatlar", text: "Akademiyanın mükafat və nailiyyətlərini idarə edin", count: `${countCollection(getSection("awards"))} mükafat` },
     { view: "media", icon: ImageIcon, title: "Media", text: "Kompüterdən şəkil və video yükləyin", count: `${media.length} fayl` },
@@ -331,6 +335,7 @@ export default function AdminDashboard({
             </section>
           ) : null}
 
+          {view === "news" ? <NewsEditor key={`news-${getSection("news_items").updated_at ?? "default"}`} section={getSection("news_items")} busy={busy} onSave={saveSection} /> : null}
           {view === "results" ? <CollectionEditor key={`results-${getSection("student_results").updated_at ?? "default"}`} kind="results" section={getSection("student_results")} busy={busy} onSave={saveSection} onUpload={uploadMedia} /> : null}
           {view === "awards" ? <CollectionEditor key={`awards-${getSection("awards").updated_at ?? "default"}`} kind="awards" section={getSection("awards")} busy={busy} onSave={saveSection} onUpload={uploadMedia} /> : null}
 
