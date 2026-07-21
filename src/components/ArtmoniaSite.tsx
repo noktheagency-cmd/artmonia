@@ -325,9 +325,11 @@ function AboutArtmonia() {
               className="about-photo"
               src="/assets/about-art-system.webp"
               alt="Artmonia Academy-də klassik heykəl üzərində akademik rəsm məşqi edən tələbə"
+              loading="lazy"
+              decoding="async"
             />
-            <img className="about-brush-wave" src="/assets/brand-brush-wave.png" alt="" aria-hidden="true" />
-            <img className="about-splatter" src="/assets/brand-paint-splatter.png" alt="" aria-hidden="true" />
+            <img className="about-brush-wave" src="/assets/brand-brush-wave.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+            <img className="about-splatter" src="/assets/brand-paint-splatter.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
             <div className="about-image-note" aria-hidden="true">
               <span>Sistem</span>
               <i />
@@ -382,7 +384,7 @@ function ProblemTransformation() {
         <div className="problem-orbit" aria-label="Artmonia problemlər karuseli">
           <div className="orbit-aura" />
           <div className="thinking-figure" aria-hidden="true">
-            <img className="question-avatar real-girl-avatar" src="/assets/problem-center-girl.webp" alt="" />
+            <img className="question-avatar real-girl-avatar" src="/assets/problem-center-girl.webp" alt="" loading="lazy" decoding="async" />
             <div className="problem-shadow" />
           </div>
           <div className="orbit-wheel">
@@ -405,7 +407,7 @@ function ProblemTransformation() {
       </Reveal>
       <Reveal className="atelier-panel" variant="boom">
         <div className="sketch-result-board scroll-sketch" aria-label="Artmonia rəsm materialları">
-          <img src={dynamicGalleryImages[1].src} alt={dynamicGalleryImages[1].alt} />
+          <img src={dynamicGalleryImages[1].src} alt={dynamicGalleryImages[1].alt} loading="lazy" decoding="async" />
           <div className="board-wash" />
           <div className="sketch-stage">
             <span className="sketch-label">Sketch To Result</span>
@@ -465,7 +467,7 @@ function Programs() {
             style={{ "--step": index } as React.CSSProperties}
           >
             <div className="course-media">
-              <img src={course.image} alt={`${course.title} proqramı üçün nümunə sənət işi`} loading="lazy" />
+              <img src={course.image} alt={`${course.title} proqramı üçün nümunə sənət işi`} loading="lazy" decoding="async" />
               <span>{course.duration}</span>
             </div>
             <div className="course-copy">
@@ -882,12 +884,12 @@ function DiagnosticQuiz() {
         </Reveal>
         <Reveal className="diagnostic-art-panel" variant="from-right">
           <Image
-            src="/assets/artmonia-success-path.png"
+            src="/assets/artmonia-success-path.webp"
             alt="Fırça ilə çəkilən işıqlı yolda irəliləyən insan"
             fill
             sizes="(max-width: 900px) calc(100vw - 28px), 540px"
-            quality={92}
-            loading="eager"
+            quality={78}
+            loading="lazy"
           />
           <div className="diagnostic-art-copy">
             <span>Artmonia istiqaməti</span>
@@ -1006,7 +1008,7 @@ function RegistrationLead() {
         <h2>Yerini ayır.</h2>
         <img
           className="registration-artwork"
-          src="/assets/registration-artwork.png"
+          src="/assets/registration-artwork.webp"
           alt="Portret üzərində çalışan rəssam"
           loading="lazy"
           decoding="async"

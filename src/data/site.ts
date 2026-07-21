@@ -44,7 +44,7 @@ export const courses = [
     title: "Akademik Rəsm",
     duration: "12 həftə",
     text: "Proporsiya, anatomiya və klassik çəkim texnikaları ilə möhkəm təməl.",
-    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85"
+    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1100&q=72"
   },
   {
     title: "Rəng & Boyama",
@@ -56,7 +56,7 @@ export const courses = [
     title: "Rəqəmsal Sənət",
     duration: "8 həftə",
     text: "Procreate və Photoshop ilə müasir rəqəmsal illüstrasiya.",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=85"
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1100&q=72"
   },
   {
     title: "Kompozisiya",
@@ -74,7 +74,7 @@ export const courses = [
     title: "Portfolyo Hazırlığı",
     duration: "4 həftə",
     text: "Karyera üçün peşəkar portfolyo yaratma və təqdimat.",
-    image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1400&q=85"
+    image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1100&q=72"
   }
 ];
 
@@ -447,7 +447,7 @@ export const galleryImages = [
     alt: "Klassik rəsm emalatxanası və kətanlar"
   },
   {
-    src: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=1000&q=85",
+    src: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&w=900&q=72",
     alt: "Rəsm materialları və boya palitrası"
   },
   {

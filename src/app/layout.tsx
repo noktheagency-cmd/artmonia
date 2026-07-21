@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./studio-heading.css";
 
 export const metadata: Metadata = {
   title: "Artmonia Academy | Sənətə sistemli başlanğıc",
