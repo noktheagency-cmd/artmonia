@@ -6,7 +6,6 @@
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
-  comparison,
   contact,
   courses,
   formFields,
@@ -510,6 +509,14 @@ function Studio() {
   );
 }
 
+function CheckIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className="pricing-check-icon">
+      <path d="m4 10.5 3.5 3.5L16 6" />
+    </svg>
+  );
+}
+
 function Results() {
   const dynamicTestimonials = useSiteContentValue("testimonials", testimonials);
   return (
@@ -878,145 +885,49 @@ function DiagnosticQuiz() {
 
 function Pricing() {
   const dynamicPackages = useSiteContentValue("packages", packages);
-  const dynamicComparison = useSiteContentValue("comparison", comparison);
-  const [activePackage, setActivePackage] = useState(1);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActivePackage((current) => (current + 1) % dynamicPackages.length);
-    }, 7000);
-
-    return () => window.clearInterval(timer);
-  }, [dynamicPackages.length]);
 
   return (
-    <>
-    <Reveal className="pricing-wrap" id="pricing" variant="from-right">
-      <div className="section-heading compact">
-        <p>Paketlər</p>
-        <h2>Sənə uyğun paketi seç.</h2>
+    <Reveal className="pricing-wrap pricing-unified" id="pricing" variant="from-bottom">
+      <div className="pricing-unified-heading">
+        <h2>Dərs paketləri və qiymətlər</h2>
+        <p>Öyrənmə ritminə uyğun planı seç.</p>
       </div>
-      <div className="packages" aria-live="polite">
-        {dynamicPackages.map((pack, index) => (
-          <article
-            key={pack.title}
-            className={`${pack.highlight ? "package featured" : "package"} ${activePackage === index ? "is-active" : ""}`}
-            aria-hidden={activePackage !== index}
-          >
-            {pack.highlight ? <span className="package-badge">{pack.highlight}</span> : null}
-            <h3>{pack.title}</h3>
-            <p>{pack.text}</p>
-            <strong>{pack.price}</strong>
-            <ul>
-              {pack.features.slice(0, 5).map((feature) => (
-                <li key={feature}>{feature}</li>
-              ))}
-            </ul>
-            <a href="#lead">{pack.cta}</a>
-          </article>
-        ))}
-        <div className="package-orbit" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-        </div>
-      </div>
-      <div className="package-tabs" aria-label="Paket seçimi">
-        {dynamicPackages.map((pack, index) => (
-          <button
-            key={pack.title}
-            type="button"
-            className={activePackage === index ? "active" : ""}
-            onClick={() => setActivePackage(index)}
-          >
-            {pack.title}
-          </button>
-        ))}
-      </div>
-      <div className="comparison">
-        <div className="comparison-head">
-          <span>Xüsusiyyət</span>
-          <span>Mini</span>
-          <span>Standart</span>
-          <span>Premium</span>
-        </div>
-        {dynamicComparison.map((row) => (
-          <div className="comparison-row" key={row[0]}>
-            {row.map((cell, cellIndex) => (
-              <span key={`${row[0]}-${cellIndex}`}>{cell}</span>
-            ))}
-          </div>
-        ))}
-      </div>
-    </Reveal>
-    <PriceCalculator />
-    </>
-  );
-}
+      <div className="pricing-saas-grid">
+        {dynamicPackages.map((pack, index) => {
+          const [amount, currency = "AZN"] = pack.price.split(" ");
+          const isFeatured = index === 1;
 
-const calculatorLevels = [
-  { id: "beginner", label: "Başlanğıc" },
-  { id: "intermediate", label: "Orta" },
-  { id: "advanced", label: "İrəliləmiş" }
-] as const;
-
-const calculatorDurations = [
-  { months: 1, label: "1 ay", discount: 0 },
-  { months: 3, label: "3 ay", discount: 0.1 },
-  { months: 6, label: "6 ay", discount: 0.2 }
-] as const;
-
-const calculatorFormats = [
-  { id: "group", label: "Qrup dərsi" },
-  { id: "private", label: "Fərdi dərs" }
-] as const;
-
-const calculatorPrices = {
-  beginner: { group: 99, private: 178 },
-  intermediate: { group: 129, private: 232 },
-  advanced: { group: 158, private: 285 }
-} as const;
-
-function PriceCalculator() {
-  const [level, setLevel] = useState<keyof typeof calculatorPrices>("beginner");
-  const [months, setMonths] = useState<1 | 3 | 6>(1);
-  const [format, setFormat] = useState<"group" | "private">("group");
-  const selectedDuration = calculatorDurations.find((item) => item.months === months)!;
-  const monthly = calculatorPrices[level][format];
-  const total = Math.round(monthly * months * (1 - selectedDuration.discount));
-  const saving = monthly * months - total;
-
-  return (
-    <Reveal className="price-calculator" id="calculator" variant="boom">
-      <div className="price-calculator-copy">
-        <p className="small-label">Qiymət kalkulyatoru</p>
-        <h2>Sənə uyğun <em>qiyməti hesabla</em></h2>
-        <p>Seçimlərini dəyiş, sənə uyğun proqramın aylıq və ümumi qiymətini dərhal gör.</p>
-      </div>
-      <div className="price-calculator-controls">
-        <fieldset>
-          <legend>Səviyyə</legend>
-          <div className="choice-row">
-            {calculatorLevels.map((item) => <button key={item.id} type="button" className={level === item.id ? "selected" : ""} onClick={() => setLevel(item.id)} aria-pressed={level === item.id}>{item.label}</button>)}
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>Müddət</legend>
-          <div className="choice-row duration-row">
-            {calculatorDurations.map((item) => <button key={item.months} type="button" className={months === item.months ? "selected" : ""} onClick={() => setMonths(item.months)} aria-pressed={months === item.months}>{item.label}{item.discount ? <small>-{item.discount * 100}%</small> : null}</button>)}
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>Format</legend>
-          <div className="choice-row format-row">
-            {calculatorFormats.map((item) => <button key={item.id} type="button" className={format === item.id ? "selected" : ""} onClick={() => setFormat(item.id)} aria-pressed={format === item.id}>{item.label}</button>)}
-          </div>
-        </fieldset>
-      </div>
-      <div className="price-calculator-result" aria-live="polite">
-        <div><span>Aylıq</span><strong>{monthly} <small>AZN</small></strong></div>
-        <div><span>{months} aylıq cəmi</span><strong>{total} <small>AZN</small></strong>{selectedDuration.discount ? <em>{saving} AZN qənaət!</em> : null}</div>
-        <a href="#lead">Bu paketlə qeydiyyat <ArrowIcon /></a>
+          return (
+            <article
+              key={pack.title}
+              className={isFeatured ? "pricing-plan pricing-plan--featured" : "pricing-plan"}
+              aria-label={`${pack.title} paketi`}
+            >
+              <div className="pricing-plan-topline" aria-hidden="true" />
+              {pack.highlight ? <span className="pricing-plan-label">{pack.highlight}</span> : null}
+              <div className="pricing-plan-heading">
+                <h3>{pack.title}</h3>
+                <div className="pricing-plan-price">
+                  <strong>{amount}</strong>
+                  <span>{currency}</span>
+                </div>
+                <p>{pack.text}</p>
+              </div>
+              <ul>
+                {pack.features.slice(0, 5).map((feature) => (
+                  <li key={feature}>
+                    <CheckIcon />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <a href="#lead">
+                {pack.cta}
+                <ArrowIcon />
+              </a>
+            </article>
+          );
+        })}
       </div>
     </Reveal>
   );

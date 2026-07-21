@@ -50,8 +50,7 @@ export default function SiteHeader() {
                 <span aria-hidden="true">⌄</span>
               </Link>
               <div className="nav-program-dropdown">
-                <Link href="/#pricing">Dərs paketləri</Link>
-                <Link href="/#calculator">Qiymət</Link>
+                <Link href="/#pricing">Paketlər və qiymətlər</Link>
               </div>
             </div>
           ) : (
@@ -92,8 +91,7 @@ export default function SiteHeader() {
                 {item.label}
               </Link>
               <div className="mobile-program-links">
-                <Link href="/#pricing" onClick={() => setOpen(false)}>Dərs paketləri</Link>
-                <Link href="/#calculator" onClick={() => setOpen(false)}>Qiymət</Link>
+                <Link href="/#pricing" onClick={() => setOpen(false)}>Paketlər və qiymətlər</Link>
               </div>
             </div>
           ) : (
