@@ -17360,3 +17360,311 @@ html.theme-dark .pricing-plan--featured {
     transition: none !important;
   }
 }
+
+/* Diagnostic pairing: a compact quiz and an equally tall artwork story. */
+.diagnostic-duo {
+  --diagnostic-panel-height: 700px;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  align-items: stretch;
+  gap: clamp(18px, 2vw, 26px);
+  width: 100%;
+}
+
+.diagnostic-duo > .diagnostic-compact,
+.diagnostic-duo > .diagnostic-art-panel {
+  width: 100%;
+  height: var(--diagnostic-panel-height);
+  min-height: var(--diagnostic-panel-height) !important;
+  margin: 0;
+  box-shadow: none !important;
+}
+
+.diagnostic-compact,
+html.theme-dark .diagnostic-compact {
+  position: relative;
+  top: auto;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 14px;
+  overflow: hidden;
+  padding: 24px;
+  border: 1px solid rgba(105, 41, 242, 0.24);
+  border-radius: 22px;
+  color: var(--brand-navy);
+  background: #ffffff;
+}
+
+.diagnostic-compact .quiz-card-head {
+  gap: 8px;
+}
+
+.diagnostic-compact .quiz-card-head .small-label {
+  color: var(--brand-coral);
+}
+
+.diagnostic-compact .quiz-card-head h2 {
+  max-width: 11ch;
+  color: var(--brand-navy);
+  font-size: clamp(42px, 3.6vw, 49px);
+  line-height: 0.94;
+}
+
+.diagnostic-compact .quiz-card-head > p:last-child {
+  max-width: 52ch;
+  color: rgba(12, 2, 89, 0.66);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.diagnostic-compact .quiz-progress {
+  padding: 8px;
+  border-color: rgba(105, 41, 242, 0.2);
+  color: var(--brand-navy);
+  background: rgba(105, 41, 242, 0.07);
+}
+
+.diagnostic-compact .quiz-progress span,
+.diagnostic-compact .quiz-progress strong {
+  color: var(--brand-navy);
+}
+
+.diagnostic-compact .quiz-progress span {
+  width: 32px;
+  height: 32px;
+  background: rgba(105, 41, 242, 0.12);
+}
+
+.diagnostic-compact .quiz-progress span.active {
+  color: var(--brand-navy);
+  background: var(--brand-orange);
+  box-shadow: none;
+}
+
+.diagnostic-compact .quiz-window {
+  min-height: 0 !important;
+  height: 100%;
+  border-color: rgba(255, 255, 255, 0.18);
+  border-radius: 17px;
+}
+
+.diagnostic-compact .quiz-pane {
+  gap: 11px;
+  padding: 20px;
+}
+
+.diagnostic-compact .quiz-pane h3 {
+  font-size: clamp(29px, 2.8vw, 39px);
+}
+
+.diagnostic-compact .quiz-options {
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.diagnostic-compact .problem-options .quiz-problem-option,
+.diagnostic-compact .quiz-options:not(.problem-options) > button {
+  min-height: 92px !important;
+  padding: 11px 12px !important;
+}
+
+.diagnostic-compact .problem-options .quiz-problem-option {
+  grid-template-columns: 58px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 10px;
+}
+
+.diagnostic-compact .problem-options .quiz-problem-option > strong {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  justify-self: start;
+  max-width: none;
+  font-size: 13px;
+  line-height: 1.18;
+  text-align: left;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+.diagnostic-compact .quiz-options:not(.problem-options) > button > strong {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+.diagnostic-compact .quiz-problem-art {
+  width: 52px;
+  height: 52px;
+}
+
+.diagnostic-compact .quiz-window .quiz-result {
+  margin: 12px;
+  padding: clamp(20px, 2.5vw, 32px);
+}
+
+.diagnostic-art-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(105, 41, 242, 0.24);
+  border-radius: 22px;
+  background: var(--brand-navy);
+}
+
+.diagnostic-art-panel::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(12, 2, 89, 0.02) 34%, rgba(12, 2, 89, 0.18) 58%, rgba(12, 2, 89, 0.92) 100%),
+    linear-gradient(90deg, rgba(12, 2, 89, 0.14), transparent 48%);
+}
+
+.diagnostic-art-panel > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.diagnostic-art-panel:hover > img {
+  transform: scale(1.025);
+}
+
+.diagnostic-art-copy {
+  position: absolute;
+  z-index: 2;
+  right: clamp(24px, 3vw, 38px);
+  bottom: clamp(25px, 3.2vw, 40px);
+  left: clamp(24px, 3vw, 38px);
+  display: grid;
+  gap: 10px;
+  color: #ffffff;
+}
+
+.diagnostic-art-copy span {
+  color: var(--brand-orange);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.diagnostic-art-copy p {
+  max-width: 15ch;
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--serif);
+  font-size: clamp(34px, 3.3vw, 47px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+@media (max-width: 900px) {
+  .diagnostic-duo {
+    --diagnostic-panel-height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .diagnostic-duo > .diagnostic-compact,
+  .diagnostic-duo > .diagnostic-art-panel {
+    height: auto;
+    min-height: 0 !important;
+  }
+
+  .diagnostic-compact .quiz-window {
+    min-height: 390px !important;
+  }
+
+  .diagnostic-art-panel {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (max-width: 560px) {
+  .diagnostic-duo {
+    gap: 16px;
+  }
+
+  .diagnostic-compact,
+  html.theme-dark .diagnostic-compact {
+    gap: 12px;
+    padding: 22px 16px;
+    border-radius: 18px;
+  }
+
+  .diagnostic-compact .quiz-card-head h2 {
+    max-width: 12ch;
+    font-size: clamp(38px, 11.5vw, 46px) !important;
+  }
+
+  .diagnostic-compact .quiz-card-head > p:last-child {
+    font-size: 13px;
+  }
+
+  .diagnostic-compact .quiz-pane {
+    padding: 16px 12px;
+  }
+
+  .diagnostic-compact .quiz-pane h3 {
+    font-size: clamp(27px, 8vw, 34px);
+  }
+
+  .diagnostic-compact .problem-options .quiz-problem-option,
+  .diagnostic-compact .quiz-options:not(.problem-options) > button {
+    min-height: 120px !important;
+    padding: 12px 8px !important;
+  }
+
+  .diagnostic-compact .problem-options .quiz-problem-option {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 48px auto;
+  }
+
+  .diagnostic-compact .problem-options .quiz-problem-option > strong {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    justify-self: center;
+    max-width: 10ch;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .diagnostic-compact .quiz-problem-art {
+    width: 48px;
+    height: 48px;
+  }
+
+  .diagnostic-art-panel {
+    border-radius: 18px;
+  }
+
+  .diagnostic-art-copy {
+    right: 22px;
+    bottom: 24px;
+    left: 22px;
+  }
+
+  .diagnostic-art-copy p {
+    max-width: 16ch;
+    font-size: clamp(31px, 9.5vw, 40px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diagnostic-art-panel > img {
+    transition: none !important;
+  }
+}
