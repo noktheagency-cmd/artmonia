@@ -253,8 +253,6 @@ function NavAtelierAnimation() {
           <div className="statue-halo" />
           <div className="real-statue-wrap">
             <img className="real-statue" src="/assets/artmonia-real-statue-hands.webp" alt="" aria-hidden="true" />
-            <i className="real-eye-glow real-eye-left" />
-            <i className="real-eye-glow real-eye-right" />
           </div>
         </div>
 
