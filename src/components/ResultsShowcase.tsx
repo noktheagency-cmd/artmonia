@@ -181,12 +181,11 @@ export default function ResultsShowcase() {
       </section>
 
       <section className="results-scene results-comparison-scene" aria-labelledby="student-results-title">
-        <header className="results-scene-heading results-scene-heading--reverse">
+        <header className="results-scene-heading">
           <div>
             <span className="results-scene-kicker">İnkişaf müqayisəsi</span>
             <h2 id="student-results-title">Tələbə nəticələri</h2>
           </div>
-          <p>Başlanğıc işi ilə proqram sonundakı nəticə eyni səhnədə aydın şəkildə görünür.</p>
         </header>
 
         <div className={styles.studentResultsPair}>

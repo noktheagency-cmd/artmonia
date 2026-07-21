@@ -1,0 +1,9 @@
+.studio-copy h2 {
+  font-size: clamp(48px, 4.55vw, 66px) !important;
+}
+
+@media (max-width: 640px) {
+  .studio-copy h2 {
+    font-size: clamp(36px, 10.7vw, 43px) !important;
+  }
+}
