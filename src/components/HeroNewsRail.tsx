@@ -22,14 +22,6 @@ function RailArrow() {
   );
 }
 
-function PauseIcon({ paused }: { paused: boolean }) {
-  return paused ? (
-    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z" /></svg>
-  ) : (
-    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14" /></svg>
-  );
-}
-
 export default function HeroNewsRail() {
   const dynamicItems = useSiteContentValue<NewsItem[]>("news_items", newsItems);
   const items = useMemo(
@@ -66,7 +58,6 @@ export default function HeroNewsRail() {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false);
       }}
     >
-      <span className="hero-news-brush" aria-hidden="true" />
       <div className="hero-news-items" key={activeIndex} aria-live="polite">
         <Link className="hero-news-item" href={`/yenilikler#${activeItem.id}`}>
           <span className="hero-news-meta">
@@ -77,13 +68,7 @@ export default function HeroNewsRail() {
           <span className="hero-news-arrow"><RailArrow /></span>
         </Link>
       </div>
-      <div className="hero-news-control">
-        <span className="hero-news-count">{String(activeIndex + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>
-        <span className={`hero-news-progress ${paused ? "is-paused" : ""}`} key={`progress-${activeIndex}`} aria-hidden="true"><i /></span>
-        <button type="button" onClick={() => setPaused((value) => !value)} aria-label={paused ? "Xəbər lentini davam etdir" : "Xəbər lentini dayandır"}>
-          <PauseIcon paused={paused} />
-        </button>
-      </div>
+      <span className={`hero-news-progress ${paused ? "is-paused" : ""}`} key={`progress-${activeIndex}`} aria-hidden="true"><i /></span>
     </aside>
   );
 }
