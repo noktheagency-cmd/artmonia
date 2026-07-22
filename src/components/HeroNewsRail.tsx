@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { newsItems, type NewsItem } from "@/data/site";
 import { useSiteContentValue } from "@/components/SiteContentContext";
 
@@ -52,7 +53,7 @@ export default function HeroNewsRail() {
 
   if (!items.length) return null;
 
-  const visible = [items[activeIndex], items[(activeIndex + 1) % items.length]].filter(Boolean);
+  const activeItem = items[activeIndex];
 
   return (
     <aside
@@ -66,27 +67,15 @@ export default function HeroNewsRail() {
       }}
     >
       <span className="hero-news-brush" aria-hidden="true" />
-      <div className="hero-news-items" key={activeIndex}>
-        {visible.map((item, index) => (
-          <a
-            key={`${item.id}-${index}`}
-            className={`hero-news-item ${index === 1 ? "hero-news-item--secondary" : ""}`}
-            href={`/yenilikler#${item.id}`}
-            onClick={(event) => {
-              const href = event.currentTarget.href;
-              window.setTimeout(() => {
-                if (window.location.href !== href) window.location.assign(href);
-              }, 80);
-            }}
-          >
-            <span className="hero-news-meta">
-              {index === 0 ? <b>Yenilik</b> : null}
-              <time dateTime={item.date}>{shortDate(item.date)}</time>
-            </span>
-            <strong>{item.title}</strong>
-            <span className="hero-news-arrow"><RailArrow /></span>
-          </a>
-        ))}
+      <div className="hero-news-items" key={activeIndex} aria-live="polite">
+        <Link className="hero-news-item" href={`/yenilikler#${activeItem.id}`}>
+          <span className="hero-news-meta">
+            <b>{activeItem.category || "Yenilik"}</b>
+            <time dateTime={activeItem.date}>{shortDate(activeItem.date)}</time>
+          </span>
+          <strong>{activeItem.title}</strong>
+          <span className="hero-news-arrow"><RailArrow /></span>
+        </Link>
       </div>
       <div className="hero-news-control">
         <span className="hero-news-count">{String(activeIndex + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>

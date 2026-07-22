@@ -62,12 +62,16 @@ export default function SiteHeader() {
             </div>
           ) : (
             <Link
-              className={isActive(item.href) ? "is-active" : undefined}
+              className={[
+                isActive(item.href) ? "is-active" : "",
+                item.href === "/yenilikler" ? "nav-news-link" : ""
+              ].filter(Boolean).join(" ") || undefined}
               key={item.href}
               href={item.href}
               aria-current={isActive(item.href) ? "page" : undefined}
             >
-              {item.label}
+              {item.href === "/yenilikler" ? <span className="nav-news-dot" aria-hidden="true" /> : null}
+              <span>{item.label}</span>
             </Link>
           )
         )}
@@ -103,13 +107,17 @@ export default function SiteHeader() {
             </div>
           ) : (
             <Link
-              className={isActive(item.href) ? "is-active" : undefined}
+              className={[
+                isActive(item.href) ? "is-active" : "",
+                item.href === "/yenilikler" ? "mobile-news-link" : ""
+              ].filter(Boolean).join(" ") || undefined}
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
               aria-current={isActive(item.href) ? "page" : undefined}
             >
-              {item.label}
+              {item.href === "/yenilikler" ? <span className="nav-news-dot" aria-hidden="true" /> : null}
+              <span>{item.label}</span>
             </Link>
           )
         )}
