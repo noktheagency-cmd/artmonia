@@ -60,6 +60,17 @@ export default function SiteHeader() {
                 <Link href="/#pricing">Paketlər və qiymətlər</Link>
               </div>
             </div>
+          ) : item.href === "/neticeler" ? (
+            <div className="nav-program-menu nav-results-menu" key={item.href}>
+              <Link className="nav-program-trigger" href={item.href} aria-haspopup="true">
+                {item.label}
+                <span aria-hidden="true">⌄</span>
+              </Link>
+              <div className="nav-program-dropdown nav-results-dropdown">
+                <Link href="/neticeler#ugur-hekayeleri">Uğur hekayələri</Link>
+                <Link href="/neticeler#telebe-neticeleri">Tələbə nəticələri</Link>
+              </div>
+            </div>
           ) : (
             <Link
               className={[
@@ -103,6 +114,16 @@ export default function SiteHeader() {
               </Link>
               <div className="mobile-program-links">
                 <Link href="/#pricing" onClick={() => setOpen(false)}>Paketlər və qiymətlər</Link>
+              </div>
+            </div>
+          ) : item.href === "/neticeler" ? (
+            <div className="mobile-program-group mobile-results-group" key={item.href}>
+              <Link href={item.href} onClick={() => setOpen(false)}>
+                {item.label}
+              </Link>
+              <div className="mobile-program-links">
+                <Link href="/neticeler#ugur-hekayeleri" onClick={() => setOpen(false)}>Uğur hekayələri</Link>
+                <Link href="/neticeler#telebe-neticeleri" onClick={() => setOpen(false)}>Tələbə nəticələri</Link>
               </div>
             </div>
           ) : (

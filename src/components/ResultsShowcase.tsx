@@ -96,7 +96,7 @@ export default function ResultsShowcase() {
 
   const showcase = (
     <div className="results-showcase">
-      <section className="results-scene results-story-scene" aria-labelledby="success-stories-title">
+      <section id="ugur-hekayeleri" className={`results-scene results-story-scene ${styles.anchorScene}`} aria-labelledby="success-stories-title">
         <header className="results-scene-heading">
           <div>
             <span className="results-scene-kicker">Video gündəlik</span>
@@ -133,7 +133,7 @@ export default function ResultsShowcase() {
         </div>
       </section>
 
-      <section className="results-scene results-comparison-scene" aria-labelledby="student-results-title">
+      <section id="telebe-neticeleri" className={`results-scene results-comparison-scene ${styles.anchorScene}`} aria-labelledby="student-results-title">
         <header className="results-scene-heading">
           <div>
             <span className="results-scene-kicker">İnkişaf müqayisəsi</span>
