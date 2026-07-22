@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import CollectionEditor from "./CollectionEditor";
 import NewsEditor from "./NewsEditor";
+import PaperSettingsEditor from "./PaperSettingsEditor";
 import JsonEditor from "./JsonEditor";
 import { createClient } from "@/lib/supabase/client";
 import { defaultSections, type JsonValue, type SiteSectionRecord } from "@/lib/admin-content";
@@ -379,7 +380,11 @@ export default function AdminDashboard({
                 <button className={`publish-switch ${editing.is_published ? "on" : ""}`} type="button" onClick={() => setEditing({ ...editing, is_published: !editing.is_published })}><i />{editing.is_published ? "Dərc olunur" : "Qaralama"}</button>
               </div>
               <div className="editor-content-heading"><div><h3>Məzmun sahələri</h3><p>Mətnləri və siyahıları aşağıdakı sahələrdən dəyişin.</p></div></div>
-              <JsonEditor value={editing.content as JsonValue} onChange={(content) => setEditing({ ...editing, content })} />
+              {editing.key === "hero_paper_settings" ? (
+                <PaperSettingsEditor value={editing.content as JsonValue} onChange={(content) => setEditing({ ...editing, content })} />
+              ) : (
+                <JsonEditor value={editing.content as JsonValue} onChange={(content) => setEditing({ ...editing, content })} />
+              )}
             </div>
             <footer><button type="button" className="secondary-action" onClick={() => setEditing(null)}>Ləğv et</button><button type="button" className="primary-action" disabled={busy || !editing.label} onClick={() => saveSection(editing)}>{busy ? "Saxlanılır..." : "Dəyişiklikləri saxla"}</button></footer>
           </div>

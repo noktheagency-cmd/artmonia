@@ -11,10 +11,10 @@ import {
   courses,
   formFields,
   galleryImages,
+  heroPaperSettings,
   heroStats,
   packages,
   painPoints,
-  studioFeatures,
   testimonials,
   transformations
 } from "@/data/site";
@@ -137,6 +137,21 @@ function useTiltTargets() {
 
 function NavAtelierAnimation() {
   const stageRef = useRef<HTMLElement | null>(null);
+  const dynamicPaperSettings = useSiteContentValue("hero_paper_settings", heroPaperSettings);
+  const paperComponents = Array.isArray(dynamicPaperSettings.components) ? dynamicPaperSettings.components : heroPaperSettings.components;
+  const paperColor = (id: "left" | "center" | "right") =>
+    paperComponents.find((component) => component.id === id)?.color
+    ?? heroPaperSettings.components.find((component) => component.id === id)?.color
+    ?? "#fffdf8";
+  const paperRadius = typeof dynamicPaperSettings.ovalRadius === "number"
+    ? Math.min(Math.max(dynamicPaperSettings.ovalRadius, 8), 58)
+    : heroPaperSettings.ovalRadius;
+  const paperStyle = {
+    "--paper-left-color": paperColor("left"),
+    "--paper-center-color": paperColor("center"),
+    "--paper-right-color": paperColor("right"),
+    "--paper-oval-radius": `${paperRadius}px`
+  } as React.CSSProperties;
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -226,7 +241,8 @@ function NavAtelierAnimation() {
           <strong>Akademik rəsm • Portfolio • Dizayn hazırlığı</strong>
         </div>
 
-        <div className="torn-paper">
+        <div className="torn-paper" style={paperStyle}>
+          <div className="paper-component paper-center-layer" aria-hidden="true" />
           <div className="paper-half paper-left">
             <div className="paper-info intro-paper-copy">
               <span>Artmonia Academy</span>
