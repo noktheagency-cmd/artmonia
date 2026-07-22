@@ -1,21 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { Clock3, Menu, MoveHorizontal, Pause, Play, Quote, X } from "lucide-react";
+import { Clock3, MoveHorizontal, Pause, Play, Quote, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import styles from "@/components/ResultsShowcase.module.css";
-
-type Story = {
-  id: string;
-  name: string;
-  program: string;
-  duration: string;
-  poster: string;
-  alt: string;
-  quote: string;
-  note: string;
-};
+import { useSiteContentValue } from "@/components/SiteContentContext";
+import { successStories, type SuccessStoryEntry } from "@/data/collections";
 
 type ResultComparison = {
   id: "portrait" | "color";
@@ -27,39 +18,6 @@ type ResultComparison = {
   note: string;
   period: string;
 };
-
-const stories: Story[] = [
-  {
-    id: "aylin",
-    name: "Aylin Məmmədli",
-    program: "Akademik rəsm",
-    duration: "00:42",
-    poster: "/assets/about-art-system.webp",
-    alt: "Molbert qarşısında portret üzərində çalışan tələbə",
-    quote: "İlk dəfə başladığım işi yarımçıq saxlamadım. Hər həftə aldığım rəy növbəti addımı aydınlaşdırdı.",
-    note: "Portret proqramı · həftəlik fərdi mentor rəyi"
-  },
-  {
-    id: "nargiz",
-    name: "Nərgiz Əliyeva",
-    program: "Rəng və boyama",
-    duration: "01:08",
-    poster: "/assets/footer-cta-portrait.webp",
-    alt: "Emalatxanada rəngli əsər üzərində çalışan tələbə",
-    quote: "Rəngdən qorxurdum. İndi palitranı düşünərək qurur, hər tonu nə üçün seçdiyimi bilirəm.",
-    note: "Rəng proqramı · kompozisiya və palitra işi"
-  },
-  {
-    id: "murad",
-    name: "Murad Həsənli",
-    program: "Final layihə",
-    duration: "00:55",
-    poster: "/assets/module-final-project.webp",
-    alt: "Molbertdə tamamlanmış rəngli final əsəri",
-    quote: "Eskizdən final işinə qədər hər mərhələnin öz qaydası olduğunu öyrəndim. Nəticə artıq təsadüfi deyil.",
-    note: "Final layihə · konseptdən təqdimata qədər"
-  }
-];
 
 const resultComparisons: ResultComparison[] = [
   {
@@ -88,19 +46,22 @@ const comparisonStyle = (position: number) =>
   ({ "--comparison-position": `${position}%` }) as CSSProperties;
 
 export default function ResultsShowcase() {
+  const dynamicStories = useSiteContentValue<SuccessStoryEntry[]>("success_stories", successStories);
+  const stories = Array.isArray(dynamicStories) && dynamicStories.length ? dynamicStories : successStories;
   const [storyPlaying, setStoryPlaying] = useState(false);
-  const [storyMenuOpen, setStoryMenuOpen] = useState(false);
-  const [selectedStoryId, setSelectedStoryId] = useState(stories[0].id);
+  const [storyModalOpen, setStoryModalOpen] = useState(false);
+  const [selectedStoryId, setSelectedStoryId] = useState(successStories[0].id);
   const [comparisonPositions, setComparisonPositions] = useState({ portrait: 52, color: 48 });
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const selectedStory = stories.find((story) => story.id === selectedStoryId) ?? stories[0];
 
   useEffect(() => {
-    if (!storyMenuOpen) return;
+    if (!storyModalOpen) return;
 
     const previousOverflow = document.body.style.overflow;
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setStoryMenuOpen(false);
+      if (event.key === "Escape") setStoryModalOpen(false);
     };
 
     document.body.style.overflow = "hidden";
@@ -111,12 +72,26 @@ export default function ResultsShowcase() {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", closeOnEscape);
     };
-  }, [storyMenuOpen]);
+  }, [storyModalOpen]);
 
-  const selectStory = (storyId: string) => {
+  const openStory = (storyId: string) => {
     setSelectedStoryId(storyId);
-    setStoryPlaying(true);
-    setStoryMenuOpen(false);
+    setStoryPlaying(false);
+    setStoryModalOpen(true);
+  };
+
+  const toggleStoryPlayback = () => {
+    const video = videoRef.current;
+    if (!video) {
+      setStoryPlaying((value) => !value);
+      return;
+    }
+
+    if (video.paused) {
+      void video.play();
+    } else {
+      video.pause();
+    }
   };
 
   const showcase = (
@@ -130,54 +105,32 @@ export default function ResultsShowcase() {
           <p>Tələbənin ilk xəttindən öz üslubunu tapdığı ana qədər keçdiyi yolu bir hekayədə izlə.</p>
         </header>
 
-        <article className="success-story-card">
-          <div className={`success-story-media${storyPlaying ? " is-playing" : ""}`}>
-            <Image
-              key={selectedStory.poster}
-              className="success-story-poster"
-              src={selectedStory.poster}
-              alt={selectedStory.alt}
-              fill
-              priority
-              sizes="(max-width: 820px) 100vw, 70vw"
-            />
-            <div className="success-story-shade" aria-hidden="true" />
+        <div className={styles.storyGallery}>
+          {stories.map((story) => (
             <button
-              className="story-play-button"
+              className={styles.storyPreviewCard}
               type="button"
-              aria-label={storyPlaying ? "Video hekayəsini dayandır" : "Video hekayəsini oynat"}
-              aria-pressed={storyPlaying}
-              onClick={() => setStoryPlaying((value) => !value)}
+              key={story.id}
+              aria-haspopup="dialog"
+              aria-label={`${story.name} — uğur hekayəsini aç`}
+              onClick={() => openStory(story.id)}
             >
-              {storyPlaying ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
+              <span className={styles.storyPreviewImage}>
+                <Image
+                  src={story.poster}
+                  alt={story.alt}
+                  fill
+                  sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, 33vw"
+                />
+                <span className={styles.storyPreviewPlay} aria-hidden="true"><Play /></span>
+              </span>
+              <span className={styles.storyPreviewCopy}>
+                <strong>{story.name}</strong>
+                <span>{story.summary || story.quote}</span>
+              </span>
             </button>
-
-            <div className="story-video-meta">
-              <span className="story-video-tag">{selectedStory.name}</span>
-              <div className="story-video-controls" aria-hidden="true">
-                <span>00:00</span>
-                <i><b /></i>
-                <span>{selectedStory.duration}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="success-story-copy">
-            <Quote className="success-story-quote-icon" aria-hidden="true" />
-            <blockquote>{selectedStory.quote}</blockquote>
-            <div className="success-story-person">
-              <strong>{selectedStory.name}</strong>
-              <span>{selectedStory.program}</span>
-            </div>
-            <div className="success-story-footnote">
-              <Clock3 aria-hidden="true" />
-              <span>{selectedStory.note}</span>
-            </div>
-            <button className={styles.storyMoreButton} type="button" onClick={() => setStoryMenuOpen(true)}>
-              Daha çox <Menu aria-hidden="true" />
-            </button>
-          </div>
-        </article>
+          ))}
+        </div>
       </section>
 
       <section className="results-scene results-comparison-scene" aria-labelledby="student-results-title">
@@ -261,53 +214,87 @@ export default function ResultsShowcase() {
   return (
     <>
       {showcase}
-      {storyMenuOpen
+      {storyModalOpen
         ? createPortal(
-            <div className={styles.storyModalBackdrop} onMouseDown={() => setStoryMenuOpen(false)}>
+            <div className={styles.storyModalBackdrop} onMouseDown={() => setStoryModalOpen(false)}>
               <section
-                className={styles.storyModal}
+                className={styles.storyPlayerModal}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="story-modal-title"
                 onMouseDown={(event) => event.stopPropagation()}
               >
-                <header className={styles.storyModalHeader}>
-                  <div>
-                    <span>Video arxiv</span>
-                    <h3 id="story-modal-title">Uğur hekayəsini seç</h3>
-                  </div>
-                  <button
-                    ref={closeButtonRef}
-                    className={styles.storyModalClose}
-                    type="button"
-                    aria-label="Pəncərəni bağla"
-                    onClick={() => setStoryMenuOpen(false)}
-                  >
-                    <X aria-hidden="true" />
-                  </button>
-                </header>
+                <h3 id="story-modal-title" className={styles.visuallyHidden}>{selectedStory.name} uğur hekayəsi</h3>
+                <button
+                  ref={closeButtonRef}
+                  className={styles.storyPlayerClose}
+                  type="button"
+                  aria-label="Video pəncərəsini bağla"
+                  onClick={() => setStoryModalOpen(false)}
+                >
+                  <X aria-hidden="true" />
+                </button>
 
-                <div className={styles.storyList}>
-                  {stories.map((story) => (
+                <article className={`success-story-card ${styles.storyModalPlayerCard}`}>
+                  <div className={`success-story-media${storyPlaying ? " is-playing" : ""}`}>
+                    {selectedStory.video ? (
+                      <video
+                        key={selectedStory.video}
+                        ref={videoRef}
+                        className="success-story-poster"
+                        src={selectedStory.video}
+                        poster={selectedStory.poster}
+                        playsInline
+                        preload="metadata"
+                        onPlay={() => setStoryPlaying(true)}
+                        onPause={() => setStoryPlaying(false)}
+                        onEnded={() => setStoryPlaying(false)}
+                      />
+                    ) : (
+                      <Image
+                        key={selectedStory.poster}
+                        className="success-story-poster"
+                        src={selectedStory.poster}
+                        alt={selectedStory.alt}
+                        fill
+                        priority
+                        sizes="(max-width: 820px) 100vw, 70vw"
+                      />
+                    )}
+                    <div className="success-story-shade" aria-hidden="true" />
                     <button
-                      className={`${styles.storyListItem}${story.id === selectedStoryId ? ` ${styles.isSelected}` : ""}`}
+                      className="story-play-button"
                       type="button"
-                      key={story.id}
-                      aria-current={story.id === selectedStoryId ? "true" : undefined}
-                      onClick={() => selectStory(story.id)}
+                      aria-label={storyPlaying ? "Video hekayəsini dayandır" : "Video hekayəsini oynat"}
+                      aria-pressed={storyPlaying}
+                      onClick={toggleStoryPlayback}
                     >
-                      <span className={styles.storyListThumb}>
-                        <Image src={story.poster} alt="" fill sizes="96px" loading="eager" />
-                      </span>
-                      <span className={styles.storyListCopy}>
-                        <strong>{story.name}</strong>
-                        <span>{story.program}</span>
-                      </span>
-                      <span className={styles.storyListDuration}>{story.duration}</span>
-                      <span className={styles.storyListPlay} aria-hidden="true"><Play /></span>
+                      {storyPlaying ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
                     </button>
-                  ))}
-                </div>
+
+                    <div className="story-video-meta">
+                      <span className="story-video-tag">{selectedStory.name}</span>
+                      <div className="story-video-controls" aria-hidden="true">
+                        <span>00:00</span>
+                        <i><b /></i>
+                        <span>{selectedStory.duration}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="success-story-copy">
+                    <Quote className="success-story-quote-icon" aria-hidden="true" />
+                    <blockquote>{selectedStory.quote}</blockquote>
+                    <div className="success-story-person">
+                      <strong>{selectedStory.name}</strong>
+                      <span>{selectedStory.program}</span>
+                    </div>
+                    <div className="success-story-footnote">
+                      <Clock3 aria-hidden="true" />
+                      <span>{selectedStory.note}</span>
+                    </div>
+                  </div>
+                </article>
               </section>
             </div>,
             document.body

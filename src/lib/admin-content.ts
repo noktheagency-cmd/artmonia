@@ -20,7 +20,7 @@ import {
   testimonials,
   transformations
 } from "@/data/site";
-import { awards, studentResults } from "@/data/collections";
+import { awards, studentResults, successStories } from "@/data/collections";
 
 export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
@@ -52,6 +52,7 @@ const definitions = [
   ["news_items", "Yeniliklər", "Hero xəbər lenti və yeniliklər səhifəsi", "content", newsItems],
   ["resources", "Məqalələr", "Məqalə və resurs məzmunu", "content", resources],
   ["testimonials", "Rəylər", "Tələbə rəyləri", "content", testimonials],
+  ["success_stories", "Uğur hekayələri", "Kart şəkli, tələbə adı, qısa açıqlama və video məlumatı", "content", successStories],
   ["faq", "Tez-tez verilən suallar", "Sual-cavab bölməsi", "content", faq],
   ["contact", "Əlaqə məlumatları", "Telefon, e-poçt, ünvan və sosial şəbəkələr", "settings", contact],
   ["form_fields", "Qeydiyyat formu", "Form sahələri və seçimlər", "settings", formFields],

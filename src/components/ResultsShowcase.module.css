@@ -1,34 +1,131 @@
-.storyMoreButton {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  justify-content: center;
-  gap: 10px;
-  min-height: 43px;
-  margin-top: 24px;
-  padding: 0 18px;
-  border: 1px solid rgba(255, 255, 255, 0.36);
-  border-radius: 6px;
+.storyGallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  min-width: 0;
+}
+
+.storyPreviewCard {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid rgba(12, 2, 89, 0.14);
+  border-radius: 16px;
   color: #0c0259;
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 220ms ease, transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.storyPreviewCard::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: #6929f2;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.storyPreviewCard:nth-child(2)::after {
   background: #f28e14;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0;
-  line-height: 1;
+}
+
+.storyPreviewCard:nth-child(3)::after {
+  background: #f37126;
+}
+
+.storyPreviewCard:hover,
+.storyPreviewCard:focus-visible {
+  border-color: #6929f2;
+  transform: translateY(-6px);
+}
+
+.storyPreviewCard:hover::after,
+.storyPreviewCard:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.storyPreviewImage {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #edeaf5;
+}
+
+.storyPreviewImage::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(180deg, transparent, rgba(12, 2, 89, 0.46));
+  pointer-events: none;
+}
+
+.storyPreviewImage img {
+  object-fit: cover;
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.storyPreviewCard:hover .storyPreviewImage img,
+.storyPreviewCard:focus-visible .storyPreviewImage img {
+  transform: scale(1.045);
+}
+
+.storyPreviewPlay {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 50%;
+  color: #0c0259;
+  background: rgba(255, 255, 255, 0.92);
   transition: color 220ms ease, background-color 220ms ease, transform 220ms ease;
 }
 
-.storyMoreButton:hover,
-.storyMoreButton:focus-visible {
-  color: #ffffff;
-  background: #6929f2;
-  transform: translateY(-2px);
+.storyPreviewPlay svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
 }
 
-.storyMoreButton svg {
-  width: 17px;
-  height: 17px;
-  stroke-width: 1.8;
+.storyPreviewCard:hover .storyPreviewPlay,
+.storyPreviewCard:focus-visible .storyPreviewPlay {
+  color: #ffffff;
+  background: #6929f2;
+  transform: scale(1.08);
+}
+
+.storyPreviewCopy {
+  display: grid;
+  align-content: start;
+  gap: 11px;
+  min-height: 150px;
+  padding: 24px 24px 27px;
+}
+
+.storyPreviewCopy strong {
+  font-family: var(--serif);
+  font-size: clamp(27px, 2.3vw, 34px);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.storyPreviewCopy > span {
+  color: rgba(12, 2, 89, 0.66);
+  font-size: 12px;
+  line-height: 1.62;
 }
 
 .studentResultsPair {
@@ -271,6 +368,72 @@
   fill: currentColor;
 }
 
+.storyPlayerModal {
+  position: relative;
+  width: min(1180px, 100%);
+  max-height: 90svh;
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 18px;
+  background: #0c0259;
+  animation: modalPanelIn 340ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.storyModalPlayerCard {
+  width: 100%;
+  min-height: 520px;
+  border: 0 !important;
+  border-radius: 18px !important;
+  box-shadow: none !important;
+}
+
+.storyPlayerModal :global(video.success-story-poster) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.storyPlayerClose {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 8;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(12, 2, 89, 0.16);
+  border-radius: 50%;
+  color: #0c0259;
+  background: rgba(255, 255, 255, 0.94);
+  cursor: pointer;
+  transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.storyPlayerClose:hover,
+.storyPlayerClose:focus-visible {
+  color: #ffffff;
+  background: #6929f2;
+  transform: rotate(7deg);
+}
+
+.storyPlayerClose svg {
+  width: 20px;
+  height: 20px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 @keyframes modalBackdropIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -282,6 +445,10 @@
 }
 
 @media (max-width: 800px) {
+  .storyGallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .studentResultsPair {
     grid-template-columns: 1fr;
     gap: 22px;
@@ -293,9 +460,40 @@
 }
 
 @media (max-width: 560px) {
+  .storyGallery {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .storyPreviewCopy {
+    min-height: 0;
+    padding: 21px 20px 24px;
+  }
+
+  .storyPreviewCopy strong {
+    font-size: 29px;
+  }
+
   .storyModalBackdrop {
-    align-items: end;
-    padding: 12px;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .storyPlayerModal {
+    max-height: 92svh;
+    border-radius: 15px;
+  }
+
+  .storyModalPlayerCard {
+    min-height: 0;
+    border-radius: 15px !important;
+  }
+
+  .storyPlayerClose {
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
   }
 
   .storyModal {
@@ -363,10 +561,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .storyMoreButton,
+  .storyPreviewCard,
+  .storyPreviewImage img,
+  .storyPreviewPlay,
   .storyModalBackdrop,
   .storyModal,
+  .storyPlayerModal,
   .storyModalClose,
+  .storyPlayerClose,
   .storyListItem {
     animation: none !important;
     transition: none !important;
