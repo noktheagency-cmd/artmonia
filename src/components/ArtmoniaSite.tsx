@@ -487,33 +487,6 @@ function Programs() {
   );
 }
 
-function Studio() {
-  const dynamicStudioFeatures = useSiteContentValue("studio_features", studioFeatures);
-  return (
-    <section className="studio-section scroll-section">
-      <div className="studio-grid">
-        <Reveal className="studio-copy" variant="from-left">
-          <p className="small-label">Məkanımız</p>
-          <h2>Burada sənətə aşiq olacaqsan.</h2>
-          <p>
-            Professional molbertlər, keyfiyyətli materiallar, xoş musiqi və ilham verən atmosfer - Artmonia-da hər
-            detal sənin yaradıcılığın üçün düşünülüb.
-          </p>
-          <div className="feature-line">
-            {dynamicStudioFeatures.map((feature) => (
-              <span key={feature}>{feature}</span>
-            ))}
-          </div>
-        </Reveal>
-        <Reveal className="studio-collage" variant="from-right">
-          <img className="collage-main" src="/assets/studio-room.webp" alt="İşıqlı rəsm studiyası və molbert" loading="lazy" decoding="async" />
-          <img className="collage-side" src="/assets/studio-brushes.webp" alt="Rəngli rəsm fırçaları" loading="lazy" decoding="async" />
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
 function CheckIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 20 20" className="pricing-check-icon">
@@ -1097,7 +1070,6 @@ function ArtmoniaSiteInner() {
         <AboutArtmonia />
         <ProblemTransformation />
         <Programs />
-        <Studio />
         <DiagnosticQuiz />
         <TeachersAtelier />
         <RegistrationLead />
