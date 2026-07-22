@@ -16,6 +16,26 @@ export type NewsItem = {
   body: string[];
 };
 
+export type HeroPaperComponent = {
+  id: "left" | "center" | "right";
+  label: string;
+  color: string;
+};
+
+export type HeroPaperSettings = {
+  ovalRadius: number;
+  components: HeroPaperComponent[];
+};
+
+export const heroPaperSettings: HeroPaperSettings = {
+  ovalRadius: 30,
+  components: [
+    { id: "left", label: "Sol kagiz", color: "#fffbf2" },
+    { id: "center", label: "Orta isiq qati", color: "#f2ecff" },
+    { id: "right", label: "Sag kagiz", color: "#fffdf8" }
+  ]
+};
+
 export const newsItems: NewsItem[] = [
   {
     id: "yay-qrupuna-on-qeydiyyat",

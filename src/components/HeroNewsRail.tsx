@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { newsItems, type NewsItem } from "@/data/site";
 import { useSiteContentValue } from "@/components/SiteContentContext";
@@ -69,10 +68,16 @@ export default function HeroNewsRail() {
       <span className="hero-news-brush" aria-hidden="true" />
       <div className="hero-news-items" key={activeIndex}>
         {visible.map((item, index) => (
-          <Link
+          <a
             key={`${item.id}-${index}`}
             className={`hero-news-item ${index === 1 ? "hero-news-item--secondary" : ""}`}
             href={`/yenilikler#${item.id}`}
+            onClick={(event) => {
+              const href = event.currentTarget.href;
+              window.setTimeout(() => {
+                if (window.location.href !== href) window.location.assign(href);
+              }, 80);
+            }}
           >
             <span className="hero-news-meta">
               {index === 0 ? <b>Yenilik</b> : null}
@@ -80,7 +85,7 @@ export default function HeroNewsRail() {
             </span>
             <strong>{item.title}</strong>
             <span className="hero-news-arrow"><RailArrow /></span>
-          </Link>
+          </a>
         ))}
       </div>
       <div className="hero-news-control">
