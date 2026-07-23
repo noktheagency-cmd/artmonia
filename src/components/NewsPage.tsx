@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import { SiteContentProvider } from "@/components/SiteContentContext";
 import type { NewsItem } from "@/data/site";
@@ -37,6 +40,14 @@ function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
   );
 }
 
+function CloseIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
+  );
+}
+
 function pageWindow(currentPage: number, totalPages: number) {
   let start = Math.max(1, currentPage - Math.floor(MAX_VISIBLE_PAGES / 2));
   const end = Math.min(totalPages, start + MAX_VISIBLE_PAGES - 1);
@@ -58,11 +69,29 @@ export default function NewsPage({
   items: NewsItem[];
   requestedPage: number;
 }) {
+  const [selectedItem, setSelectedItem] = useState<NewsItem | null>(null);
   const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
   const currentPage = Math.min(Math.max(requestedPage, 1), totalPages);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const visibleItems = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   const pagination = pageWindow(currentPage, totalPages);
+
+  useEffect(() => {
+    if (!selectedItem) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") setSelectedItem(null);
+    }
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [selectedItem]);
 
   return (
     <SiteContentProvider content={content}>
@@ -70,42 +99,36 @@ export default function NewsPage({
       <main className={styles.page} id="top">
         <header className={styles.intro}>
           <div className={styles.introCopy}>
-            <span className={styles.eyebrow}>Artmonia gündəliyi</span>
             <h1>Yeniliklər</h1>
+            <span className={styles.titleStroke} aria-hidden="true" />
             <p>
-              Studiyadan xəbərlər, yeni proqramlar və sənətin içindən gələn
-              görüşlər — hamısı bir yaradıcı gündəlikdə.
+              Artmonia-da yaradıcılıq daim hərəkətdədir. Sərgilər, kurslar,
+              ustad dərsləri və tələbələrimizin uğurları haqqında ən son xəbərlər.
             </p>
           </div>
 
           <div className={styles.introArtwork} aria-hidden="true">
             <span className={styles.sketchCircle} />
+            <img src="/assets/about-art-system.webp" alt="" />
             <span className={styles.brushMark} />
-            <span className={styles.artLetter}>A</span>
           </div>
         </header>
 
         <section className={styles.archive} id="yenilikler-arxivi" aria-label="Artmonia yenilikləri">
           <div className={styles.archiveHeading}>
-            <p>Seçilmiş xəbərlər</p>
+            <p>Son xəbərlər</p>
             <span>{String(items.length).padStart(2, "0")} qeyd</span>
           </div>
 
           <div className={styles.grid}>
             {visibleItems.map((item, index) => {
               const image = item.image || fallbackImages[(startIndex + index) % fallbackImages.length];
-              const number = String(startIndex + index + 1).padStart(2, "0");
 
               return (
-                <article
-                  className={`${styles.card} ${index === 0 ? styles.featuredCard : ""}`}
-                  id={item.id}
-                  key={item.id}
-                >
+                <article className={styles.card} id={item.id} key={item.id}>
                   <div className={styles.imageWrap}>
                     {/* Admin images can come from different providers, so a native image is intentional. */}
-                    <img src={image} alt="" loading={index === 0 ? "eager" : "lazy"} />
-                    <span className={styles.cardNumber}>{number}</span>
+                    <img src={image} alt={item.title} loading={index < 3 ? "eager" : "lazy"} />
                   </div>
 
                   <div className={styles.cardContent}>
@@ -114,17 +137,13 @@ export default function NewsPage({
                       <span>{item.category}</span>
                     </div>
                     <h2>{item.title}</h2>
+                    <span className={styles.cardStroke} aria-hidden="true" />
                     <p className={styles.excerpt}>{item.excerpt}</p>
 
-                    <details className={styles.details}>
-                      <summary>
-                        Xəbəri oxu
-                        <Arrow />
-                      </summary>
-                      <div className={styles.body}>
-                        {item.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-                      </div>
-                    </details>
+                    <button className={styles.readButton} type="button" onClick={() => setSelectedItem(item)}>
+                      Ətraflı oxu
+                      <Arrow />
+                    </button>
                   </div>
                 </article>
               );
@@ -167,6 +186,41 @@ export default function NewsPage({
           </nav>
         </section>
       </main>
+
+      {selectedItem ? (
+        <div className={styles.modalBackdrop} role="presentation" onMouseDown={() => setSelectedItem(null)}>
+          <section
+            className={styles.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="news-modal-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <button className={styles.modalClose} type="button" onClick={() => setSelectedItem(null)} aria-label="Pəncərəni bağla">
+              <CloseIcon />
+            </button>
+
+            <div className={styles.modalImage}>
+              <img
+                src={selectedItem.image || fallbackImages[items.indexOf(selectedItem) % fallbackImages.length]}
+                alt={selectedItem.title}
+              />
+            </div>
+            <div className={styles.modalContent}>
+              <div className={styles.meta}>
+                <time dateTime={selectedItem.date}>{formatDate(selectedItem.date)}</time>
+                <span>{selectedItem.category}</span>
+              </div>
+              <h2 id="news-modal-title">{selectedItem.title}</h2>
+              <p className={styles.modalExcerpt}>{selectedItem.excerpt}</p>
+              <div className={styles.modalBody}>
+                {selectedItem.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
+            </div>
+          </section>
+        </div>
+      ) : null}
+
       <footer className={styles.footer}>© 2026 Artmonia Academy</footer>
     </SiteContentProvider>
   );
