@@ -18991,22 +18991,25 @@ html.theme-dark .diagnostic-compact {
   }
 }
 
-/* Static quick application panel below the interactive hero. */
+/* Compact application bar inside the desktop hero. */
 .hero-application {
-  position: relative;
-  z-index: 20;
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  z-index: 40;
   display: grid;
-  grid-template-columns: minmax(210px, 0.7fr) minmax(0, 2.3fr);
+  grid-template-columns: minmax(170px, 0.55fr) minmax(0, 2.45fr);
   align-items: center;
-  gap: clamp(22px, 3vw, 44px);
-  width: min(1320px, calc(100% - 48px));
-  margin: clamp(22px, 3vw, 40px) auto clamp(52px, 6vw, 84px);
-  padding: clamp(22px, 2.5vw, 32px);
-  overflow: hidden;
-  border: 1px solid rgba(105, 41, 242, 0.16);
-  border-radius: var(--radius-lg);
-  background: rgba(250, 248, 255, 0.96);
-  box-shadow: 0 24px 62px rgba(12, 2, 89, 0.11);
+  gap: 14px;
+  width: min(1120px, calc(100% - 64px));
+  margin: 0;
+  padding: 10px 12px 10px 20px;
+  border: 1px solid rgba(105, 41, 242, 0.15);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 16px 42px rgba(12, 2, 89, 0.1);
+  backdrop-filter: blur(16px);
+  transform: translateX(-50%);
 }
 
 .hero-application::before {
@@ -19015,22 +19018,13 @@ html.theme-dark .diagnostic-compact {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 6px;
+  width: 4px;
+  border-radius: 14px 0 0 14px;
   background: var(--brand-orange);
 }
 
 .hero-application::after {
-  content: "";
-  position: absolute;
-  right: -48px;
-  bottom: -62px;
-  width: 190px;
-  height: 92px;
-  pointer-events: none;
-  border: 12px solid rgba(242, 142, 20, 0.12);
-  border-right: 0;
-  border-left: 0;
-  transform: rotate(-10deg);
+  content: none;
 }
 
 .hero-application-copy,
@@ -19042,56 +19036,57 @@ html.theme-dark .diagnostic-compact {
 
 .hero-application-copy span {
   display: block;
-  margin-bottom: 7px;
+  margin-bottom: 3px;
   color: var(--brand-orange);
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
 }
 
 .hero-application-copy h2 {
-  max-width: 290px;
+  max-width: 190px;
   margin: 0;
   font-family: var(--serif);
-  font-size: clamp(24px, 2vw, 32px);
+  font-size: clamp(15px, 1.2vw, 18px);
   font-weight: 500;
-  line-height: 1.05;
+  line-height: 1.08;
 }
 
 .hero-application-form {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
-  align-items: end;
-  gap: 12px;
+  grid-template-columns: minmax(130px, 1fr) minmax(115px, 0.78fr) minmax(150px, 1fr) auto;
+  align-items: center;
+  gap: 8px;
 }
 
 .hero-application-form label {
-  display: grid;
+  display: block;
+  position: relative;
   min-width: 0;
-  gap: 7px;
 }
 
 .hero-application-form label > span {
-  padding-left: 3px;
-  color: rgba(12, 2, 89, 0.64);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .hero-application-form input,
 .hero-application-form select {
   width: 100%;
   min-width: 0;
-  height: 52px;
-  padding: 0 16px;
+  height: 44px;
+  padding: 0 13px;
   border: 1px solid rgba(12, 2, 89, 0.14);
-  border-radius: 12px;
+  border-radius: 10px;
   outline: 0;
   color: var(--brand-navy);
   background: var(--brand-white);
+  font-size: 12.5px;
   box-shadow: 0 8px 24px rgba(12, 2, 89, 0.05);
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
@@ -19111,14 +19106,15 @@ html.theme-dark .diagnostic-compact {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-width: 150px;
-  height: 52px;
-  padding: 0 20px;
+  gap: 8px;
+  min-width: 132px;
+  height: 44px;
+  padding: 0 16px;
   border: 0;
-  border-radius: 12px;
+  border-radius: 10px;
   color: var(--brand-navy);
   background: var(--brand-orange);
+  font-size: 12px;
   font-weight: 800;
   cursor: pointer;
   box-shadow: 0 12px 28px rgba(242, 142, 20, 0.24);
@@ -19137,47 +19133,46 @@ html.theme-dark .diagnostic-compact {
 }
 
 .hero-application-form button .icon {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 .hero-application-status {
-  grid-column: 2;
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 7px);
 }
 
 .hero-application-status p {
-  margin: 10px 0 0;
-  font-size: 13px;
+  margin: 0;
+  padding: 8px 11px;
+  border: 1px solid rgba(105, 41, 242, 0.14);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.96);
+  font-size: 11px;
+  box-shadow: 0 10px 28px rgba(12, 2, 89, 0.1);
 }
 
 @media (max-width: 1080px) {
   .hero-application {
-    grid-template-columns: 1fr;
+    grid-template-columns: 145px minmax(0, 1fr);
+    width: calc(100% - 36px);
+    gap: 10px;
+    padding-left: 16px;
   }
 
   .hero-application-copy h2 {
-    max-width: none;
-  }
-
-  .hero-application-status {
-    grid-column: 1;
-  }
-}
-
-@media (max-width: 760px) {
-  .hero-application {
-    width: min(100% - 24px, 560px);
-    margin-top: 16px;
-    padding: 20px 16px;
-    border-radius: 16px;
+    font-size: 15px;
   }
 
   .hero-application-form {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(110px, 1fr) minmax(100px, 0.75fr) minmax(125px, 1fr) auto;
   }
+}
 
-  .hero-application-form button {
-    width: 100%;
+@media (max-width: 860px) {
+  .hero-application {
+    display: none;
   }
 }
 
