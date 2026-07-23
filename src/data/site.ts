@@ -13,6 +13,7 @@ export type NewsItem = {
   category: string;
   title: string;
   excerpt: string;
+  image?: string;
   body: string[];
 };
 
@@ -40,6 +41,7 @@ export const newsItems: NewsItem[] = [
   {
     id: "yay-qrupuna-on-qeydiyyat",
     date: "2026-07-21",
+    image: "/assets/studio-room.webp",
     category: "Qəbul",
     title: "Yay qrupuna ön qeydiyyat başladı",
     excerpt: "Yay mövsümündə sənət yolçuluğunu bizimlə davam etdirmək istəyənlər üçün ön qeydiyyat açıqdır.",
@@ -51,6 +53,7 @@ export const newsItems: NewsItem[] = [
   {
     id: "portfolio-hazirligi-yeni-qrup",
     date: "2026-07-18",
+    image: "/assets/article-composition.webp",
     category: "Proqram",
     title: "Portfolio hazırlığı üçün yeni qrup açılır",
     excerpt: "Portfolio qurmaq və qəbul prosesinə hazırlaşmaq istəyənlər üçün fokuslanmış yeni qrup formalaşır.",
@@ -62,6 +65,7 @@ export const newsItems: NewsItem[] = [
   {
     id: "aciq-studiya-gunu",
     date: "2026-07-15",
+    image: "/assets/article-portrait-technique.webp",
     category: "Görüş",
     title: "Açıq studiya günü: məkan və müəllimlərlə tanışlıq",
     excerpt: "Studiyanı kəşf edin, müəllimlərimizlə tanış olun və proqramlarla bağlı suallarınızı birbaşa cavablandıraq.",
