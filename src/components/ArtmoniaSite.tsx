@@ -267,6 +267,7 @@ function NavAtelierAnimation() {
           </div>
         </div>
       </div>
+      <QuickApplicationForm />
     </section>
   );
 }
@@ -296,9 +297,9 @@ function QuickApplicationForm() {
   };
 
   return (
-    <section className="hero-application" id="lead" aria-labelledby="hero-application-title">
+    <aside className="hero-application" id="lead" aria-labelledby="hero-application-title">
       <div className="hero-application-copy">
-        <span>Pulsuz konsultasiya</span>
+        <span>Ödənişsiz konsultasiya</span>
         <h2 id="hero-application-title">Sənət yolunu birlikdə seçək.</h2>
       </div>
       <form className="hero-application-form" onSubmit={onSubmit}>
@@ -314,8 +315,7 @@ function QuickApplicationForm() {
         </label>
         <label>
           <span>Maraqlandığın istiqamət</span>
-          <select name="interest" defaultValue="İxtisas seçimində qərarsızam">
-            <option>İxtisas seçimində qərarsızam</option>
+          <select name="interest" defaultValue="Akademik rəsm">
             <option>Akademik rəsm</option>
             <option>Portfolio hazırlığı</option>
             <option>Dizayn hazırlığı</option>
@@ -330,7 +330,7 @@ function QuickApplicationForm() {
         {sent ? <p className="form-success">Müraciətin qəbul edildi. Tezliklə səninlə əlaqə saxlayacağıq.</p> : null}
         {submitError ? <p className="form-error">{submitError}</p> : null}
       </div>
-    </section>
+    </aside>
   );
 }
 
@@ -1017,7 +1017,6 @@ function ArtmoniaSiteInner() {
       <BrushField />
       <SiteHeader />
       <NavAtelierAnimation />
-      <QuickApplicationForm />
       <main>
         <AboutArtmonia />
         <ProblemTransformation />
