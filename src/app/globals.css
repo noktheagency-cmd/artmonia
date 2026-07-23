@@ -18461,15 +18461,9 @@ html.theme-dark .diagnostic-compact {
   }
 
   .site-header .menu-button::before {
-    content: "";
-    position: absolute;
-    top: 15px;
-    left: 12px;
-    width: 24px;
-    height: 2px;
-    border-radius: 999px;
-    background: currentColor;
-    box-shadow: 0 7px 0 currentColor, 0 14px 0 currentColor;
+    content: none !important;
+    display: none !important;
+    box-shadow: none !important;
   }
 
   .site-header .menu-svg {
