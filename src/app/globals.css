@@ -18990,3 +18990,193 @@ html.theme-dark .diagnostic-compact {
     font-size: 12.5px;
   }
 }
+
+/* Static quick application panel below the interactive hero. */
+.hero-application {
+  position: relative;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: minmax(210px, 0.7fr) minmax(0, 2.3fr);
+  align-items: center;
+  gap: clamp(22px, 3vw, 44px);
+  width: min(1320px, calc(100% - 48px));
+  margin: clamp(22px, 3vw, 40px) auto clamp(52px, 6vw, 84px);
+  padding: clamp(22px, 2.5vw, 32px);
+  overflow: hidden;
+  border: 1px solid rgba(105, 41, 242, 0.16);
+  border-radius: var(--radius-lg);
+  background: rgba(250, 248, 255, 0.96);
+  box-shadow: 0 24px 62px rgba(12, 2, 89, 0.11);
+}
+
+.hero-application::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  background: var(--brand-orange);
+}
+
+.hero-application::after {
+  content: "";
+  position: absolute;
+  right: -48px;
+  bottom: -62px;
+  width: 190px;
+  height: 92px;
+  pointer-events: none;
+  border: 12px solid rgba(242, 142, 20, 0.12);
+  border-right: 0;
+  border-left: 0;
+  transform: rotate(-10deg);
+}
+
+.hero-application-copy,
+.hero-application-form,
+.hero-application-status {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-application-copy span {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--brand-orange);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.hero-application-copy h2 {
+  max-width: 290px;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(24px, 2vw, 32px);
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.hero-application-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  align-items: end;
+  gap: 12px;
+}
+
+.hero-application-form label {
+  display: grid;
+  min-width: 0;
+  gap: 7px;
+}
+
+.hero-application-form label > span {
+  padding-left: 3px;
+  color: rgba(12, 2, 89, 0.64);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.hero-application-form input,
+.hero-application-form select {
+  width: 100%;
+  min-width: 0;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid rgba(12, 2, 89, 0.14);
+  border-radius: 12px;
+  outline: 0;
+  color: var(--brand-navy);
+  background: var(--brand-white);
+  box-shadow: 0 8px 24px rgba(12, 2, 89, 0.05);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.hero-application-form input::placeholder {
+  color: rgba(12, 2, 89, 0.47);
+}
+
+.hero-application-form input:focus,
+.hero-application-form select:focus {
+  border-color: rgba(105, 41, 242, 0.62);
+  box-shadow: 0 0 0 4px rgba(105, 41, 242, 0.1);
+  transform: translateY(-1px);
+}
+
+.hero-application-form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 150px;
+  height: 52px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 12px;
+  color: var(--brand-navy);
+  background: var(--brand-orange);
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(242, 142, 20, 0.24);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.hero-application-form button:hover {
+  background: var(--brand-coral);
+  box-shadow: 0 16px 32px rgba(243, 113, 38, 0.27);
+  transform: translateY(-2px);
+}
+
+.hero-application-form button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.hero-application-form button .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.hero-application-status {
+  grid-column: 2;
+}
+
+.hero-application-status p {
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+
+@media (max-width: 1080px) {
+  .hero-application {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-application-copy h2 {
+    max-width: none;
+  }
+
+  .hero-application-status {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-application {
+    width: min(100% - 24px, 560px);
+    margin-top: 16px;
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .hero-application-form {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-application-form button {
+    width: 100%;
+  }
+}

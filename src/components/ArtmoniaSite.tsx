@@ -12,7 +12,6 @@ import {
   formFields,
   galleryImages,
   heroPaperSettings,
-  heroStats,
   packages,
   painPoints,
   testimonials,
@@ -262,72 +261,75 @@ function NavAtelierAnimation() {
           </div>
         </div>
 
-        <div className="intro-actions">
-          <a className="button primary" href="#lead">Ön qeydiyyat</a>
-          <a className="button ghost" href="#program">Necə öyrədirik?</a>
-        </div>
-
         <div className="statue-burst">
           <div className="statue-halo" />
           <div className="real-statue-wrap">
             <img className="real-statue" src="/assets/artmonia-real-statue-hands.webp" alt="" aria-hidden="true" />
           </div>
         </div>
-
-        <div className="statue-metrics">
-          <span><strong>60+</strong>Tələbə işi</span>
-          <span><strong>8+</strong>Proqram</span>
-          <span><strong>1:1</strong>Mentor rəyi</span>
-        </div>
       </div>
     </section>
   );
 }
 
-function Hero() {
-  const dynamicGalleryImages = useSiteContentValue("gallery_images", galleryImages);
-  const dynamicHeroStats = useSiteContentValue("hero_stats", heroStats);
+function QuickApplicationForm() {
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSending(true);
+    setSent(false);
+    setSubmitError("");
+    const form = event.currentTarget;
+
+    try {
+      const response = await fetch("/api/contact", { method: "POST", body: new FormData(form) });
+      if (!response.ok) throw new Error("Müraciət hazırda göndərilə bilmir.");
+      setSent(true);
+      form.reset();
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Xəta baş verdi.");
+    } finally {
+      setSending(false);
+    }
+  };
+
   return (
-    <section className="hero section-shell scroll-section" id="top">
-      <div className="hero-copy">
-        <div className="monogram-row">
-          <span />
-          <b>Artmonia Academy</b>
-        </div>
-        <h1>Fırçanı tut, sənətkar ol.</h1>
-        <p>
-          Sistem. Rəy. Nəticə - peşəkar mentorlarla 6 həftəlik akademik rəsm proqramı. Klassik rəsm intizamı,
-          müasir tədris ritmi və ölçülən inkişaf bir yerdə.
-        </p>
-        <div className="hero-actions">
-          <a className="button primary" href="#lead">
-            Ön qeydiyyat <ArrowIcon />
-          </a>
-          <a className="button ghost" href="#program">
-            Necə öyrədirik?
-          </a>
-        </div>
+    <section className="hero-application" aria-labelledby="hero-application-title">
+      <div className="hero-application-copy">
+        <span>Pulsuz konsultasiya</span>
+        <h2 id="hero-application-title">Sənət yolunu birlikdə seçək.</h2>
       </div>
-      <div className="hero-stage">
-        <div className="hero-frame" data-tilt>
-          <img src={dynamicGalleryImages[0].src} alt={dynamicGalleryImages[0].alt} />
-          <div className="floating-card card-a">
-            <span>01</span>
-            Proporsiya
-          </div>
-          <div className="floating-card card-b">
-            <span>06</span>
-            Final layihə
-          </div>
-        </div>
-        <div className="hero-stat-strip">
-          {dynamicHeroStats.map((item) => (
-            <div key={item.label}>
-              <strong>{item.value}</strong>
-              <span>{item.label}</span>
-            </div>
-          ))}
-        </div>
+      <form className="hero-application-form" onSubmit={onSubmit}>
+        <input className="form-honeypot" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+        <input type="hidden" name="goal" value="Hero konsultasiya müraciəti" />
+        <label>
+          <span>Ad və soyad</span>
+          <input type="text" name="full_name" placeholder="Ad Soyad" autoComplete="name" required />
+        </label>
+        <label>
+          <span>Telefon</span>
+          <input type="tel" name="phone" placeholder="+994" autoComplete="tel" required />
+        </label>
+        <label>
+          <span>Maraqlandığın istiqamət</span>
+          <select name="interest" defaultValue="İxtisas seçimində qərarsızam">
+            <option>İxtisas seçimində qərarsızam</option>
+            <option>Akademik rəsm</option>
+            <option>Portfolio hazırlığı</option>
+            <option>Dizayn hazırlığı</option>
+          </select>
+        </label>
+        <button type="submit" disabled={sending}>
+          <span>{sending ? "Göndərilir..." : "Müraciət et"}</span>
+          <ArrowIcon />
+        </button>
+      </form>
+      <div className="hero-application-status" aria-live="polite">
+        {sent ? <p className="form-success">Müraciətin qəbul edildi. Tezliklə səninlə əlaqə saxlayacağıq.</p> : null}
+        {submitError ? <p className="form-error">{submitError}</p> : null}
       </div>
     </section>
   );
@@ -1082,6 +1084,7 @@ function ArtmoniaSiteInner() {
       <BrushField />
       <SiteHeader />
       <NavAtelierAnimation />
+      <QuickApplicationForm />
       <main>
         <AboutArtmonia />
         <ProblemTransformation />
