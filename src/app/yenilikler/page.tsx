@@ -17,10 +17,17 @@ function isNewsItem(value: unknown): value is NewsItem {
   );
 }
 
-export default async function UpdatesPage() {
+export default async function UpdatesPage({
+  searchParams
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   const content = await getPublishedContent();
+  const params = await searchParams;
+  const parsedPage = Number.parseInt(params.page ?? "1", 10);
+  const requestedPage = Number.isFinite(parsedPage) ? parsedPage : 1;
   const dynamicItems = content.news_items;
   const items = Array.isArray(dynamicItems) ? dynamicItems.filter(isNewsItem) : newsItems;
 
-  return <NewsPage content={content} items={items.length ? items : newsItems} />;
+  return <NewsPage content={content} items={items.length ? items : newsItems} requestedPage={requestedPage} />;
 }

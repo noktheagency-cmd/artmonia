@@ -17,6 +17,7 @@ function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
       category: typeof item.category === "string" ? item.category : "",
       title: typeof item.title === "string" ? item.title : "",
       excerpt: typeof item.excerpt === "string" ? item.excerpt : "",
+      image: typeof item.image === "string" ? item.image : "",
       body: Array.isArray(item.body) ? item.body.filter((paragraph): paragraph is string => typeof paragraph === "string") : []
     }];
   });
@@ -29,6 +30,7 @@ function newItem(): NewsItem {
     category: "Elan",
     title: "Yeni xəbər",
     excerpt: "",
+    image: "/assets/studio-room.webp",
     body: [""]
   };
 }
@@ -113,6 +115,7 @@ export default function NewsEditor({
                 <label className="admin-field wide"><span>Xəbər başlığı</span><input value={selected.title} onChange={(event) => updateSelected({ title: event.target.value })} /></label>
                 <label className="admin-field"><span>Kateqoriya</span><input value={selected.category} onChange={(event) => updateSelected({ category: event.target.value })} /></label>
                 <label className="admin-field"><span>Tarix</span><input type="date" value={selected.date} onChange={(event) => updateSelected({ date: event.target.value })} /></label>
+                <label className="admin-field wide"><span>Şəkil URL-i və ya media yolu</span><input value={selected.image ?? ""} placeholder="/assets/studio-room.webp" onChange={(event) => updateSelected({ image: event.target.value })} /><small>Məsələn: /assets/sekil.webp və ya tam https ünvanı.</small></label>
                 <label className="admin-field wide"><span>Qısa mətn</span><textarea rows={3} value={selected.excerpt} onChange={(event) => updateSelected({ excerpt: event.target.value })} /></label>
                 <label className="admin-field wide"><span>Tam mətn</span><textarea rows={10} value={selected.body.join("\n\n")} onChange={(event) => updateSelected({ body: event.target.value.split(/\n\s*\n/).map((value) => value.trim()).filter(Boolean) })} /><small>Abzasları bir boş sətirlə ayırın.</small></label>
               </div>
