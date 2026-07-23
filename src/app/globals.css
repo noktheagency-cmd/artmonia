@@ -18895,6 +18895,23 @@ html.theme-dark .diagnostic-compact {
 }
 
 @media (min-width: 861px) {
+  .statue-reveal .statue-copy {
+    top: clamp(174px, 20svh, 194px) !important;
+    width: min(860px, calc(100% - 48px)) !important;
+  }
+
+  .statue-reveal .statue-copy span {
+    font-size: clamp(56px, 4.2vw, 72px) !important;
+    line-height: 0.94 !important;
+  }
+
+  .statue-reveal .statue-copy strong {
+    margin-top: 14px !important;
+    font-size: 10.5px !important;
+    line-height: 1.35;
+    letter-spacing: 0.22em;
+  }
+
   .statue-reveal .torn-paper {
     inset: auto 7% clamp(98px, 12svh, 118px) 7% !important;
     top: auto !important;
@@ -18905,11 +18922,26 @@ html.theme-dark .diagnostic-compact {
   }
 
   .statue-reveal .intro-actions {
-    bottom: clamp(94px, 12svh, 112px) !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(360px, calc(100% - 32px)) !important;
+    bottom: calc(clamp(98px, 12svh, 118px) + 24px) !important;
+    gap: 12px;
+  }
+
+  .statue-reveal .intro-actions .button {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 14px;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 10.5px;
+    letter-spacing: 0.13em;
+    box-sizing: border-box;
   }
 
   .statue-reveal .statue-metrics {
-    bottom: clamp(170px, 21svh, 200px) !important;
+    bottom: clamp(186px, 23svh, 214px) !important;
   }
 }
 
