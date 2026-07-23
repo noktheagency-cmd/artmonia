@@ -18896,29 +18896,37 @@ html.theme-dark .diagnostic-compact {
 
 @media (min-width: 861px) {
   .statue-reveal .statue-copy {
-    top: clamp(174px, 20svh, 194px) !important;
-    width: min(860px, calc(100% - 48px)) !important;
+    top: clamp(166px, 21.8svh, 174px) !important;
+    width: min(820px, calc(100% - 48px)) !important;
   }
 
   .statue-reveal .statue-copy span {
-    font-size: clamp(56px, 4.2vw, 72px) !important;
-    line-height: 0.94 !important;
+    font-size: clamp(54px, 3.9vw, 68px) !important;
+    line-height: 0.95 !important;
   }
 
   .statue-reveal .statue-copy strong {
-    margin-top: 14px !important;
-    font-size: 10.5px !important;
+    margin-top: 12px !important;
+    font-size: 10px !important;
     line-height: 1.35;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.21em;
   }
 
   .statue-reveal .torn-paper {
-    inset: auto 7% clamp(98px, 12svh, 118px) 7% !important;
+    inset: auto 13% clamp(98px, 12svh, 118px) 13% !important;
     top: auto !important;
-    right: 7% !important;
+    right: 13% !important;
     bottom: clamp(98px, 12svh, 118px) !important;
-    left: 7% !important;
+    left: 13% !important;
+    height: clamp(360px, 50svh, 390px) !important;
+    min-height: 0 !important;
+    max-height: 390px !important;
     animation: paperBreathFramed 6s ease-in-out infinite !important;
+  }
+
+  .statue-reveal .paper-half {
+    height: 100% !important;
+    min-height: 0 !important;
   }
 
   .statue-reveal .intro-actions {
