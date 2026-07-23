@@ -365,11 +365,14 @@
 
 .modalBackdrop {
   position: fixed;
-  inset: 0;
-  z-index: 100;
+  top: 96px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 19;
   display: grid;
   place-items: center;
-  padding: 28px;
+  padding: 18px 28px 28px;
   background: rgba(12, 2, 56, 0.66);
   backdrop-filter: blur(8px);
   animation: backdropIn 180ms ease both;
@@ -378,7 +381,7 @@
 .modal {
   position: relative;
   width: min(1040px, 100%);
-  max-height: min(86vh, 780px);
+  max-height: min(calc(100dvh - 126px), 780px);
   display: grid;
   grid-template-columns: minmax(340px, 0.9fr) minmax(0, 1.1fr);
   border: 1px solid rgba(255, 255, 255, 0.34);
@@ -584,13 +587,14 @@
   }
 
   .modalBackdrop {
+    top: 94px;
     align-items: end;
-    padding: 10px;
+    padding: 8px 10px 10px;
   }
 
   .modal {
     width: 100%;
-    max-height: 92vh;
+    max-height: calc(100dvh - 104px);
     display: block;
     border-radius: 22px;
     overflow-y: auto;
