@@ -100,8 +100,8 @@ export default function SiteHeader() {
       </nav>
 
       <div className="header-actions">
-        <Link className="nav-cta" href="/#lead">
-          Qeydiyyat <HeaderArrowIcon />
+        <Link className="nav-cta" href="/muraciet">
+          Müraciət et <HeaderArrowIcon />
         </Link>
       </div>
 
@@ -163,8 +163,8 @@ export default function SiteHeader() {
             </Link>
           )
         )}
-        <Link href="/#lead" onClick={() => setOpen(false)}>
-          Qeydiyyat
+        <Link href="/muraciet" onClick={() => setOpen(false)}>
+          Müraciət et
         </Link>
       </nav>
     </header>
