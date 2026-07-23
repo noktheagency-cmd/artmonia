@@ -9,7 +9,6 @@ import Image from "next/image";
 import {
   contact,
   courses,
-  formFields,
   galleryImages,
   heroPaperSettings,
   packages,
@@ -297,7 +296,7 @@ function QuickApplicationForm() {
   };
 
   return (
-    <section className="hero-application" aria-labelledby="hero-application-title">
+    <section className="hero-application" id="lead" aria-labelledby="hero-application-title">
       <div className="hero-application-copy">
         <span>Pulsuz konsultasiya</span>
         <h2 id="hero-application-title">Sənət yolunu birlikdə seçək.</h2>
@@ -971,72 +970,6 @@ function TeachersAtelier() {
   );
 }
 
-function RegistrationLead() {
-  const dynamicFormFields = useSiteContentValue("form_fields", formFields);
-  const [sent, setSent] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [submitError, setSubmitError] = useState("");
-
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSending(true);
-    setSubmitError("");
-    const form = event.currentTarget;
-    try {
-      const response = await fetch("/api/contact", { method: "POST", body: new FormData(form) });
-      if (!response.ok) throw new Error("Müraciət hazırda göndərilə bilmir.");
-      setSent(true);
-      form.reset();
-    } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Xəta baş verdi.");
-    } finally {
-      setSending(false);
-    }
-  };
-
-  return (
-    <section className="registration-section scroll-section" id="lead">
-      <Reveal className="lead-panel" variant="boom">
-        <p className="small-label">Ön qeydiyyat</p>
-        <h2>Yerini ayır.</h2>
-        <img
-          className="registration-artwork"
-          src="/assets/registration-artwork.webp"
-          alt="Portret üzərində çalışan rəssam"
-          loading="lazy"
-          decoding="async"
-        />
-        <form onSubmit={onSubmit}>
-          <input className="form-honeypot" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-          {dynamicFormFields.map((field) => (
-            <label key={field.name}>
-              <span>{field.label}</span>
-              {field.type === "select" ? (
-                <select name={field.name}>
-                  {field.options?.map((option) => (
-                    <option key={option}>{option}</option>
-                  ))}
-                </select>
-              ) : (
-                <input type={field.type} name={field.name} placeholder={field.placeholder} required={field.name !== "email"} />
-              )}
-            </label>
-          ))}
-          <label className="full">
-            <span>Məqsədin nədir?</span>
-            <textarea name="goal" placeholder="Hobim üçün / Peşəkar olmaq istəyirəm..." />
-          </label>
-          <button className="button primary" type="submit" disabled={sending}>
-            {sending ? "Göndərilir..." : "Qeydiyyatdan keç"} <ArrowIcon />
-          </button>
-          {sent ? <p className="form-success">Müraciətiniz qəbul edildi. Tezliklə sizinlə əlaqə saxlayacağıq.</p> : null}
-          {submitError ? <p className="form-error">{submitError}</p> : null}
-        </form>
-      </Reveal>
-    </section>
-  );
-}
-
 function AuditPrivacyFooter() {
   const dynamicContact = useSiteContentValue("contact", contact);
   return (
@@ -1091,7 +1024,6 @@ function ArtmoniaSiteInner() {
         <Programs />
         <DiagnosticQuiz />
         <TeachersAtelier />
-        <RegistrationLead />
       </main>
       <AuditPrivacyFooter />
     </>
