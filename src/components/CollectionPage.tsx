@@ -14,6 +14,8 @@ export default async function CollectionPage({ type }: CollectionPageProps) {
   const siteContent = await getPublishedContent();
   const content = collectionPageContent[type];
   const items = (siteContent[content.sectionKey] as unknown as CollectionEntry[] | undefined) ?? [];
+  const cashAwards = items.filter((item) => item.category === "cash");
+  const travelAwards = items.filter((item) => item.category === "travel");
 
   return (
     <SiteContentProvider content={siteContent}>
@@ -35,17 +37,47 @@ export default async function CollectionPage({ type }: CollectionPageProps) {
         <section className="collection-content" aria-label={`${content.title} siyahısı`}>
           {type === "results" ? (
             <ResultsShowcase />
-          ) : items.length ? (
-            <div className="student-results-grid">
-              {items.map((result, index) => (
-                <StudentResultCard key={result.id} {...result} index={index} type={type} />
-              ))}
-            </div>
           ) : (
-            <div className="collection-empty">
-              <span className="collection-empty-mark" aria-hidden="true" />
-              <h2>{content.emptyTitle}</h2>
-              <p>{content.emptyText}</p>
+            <div className="awards-categories">
+              <section className="awards-category awards-category--cash" id="pul-mukafatlari" aria-labelledby="cash-awards-title">
+                <header className="awards-category-heading">
+                  <p>Mükafat kateqoriyası</p>
+                  <h2 id="cash-awards-title">Pul mükafatları</h2>
+                  <span>Yaradıcılığın nəticəyə və real dəyərə çevrildiyi nailiyyətlər.</span>
+                </header>
+                {cashAwards.length ? (
+                  <div className="student-results-grid">
+                    {cashAwards.map((result, index) => (
+                      <StudentResultCard key={result.id} {...result} index={index} type={type} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="awards-category-empty">
+                    <strong>Yeni pul mükafatları burada paylaşılacaq.</strong>
+                    <span>Seçilmiş layihələr, müsabiqələr və qaliblər haqqında məlumatlar tezliklə əlavə ediləcək.</span>
+                  </div>
+                )}
+              </section>
+
+              <section className="awards-category awards-category--travel" id="seyahet-mukafatlari" aria-labelledby="travel-awards-title">
+                <header className="awards-category-heading">
+                  <p>Mükafat kateqoriyası</p>
+                  <h2 id="travel-awards-title">Səyahət mükafatları</h2>
+                  <span>Sənət sərgiləri, yaradıcılıq proqramları və yeni təcrübələrə açılan yol.</span>
+                </header>
+                {travelAwards.length ? (
+                  <div className="student-results-grid">
+                    {travelAwards.map((result, index) => (
+                      <StudentResultCard key={result.id} {...result} index={index} type={type} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="awards-category-empty">
+                    <strong>Yeni səyahət mükafatları burada paylaşılacaq.</strong>
+                    <span>İştirak şərtləri, istiqamətlər və qaliblərin hekayələri tezliklə əlavə ediləcək.</span>
+                  </div>
+                )}
+              </section>
             </div>
           )}
         </section>

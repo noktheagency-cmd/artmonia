@@ -5,6 +5,7 @@ export type CollectionEntry = {
   description: string;
   image: string;
   date: string;
+  category?: "cash" | "travel";
 };
 
 export type SuccessStoryEntry = {

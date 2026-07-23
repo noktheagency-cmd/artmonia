@@ -78,8 +78,8 @@ export default function SiteHeader() {
                 <span aria-hidden="true">⌄</span>
               </Link>
               <div className="nav-program-dropdown nav-awards-dropdown">
-                <Link href="/mukafatlar?kateqoriya=pul">Pul mükafatları</Link>
-                <Link href="/mukafatlar?kateqoriya=seyahet">Səyahət mükafatları</Link>
+                <Link href="/mukafatlar#pul-mukafatlari">Pul mükafatları</Link>
+                <Link href="/mukafatlar#seyahet-mukafatlari">Səyahət mükafatları</Link>
               </div>
             </div>
           ) : (
@@ -143,8 +143,8 @@ export default function SiteHeader() {
                 {item.label}
               </Link>
               <div className="mobile-program-links">
-                <Link href="/mukafatlar?kateqoriya=pul" onClick={() => setOpen(false)}>Pul mükafatları</Link>
-                <Link href="/mukafatlar?kateqoriya=seyahet" onClick={() => setOpen(false)}>Səyahət mükafatları</Link>
+                <Link href="/mukafatlar#pul-mukafatlari" onClick={() => setOpen(false)}>Pul mükafatları</Link>
+                <Link href="/mukafatlar#seyahet-mukafatlari" onClick={() => setOpen(false)}>Səyahət mükafatları</Link>
               </div>
             </div>
           ) : (
