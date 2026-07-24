@@ -19132,6 +19132,38 @@ html.theme-dark .diagnostic-compact {
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
+.hero-application-form select {
+  appearance: none;
+  padding-right: 36px;
+  background-color: var(--brand-white);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--brand-purple) 50%),
+    linear-gradient(135deg, var(--brand-purple) 50%, transparent 50%);
+  background-position:
+    calc(100% - 17px) 17px,
+    calc(100% - 12px) 17px;
+  background-repeat: no-repeat;
+  background-size: 5px 5px, 5px 5px;
+  font-family: var(--sans);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.hero-application-form select option {
+  min-height: 42px;
+  padding: 12px 14px;
+  color: var(--brand-navy);
+  background: var(--brand-white);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.hero-application-form select option:checked {
+  color: var(--brand-white);
+  background: var(--brand-purple);
+}
+
 .hero-application-form input::placeholder {
   color: rgba(12, 2, 89, 0.47);
 }
