@@ -15600,6 +15600,23 @@ main > section::after,
   object-fit: cover !important;
 }
 
+/* Keep descriptions readable when a course title wraps onto two lines. */
+#program .course-label,
+#program .course-card h3,
+#program .course-card p,
+#program .course-copy a {
+  flex-shrink: 0;
+}
+
+#program .course-card p {
+  min-height: 2.9em;
+}
+
+#program .course-copy a {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
 /* Keep the pre-registration panel flat: remove the offset purple shadow layer. */
 .registration-section .lead-panel,
 .registration-section .lead-panel:hover {
