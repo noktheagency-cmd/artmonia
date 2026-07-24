@@ -19039,6 +19039,19 @@ html.theme-dark .diagnostic-compact {
   animation: heroApplicationWash 7s ease-in-out infinite alternate;
 }
 
+/*
+ * The animated hero ignores pointer input so it cannot block the page.
+ * This live form is the exception and must opt back into interaction.
+ */
+.hero-application,
+.hero-application-form,
+.hero-application-form label,
+.hero-application-form input:not(.form-honeypot),
+.hero-application-form select,
+.hero-application-form button {
+  pointer-events: auto !important;
+}
+
 .hero-application::before {
   content: "";
   position: absolute;

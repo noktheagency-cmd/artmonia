@@ -286,7 +286,10 @@ function QuickApplicationForm() {
 
     try {
       const response = await fetch("/api/contact", { method: "POST", body: new FormData(form) });
-      if (!response.ok) throw new Error("Müraciət hazırda göndərilə bilmir.");
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        throw new Error(payload?.error || "Müraciət hazırda göndərilə bilmir.");
+      }
       setSent(true);
       form.reset();
     } catch (error) {
@@ -302,7 +305,7 @@ function QuickApplicationForm() {
         <span>Ödənişsiz konsultasiya</span>
         <h2 id="hero-application-title">Sənət yolunu birlikdə seçək.</h2>
       </div>
-      <form className="hero-application-form" onSubmit={onSubmit}>
+      <form className="hero-application-form" onSubmit={onSubmit} aria-busy={sending}>
         <input className="form-honeypot" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
         <input type="hidden" name="goal" value="Hero konsultasiya müraciəti" />
         <label>
@@ -311,11 +314,11 @@ function QuickApplicationForm() {
         </label>
         <label>
           <span>Telefon</span>
-          <input type="tel" name="phone" placeholder="+994" autoComplete="tel" required />
+          <input type="tel" name="phone" placeholder="+994" autoComplete="tel" inputMode="tel" required />
         </label>
         <label>
           <span>Maraqlandığın istiqamət</span>
-          <select name="interest" defaultValue="Akademik rəsm">
+          <select name="interest" defaultValue="Akademik rəsm" required>
             <option>Akademik rəsm</option>
             <option>Portfolio hazırlığı</option>
             <option>Dizayn hazırlığı</option>
