@@ -19,8 +19,8 @@
   --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 20px;
-  --serif: Georgia, "Times New Roman", serif;
-  --sans: "Segoe UI", Arial, sans-serif;
+  --serif: Georgia, "Times New Roman", "Noto Serif", "DejaVu Serif", serif;
+  --sans: "Segoe UI", "Noto Sans", "DejaVu Sans", Arial, sans-serif;
 }
 
 * {
@@ -18994,22 +18994,32 @@ html.theme-dark .diagnostic-compact {
 /* Compact application bar inside the desktop hero. */
 .hero-application {
   position: absolute;
-  bottom: 18px;
+  bottom: 22px;
   left: 50%;
   z-index: 40;
   display: grid;
-  grid-template-columns: minmax(170px, 0.55fr) minmax(0, 2.45fr);
+  grid-template-columns: minmax(230px, 0.62fr) minmax(0, 2.38fr);
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: min(1120px, calc(100% - 64px));
   margin: 0;
-  padding: 10px 12px 10px 20px;
+  padding: 6px 10px 6px 18px;
   border: 1px solid rgba(105, 41, 242, 0.15);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.86);
+  border-radius: 13px;
+  background:
+    linear-gradient(
+      110deg,
+      rgba(252, 249, 255, 0.96) 0%,
+      rgba(229, 216, 255, 0.94) 28%,
+      rgba(248, 244, 255, 0.96) 52%,
+      rgba(238, 221, 255, 0.94) 76%,
+      rgba(255, 240, 249, 0.94) 100%
+    );
+  background-size: 280% 100%;
   box-shadow: 0 16px 42px rgba(12, 2, 89, 0.1);
   backdrop-filter: blur(16px);
   transform: translateX(-50%);
+  animation: heroApplicationWash 7s ease-in-out infinite alternate;
 }
 
 .hero-application::before {
@@ -19045,12 +19055,13 @@ html.theme-dark .diagnostic-compact {
 }
 
 .hero-application-copy h2 {
-  max-width: 190px;
+  max-width: none;
   margin: 0;
   font-family: var(--serif);
-  font-size: clamp(15px, 1.2vw, 18px);
+  font-size: 15px;
   font-weight: 500;
-  line-height: 1.08;
+  line-height: 1.05;
+  white-space: nowrap;
 }
 
 .hero-application-form {
@@ -19079,7 +19090,7 @@ html.theme-dark .diagnostic-compact {
 .hero-application-form select {
   width: 100%;
   min-width: 0;
-  height: 44px;
+  height: 40px;
   padding: 0 13px;
   border: 1px solid rgba(12, 2, 89, 0.14);
   border-radius: 10px;
@@ -19107,8 +19118,8 @@ html.theme-dark .diagnostic-compact {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-width: 132px;
-  height: 44px;
+  min-width: 128px;
+  height: 40px;
   padding: 0 16px;
   border: 0;
   border-radius: 10px;
@@ -19155,9 +19166,9 @@ html.theme-dark .diagnostic-compact {
 
 @media (max-width: 1080px) {
   .hero-application {
-    grid-template-columns: 145px minmax(0, 1fr);
+    grid-template-columns: 205px minmax(0, 1fr);
     width: calc(100% - 36px);
-    gap: 10px;
+    gap: 8px;
     padding-left: 16px;
   }
 
@@ -19166,13 +19177,28 @@ html.theme-dark .diagnostic-compact {
   }
 
   .hero-application-form {
-    grid-template-columns: minmax(110px, 1fr) minmax(100px, 0.75fr) minmax(125px, 1fr) auto;
+    grid-template-columns: minmax(105px, 1fr) minmax(95px, 0.72fr) minmax(120px, 1fr) auto;
   }
 }
 
 @media (max-width: 860px) {
   .hero-application {
     display: none;
+  }
+}
+
+@keyframes heroApplicationWash {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-application {
+    animation: none;
   }
 }
 
