@@ -4,8 +4,9 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   contact,
   courses,
@@ -18,6 +19,7 @@ import {
 } from "@/data/site";
 import SiteHeader from "@/components/SiteHeader";
 import HeroNewsRail from "@/components/HeroNewsRail";
+import HomeNewsSection from "@/components/HomeNewsSection";
 import { SiteContentProvider, useSiteContentValue } from "@/components/SiteContentContext";
 import type { SiteContentMap } from "@/lib/site-content";
 
@@ -267,130 +269,12 @@ function NavAtelierAnimation() {
           </div>
         </div>
       </div>
-      <QuickApplicationForm />
-    </section>
-  );
-}
-
-function QuickApplicationForm() {
-  const [sent, setSent] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [submitError, setSubmitError] = useState("");
-
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSending(true);
-    setSent(false);
-    setSubmitError("");
-    const form = event.currentTarget;
-
-    try {
-      const response = await fetch("/api/contact", { method: "POST", body: new FormData(form) });
-      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
-      if (!response.ok) {
-        throw new Error(payload?.error || "Müraciət hazırda göndərilə bilmir.");
-      }
-      setSent(true);
-      form.reset();
-    } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Xəta baş verdi.");
-    } finally {
-      setSending(false);
-    }
-  };
-
-  return (
-    <aside className="hero-application" id="lead" aria-labelledby="hero-application-title">
-      <div className="hero-application-copy">
-        <span>Ödənişsiz konsultasiya</span>
-        <h2 id="hero-application-title">Sənət yolunu birlikdə seçək.</h2>
-      </div>
-      <form className="hero-application-form" onSubmit={onSubmit} aria-busy={sending}>
-        <input className="form-honeypot" type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-        <input type="hidden" name="goal" value="Hero konsultasiya müraciəti" />
-        <label>
-          <span>Ad və soyad</span>
-          <input type="text" name="full_name" placeholder="Ad Soyad" autoComplete="name" required />
-        </label>
-        <label>
-          <span>Telefon</span>
-          <input type="tel" name="phone" placeholder="+994" autoComplete="tel" inputMode="tel" required />
-        </label>
-        <label>
-          <span>Maraqlandığın istiqamət</span>
-          <select name="interest" defaultValue="Akademik rəsm" required>
-            <option>Akademik rəsm</option>
-            <option>Portfolio hazırlığı</option>
-            <option>Dizayn hazırlığı</option>
-          </select>
-        </label>
-        <button type="submit" disabled={sending}>
-          <span>{sending ? "Göndərilir..." : "Müraciət et"}</span>
+      <div className="hero-reveal-cta">
+        <p>Təsəvvür etdiyin hər şey gerçəkdir.</p>
+        <Link className="hero-reveal-cta-button" href="/muraciet" aria-label="Müraciət səhifəsinə keç">
+          <span>Müraciət et</span>
           <ArrowIcon />
-        </button>
-      </form>
-      <div className="hero-application-status" aria-live="polite">
-        {sent ? <p className="form-success">Müraciətin qəbul edildi. Tezliklə səninlə əlaqə saxlayacağıq.</p> : null}
-        {submitError ? <p className="form-error">{submitError}</p> : null}
-      </div>
-    </aside>
-  );
-}
-
-function AboutArtmonia() {
-  return (
-    <section className="about-system scroll-section" id="academy">
-      <div className="about-system-shell">
-        <Reveal className="about-system-visual" variant="from-left">
-          <div className="about-photo-wrap">
-            <img
-              className="about-photo"
-              src="/assets/about-art-system.webp"
-              alt="Artmonia Academy-də klassik heykəl üzərində akademik rəsm məşqi edən tələbə"
-              loading="lazy"
-              decoding="async"
-            />
-            <img className="about-brush-wave" src="/assets/brand-brush-wave.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-            <img className="about-splatter" src="/assets/brand-paint-splatter.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-            <div className="about-image-note" aria-hidden="true">
-              <span>Sistem</span>
-              <i />
-              <span>Rəhbərlik</span>
-              <i />
-              <span>Nəticə</span>
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal className="about-system-copy" variant="from-right">
-          <p className="small-label">Haqqımızda</p>
-          <h2>
-            <em>Artmonia</em> — sənət sistemi.
-          </h2>
-          <p className="about-system-lead">
-            Biz inanırıq ki, hər kəs rəsm çəkə bilər — düzgün sistem və doğru rəhbərlik olduqda. Artmonia Academy
-            peşəkar rəssamlar tərəfindən yaradılmış strukturlaşdırılmış proqramdır.
-          </p>
-
-          <div className="about-principles" aria-label="Artmonia tədris prinsipləri">
-            <div>
-              <span>Sistem</span>
-              <p>Hər mərhələ bir-birini tamamlayan aydın planla qurulur.</p>
-            </div>
-            <div>
-              <span>Rəhbərlik</span>
-              <p>Mentor rəyi hər xətti daha dəqiq qərara çevirir.</p>
-            </div>
-            <div>
-              <span>Praktika</span>
-              <p>Ardıcıl məşq görünən və ölçülən nəticə yaradır.</p>
-            </div>
-          </div>
-
-          <svg className="about-line-art" aria-hidden="true" viewBox="0 0 520 92" preserveAspectRatio="none">
-            <path d="M4 67C91 12 151 82 234 43C315 5 394 20 516 63" />
-          </svg>
-        </Reveal>
+        </Link>
       </div>
     </section>
   );
@@ -1021,7 +905,7 @@ function ArtmoniaSiteInner() {
       <SiteHeader />
       <NavAtelierAnimation />
       <main>
-        <AboutArtmonia />
+        <HomeNewsSection />
         <ProblemTransformation />
         <Programs />
         <DiagnosticQuiz />

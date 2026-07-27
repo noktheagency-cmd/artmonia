@@ -420,10 +420,6 @@
   color-scheme: dark;
 }
 
-.wideField {
-  grid-column: 1 / -1;
-}
-
 .successPanel {
   min-height: calc(100svh - 260px);
   display: flex;
@@ -551,10 +547,6 @@
 
   .formGrid {
     grid-template-columns: 1fr;
-  }
-
-  .wideField {
-    grid-column: auto;
   }
 
   .stepActions,

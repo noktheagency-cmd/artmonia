@@ -1,49 +1,24 @@
 "use client";
 
+/* News images can be managed from different providers in the admin panel. */
+/* eslint-disable @next/next/no-img-element */
+
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import { SiteContentProvider } from "@/components/SiteContentContext";
 import type { NewsItem } from "@/data/site";
 import type { SiteContentMap } from "@/lib/site-content";
+import { formatNewsDate, getNewsImages } from "@/lib/news";
 import styles from "./NewsPage.module.css";
 
 const ITEMS_PER_PAGE = 6;
 const MAX_VISIBLE_PAGES = 10;
-
-const fallbackImages = [
-  "/assets/studio-room.webp",
-  "/assets/article-composition.webp",
-  "/assets/article-portrait-technique.webp",
-  "/assets/module-color.webp",
-  "/assets/studio-brushes.webp",
-  "/assets/article-color-harmony-crisp.webp"
-];
-
-function formatDate(value: string) {
-  const date = new Date(`${value}T12:00:00`);
-  if (Number.isNaN(date.getTime())) return value;
-
-  return new Intl.DateTimeFormat("az-AZ", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric"
-  }).format(date);
-}
 
 function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" className={direction === "left" ? styles.arrowLeft : undefined}>
       <path d="M5 12h13" />
       <path d="m13 6 6 6-6 6" />
-    </svg>
-  );
-}
-
-function CloseIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24">
-      <path d="M6 6l12 12M18 6 6 18" />
     </svg>
   );
 }
@@ -69,29 +44,11 @@ export default function NewsPage({
   items: NewsItem[];
   requestedPage: number;
 }) {
-  const [selectedItem, setSelectedItem] = useState<NewsItem | null>(null);
   const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
   const currentPage = Math.min(Math.max(requestedPage, 1), totalPages);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const visibleItems = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   const pagination = pageWindow(currentPage, totalPages);
-
-  useEffect(() => {
-    if (!selectedItem) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    function closeOnEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") setSelectedItem(null);
-    }
-
-    window.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [selectedItem]);
 
   return (
     <SiteContentProvider content={content}>
@@ -122,10 +79,16 @@ export default function NewsPage({
 
           <div className={styles.grid}>
             {visibleItems.map((item, index) => {
-              const image = item.image || fallbackImages[(startIndex + index) % fallbackImages.length];
+              const image = getNewsImages(item, startIndex + index)[0];
 
               return (
-                <article className={styles.card} id={item.id} key={item.id}>
+                <Link
+                  className={styles.card}
+                  id={item.id}
+                  href={`/yenilikler/${encodeURIComponent(item.id)}`}
+                  aria-label={`${item.title} xəbərini ətraflı oxu`}
+                  key={item.id}
+                >
                   <div className={styles.imageWrap}>
                     {/* Admin images can come from different providers, so a native image is intentional. */}
                     <img src={image} alt={item.title} loading={index < 3 ? "eager" : "lazy"} />
@@ -133,19 +96,19 @@ export default function NewsPage({
 
                   <div className={styles.cardContent}>
                     <div className={styles.meta}>
-                      <time dateTime={item.date}>{formatDate(item.date)}</time>
+                      <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
                       <span>{item.category}</span>
                     </div>
                     <h2>{item.title}</h2>
                     <span className={styles.cardStroke} aria-hidden="true" />
                     <p className={styles.excerpt}>{item.excerpt}</p>
 
-                    <button className={styles.readButton} type="button" onClick={() => setSelectedItem(item)}>
+                    <span className={styles.readButton}>
                       Ətraflı oxu
                       <Arrow />
-                    </button>
+                    </span>
                   </div>
-                </article>
+                </Link>
               );
             })}
           </div>
@@ -186,40 +149,6 @@ export default function NewsPage({
           </nav>
         </section>
       </main>
-
-      {selectedItem ? (
-        <div className={styles.modalBackdrop} role="presentation" onMouseDown={() => setSelectedItem(null)}>
-          <section
-            className={styles.modal}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="news-modal-title"
-            onMouseDown={(event) => event.stopPropagation()}
-          >
-            <button className={styles.modalClose} type="button" onClick={() => setSelectedItem(null)} aria-label="Pəncərəni bağla">
-              <CloseIcon />
-            </button>
-
-            <div className={styles.modalImage}>
-              <img
-                src={selectedItem.image || fallbackImages[items.indexOf(selectedItem) % fallbackImages.length]}
-                alt={selectedItem.title}
-              />
-            </div>
-            <div className={styles.modalContent}>
-              <div className={styles.meta}>
-                <time dateTime={selectedItem.date}>{formatDate(selectedItem.date)}</time>
-                <span>{selectedItem.category}</span>
-              </div>
-              <h2 id="news-modal-title">{selectedItem.title}</h2>
-              <p className={styles.modalExcerpt}>{selectedItem.excerpt}</p>
-              <div className={styles.modalBody}>
-                {selectedItem.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              </div>
-            </div>
-          </section>
-        </div>
-      ) : null}
 
       <footer className={styles.footer}>© 2026 Artmonia Academy</footer>
     </SiteContentProvider>

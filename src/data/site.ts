@@ -14,6 +14,7 @@ export type NewsItem = {
   title: string;
   excerpt: string;
   image?: string;
+  images?: string[];
   body: string[];
 };
 
@@ -42,6 +43,11 @@ export const newsItems: NewsItem[] = [
     id: "yay-qrupuna-on-qeydiyyat",
     date: "2026-07-21",
     image: "/assets/studio-room.webp",
+    images: [
+      "/assets/studio-room.webp",
+      "/assets/article-composition.webp",
+      "/assets/module-final-project.webp"
+    ],
     category: "Qəbul",
     title: "Yay qrupuna ön qeydiyyat başladı",
     excerpt: "Yay mövsümündə sənət yolçuluğunu bizimlə davam etdirmək istəyənlər üçün ön qeydiyyat açıqdır.",
@@ -54,6 +60,10 @@ export const newsItems: NewsItem[] = [
     id: "portfolio-hazirligi-yeni-qrup",
     date: "2026-07-18",
     image: "/assets/article-composition.webp",
+    images: [
+      "/assets/article-composition.webp",
+      "/assets/module-composition.webp"
+    ],
     category: "Proqram",
     title: "Portfolio hazırlığı üçün yeni qrup açılır",
     excerpt: "Portfolio qurmaq və qəbul prosesinə hazırlaşmaq istəyənlər üçün fokuslanmış yeni qrup formalaşır.",
@@ -66,12 +76,134 @@ export const newsItems: NewsItem[] = [
     id: "aciq-studiya-gunu",
     date: "2026-07-15",
     image: "/assets/article-portrait-technique.webp",
+    images: [
+      "/assets/article-portrait-technique.webp",
+      "/assets/studio-room.webp",
+      "/assets/teacher-emine.webp"
+    ],
     category: "Görüş",
     title: "Açıq studiya günü: məkan və müəllimlərlə tanışlıq",
     excerpt: "Studiyanı kəşf edin, müəllimlərimizlə tanış olun və proqramlarla bağlı suallarınızı birbaşa cavablandıraq.",
     body: [
       "Açıq studiya günündə tədris mühitini, istifadə olunan materialları və tələbə işlərini yaxından görmək mümkündür.",
       "İştirak üçün öncədən qeydiyyat kifayətdir. Görüş saatı müraciətdən sonra komanda tərəfindən dəqiqləşdiriləcək."
+    ]
+  },
+  {
+    id: "reng-harmoniyasi-ustad-dersi",
+    date: "2026-07-12",
+    image: "/assets/article-color-harmony-crisp.webp",
+    images: [
+      "/assets/article-color-harmony-crisp.webp",
+      "/assets/module-color.webp",
+      "/assets/studio-brushes.webp"
+    ],
+    category: "Ustad dərsi",
+    title: "Rəng harmoniyası üzrə açıq ustad dərsi",
+    excerpt: "Rəngləri daha inamlı seçmək və palitranı idarə etmək üçün praktiki görüş keçiririk.",
+    body: [
+      "Ustad dərsində əsas rəng münasibətləri, isti-soyuq balansı və işıq altında rəngin dəyişməsi canlı nümunələrlə izah ediləcək.",
+      "İştirakçılar öz palitralarını quracaq, kiçik etüdlər hazırlayacaq və mentor tərəfindən fərdi rəy alacaqlar."
+    ]
+  },
+  {
+    id: "portret-proporsiyalari-seminari",
+    date: "2026-07-09",
+    image: "/assets/article-portrait-proportions.webp",
+    images: [
+      "/assets/article-portrait-proportions.webp",
+      "/assets/module-portrait.webp"
+    ],
+    category: "Seminar",
+    title: "Portretdə proporsiya və ifadə seminarı",
+    excerpt: "Üz quruluşunu düzgün analiz etmək və ifadəni itirmədən çəkmək üçün yeni seminar.",
+    body: [
+      "Seminarda kəllə quruluşu, üzün əsas oxları və fərdi xüsusiyyətlərin müşahidəsi mərhələli şəkildə işlənəcək.",
+      "Praktiki hissədə iştirakçılar canlı model və foto istinadlarla qısa portret məşqləri edəcəklər."
+    ]
+  },
+  {
+    id: "akrilik-texnikasi-workshop",
+    date: "2026-07-06",
+    image: "/assets/article-acrylic-technique.webp",
+    images: [
+      "/assets/article-acrylic-technique.webp",
+      "/assets/studio-brushes.webp",
+      "/assets/module-color.webp"
+    ],
+    category: "Workshop",
+    title: "Akrilik texnikası ilə faktura workshop-u",
+    excerpt: "Lay, faktura və sürətli rəng keçidləri ilə akrilikin imkanlarını birlikdə sınayırıq.",
+    body: [
+      "Workshop boyunca səthin hazırlanması, şəffaf və örtücü qatların qurulması, eləcə də müxtəlif fırça izlərinin istifadəsi göstəriləcək.",
+      "Hər iştirakçı dərs sonunda öz kiçik faktura kompozisiyasını tamamlayacaq."
+    ]
+  },
+  {
+    id: "telebe-isleri-iyul-sergisi",
+    date: "2026-07-03",
+    image: "/assets/module-final-project.webp",
+    images: [
+      "/assets/module-final-project.webp",
+      "/assets/module-composition.webp",
+      "/assets/article-portrait-technique.webp"
+    ],
+    category: "Sərgi",
+    title: "İyul tələbə işləri sərgisi açılır",
+    excerpt: "Fərqli proqramlardan seçilən işləri bir araya gətirən yay sərgimiz ziyarətçilərə açılır.",
+    body: [
+      "Sərgidə akademik rəsm, portret, rəngkarlıq və kompozisiya proqramlarında hazırlanmış seçmə tələbə işləri təqdim olunur.",
+      "Açılış günü müəllimlərlə tanışlıq və işlərin yaranma prosesi haqqında qısa söhbət də keçiriləcək."
+    ]
+  },
+  {
+    id: "kompozisiya-aciq-dersi",
+    date: "2026-06-29",
+    image: "/assets/module-composition.webp",
+    images: [
+      "/assets/module-composition.webp",
+      "/assets/article-composition.webp"
+    ],
+    category: "Açıq dərs",
+    title: "Kompozisiyada ritm və balans açıq dərsi",
+    excerpt: "Baxışı idarə edən əsas kompozisiya qərarlarını qısa praktika ilə öyrənəcəyik.",
+    body: [
+      "Açıq dərsdə vizual ağırlıq, ritm, kontrast və boşluğun kompozisiyadakı rolu sadə tapşırıqlarla izah olunacaq.",
+      "Dərs yeni başlayanlar üçün uyğundur və iştirak üçün əvvəlcədən rəsm təcrübəsi tələb edilmir."
+    ]
+  },
+  {
+    id: "reqemsal-senet-yeni-qrup",
+    date: "2026-06-25",
+    image: "/assets/module-light-shadow.webp",
+    images: [
+      "/assets/module-light-shadow.webp",
+      "/assets/module-color.webp",
+      "/assets/article-color-harmony-crisp.webp"
+    ],
+    category: "Yeni qrup",
+    title: "Rəqəmsal sənət proqramında yeni qrup",
+    excerpt: "Rəqəmsal eskiz, rəng və işıq-kölgə üzərində qurulan praktik proqram üçün qəbul başlayıb.",
+    body: [
+      "Proqram rəqəmsal alətlərlə ilk dəfə işləyənlər üçün interfeys və fırça idarəsindən başlayır, sonra rəng və işıq mövzularına keçir.",
+      "Dərslər tapşırıq, mentor rəyi və mərhələli yekun layihə ilə tamamlanır."
+    ]
+  },
+  {
+    id: "mentorlarla-portfolio-baxisi",
+    date: "2026-06-21",
+    image: "/assets/teacher-vaqif.webp",
+    images: [
+      "/assets/teacher-vaqif.webp",
+      "/assets/teacher-esmer.webp",
+      "/assets/teacher-emine.webp"
+    ],
+    category: "Portfolio",
+    title: "Mentorlarla fərdi portfolio baxışı",
+    excerpt: "Mövcud işlərinizə peşəkar rəy almaq və növbəti addımı müəyyənləşdirmək üçün görüş.",
+    body: [
+      "Portfolio baxışında iş seçimi, ardıcıllıq, texniki inkişaf və təqdimat dili müəllimlə birlikdə təhlil olunur.",
+      "Görüşün sonunda iştirakçıya prioritet mövzular və inkişaf üçün fərdi fəaliyyət planı təqdim edilir."
     ]
   }
 ];
