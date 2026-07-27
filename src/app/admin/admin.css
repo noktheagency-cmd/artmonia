@@ -432,3 +432,119 @@
   .collection-publish { margin-left: auto; }
   .media-upload-zone { align-items: center; flex-direction: column; text-align: center; }
 }
+
+html.theme-dark .admin-root {
+  --admin-ink: #f7f4ff;
+  --admin-muted: #bdb7dc;
+  --admin-line: rgba(220, 214, 255, 0.15);
+  --admin-bg: #07051d;
+  color: var(--admin-ink);
+  background: var(--admin-bg);
+}
+
+html.theme-dark .admin-topbar,
+html.theme-dark .admin-footer,
+html.theme-dark .admin-panel,
+html.theme-dark .admin-metrics,
+html.theme-dark .content-toolbar > div,
+html.theme-dark .content-table,
+html.theme-dark .admin-empty,
+html.theme-dark .media-grid article,
+html.theme-dark .messages-list,
+html.theme-dark .settings-grid article,
+html.theme-dark .editor-drawer,
+html.theme-dark .editor-drawer > footer,
+html.theme-dark .json-array-item,
+html.theme-dark .collection-workspace,
+html.theme-dark .collection-form-pane {
+  color: var(--admin-ink);
+  border-color: var(--admin-line);
+  background: #13103a;
+}
+
+html.theme-dark .admin-topbar {
+  background: rgba(13, 9, 48, 0.94);
+}
+
+html.theme-dark :is(
+  .admin-page-title h1,
+  .admin-page-title h2,
+  .admin-panel-heading h3,
+  .admin-metrics strong,
+  .admin-empty h3,
+  .settings-grid h3,
+  .editor-drawer > header h2,
+  .editor-content-heading h3,
+  .collection-list-pane h2,
+  .collection-form-header h2,
+  .collection-item-list strong,
+  .collection-dropzone strong,
+  .media-upload-zone strong
+) {
+  color: var(--admin-ink);
+}
+
+html.theme-dark .secondary-action,
+html.theme-dark .recent-list > button,
+html.theme-dark .admin-field input,
+html.theme-dark .admin-field select,
+html.theme-dark .admin-field textarea,
+html.theme-dark .editor-meta input,
+html.theme-dark .editor-meta select,
+html.theme-dark .messages-list select,
+html.theme-dark .collection-form-header button {
+  color: var(--admin-ink);
+  border-color: var(--admin-line);
+  background: #1a1648;
+}
+
+html.theme-dark .content-table-head,
+html.theme-dark .json-array-toolbar,
+html.theme-dark .collection-list-pane {
+  color: var(--admin-muted);
+  border-color: var(--admin-line);
+  background: #100d32;
+}
+
+html.theme-dark .collection-item-list > button {
+  color: var(--admin-ink);
+  border-color: var(--admin-line);
+}
+
+html.theme-dark .collection-item-list > button:hover,
+html.theme-dark .collection-item-list > button.selected {
+  background: #201957;
+}
+
+html.theme-dark .collection-dropzone,
+html.theme-dark .media-upload-zone,
+html.theme-dark .quick-preview pre,
+html.theme-dark .settings-grid code {
+  color: var(--admin-muted);
+  border-color: var(--admin-line);
+  background: #100d32;
+}
+
+html.theme-dark .admin-login-shell {
+  color: var(--admin-ink);
+  background: var(--admin-bg);
+}
+
+html.theme-dark .admin-login-card {
+  color: var(--admin-ink);
+  background: #13103a;
+}
+
+html.theme-dark .admin-login-card :is(h1, label, .admin-login-back) {
+  color: var(--admin-ink);
+}
+
+html.theme-dark .admin-login-card :is(p, .admin-login-copy > span) {
+  color: var(--admin-muted);
+}
+
+html.theme-dark .admin-login-form input {
+  color: var(--admin-ink);
+  border-color: var(--admin-line);
+  background: #1a1648;
+}

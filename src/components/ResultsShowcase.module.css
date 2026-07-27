@@ -578,3 +578,53 @@
     transition: none !important;
   }
 }
+
+:global(html.theme-dark) .storyPreviewCard,
+:global(html.theme-dark) .compactResultCard,
+:global(html.theme-dark) .storyModal,
+:global(html.theme-dark) .storyListItem,
+:global(html.theme-dark) .storyModalPlayerCard {
+  color: var(--theme-text);
+  border-color: var(--theme-border);
+  background: var(--theme-surface);
+}
+
+:global(html.theme-dark) .storyPreviewCard:hover,
+:global(html.theme-dark) .storyPreviewCard:focus-visible,
+:global(html.theme-dark) .storyListItem:hover,
+:global(html.theme-dark) .storyListItem:focus-visible,
+:global(html.theme-dark) .storyListItem.isSelected {
+  border-color: rgba(168, 132, 255, 0.56);
+  background: var(--theme-surface-raised);
+}
+
+:global(html.theme-dark) .storyPreviewCopy strong,
+:global(html.theme-dark) .storyModalHeader h3,
+:global(html.theme-dark) .storyListCopy strong,
+:global(html.theme-dark) .compactDetails :global(.before-after-title h3),
+:global(html.theme-dark) .compactDetails :global(.before-after-period strong) {
+  color: var(--theme-text);
+}
+
+:global(html.theme-dark) .storyPreviewCopy > span,
+:global(html.theme-dark) .storyListCopy span,
+:global(html.theme-dark) .storyListDuration,
+:global(html.theme-dark) .compactDetails :global(.before-after-note p) {
+  color: var(--theme-text-muted);
+}
+
+:global(html.theme-dark) .storyModalHeader {
+  border-bottom-color: var(--theme-border);
+  background: var(--theme-surface-raised);
+}
+
+:global(html.theme-dark) .storyModalClose,
+:global(html.theme-dark) .storyPlayerClose {
+  color: var(--theme-text);
+  border-color: var(--theme-border);
+  background: var(--theme-surface-raised);
+}
+
+:global(html.theme-dark) .storyModalBackdrop {
+  background: var(--theme-overlay);
+}

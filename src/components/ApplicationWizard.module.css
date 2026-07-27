@@ -575,3 +575,30 @@
     transition: none;
   }
 }
+
+:global(html.theme-dark) .page {
+  background:
+    linear-gradient(rgba(220, 214, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220, 214, 255, 0.018) 1px, transparent 1px),
+    var(--theme-canvas);
+}
+
+:global(html.theme-dark) .wizard {
+  border: 1px solid var(--theme-border);
+  background:
+    radial-gradient(circle at 72% 12%, rgba(105, 41, 242, 0.24), transparent 24rem),
+    linear-gradient(135deg, #130b4b 0%, #0a0730 62%, #07051d 100%);
+}
+
+:global(html.theme-dark) .option,
+:global(html.theme-dark) .formGrid input,
+:global(html.theme-dark) .formGrid select,
+:global(html.theme-dark) .formGrid textarea,
+:global(html.theme-dark) .secondaryButton {
+  border-color: var(--theme-border);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+:global(html.theme-dark) .formGrid select {
+  color-scheme: dark;
+}

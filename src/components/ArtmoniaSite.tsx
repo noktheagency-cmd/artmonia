@@ -863,7 +863,7 @@ function AuditPrivacyFooter() {
         <div>
           <h2>Gözləmə. Başla.</h2>
           <p>Növbəti qrup tezliklə başlayır. Yerini indi ayır və rəsm səyahətinə başla.</p>
-          <a href="#lead" className="button inverse">
+          <a href="/muraciet" className="button inverse">
             Akademiyaya qoşul <ArrowIcon />
           </a>
         </div>

@@ -376,3 +376,49 @@
     transition: none;
   }
 }
+
+:global(html.theme-dark) .section {
+  color: var(--theme-text);
+  background: transparent;
+}
+
+:global(html.theme-dark) .heading h2,
+:global(html.theme-dark) .content > strong,
+:global(html.theme-dark) .readMore {
+  color: var(--theme-text);
+}
+
+:global(html.theme-dark) .heading p,
+:global(html.theme-dark) .headingActions > a,
+:global(html.theme-dark) .headingActions > span,
+:global(html.theme-dark) .meta,
+:global(html.theme-dark) .excerpt {
+  color: var(--theme-text-muted);
+}
+
+:global(html.theme-dark) .scrollButtons button,
+:global(html.theme-dark) .card {
+  color: var(--theme-text);
+  border-color: var(--theme-border);
+  background: var(--theme-surface);
+}
+
+:global(html.theme-dark) .scrollButtons button:hover,
+:global(html.theme-dark) .scrollButtons button:focus-visible,
+:global(html.theme-dark) .card:hover,
+:global(html.theme-dark) .card:focus-visible {
+  border-color: rgba(168, 132, 255, 0.5);
+  background: var(--theme-surface-raised);
+}
+
+:global(html.theme-dark) .image {
+  background: var(--theme-surface-soft);
+}
+
+:global(html.theme-dark) .rail {
+  scrollbar-color: #a884ff rgba(220, 214, 255, 0.08);
+}
+
+:global(html.theme-dark) .rail::-webkit-scrollbar-track {
+  background: rgba(220, 214, 255, 0.08);
+}
