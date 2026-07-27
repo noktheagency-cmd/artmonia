@@ -1,6 +1,6 @@
 export const navItems = [
   { label: "Proqram", href: "/#program" },
-  { label: "Akademiya", href: "/#academy" },
+  { label: "Akademiya", href: "/akademiya" },
   { label: "Yeniliklər", href: "/yenilikler" },
   { label: "Nəticələr", href: "/neticeler" },
   { label: "Mükafatlar", href: "/mukafatlar" },

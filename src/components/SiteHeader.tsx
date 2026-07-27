@@ -32,15 +32,23 @@ export default function SiteHeader() {
   const dynamicNavItems = useSiteContentValue("nav_items", navItems);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const visibleNavItems = dynamicNavItems.some((item) => item.href === "/yenilikler")
+  const navItemsWithNews = dynamicNavItems.some((item) => item.href === "/yenilikler")
     ? dynamicNavItems
     : [
         ...dynamicNavItems.slice(0, 2),
         { label: "Yeniliklər", href: "/yenilikler" },
         ...dynamicNavItems.slice(2)
       ];
+  const newsNavItem = navItemsWithNews.find((item) => item.href === "/yenilikler")
+    ?? { label: "Yeniliklər", href: "/yenilikler" };
+  const visibleNavItems = [
+    newsNavItem,
+    ...navItemsWithNews.filter((item) => item.href !== "/yenilikler")
+  ];
 
   const isActive = (href: string) => href.startsWith("/") && !href.includes("#") && pathname === href;
+  const isAcademyNavItem = (href: string, label: string) =>
+    href === "/akademiya" || href.endsWith("#academy") || label === "Akademiya";
 
   return (
     <header className="site-header">
@@ -58,6 +66,22 @@ export default function SiteHeader() {
               </Link>
               <div className="nav-program-dropdown">
                 <Link href="/#pricing">Paketlər və qiymətlər</Link>
+              </div>
+            </div>
+          ) : isAcademyNavItem(item.href, item.label) ? (
+            <div className="nav-program-menu nav-academy-menu" key={item.href}>
+              <Link
+                className={pathname === "/akademiya" ? "nav-program-trigger is-active" : "nav-program-trigger"}
+                href="/akademiya"
+                aria-haspopup="true"
+                aria-current={pathname === "/akademiya" ? "page" : undefined}
+              >
+                {item.label}
+                <span aria-hidden="true">⌄</span>
+              </Link>
+              <div className="nav-program-dropdown nav-academy-dropdown">
+                <Link href="/akademiya#interyer">İnteryer</Link>
+                <Link href="/akademiya#haqqimizda">Haqqımızda</Link>
               </div>
             </div>
           ) : item.href === "/neticeler" ? (
@@ -125,6 +149,16 @@ export default function SiteHeader() {
               </Link>
               <div className="mobile-program-links">
                 <Link href="/#pricing" onClick={() => setOpen(false)}>Paketlər və qiymətlər</Link>
+              </div>
+            </div>
+          ) : isAcademyNavItem(item.href, item.label) ? (
+            <div className="mobile-program-group mobile-academy-group" key={item.href}>
+              <Link href="/akademiya" onClick={() => setOpen(false)}>
+                {item.label}
+              </Link>
+              <div className="mobile-program-links">
+                <Link href="/akademiya#interyer" onClick={() => setOpen(false)}>İnteryer</Link>
+                <Link href="/akademiya#haqqimizda" onClick={() => setOpen(false)}>Haqqımızda</Link>
               </div>
             </div>
           ) : item.href === "/neticeler" ? (
