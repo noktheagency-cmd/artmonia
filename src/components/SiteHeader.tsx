@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navItems } from "@/data/site";
 import { useSiteContentValue } from "@/components/SiteContentContext";
+import ThemeToggle from "@/components/ThemeToggle";
 
 function HeaderArrowIcon() {
   return (
@@ -65,7 +66,8 @@ export default function SiteHeader() {
                 <span aria-hidden="true">⌄</span>
               </Link>
               <div className="nav-program-dropdown">
-                <Link href="/#pricing">Paketlər və qiymətlər</Link>
+                <Link href="/#program">Paketlər</Link>
+                <Link href="/#pricing">Qiymətlər</Link>
               </div>
             </div>
           ) : isAcademyNavItem(item.href, item.label) ? (
@@ -124,6 +126,7 @@ export default function SiteHeader() {
       </nav>
 
       <div className="header-actions">
+        <ThemeToggle />
         <Link className="nav-cta" href="/muraciet">
           Müraciət et <HeaderArrowIcon />
         </Link>
@@ -148,7 +151,8 @@ export default function SiteHeader() {
                 {item.label}
               </Link>
               <div className="mobile-program-links">
-                <Link href="/#pricing" onClick={() => setOpen(false)}>Paketlər və qiymətlər</Link>
+                <Link href="/#program" onClick={() => setOpen(false)}>Paketlər</Link>
+                <Link href="/#pricing" onClick={() => setOpen(false)}>Qiymətlər</Link>
               </div>
             </div>
           ) : isAcademyNavItem(item.href, item.label) ? (
@@ -200,6 +204,7 @@ export default function SiteHeader() {
         <Link href="/muraciet" onClick={() => setOpen(false)}>
           Müraciət et
         </Link>
+        <ThemeToggle className="mobile-theme-toggle" />
       </nav>
     </header>
   );

@@ -642,3 +642,64 @@
     transform: translateY(0);
   }
 }
+
+:global(html.theme-dark) .page,
+:global(html.theme-dark) .interior {
+  color: var(--theme-text);
+  background:
+    radial-gradient(circle at 15% 18%, rgba(105, 41, 242, 0.14), transparent 24%),
+    radial-gradient(circle at 93% 72%, rgba(242, 142, 20, 0.08), transparent 22%),
+    var(--theme-canvas);
+}
+
+:global(html.theme-dark) .gridTexture {
+  opacity: 0.6;
+  background-image:
+    linear-gradient(rgba(220, 214, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220, 214, 255, 0.025) 1px, transparent 1px);
+}
+
+:global(html.theme-dark) .titleBlock h1,
+:global(html.theme-dark) .interiorCopy h2,
+:global(html.theme-dark) .interiorNarrative h3,
+:global(html.theme-dark) .studioDetails strong {
+  color: var(--theme-text);
+}
+
+:global(html.theme-dark) .sectionLead,
+:global(html.theme-dark) .bodyCopy,
+:global(html.theme-dark) .studioDetails p,
+:global(html.theme-dark) .interiorNarrative p {
+  color: var(--theme-text-muted);
+}
+
+:global(html.theme-dark) .roomFigure {
+  background: var(--theme-surface);
+}
+
+:global(html.theme-dark) .roomFigure figcaption {
+  color: var(--theme-text);
+  border-color: var(--theme-border);
+  background: rgba(19, 16, 58, 0.9);
+}
+
+:global(html.theme-dark) .studioDetails,
+:global(html.theme-dark) .interiorNarrative,
+:global(html.theme-dark) .studioDetails > div + div,
+:global(html.theme-dark) .interiorNarrative > div {
+  border-color: var(--theme-border);
+}
+
+:global(html.theme-dark) .about {
+  background: linear-gradient(145deg, #120d3a, #080522 68%);
+}
+
+:global(html.theme-dark) .footer {
+  color: var(--theme-text-muted);
+  border-top-color: var(--theme-border);
+  background: var(--theme-canvas);
+}
+
+:global(html.theme-dark) .footer a {
+  color: var(--theme-text);
+}

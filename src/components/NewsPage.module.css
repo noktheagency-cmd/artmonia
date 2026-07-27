@@ -625,3 +625,87 @@
     transition: none;
   }
 }
+
+:global(html.theme-dark) .page {
+  color: var(--theme-text);
+  background:
+    linear-gradient(rgba(220, 214, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220, 214, 255, 0.018) 1px, transparent 1px),
+    var(--theme-canvas);
+}
+
+:global(html.theme-dark) .intro h1,
+:global(html.theme-dark) .archiveHeading p,
+:global(html.theme-dark) .card h2,
+:global(html.theme-dark) .readButton,
+:global(html.theme-dark) .modalContent h2 {
+  color: var(--theme-text);
+}
+
+:global(html.theme-dark) .introCopy > p,
+:global(html.theme-dark) .archiveHeading span,
+:global(html.theme-dark) .meta,
+:global(html.theme-dark) .excerpt,
+:global(html.theme-dark) .modalExcerpt,
+:global(html.theme-dark) .modalBody {
+  color: var(--theme-text-muted);
+}
+
+:global(html.theme-dark) .introArtwork {
+  opacity: 0.72;
+  filter: brightness(1.35) saturate(0.78);
+}
+
+:global(html.theme-dark) .archive {
+  border-color: var(--theme-border);
+}
+
+:global(html.theme-dark) .card,
+:global(html.theme-dark) .modal,
+:global(html.theme-dark) .modalClose {
+  color: var(--theme-text);
+  border-color: var(--theme-border);
+  background: var(--theme-surface);
+}
+
+:global(html.theme-dark) .card:hover,
+:global(html.theme-dark) .card:target {
+  border-color: rgba(168, 132, 255, 0.52);
+  background: var(--theme-surface-raised);
+}
+
+:global(html.theme-dark) .imageWrap {
+  background: var(--theme-surface-soft);
+}
+
+:global(html.theme-dark) .pageNumbers a,
+:global(html.theme-dark) .paginationArrow {
+  color: var(--theme-text);
+  border-color: var(--theme-border);
+}
+
+:global(html.theme-dark) .pageNumbers a:hover,
+:global(html.theme-dark) .pageNumbers .activePage,
+:global(html.theme-dark) .paginationArrow:not(.disabled):hover {
+  color: #ffffff;
+  border-color: var(--brand-purple);
+  background: var(--brand-purple);
+}
+
+:global(html.theme-dark) .disabled {
+  color: rgba(201, 195, 230, 0.42);
+}
+
+:global(html.theme-dark) .modalBackdrop {
+  background: var(--theme-overlay);
+}
+
+:global(html.theme-dark) .modalBody p {
+  color: var(--theme-text-muted);
+}
+
+:global(html.theme-dark) .footer {
+  color: var(--theme-text-muted);
+  border-top-color: var(--theme-border);
+  background: var(--theme-canvas);
+}
