@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from "react";
 import { ChevronDown, ChevronRight, ChevronUp, Newspaper, Plus, Trash2 } from "lucide-react";
-import type { NewsItem } from "@/data/site";
+import { newsItems, type NewsItem } from "@/data/site";
 import type { SiteSectionRecord } from "@/lib/admin-content";
+import { mergeNewsItems } from "@/lib/news";
 
 function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
   if (!Array.isArray(content)) return [];
@@ -18,6 +19,7 @@ function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
       title: typeof item.title === "string" ? item.title : "",
       excerpt: typeof item.excerpt === "string" ? item.excerpt : "",
       image: typeof item.image === "string" ? item.image : "",
+      images: Array.isArray(item.images) ? item.images.filter((image): image is string => typeof image === "string") : undefined,
       body: Array.isArray(item.body) ? item.body.filter((paragraph): paragraph is string => typeof paragraph === "string") : []
     }];
   });
@@ -31,6 +33,7 @@ function newItem(): NewsItem {
     title: "Yeni xəbər",
     excerpt: "",
     image: "/assets/studio-room.webp",
+    images: ["/assets/studio-room.webp"],
     body: [""]
   };
 }
@@ -44,7 +47,10 @@ export default function NewsEditor({
   busy: boolean;
   onSave: (section: SiteSectionRecord) => Promise<void>;
 }) {
-  const initialItems = useMemo(() => parseItems(section.content), [section.content]);
+  const initialItems = useMemo(
+    () => mergeNewsItems(parseItems(section.content), newsItems),
+    [section.content]
+  );
   const [items, setItems] = useState<NewsItem[]>(initialItems);
   const [selectedId, setSelectedId] = useState<string | null>(initialItems[0]?.id ?? null);
   const [published, setPublished] = useState(section.is_published);
@@ -116,6 +122,7 @@ export default function NewsEditor({
                 <label className="admin-field"><span>Kateqoriya</span><input value={selected.category} onChange={(event) => updateSelected({ category: event.target.value })} /></label>
                 <label className="admin-field"><span>Tarix</span><input type="date" value={selected.date} onChange={(event) => updateSelected({ date: event.target.value })} /></label>
                 <label className="admin-field wide"><span>Şəkil URL-i və ya media yolu</span><input value={selected.image ?? ""} placeholder="/assets/studio-room.webp" onChange={(event) => updateSelected({ image: event.target.value })} /><small>Məsələn: /assets/sekil.webp və ya tam https ünvanı.</small></label>
+                <label className="admin-field wide"><span>Detail qalereya şəkilləri</span><textarea rows={4} value={(selected.images ?? []).join("\n")} onChange={(event) => updateSelected({ images: event.target.value.split(/\r?\n/).map((value) => value.trim()).filter(Boolean) })} /><small>Hər sətirdə bir şəkil yolu yazın. Birdən çox şəkil detail səhifəsində qalereya kimi görünəcək.</small></label>
                 <label className="admin-field wide"><span>Qısa mətn</span><textarea rows={3} value={selected.excerpt} onChange={(event) => updateSelected({ excerpt: event.target.value })} /></label>
                 <label className="admin-field wide"><span>Tam mətn</span><textarea rows={10} value={selected.body.join("\n\n")} onChange={(event) => updateSelected({ body: event.target.value.split(/\n\s*\n/).map((value) => value.trim()).filter(Boolean) })} /><small>Abzasları bir boş sətirlə ayırın.</small></label>
               </div>

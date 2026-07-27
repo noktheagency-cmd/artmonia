@@ -75,17 +75,13 @@ type ApplicationForm = {
   lastName: string;
   phone: string;
   email: string;
-  format: string;
-  note: string;
 };
 
 const initialForm: ApplicationForm = {
   firstName: "",
   lastName: "",
   phone: "",
-  email: "",
-  format: "",
-  note: ""
+  email: ""
 };
 
 export default function ApplicationWizard() {
@@ -204,19 +200,6 @@ export default function ApplicationWizard() {
               <label>
                 <span>Elektron poçt</span>
                 <input autoComplete="email" type="email" value={form.email} onChange={(event) => updateField("email", event.target.value)} placeholder="email@numune.az" />
-              </label>
-              <label className={styles.wideField}>
-                <span>Tədris formatı *</span>
-                <select required value={form.format} onChange={(event) => updateField("format", event.target.value)}>
-                  <option value="" disabled>Formatı seçin</option>
-                  <option value="studio">Studiyada əyani</option>
-                  <option value="online">Onlayn</option>
-                  <option value="either">Hər ikisi uyğundur</option>
-                </select>
-              </label>
-              <label className={styles.wideField}>
-                <span>Qeydiniz</span>
-                <textarea rows={3} value={form.note} onChange={(event) => updateField("note", event.target.value)} placeholder="Məqsədiniz və ya uyğun olduğunuz vaxt haqqında qısa qeyd..." />
               </label>
             </div>
 

@@ -59,7 +59,7 @@ export default function HeroNewsRail() {
       }}
     >
       <div className="hero-news-items" key={activeIndex} aria-live="polite">
-        <Link className="hero-news-item" href={`/yenilikler#${activeItem.id}`}>
+        <Link className="hero-news-item" href={`/yenilikler/${encodeURIComponent(activeItem.id)}`}>
           <span className="hero-news-meta">
             <b>{activeItem.category || "Yenilik"}</b>
             <time dateTime={activeItem.date}>{shortDate(activeItem.date)}</time>
