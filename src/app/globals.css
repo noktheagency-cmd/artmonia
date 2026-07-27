@@ -14435,6 +14435,56 @@ html.theme-dark .price-calculator-result a {
   font-weight: 600;
 }
 
+.site-header .nav-program-trigger.is-active {
+  color: var(--brand-purple);
+}
+
+.site-header .nav-program-trigger.is-active::after {
+  right: 0;
+  left: 0;
+}
+
+.site-header .nav-academy-dropdown {
+  width: 176px;
+  padding: 7px;
+  border-color: rgba(105, 41, 242, 0.16);
+  background:
+    linear-gradient(135deg, rgba(105, 41, 242, 0.045), transparent 48%),
+    rgba(255, 255, 255, 0.98);
+}
+
+.site-header .desktop-nav .nav-academy-dropdown a {
+  position: relative;
+  padding: 12px 13px 12px 28px;
+}
+
+.site-header .desktop-nav .nav-academy-dropdown a::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.site-header .desktop-nav .nav-academy-dropdown a:first-child {
+  color: var(--brand-purple);
+}
+
+.site-header .desktop-nav .nav-academy-dropdown a:last-child {
+  color: var(--brand-navy);
+}
+
+.site-header .desktop-nav .nav-academy-dropdown a:hover::before,
+.site-header .desktop-nav .nav-academy-dropdown a:focus-visible::before {
+  background: var(--brand-orange);
+  transform: translateY(-50%) scale(1.15);
+}
+
 .collection-page {
   position: relative;
   min-height: calc(100svh - 68px);
@@ -18622,7 +18672,7 @@ html.theme-dark .diagnostic-compact {
   align-items: center;
   gap: 8px;
   min-height: 36px;
-  margin-left: clamp(20px, 2.2vw, 36px);
+  margin-right: clamp(24px, 3vw, 48px);
   padding: 0 13px;
   border: 1px solid rgba(105, 41, 242, 0.2);
   border-radius: 11px;
@@ -18907,7 +18957,7 @@ html.theme-dark .diagnostic-compact {
 
 @media (min-width: 861px) {
   .statue-reveal .statue-copy {
-    top: clamp(166px, 21.8svh, 174px) !important;
+    top: clamp(136px, 17.5svh, 152px) !important;
     width: min(820px, calc(100% - 48px)) !important;
   }
 
@@ -19380,14 +19430,21 @@ html.theme-dark .diagnostic-compact {
 /* Reveal-only hero message and application action. */
 .hero-reveal-cta {
   position: absolute;
-  bottom: clamp(18px, 3svh, 30px);
+  bottom: clamp(14px, 2svh, 22px);
   left: 50%;
   z-index: 48;
   display: flex;
-  width: min(760px, calc(100% - 40px));
+  width: max-content;
+  max-width: calc(100% - 40px);
+  min-height: 70px;
   align-items: center;
   justify-content: center;
-  gap: clamp(24px, 4vw, 54px);
+  gap: 18px;
+  padding: 7px 7px 7px 22px;
+  border: 1px solid rgba(105, 41, 242, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px) saturate(1.12);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -19408,26 +19465,26 @@ html.theme-dark .diagnostic-compact {
 }
 
 .hero-reveal-cta p {
-  max-width: 520px;
   margin: 0;
   color: var(--brand-navy);
   font-family: var(--serif);
-  font-size: clamp(28px, 3vw, 48px);
+  font-size: clamp(21px, 1.55vw, 28px);
   font-style: italic;
   font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 0.98;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .hero-reveal-cta-button {
   position: relative;
   display: grid;
-  width: 112px;
-  height: 112px;
-  flex: 0 0 112px;
+  width: 66px;
+  height: 66px;
+  flex: 0 0 66px;
   place-content: center;
   place-items: center;
-  gap: 5px;
+  gap: 2px;
   border: 1px solid rgba(105, 41, 242, 0.45);
   border-radius: 50%;
   color: var(--brand-white);
@@ -19445,7 +19502,7 @@ html.theme-dark .diagnostic-compact {
 .hero-reveal-cta-button::before {
   content: "";
   position: absolute;
-  inset: -8px;
+  inset: -4px;
   border: 1px dashed rgba(105, 41, 242, 0.55);
   border-radius: inherit;
   animation: heroCtaOrbit 9s linear infinite;
@@ -19454,28 +19511,28 @@ html.theme-dark .diagnostic-compact {
 .hero-reveal-cta-button::after {
   content: "";
   position: absolute;
-  top: -12px;
+  top: -8px;
   left: 50%;
-  width: 9px;
-  height: 9px;
-  margin-left: -4.5px;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
   border-radius: 50%;
   background: var(--brand-orange);
-  transform-origin: 4.5px 68px;
+  transform-origin: 3.5px 41px;
   animation: heroCtaOrbit 4.8s linear infinite;
 }
 
 .hero-reveal-cta-button span {
-  font-size: 11px;
+  font-size: 7.5px;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   line-height: 1.2;
   text-transform: uppercase;
 }
 
 .hero-reveal-cta-button .icon {
-  width: 19px;
-  height: 19px;
+  width: 14px;
+  height: 14px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.7;
@@ -19508,62 +19565,70 @@ html.theme-dark .diagnostic-compact {
 }
 
 @media (max-width: 760px) {
+  .statue-reveal .statue-copy {
+    top: clamp(134px, 17svh, 152px) !important;
+  }
+
   .hero-reveal-cta {
-    bottom: 18px;
-    width: calc(100% - 32px);
-    gap: 18px;
+    bottom: 12px;
+    width: max-content;
+    max-width: calc(100% - 20px);
+    min-height: 62px;
+    gap: 10px;
+    padding: 5px 5px 5px 13px;
   }
 
   .hero-reveal-cta p {
-    max-width: 210px;
-    font-size: clamp(22px, 6.8vw, 29px);
+    max-width: none;
+    font-size: clamp(13.5px, 4vw, 17px);
     line-height: 1;
   }
 
   .hero-reveal-cta-button {
-    width: 88px;
-    height: 88px;
-    flex-basis: 88px;
+    width: 56px;
+    height: 56px;
+    flex-basis: 56px;
   }
 
   .hero-reveal-cta-button::before {
-    inset: -6px;
+    inset: -3px;
   }
 
   .hero-reveal-cta-button::after {
-    top: -10px;
-    transform-origin: 4.5px 53px;
+    top: -7px;
+    transform-origin: 3.5px 35px;
   }
 
   .hero-reveal-cta-button span {
-    font-size: 9px;
-    letter-spacing: 0.1em;
+    font-size: 6.5px;
+    letter-spacing: 0.08em;
   }
 
   .hero-reveal-cta-button .icon {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
   }
 }
 
 @media (max-width: 380px) {
   .hero-reveal-cta {
-    gap: 14px;
+    max-width: calc(100% - 14px);
+    gap: 7px;
+    padding-left: 10px;
   }
 
   .hero-reveal-cta p {
-    max-width: 180px;
-    font-size: 21px;
+    font-size: clamp(12px, 3.7vw, 14px);
   }
 
   .hero-reveal-cta-button {
-    width: 80px;
-    height: 80px;
-    flex-basis: 80px;
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
   }
 
   .hero-reveal-cta-button::after {
-    transform-origin: 4.5px 49px;
+    transform-origin: 3.5px 33px;
   }
 }
 
