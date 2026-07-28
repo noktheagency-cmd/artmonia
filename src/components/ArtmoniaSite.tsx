@@ -156,6 +156,24 @@ function NavAtelierAnimation() {
     const stage = stageRef.current;
     if (!stage) return;
     let closeTimer: number | undefined;
+    let mobileRevealTimer: number | undefined;
+    const mobileViewport = window.matchMedia("(max-width: 760px)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const scheduleMobileCta = () => {
+      if (mobileRevealTimer) window.clearTimeout(mobileRevealTimer);
+      stage.classList.remove("is-mobile-cta-ready");
+
+      if (!mobileViewport.matches) return;
+      if (reducedMotion.matches) {
+        stage.classList.add("is-mobile-cta-ready");
+        return;
+      }
+
+      mobileRevealTimer = window.setTimeout(() => {
+        stage.classList.add("is-mobile-cta-ready");
+      }, 5600);
+    };
 
     const wakeStage = () => {
       if (closeTimer) window.clearTimeout(closeTimer);
@@ -216,6 +234,9 @@ function NavAtelierAnimation() {
     stage.addEventListener("mouseleave", handlePointerLeave);
     window.addEventListener("mousemove", handleWindowMove);
     window.addEventListener("mouseout", handlePointerLeave);
+    mobileViewport.addEventListener("change", scheduleMobileCta);
+    reducedMotion.addEventListener("change", scheduleMobileCta);
+    scheduleMobileCta();
     return () => {
       stage.removeEventListener("mouseenter", handlePointerEnter);
       stage.removeEventListener("mouseover", handlePointerEnter);
@@ -226,7 +247,10 @@ function NavAtelierAnimation() {
       stage.removeEventListener("mouseleave", handlePointerLeave);
       window.removeEventListener("mousemove", handleWindowMove);
       window.removeEventListener("mouseout", handlePointerLeave);
+      mobileViewport.removeEventListener("change", scheduleMobileCta);
+      reducedMotion.removeEventListener("change", scheduleMobileCta);
       if (closeTimer) window.clearTimeout(closeTimer);
+      if (mobileRevealTimer) window.clearTimeout(mobileRevealTimer);
     };
   }, []);
 
