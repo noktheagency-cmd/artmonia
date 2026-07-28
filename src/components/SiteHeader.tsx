@@ -132,6 +132,8 @@ export default function SiteHeader() {
         </Link>
       </div>
 
+      <ThemeToggle className="compact-mobile-theme-toggle" />
+
       <button
         className="menu-button"
         type="button"
@@ -204,7 +206,6 @@ export default function SiteHeader() {
         <Link href="/muraciet" onClick={() => setOpen(false)}>
           Müraciət et
         </Link>
-        <ThemeToggle className="mobile-theme-toggle" />
       </nav>
     </header>
   );
