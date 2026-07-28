@@ -4,14 +4,12 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   contact,
   courses,
   galleryImages,
-  heroPaperSettings,
   packages,
   painPoints,
   testimonials,
@@ -19,6 +17,7 @@ import {
 } from "@/data/site";
 import SiteHeader from "@/components/SiteHeader";
 import HomeNewsSection from "@/components/HomeNewsSection";
+import HomeHero from "@/components/HomeHero";
 import { SiteContentProvider, useSiteContentValue } from "@/components/SiteContentContext";
 import type { SiteContentMap } from "@/lib/site-content";
 
@@ -27,6 +26,45 @@ function ArrowIcon() {
     <svg aria-hidden="true" viewBox="0 0 24 24" className="icon">
       <path d="M5 12h13" />
       <path d="m13 6 6 6-6 6" />
+    </svg>
+  );
+}
+
+function ContactIcon({ name }: { name: "clock" | "external" | "mail" | "pin" | "phone" }) {
+  const paths = {
+    clock: (
+      <>
+        <circle cx="12" cy="12" r="8.5" />
+        <path d="M12 7.5V12l3.2 2" />
+      </>
+    ),
+    external: (
+      <>
+        <path d="M14 5h5v5" />
+        <path d="M11 13 19 5" />
+        <path d="M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+      </>
+    ),
+    mail: (
+      <>
+        <rect x="4" y="6" width="16" height="12" rx="1.8" />
+        <path d="m5 7 7 6 7-6" />
+      </>
+    ),
+    pin: (
+      <>
+        <path d="M19 10c0 5-7 10-7 10S5 15 5 10a7 7 0 1 1 14 0Z" />
+        <circle cx="12" cy="10" r="2.2" />
+      </>
+    ),
+    phone: (
+      <path d="M8.1 4.7 10 8.5 7.8 10a14.5 14.5 0 0 0 6.2 6.2l1.5-2.2 3.8 1.9-.5 3a2 2 0 0 1-2.2 1.6C9.7 19.4 4.6 14.3 3.5 7.4a2 2 0 0 1 1.6-2.2l3-.5Z" />
+    )
+  };
+
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="contact-icon-svg">
+      {paths[name]}
     </svg>
   );
 }
@@ -132,174 +170,6 @@ function useTiltTargets() {
     });
     return () => cleanups.forEach((cleanup) => cleanup());
   }, []);
-}
-
-function NavAtelierAnimation() {
-  const stageRef = useRef<HTMLElement | null>(null);
-  const dynamicPaperSettings = useSiteContentValue("hero_paper_settings", heroPaperSettings);
-  const paperComponents = Array.isArray(dynamicPaperSettings.components) ? dynamicPaperSettings.components : heroPaperSettings.components;
-  const paperColor = (id: "left" | "center" | "right") =>
-    paperComponents.find((component) => component.id === id)?.color
-    ?? heroPaperSettings.components.find((component) => component.id === id)?.color
-    ?? "#fffdf8";
-  const paperRadius = typeof dynamicPaperSettings.ovalRadius === "number"
-    ? Math.min(Math.max(dynamicPaperSettings.ovalRadius, 8), 58)
-    : heroPaperSettings.ovalRadius;
-  const paperStyle = {
-    "--paper-left-color": paperColor("left"),
-    "--paper-center-color": paperColor("center"),
-    "--paper-right-color": paperColor("right"),
-    "--paper-oval-radius": `${paperRadius}px`
-  } as React.CSSProperties;
-
-  useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage) return;
-    let closeTimer: number | undefined;
-    let mobileRevealTimer: number | undefined;
-    const mobileViewport = window.matchMedia("(max-width: 760px)");
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    const scheduleMobileCta = () => {
-      if (mobileRevealTimer) window.clearTimeout(mobileRevealTimer);
-      stage.classList.remove("is-mobile-cta-ready");
-
-      if (!mobileViewport.matches) return;
-      if (reducedMotion.matches) {
-        stage.classList.add("is-mobile-cta-ready");
-        return;
-      }
-
-      mobileRevealTimer = window.setTimeout(() => {
-        stage.classList.add("is-mobile-cta-ready");
-      }, 5600);
-    };
-
-    const wakeStage = () => {
-      if (closeTimer) window.clearTimeout(closeTimer);
-      stage.classList.add("is-awake");
-    };
-
-    const sleepStage = () => {
-      if (closeTimer) window.clearTimeout(closeTimer);
-      closeTimer = window.setTimeout(() => {
-        stage.classList.remove("is-awake");
-      }, 120);
-    };
-
-    const handlePointerEnter = () => {
-      wakeStage();
-    };
-
-    const handlePointerMove = (event: PointerEvent | MouseEvent) => {
-      const rect = stage.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const distance = Math.hypot(event.clientX - centerX, event.clientY - centerY);
-      const threshold = Math.min(rect.width, rect.height) * 0.34;
-      if (distance < threshold) wakeStage();
-      wakeStage();
-      stage.style.setProperty("--cursor-x", `${event.clientX - rect.left}px`);
-      stage.style.setProperty("--cursor-y", `${event.clientY - rect.top}px`);
-    };
-
-    const handleWindowMove = (event: MouseEvent) => {
-      const trigger = stage.querySelector(".torn-paper");
-      const rect = (trigger ?? stage).getBoundingClientRect();
-      const inside =
-        event.clientX >= rect.left &&
-        event.clientX <= rect.right &&
-        event.clientY >= rect.top &&
-        event.clientY <= rect.bottom;
-      if (inside) {
-        wakeStage();
-        const stageRect = stage.getBoundingClientRect();
-        stage.style.setProperty("--cursor-x", `${event.clientX - stageRect.left}px`);
-        stage.style.setProperty("--cursor-y", `${event.clientY - stageRect.top}px`);
-      } else {
-        sleepStage();
-      }
-    };
-
-    const handlePointerLeave = () => {
-      sleepStage();
-    };
-
-    stage.addEventListener("mouseenter", handlePointerEnter);
-    stage.addEventListener("mouseover", handlePointerEnter);
-    stage.addEventListener("pointerenter", handlePointerEnter);
-    stage.addEventListener("mousemove", handlePointerMove);
-    stage.addEventListener("pointermove", handlePointerMove);
-    stage.addEventListener("pointerleave", handlePointerLeave);
-    stage.addEventListener("mouseleave", handlePointerLeave);
-    window.addEventListener("mousemove", handleWindowMove);
-    window.addEventListener("mouseout", handlePointerLeave);
-    mobileViewport.addEventListener("change", scheduleMobileCta);
-    reducedMotion.addEventListener("change", scheduleMobileCta);
-    scheduleMobileCta();
-    return () => {
-      stage.removeEventListener("mouseenter", handlePointerEnter);
-      stage.removeEventListener("mouseover", handlePointerEnter);
-      stage.removeEventListener("pointerenter", handlePointerEnter);
-      stage.removeEventListener("mousemove", handlePointerMove);
-      stage.removeEventListener("pointermove", handlePointerMove);
-      stage.removeEventListener("pointerleave", handlePointerLeave);
-      stage.removeEventListener("mouseleave", handlePointerLeave);
-      window.removeEventListener("mousemove", handleWindowMove);
-      window.removeEventListener("mouseout", handlePointerLeave);
-      mobileViewport.removeEventListener("change", scheduleMobileCta);
-      reducedMotion.removeEventListener("change", scheduleMobileCta);
-      if (closeTimer) window.clearTimeout(closeTimer);
-      if (mobileRevealTimer) window.clearTimeout(mobileRevealTimer);
-    };
-  }, []);
-
-  return (
-    <section ref={stageRef} className="nav-atelier statue-reveal" aria-label="Artmonia Academy sculpture reveal animation">
-      <div className="statue-atmosphere" />
-      <div className="statue-stage">
-        <div className="statue-copy">
-          <span>Artmonia Academy</span>
-          <strong>Akademik rəsm • Portfolio • Dizayn hazırlığı</strong>
-        </div>
-
-        <div className="torn-paper" style={paperStyle}>
-          <div className="paper-component paper-center-layer" aria-hidden="true" />
-          <div className="paper-half paper-left">
-            <div className="paper-info intro-paper-copy">
-              <span>Artmonia Academy</span>
-              <strong>Fırçanı tut, sənətkar ol.</strong>
-              <p>
-                Sistem. Rəy. Nəticə - peşəkar mentorlarla 6 həftəlik akademik rəsm proqramı.
-              </p>
-            </div>
-            <i className="rip rip-left" />
-          </div>
-          <div className="paper-half paper-right">
-            <div className="paper-info intro-paper-copy">
-              <span>Akademik ritm</span>
-              <strong>Klassik rəsm intizamı, müasir tədris.</strong>
-            </div>
-            <i className="rip rip-right" />
-          </div>
-        </div>
-
-        <div className="statue-burst">
-          <div className="statue-halo" />
-          <div className="real-statue-wrap">
-            <img className="real-statue" src="/assets/artmonia-real-statue-hands.webp" alt="" aria-hidden="true" />
-          </div>
-        </div>
-      </div>
-      <div className="hero-reveal-cta">
-        <p>Təsəvvür etdiyin hər şey gerçəkdir.</p>
-        <Link className="hero-reveal-cta-button" href="/muraciet" aria-label="Müraciət səhifəsinə keç">
-          <span>Müraciət et</span>
-          <ArrowIcon />
-        </Link>
-      </div>
-    </section>
-  );
 }
 
 function ProblemTransformation() {
@@ -681,123 +551,9 @@ function QuizGenreIcon({ genre }: { genre: QuizGenre }) {
   );
 }
 
-function DiagnosticQuiz() {
-  const [step, setStep] = useState(0);
-  const [problem, setProblem] = useState<QuizProblem | null>(null);
-  const [genre, setGenre] = useState<QuizGenre | null>(null);
-  const result = useMemo(() => (problem && genre ? quizResults[problem][genre] : null), [problem, genre]);
-
-  const resetQuiz = () => {
-    setStep(0);
-    setProblem(null);
-    setGenre(null);
-  };
-
+function PricingSection() {
   return (
-    <section className="quiz-pricing scroll-section" id="diagnostic">
-      <div className="diagnostic-duo">
-        <Reveal className="quiz-card diagnostic-compact" variant="from-left">
-          <div className="quiz-card-head">
-            <p className="small-label">Diaqnostika</p>
-            <h2>Sənə uyğun yolu tap.</h2>
-            <p>2 sadə suala cavab ver, biz sənin üçün ən uyğun modulu və paketi təklif edək.</p>
-          </div>
-          <div className="quiz-progress" aria-label={`Addım ${Math.min(step, 2)} / 2`}>
-            {[1, 2].map((item) => (
-              <span key={item} className={step >= item ? "active" : ""}>
-                {item}
-              </span>
-            ))}
-            <strong>{step === 0 ? "Başla" : step === 3 ? "Nəticə" : `Addım ${step}/2`}</strong>
-          </div>
-          <div className="quiz-window">
-            {step === 0 ? (
-              <div className="quiz-pane quiz-intro">
-                <span className="quiz-orb">✦</span>
-                <h3>Hansı proqram sənə uyğundur?</h3>
-                <button type="button" className="quiz-primary" onClick={() => setStep(1)}>
-                  Testi başla
-                </button>
-              </div>
-            ) : null}
-            {step === 1 ? (
-              <div className="quiz-pane">
-                <h3>Əsas problemin nədir?</h3>
-                <p>Sənə ən çox uyğun olan variantı seç.</p>
-                <div className="quiz-options problem-options">
-                  {quizProblems.map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      className={`${problem === item.id ? "active " : ""}quiz-problem-option ${item.id}`}
-                      onClick={() => {
-                        setProblem(item.id);
-                        setStep(2);
-                      }}
-                    >
-                      <QuizProblemArt problem={item.id} />
-                      <strong>{item.label}</strong>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-            {step === 2 ? (
-              <div className="quiz-pane">
-                <h3>Öyrənmək istədiyin janr?</h3>
-                <p>Ən çox maraqlandığın sahəni seç.</p>
-                <div className="quiz-options">
-                  {quizGenres.map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      className={genre === item.id ? "active" : ""}
-                      onClick={() => {
-                        setGenre(item.id);
-                        setStep(3);
-                      }}
-                    >
-                      <QuizGenreIcon genre={item.id} />
-                      <strong>{item.label}</strong>
-                    </button>
-                  ))}
-                </div>
-                <button type="button" className="quiz-back" onClick={() => setStep(1)}>
-                  ← Geri qayıt
-                </button>
-              </div>
-            ) : null}
-            {step === 3 && result ? (
-              <div className="quiz-pane quiz-result">
-                <span>Sənin üçün tövsiyə</span>
-                <strong>{result.module}</strong>
-                <p>{result.reason}</p>
-                <em>Uyğun paket: {result.package}</em>
-                <div className="quiz-actions">
-                  <a href="#pricing">Paketləri gör</a>
-                  <button type="button" onClick={resetQuiz}>
-                    Yenidən
-                  </button>
-                </div>
-              </div>
-            ) : null}
-          </div>
-        </Reveal>
-        <Reveal className="diagnostic-art-panel" variant="from-right">
-          <Image
-            src="/assets/artmonia-success-path.webp"
-            alt="Fırça ilə çəkilən işıqlı yolda irəliləyən insan"
-            fill
-            sizes="(max-width: 900px) calc(100vw - 28px), 540px"
-            quality={78}
-            loading="lazy"
-          />
-          <div className="diagnostic-art-copy">
-            <span>Artmonia istiqaməti</span>
-            <p>Artmonia ilə uğura gedən yolda daim irəli addımla.</p>
-          </div>
-        </Reveal>
-      </div>
+    <section className="quiz-pricing scroll-section">
       <Pricing />
     </section>
   );
@@ -881,6 +637,8 @@ function TeachersAtelier() {
 
 function AuditPrivacyFooter() {
   const dynamicContact = useSiteContentValue("contact", contact);
+  const mapUrl = "https://www.google.com/maps/search/?api=1&query=Nizami+Cinema+Center%2C+Baku";
+
   return (
     <footer className="site-footer scroll-section" id="contact">
       <div className="footer-top scroll-block">
@@ -901,12 +659,52 @@ function AuditPrivacyFooter() {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
+          <a className="footer-map-visit" href={mapUrl} target="_blank" rel="noreferrer">
+            <span className="footer-map-visit-icon"><ContactIcon name="pin" /></span>
+            <span>
+              <strong>Bizi ziyarət edin</strong>
+              <small>Artmonia Academy</small>
+            </span>
+          </a>
+          <a className="footer-map-open" href={mapUrl} target="_blank" rel="noreferrer">
+            <span className="footer-map-open-icon"><ContactIcon name="external" /></span>
+            Xəritədə aç
+            <ArrowIcon />
+          </a>
         </div>
         <address className="footer-contact">
-          <p className="footer-label">Əlaqə</p>
-          <a href={`tel:${dynamicContact.phone.replace(/\s/g, "")}`}>{dynamicContact.phone}</a>
-          <a href={`mailto:${dynamicContact.email}`}>{dynamicContact.email}</a>
-          <p className="footer-location">{dynamicContact.address}</p>
+          <div className="footer-contact-heading">
+            <h2>Əlaqə</h2>
+            <span aria-hidden="true" />
+          </div>
+          <div className="footer-contact-list">
+            <div className="footer-contact-row">
+              <span className="footer-contact-icon"><ContactIcon name="phone" /></span>
+              <div>
+                <span className="footer-contact-caption">Telefon</span>
+                <a href={`tel:${dynamicContact.phone.replace(/\s/g, "")}`}>{dynamicContact.phone}</a>
+              </div>
+            </div>
+            <div className="footer-contact-row">
+              <span className="footer-contact-icon"><ContactIcon name="mail" /></span>
+              <div>
+                <span className="footer-contact-caption">E-poçt</span>
+                <a href={`mailto:${dynamicContact.email}`}>{dynamicContact.email}</a>
+              </div>
+            </div>
+            <div className="footer-contact-row">
+              <span className="footer-contact-icon"><ContactIcon name="pin" /></span>
+              <div>
+                <span className="footer-contact-caption">Ünvan</span>
+                <p className="footer-location">{dynamicContact.address}</p>
+              </div>
+            </div>
+          </div>
+          <div className="footer-contact-note">
+            <span className="footer-contact-icon"><ContactIcon name="clock" /></span>
+            <p><strong>Sizi görməyə şad olarıq!</strong>Gəlməzdən əvvəl əlaqə saxlayın.</p>
+            <i aria-hidden="true" />
+          </div>
         </address>
       </div>
       <div className="footer-bottom scroll-block" data-scroll-order="2">
@@ -925,12 +723,12 @@ function ArtmoniaSiteInner() {
     <>
       <BrushField />
       <SiteHeader />
-      <NavAtelierAnimation />
+      <HomeHero />
       <main>
         <HomeNewsSection />
         <ProblemTransformation />
         <Programs />
-        <DiagnosticQuiz />
+        <PricingSection />
         <TeachersAtelier />
       </main>
       <AuditPrivacyFooter />

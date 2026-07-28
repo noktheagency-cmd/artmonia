@@ -6,15 +6,50 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { navItems } from "@/data/site";
-import { useSiteContentValue } from "@/components/SiteContentContext";
 import ThemeToggle from "@/components/ThemeToggle";
 
-function HeaderArrowIcon() {
+const navigation = [
+  {
+    label: "Proqramlar",
+    href: "/#program",
+    children: [
+      { label: "Proqramlar", href: "/#program" },
+      { label: "Qiymətlər", href: "/#pricing" }
+    ]
+  },
+  {
+    label: "Akademiya",
+    href: "/akademiya",
+    children: [
+      { label: "İnteryer", href: "/akademiya#interyer" },
+      { label: "Haqqımızda", href: "/akademiya#haqqimizda" }
+    ]
+  },
+  {
+    label: "Nəticələr",
+    href: "/neticeler",
+    children: [
+      { label: "Uğur hekayələri", href: "/neticeler#ugur-hekayeleri" },
+      { label: "Tələbə nəticələri", href: "/neticeler#telebe-neticeleri" }
+    ]
+  },
+  { label: "Müəllimlər", href: "/#teachers" },
+  { label: "Əlaqə", href: "/#contact" }
+];
+
+function ArrowIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" className="icon">
       <path d="M5 12h13" />
       <path d="m13 6 6 6-6 6" />
+    </svg>
+  );
+}
+
+function ChevronIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 12 8" className="nav-chevron">
+      <path d="m1 1 5 5 5-5" />
     </svg>
   );
 }
@@ -30,26 +65,13 @@ function MenuIcon({ open }: { open: boolean }) {
 }
 
 export default function SiteHeader() {
-  const dynamicNavItems = useSiteContentValue("nav_items", navItems);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const navItemsWithNews = dynamicNavItems.some((item) => item.href === "/yenilikler")
-    ? dynamicNavItems
-    : [
-        ...dynamicNavItems.slice(0, 2),
-        { label: "Yeniliklər", href: "/yenilikler" },
-        ...dynamicNavItems.slice(2)
-      ];
-  const newsNavItem = navItemsWithNews.find((item) => item.href === "/yenilikler")
-    ?? { label: "Yeniliklər", href: "/yenilikler" };
-  const visibleNavItems = [
-    newsNavItem,
-    ...navItemsWithNews.filter((item) => item.href !== "/yenilikler")
-  ];
 
-  const isActive = (href: string) => href.startsWith("/") && !href.includes("#") && pathname === href;
-  const isAcademyNavItem = (href: string, label: string) =>
-    href === "/akademiya" || href.endsWith("#academy") || label === "Akademiya";
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return !href.includes("#") && pathname === href;
+  };
 
   return (
     <header className="site-header">
@@ -59,68 +81,32 @@ export default function SiteHeader() {
       </Link>
 
       <nav className="desktop-nav" aria-label="Əsas naviqasiya">
-        {visibleNavItems.map((item) =>
-          item.href.endsWith("#program") ? (
-            <div className="nav-program-menu" key={item.href}>
-              <Link className="nav-program-trigger" href={item.href} aria-haspopup="true">
-                {item.label}
-                <span aria-hidden="true">⌄</span>
-              </Link>
-              <div className="nav-program-dropdown">
-                <Link href="/#program">Paketlər</Link>
-                <Link href="/#pricing">Qiymətlər</Link>
-              </div>
-            </div>
-          ) : isAcademyNavItem(item.href, item.label) ? (
-            <div className="nav-program-menu nav-academy-menu" key={item.href}>
+        {navigation.map((item) =>
+          item.children ? (
+            <div className="nav-program-menu" key={item.label}>
               <Link
-                className={pathname === "/akademiya" ? "nav-program-trigger is-active" : "nav-program-trigger"}
-                href="/akademiya"
+                className={isActive(item.href) ? "nav-program-trigger is-active" : "nav-program-trigger"}
+                href={item.href}
                 aria-haspopup="true"
-                aria-current={pathname === "/akademiya" ? "page" : undefined}
+                aria-current={isActive(item.href) ? "page" : undefined}
               >
                 {item.label}
-                <span aria-hidden="true">⌄</span>
+                <ChevronIcon />
               </Link>
-              <div className="nav-program-dropdown nav-academy-dropdown">
-                <Link href="/akademiya#interyer">İnteryer</Link>
-                <Link href="/akademiya#haqqimizda">Haqqımızda</Link>
-              </div>
-            </div>
-          ) : item.href === "/neticeler" ? (
-            <div className="nav-program-menu nav-results-menu" key={item.href}>
-              <Link className="nav-program-trigger" href={item.href} aria-haspopup="true">
-                {item.label}
-                <span aria-hidden="true">⌄</span>
-              </Link>
-              <div className="nav-program-dropdown nav-results-dropdown">
-                <Link href="/neticeler#ugur-hekayeleri">Uğur hekayələri</Link>
-                <Link href="/neticeler#telebe-neticeleri">Tələbə nəticələri</Link>
-              </div>
-            </div>
-          ) : item.href === "/mukafatlar" ? (
-            <div className="nav-program-menu nav-awards-menu" key={item.href}>
-              <Link className="nav-program-trigger" href={item.href} aria-haspopup="true">
-                {item.label}
-                <span aria-hidden="true">⌄</span>
-              </Link>
-              <div className="nav-program-dropdown nav-awards-dropdown">
-                <Link href="/mukafatlar#pul-mukafatlari">Pul mükafatları</Link>
-                <Link href="/mukafatlar#seyahet-mukafatlari">Səyahət mükafatları</Link>
+              <div className="nav-program-dropdown">
+                {item.children.map((child) => (
+                  <Link href={child.href} key={child.href}>{child.label}</Link>
+                ))}
               </div>
             </div>
           ) : (
             <Link
-              className={[
-                isActive(item.href) ? "is-active" : "",
-                item.href === "/yenilikler" ? "nav-news-link" : ""
-              ].filter(Boolean).join(" ") || undefined}
+              className={isActive(item.href) ? "is-active" : undefined}
               key={item.href}
               href={item.href}
               aria-current={isActive(item.href) ? "page" : undefined}
             >
-              {item.href === "/yenilikler" ? <span className="nav-news-dot" aria-hidden="true" /> : null}
-              <span>{item.label}</span>
+              {item.label}
             </Link>
           )
         )}
@@ -129,7 +115,7 @@ export default function SiteHeader() {
       <div className="header-actions">
         <ThemeToggle />
         <Link className="nav-cta" href="/muraciet">
-          Müraciət et <HeaderArrowIcon />
+          Müraciət et <ArrowIcon />
         </Link>
       </div>
 
@@ -147,65 +133,24 @@ export default function SiteHeader() {
       </button>
 
       <nav id="mobile-navigation" className={open ? "mobile-nav open" : "mobile-nav"} aria-label="Mobil naviqasiya">
-        {visibleNavItems.map((item) =>
-          item.href.endsWith("#program") ? (
-            <div className="mobile-program-group" key={item.href}>
-              <Link href={item.href} onClick={() => setOpen(false)}>
-                {item.label}
-              </Link>
-              <div className="mobile-program-links">
-                <Link href="/#program" onClick={() => setOpen(false)}>Paketlər</Link>
-                <Link href="/#pricing" onClick={() => setOpen(false)}>Qiymətlər</Link>
-              </div>
-            </div>
-          ) : isAcademyNavItem(item.href, item.label) ? (
-            <div className="mobile-program-group mobile-academy-group" key={item.href}>
-              <Link href="/akademiya" onClick={() => setOpen(false)}>
-                {item.label}
-              </Link>
-              <div className="mobile-program-links">
-                <Link href="/akademiya#interyer" onClick={() => setOpen(false)}>İnteryer</Link>
-                <Link href="/akademiya#haqqimizda" onClick={() => setOpen(false)}>Haqqımızda</Link>
-              </div>
-            </div>
-          ) : item.href === "/neticeler" ? (
-            <div className="mobile-program-group mobile-results-group" key={item.href}>
-              <Link href={item.href} onClick={() => setOpen(false)}>
-                {item.label}
-              </Link>
-              <div className="mobile-program-links">
-                <Link href="/neticeler#ugur-hekayeleri" onClick={() => setOpen(false)}>Uğur hekayələri</Link>
-                <Link href="/neticeler#telebe-neticeleri" onClick={() => setOpen(false)}>Tələbə nəticələri</Link>
-              </div>
-            </div>
-          ) : item.href === "/mukafatlar" ? (
-            <div className="mobile-program-group mobile-awards-group" key={item.href}>
-              <Link href={item.href} onClick={() => setOpen(false)}>
-                {item.label}
-              </Link>
-              <div className="mobile-program-links">
-                <Link href="/mukafatlar#pul-mukafatlari" onClick={() => setOpen(false)}>Pul mükafatları</Link>
-                <Link href="/mukafatlar#seyahet-mukafatlari" onClick={() => setOpen(false)}>Səyahət mükafatları</Link>
-              </div>
-            </div>
-          ) : (
-            <Link
-              className={[
-                isActive(item.href) ? "is-active" : "",
-                item.href === "/yenilikler" ? "mobile-news-link" : ""
-              ].filter(Boolean).join(" ") || undefined}
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              aria-current={isActive(item.href) ? "page" : undefined}
-            >
-              {item.href === "/yenilikler" ? <span className="nav-news-dot" aria-hidden="true" /> : null}
-              <span>{item.label}</span>
+        {navigation.map((item) => (
+          <div className={item.children ? "mobile-program-group" : undefined} key={item.label}>
+            <Link href={item.href} onClick={() => setOpen(false)}>
+              {item.label}
             </Link>
-          )
-        )}
-        <Link href="/muraciet" onClick={() => setOpen(false)}>
-          Müraciət et
+            {item.children ? (
+              <div className="mobile-program-links">
+                {item.children.map((child) => (
+                  <Link href={child.href} key={child.href} onClick={() => setOpen(false)}>
+                    {child.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        ))}
+        <Link className="mobile-cta" href="/muraciet" onClick={() => setOpen(false)}>
+          Müraciət et <ArrowIcon />
         </Link>
       </nav>
     </header>

@@ -1,0 +1,948 @@
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: max(860px, 100svh);
+  color: #13075f;
+  background: #f5f2fb;
+  isolation: isolate;
+}
+
+.background {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background: #f5f2fb url("/assets/artmonia-cloud-hands-hero.webp") center center / cover no-repeat;
+}
+
+.background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 76%, rgba(247, 245, 253, 0.38) 100%);
+  pointer-events: none;
+}
+
+.heading {
+  position: absolute;
+  z-index: 2;
+  top: clamp(126px, 13.2vh, 150px);
+  left: 50%;
+  display: grid;
+  width: min(900px, calc(100% - 32px));
+  justify-items: center;
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 0 0 23px;
+  color: rgba(19, 7, 95, 0.74);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.eyebrowSpark {
+  color: #6f31df;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.eyebrowWords {
+  display: inline-flex;
+  gap: 0.58em;
+  white-space: nowrap;
+}
+
+.eyebrowWords span {
+  display: inline-block;
+  transform-origin: 50% 100%;
+}
+
+.heading h1 {
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  font-family: var(--serif);
+  font-size: clamp(64px, 6.2vw, 94px);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.048em;
+  line-height: 0.9;
+}
+
+.cards {
+  position: absolute;
+  z-index: 3;
+  top: clamp(445px, 50vh, 465px);
+  left: 50%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 350px));
+  width: min(700px, calc(100% - 40px));
+  perspective: 1200px;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 22px 24px rgba(32, 20, 91, 0.14));
+}
+
+.cards::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 210px;
+  height: 250px;
+  border-radius: 50%;
+  opacity: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.96), rgba(139, 88, 241, 0.22) 38%, transparent 72%);
+  filter: blur(8px);
+  transform: translate(-50%, -50%) scale(0.72);
+  transition: opacity 650ms ease, transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+.cards::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  top: 11%;
+  bottom: 11%;
+  left: 50%;
+  width: 2px;
+  opacity: 0.5;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(45, 25, 113, 0.42) 0 7px,
+    transparent 7px 11px
+  );
+  filter: drop-shadow(0 0 4px rgba(83, 35, 180, 0.28));
+  transform: translateX(-50%) scaleY(1);
+  transform-origin: 50% 50%;
+  transition: opacity 240ms ease, transform 620ms cubic-bezier(0.16, 0.86, 0.2, 1);
+  pointer-events: none;
+}
+
+.statueReveal {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  width: clamp(430px, 38vw, 540px);
+  opacity: 0;
+  filter: blur(10px) drop-shadow(0 22px 26px rgba(26, 10, 80, 0.24));
+  transform: translate(-50%, -30%) scale(0.24);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 420ms ease,
+    filter 700ms ease,
+    transform 900ms cubic-bezier(0.16, 0.86, 0.2, 1);
+  pointer-events: none;
+  will-change: opacity, filter, transform;
+}
+
+.statue {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.card {
+  position: relative;
+  z-index: 3;
+  min-height: 338px;
+  padding: 65px 50px 42px;
+  border: 1px solid rgba(23, 11, 91, 0.22);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(248, 246, 254, 0.9));
+  backdrop-filter: blur(18px) saturate(1.05);
+  transform: translate3d(0, 0, 0);
+  transition:
+    border-radius 800ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 800ms ease;
+  will-change: transform;
+}
+
+.card::before,
+.card::after {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  width: 22px;
+  opacity: 0;
+  background: rgba(253, 251, 255, 0.96);
+  filter: drop-shadow(0 0 1px rgba(23, 11, 91, 0.2));
+  transition: opacity 260ms 110ms ease;
+  pointer-events: none;
+}
+
+.cardLeft {
+  border-radius: 23px 0 0 23px;
+}
+
+.cardLeft::after {
+  content: "";
+  right: -13px;
+  clip-path: polygon(
+    0 0,
+    54% 0,
+    74% 4%,
+    46% 8%,
+    82% 13%,
+    50% 18%,
+    76% 23%,
+    43% 29%,
+    79% 35%,
+    48% 41%,
+    84% 47%,
+    45% 53%,
+    77% 60%,
+    42% 66%,
+    81% 72%,
+    49% 78%,
+    75% 84%,
+    44% 90%,
+    72% 96%,
+    53% 100%,
+    0 100%
+  );
+}
+
+.cardRight {
+  border-left: 0;
+  border-radius: 0 23px 23px 0;
+}
+
+.cardRight::before {
+  content: "";
+  left: -13px;
+  clip-path: polygon(
+    47% 0,
+    100% 0,
+    100% 100%,
+    46% 100%,
+    28% 96%,
+    56% 90%,
+    25% 84%,
+    51% 78%,
+    19% 72%,
+    58% 66%,
+    23% 60%,
+    55% 53%,
+    16% 47%,
+    52% 41%,
+    21% 35%,
+    57% 29%,
+    24% 23%,
+    50% 18%,
+    18% 13%,
+    54% 8%,
+    26% 4%
+  );
+}
+
+.cards:hover::before,
+.cardsOpen::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.cards:hover::after,
+.cardsOpen::after {
+  opacity: 0;
+  transform: translateX(-50%) scaleY(0.2);
+}
+
+.cards:hover .statueReveal,
+.cardsOpen .statueReveal {
+  opacity: 1;
+  filter: blur(0) drop-shadow(0 25px 28px rgba(26, 10, 80, 0.28));
+  transform: translate(-50%, -80%) scale(1.06);
+}
+
+.cards:hover .cardLeft,
+.cardsOpen .cardLeft {
+  border-right-color: transparent;
+  border-radius: 23px;
+  box-shadow: 22px 20px 38px rgba(32, 20, 91, 0.12);
+  transform: translate3d(-142px, 0, 0) rotateY(-7deg) rotateZ(-0.55deg);
+}
+
+.cards:hover .cardRight,
+.cardsOpen .cardRight {
+  border-left: 1px solid transparent;
+  border-radius: 23px;
+  box-shadow: -22px 20px 38px rgba(32, 20, 91, 0.12);
+  transform: translate3d(142px, 0, 0) rotateY(7deg) rotateZ(0.55deg);
+}
+
+.cards:hover .cardLeft::after,
+.cards:hover .cardRight::before,
+.cardsOpen .cardLeft::after,
+.cardsOpen .cardRight::before {
+  opacity: 1;
+}
+
+.cardLabel {
+  margin: 0 0 15px;
+  color: #5219b3;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.card h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(34px, 2.8vw, 43px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+.cardRule {
+  display: block;
+  width: 36px;
+  height: 2px;
+  margin: 27px 0 18px;
+  background: #6a25df;
+}
+
+.cardText {
+  max-width: 250px;
+  margin: 0;
+  color: rgba(19, 7, 95, 0.76);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.cardAction {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: #1a0867;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 0 28px rgba(105, 41, 242, 0.38);
+  transform: translate(-50%, -50%);
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 650ms ease,
+    transform 650ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.cards:hover .cardAction,
+.cardsOpen .cardAction {
+  color: #ffffff;
+  background: #6224d2;
+  box-shadow: 0 0 0 9px rgba(255, 255, 255, 0.34), 0 0 42px rgba(105, 41, 242, 0.56);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.revealCta {
+  position: absolute;
+  z-index: 5;
+  top: calc(50% + 102px);
+  left: 50%;
+  display: inline-flex;
+  width: 250px;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px 8px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  opacity: 0;
+  color: #ffffff;
+  background: rgba(75, 25, 172, 0.86);
+  box-shadow: 0 16px 34px rgba(43, 13, 106, 0.24);
+  backdrop-filter: blur(14px) saturate(1.2);
+  transform: translate(-50%, 14px) scale(0.92);
+  transition:
+    opacity 220ms ease,
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 360ms cubic-bezier(0.16, 0.86, 0.2, 1);
+  pointer-events: none;
+}
+
+.revealCta span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.revealCta svg {
+  flex: 0 0 auto;
+  width: 31px;
+  height: 31px;
+  padding: 7px;
+  border-radius: 50%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.cards:hover .revealCta,
+.cardsOpen .revealCta {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  transition-delay: 420ms;
+  pointer-events: auto;
+}
+
+.revealCta:hover {
+  color: #32106f;
+  background: rgba(255, 255, 255, 0.94);
+  transition-delay: 0ms;
+}
+
+.revealCta:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+}
+
+.cardAction:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+}
+
+.cardAction svg {
+  width: 25px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.scrollCue {
+  position: absolute;
+  z-index: 3;
+  bottom: 18px;
+  left: 50%;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  color: #13075f;
+  transform: translateX(-50%);
+}
+
+.scrollCue svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 760px) {
+  .hero {
+    min-height: 1140px;
+  }
+
+  .background {
+    background-position: center top;
+  }
+
+  .heading {
+    top: 112px;
+  }
+
+  .eyebrow {
+    gap: 9px;
+    margin-bottom: 17px;
+    font-size: 8px;
+    letter-spacing: 0.19em;
+  }
+
+  .eyebrowSpark {
+    font-size: 18px;
+  }
+
+  .eyebrowWords {
+    gap: 0.42em;
+  }
+
+  .heading h1 {
+    font-size: clamp(45px, 13.7vw, 62px);
+    line-height: 0.94;
+  }
+
+  .cards {
+    top: 440px;
+    grid-template-columns: 1fr;
+    width: min(365px, calc(100% - 28px));
+  }
+
+  .cards::after {
+    top: 50%;
+    right: 10%;
+    bottom: auto;
+    left: 10%;
+    width: auto;
+    height: 2px;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(45, 25, 113, 0.42) 0 7px,
+      transparent 7px 11px
+    );
+    transform: translateY(-50%) scaleX(1);
+  }
+
+  .cards:hover::after,
+  .cardsOpen::after {
+    transform: translateY(-50%) scaleX(0.2);
+  }
+
+  .statueReveal {
+    width: min(190px, 50vw);
+    transform: translate(-50%, -35%) scale(0.28);
+  }
+
+  .cards.cardsOpen .statueReveal {
+    animation: none;
+    transform: translate(-50%, -52%) scale(1);
+  }
+
+  .card {
+    min-height: 0;
+    padding: 31px 30px 29px;
+  }
+
+  .cardLeft {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .cardLeft::after {
+    top: auto;
+    right: -1px;
+    bottom: -13px;
+    left: -1px;
+    width: auto;
+    height: 22px;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 52%,
+      96% 72%,
+      90% 44%,
+      84% 76%,
+      78% 48%,
+      72% 81%,
+      66% 42%,
+      60% 77%,
+      53% 45%,
+      47% 84%,
+      41% 48%,
+      35% 79%,
+      29% 43%,
+      23% 76%,
+      17% 50%,
+      11% 82%,
+      5% 47%,
+      0 68%
+    );
+  }
+
+  .cardRight {
+    border-top: 0;
+    border-left: 1px solid rgba(23, 11, 91, 0.22);
+    border-radius: 0 0 20px 20px;
+  }
+
+  .cardRight::before {
+    top: -13px;
+    right: -1px;
+    bottom: auto;
+    left: -1px;
+    width: auto;
+    height: 22px;
+    clip-path: polygon(
+      0 32%,
+      5% 53%,
+      11% 18%,
+      17% 50%,
+      23% 24%,
+      29% 57%,
+      35% 21%,
+      41% 52%,
+      47% 16%,
+      53% 55%,
+      60% 23%,
+      66% 58%,
+      72% 19%,
+      78% 52%,
+      84% 24%,
+      90% 56%,
+      96% 28%,
+      100% 48%,
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .card h2 {
+    font-size: 34px;
+  }
+
+  .cardRule {
+    margin: 20px 0 14px;
+  }
+
+  .cardAction {
+    width: 52px;
+    height: 52px;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .cards:hover .cardLeft,
+  .cards:hover .cardRight {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .cards:hover .cardAction,
+  .cardsOpen .cardAction {
+    transform: translate(-50%, -50%) rotate(90deg) scale(1.06);
+  }
+
+  .cards.cardsOpen .cardLeft {
+    animation: none;
+    border-right-color: rgba(23, 11, 91, 0.22);
+    border-bottom-color: transparent;
+    transform: translate3d(0, -55px, 0) rotateX(-4deg);
+  }
+
+  .cards.cardsOpen .cardRight {
+    animation: none;
+    border-top-color: transparent;
+    border-left-color: rgba(23, 11, 91, 0.22);
+    transform: translate3d(0, 130px, 0) rotateX(4deg);
+  }
+
+  .cards.cardsOpen .cardAction {
+    animation: none;
+    transform: translate(-50%, -50%) rotate(90deg) scale(1.07);
+  }
+
+  .revealCta {
+    top: calc(50% + 68px);
+    width: min(248px, calc(100% - 70px));
+    min-height: 44px;
+    padding-left: 15px;
+  }
+
+  .cards.cardsOpen .revealCta {
+    animation: none;
+  }
+
+  .scrollCue {
+    bottom: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .heading {
+    animation: heroHeadingIn 700ms 80ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .cards {
+    animation: heroCardsIn 760ms 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .scrollCue {
+    animation: scrollCue 1.8s ease-in-out infinite;
+  }
+
+  .eyebrowSpark {
+    animation: dreamSpark 2.8s 700ms ease-in-out infinite;
+  }
+
+  .eyebrowWords span {
+    animation: dreamWordIn 620ms cubic-bezier(0.16, 0.86, 0.2, 1) both;
+  }
+
+  .eyebrowWords span:nth-child(1) {
+    animation-delay: 180ms;
+  }
+
+  .eyebrowWords span:nth-child(2) {
+    animation-delay: 250ms;
+  }
+
+  .eyebrowWords span:nth-child(3) {
+    animation-delay: 320ms;
+  }
+
+  .eyebrowWords span:nth-child(4) {
+    animation-delay: 390ms;
+  }
+
+  .eyebrowWords span:nth-child(5) {
+    animation-delay: 460ms;
+  }
+}
+
+@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+  .cards:hover .cardLeft,
+  .cardsOpen .cardLeft {
+    animation: paperTearLeft 940ms cubic-bezier(0.16, 0.86, 0.2, 1) both;
+  }
+
+  .cards:hover .cardRight,
+  .cardsOpen .cardRight {
+    animation: paperTearRight 940ms cubic-bezier(0.16, 0.86, 0.2, 1) both;
+  }
+}
+
+@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+  .cardLeft {
+    animation: mobileCardOpenTop 7s 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  }
+
+  .cardRight {
+    animation: mobileCardOpenBottom 7s 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  }
+
+  .cardAction {
+    animation: mobileCardActionGlow 7s 1.2s ease-in-out infinite;
+  }
+
+  .statueReveal {
+    animation: mobileStatueReveal 7s 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  }
+}
+
+@keyframes heroHeadingIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes heroCardsIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes scrollCue {
+  50% {
+    transform: translate(-50%, 5px);
+  }
+}
+
+@keyframes dreamWordIn {
+  from {
+    opacity: 0;
+    filter: blur(7px);
+    transform: translateY(9px) rotateX(-18deg);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+@keyframes dreamSpark {
+  0%,
+  100% {
+    opacity: 0.72;
+    filter: drop-shadow(0 0 0 rgba(111, 49, 223, 0));
+    transform: scale(0.9) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(111, 49, 223, 0.42));
+    transform: scale(1.12) rotate(12deg);
+  }
+}
+
+@keyframes paperTearLeft {
+  0% {
+    transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0);
+  }
+
+  22% {
+    transform: translate3d(-12px, 0, 0) rotateY(-2deg) rotateZ(-0.15deg);
+  }
+
+  68% {
+    transform: translate3d(-154px, 0, 0) rotateY(-9deg) rotateZ(-0.9deg);
+  }
+
+  100% {
+    transform: translate3d(-142px, 0, 0) rotateY(-7deg) rotateZ(-0.55deg);
+  }
+}
+
+@keyframes paperTearRight {
+  0% {
+    transform: translate3d(0, 0, 0) rotateY(0) rotateZ(0);
+  }
+
+  22% {
+    transform: translate3d(12px, 0, 0) rotateY(2deg) rotateZ(0.15deg);
+  }
+
+  68% {
+    transform: translate3d(154px, 0, 0) rotateY(9deg) rotateZ(0.9deg);
+  }
+
+  100% {
+    transform: translate3d(142px, 0, 0) rotateY(7deg) rotateZ(0.55deg);
+  }
+}
+
+@keyframes mobileCardOpenTop {
+  0%,
+  20%,
+  82%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  36%,
+  68% {
+    transform: translate3d(0, -55px, 0) rotateX(-4deg);
+  }
+}
+
+@keyframes mobileCardOpenBottom {
+  0%,
+  20%,
+  82%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  36%,
+  68% {
+    transform: translate3d(0, 130px, 0) rotateX(4deg);
+  }
+}
+
+@keyframes mobileCardActionGlow {
+  0%,
+  20%,
+  82%,
+  100% {
+    color: #1a0867;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 0 28px rgba(105, 41, 242, 0.38);
+    transform: translate(-50%, -50%) rotate(90deg) scale(1);
+  }
+
+  36%,
+  68% {
+    color: #ffffff;
+    background: #6224d2;
+    box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.3), 0 0 38px rgba(105, 41, 242, 0.54);
+    transform: translate(-50%, -50%) rotate(90deg) scale(1.07);
+  }
+}
+
+@keyframes mobileStatueReveal {
+  0%,
+  20%,
+  82%,
+  100% {
+    opacity: 0;
+    filter: blur(10px) drop-shadow(0 18px 24px rgba(26, 10, 80, 0.2));
+    transform: translate(-50%, -24%) scale(0.38);
+  }
+
+  36%,
+  68% {
+    opacity: 1;
+    filter: blur(0) drop-shadow(0 22px 26px rgba(26, 10, 80, 0.26));
+    transform: translate(-50%, -52%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cardAction,
+  .cards::before,
+  .cards::after,
+  .revealCta,
+  .statueReveal {
+    transition: none;
+  }
+}
+
+:global(html.theme-dark) .hero {
+  color: #f5f1ff;
+  background: #0d092e;
+}
+
+:global(html.theme-dark) .background {
+  filter: brightness(0.42) saturate(0.88);
+}
+
+:global(html.theme-dark) .eyebrow {
+  color: rgba(242, 237, 255, 0.78);
+}
+
+:global(html.theme-dark) .card {
+  color: #f7f3ff;
+  border-color: rgba(194, 174, 255, 0.28);
+  background: linear-gradient(145deg, rgba(25, 18, 64, 0.92), rgba(12, 8, 40, 0.9));
+}
+
+:global(html.theme-dark) .cardLabel {
+  color: #b99dff;
+}
+
+:global(html.theme-dark) .cardText {
+  color: rgba(242, 237, 255, 0.76);
+}
+
+:global(html.theme-dark) .cardLeft::after,
+:global(html.theme-dark) .cardRight::before {
+  background: rgba(20, 14, 52, 0.98);
+}
+
+:global(html.theme-dark) .revealCta {
+  border-color: rgba(207, 191, 255, 0.34);
+  background: rgba(102, 54, 205, 0.9);
+}
+
+:global(html.theme-dark) .scrollCue {
+  color: #f5f1ff;
+}

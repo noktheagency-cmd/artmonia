@@ -53,12 +53,25 @@ export function getNewsImages(item: NewsItem, fallbackIndex = 0) {
 }
 
 export function formatNewsDate(value: string) {
-  const date = new Date(`${value}T12:00:00`);
-  if (Number.isNaN(date.getTime())) return value;
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return value;
 
-  return new Intl.DateTimeFormat("az-AZ", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric"
-  }).format(date);
+  const [, year, month, day] = match;
+  const monthNames = [
+    "yanvar",
+    "fevral",
+    "mart",
+    "aprel",
+    "may",
+    "iyun",
+    "iyul",
+    "avqust",
+    "sentyabr",
+    "oktyabr",
+    "noyabr",
+    "dekabr"
+  ];
+  const monthName = monthNames[Number(month) - 1];
+
+  return monthName ? `${day} ${monthName} ${year}` : value;
 }
