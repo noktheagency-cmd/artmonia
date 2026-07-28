@@ -19817,6 +19817,14 @@ html.theme-dark .site-header .brand-logo {
   filter: none;
 }
 
+html.theme-dark .site-header .brand-logo-light {
+  display: none;
+}
+
+html.theme-dark .site-header .brand-logo-dark {
+  display: block;
+}
+
 html.theme-dark .site-header .desktop-nav > a,
 html.theme-dark .site-header .nav-program-trigger,
 html.theme-dark .site-header .mobile-nav > a,
