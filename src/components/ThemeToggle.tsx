@@ -7,6 +7,28 @@ const THEME_CHANGE_EVENT = "artmonia-theme-change";
 
 type Theme = "light" | "dark";
 
+function readStoredTheme(): Theme | null {
+  try {
+    const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+    if (storedTheme === "light" || storedTheme === "dark") {
+      return storedTheme;
+    }
+  } catch {
+    // Fall back to the cookie when local storage is unavailable.
+  }
+
+  try {
+    const cookieTheme = document.cookie
+      .split("; ")
+      .find((item) => item.startsWith(`${THEME_STORAGE_KEY}=`))
+      ?.split("=")[1];
+
+    return cookieTheme === "light" || cookieTheme === "dark" ? cookieTheme : null;
+  } catch {
+    return null;
+  }
+}
+
 function applyTheme(theme: Theme) {
   const isDark = theme === "dark";
   const root = document.documentElement;
@@ -38,9 +60,11 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
   const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
-    const currentTheme: Theme = document.documentElement.classList.contains("theme-dark")
-      ? "dark"
-      : "light";
+    const currentTheme: Theme =
+      readStoredTheme() ??
+      (document.documentElement.classList.contains("theme-dark") ? "dark" : "light");
+
+    applyTheme(currentTheme);
     setTheme(currentTheme);
 
     const syncTheme = (event: StorageEvent) => {
@@ -58,12 +82,22 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
       }
     };
 
+    const restorePersistedTheme = () => {
+      const persistedTheme = readStoredTheme();
+      if (persistedTheme) {
+        applyTheme(persistedTheme);
+        setTheme(persistedTheme);
+      }
+    };
+
     window.addEventListener("storage", syncTheme);
     window.addEventListener(THEME_CHANGE_EVENT, syncThemeControls);
+    window.addEventListener("pageshow", restorePersistedTheme);
 
     return () => {
       window.removeEventListener("storage", syncTheme);
       window.removeEventListener(THEME_CHANGE_EVENT, syncThemeControls);
+      window.removeEventListener("pageshow", restorePersistedTheme);
     };
   }, []);
 

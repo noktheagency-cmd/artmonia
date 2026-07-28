@@ -19796,6 +19796,10 @@ html.theme-dark .theme-toggle-sun {
   display: inline;
 }
 
+.compact-mobile-theme-toggle {
+  display: none;
+}
+
 /* Navigation */
 html.theme-dark .site-header {
   color: var(--theme-text);
@@ -19805,10 +19809,11 @@ html.theme-dark .site-header {
 }
 
 html.theme-dark .site-header .brand {
-  background: rgba(255, 255, 255, 0.96);
+  background: transparent !important;
 }
 
 html.theme-dark .site-header .brand-logo {
+  background: transparent !important;
   filter: none;
 }
 
@@ -20253,11 +20258,35 @@ html.theme-dark :is(
 }
 
 @media (max-width: 760px) {
-  .site-header .mobile-nav .mobile-theme-toggle {
-    display: flex;
-    min-height: 46px;
-    padding: 0 12px;
+  .site-header .compact-mobile-theme-toggle {
+    position: absolute;
+    z-index: 3;
+    top: 13px;
+    right: 66px;
+    display: inline-flex;
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    padding: 0;
+    color: var(--brand-navy);
+    border-color: rgba(12, 2, 89, 0.13);
+    background: rgba(255, 255, 255, 0.88);
   }
+}
+
+@media (max-width: 370px) {
+  .site-header .compact-mobile-theme-toggle {
+    right: 62px;
+    width: 38px;
+    min-width: 38px;
+    height: 38px;
+  }
+}
+
+html.theme-dark .site-header .compact-mobile-theme-toggle {
+  color: var(--theme-text) !important;
+  border-color: var(--theme-border) !important;
+  background: var(--theme-surface) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -20265,4 +20294,76 @@ html.theme-dark :is(
   .theme-toggle-icon {
     transition: none;
   }
+}
+
+/* Final dark-mode contrast pass for hero and core home-page cards. */
+html.theme-dark .statue-reveal .statue-copy span {
+  color: #f5a03a !important;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.86), 0 1px 2px #000000;
+}
+
+html.theme-dark .statue-reveal .statue-copy strong {
+  color: #ddd3ff !important;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.86), 0 1px 2px #000000;
+}
+
+html.theme-dark .transformation-grid article :is(h3, strong) {
+  color: var(--theme-text) !important;
+}
+
+html.theme-dark .transformation-grid article p {
+  color: var(--theme-text-muted) !important;
+}
+
+html.theme-dark #program .course-card,
+html.theme-dark #program .course-card .course-copy {
+  color: var(--theme-text) !important;
+  border-color: var(--theme-border) !important;
+  background: var(--theme-surface) !important;
+}
+
+html.theme-dark #program .course-card :is(h3, strong, a) {
+  color: var(--theme-text) !important;
+}
+
+html.theme-dark #program .course-card .course-label {
+  color: #f5a03a !important;
+}
+
+html.theme-dark #program .course-card p {
+  color: var(--theme-text-muted) !important;
+}
+
+html.theme-dark #program .course-card .course-link:hover,
+html.theme-dark #program .course-card .course-link:focus-visible {
+  color: #ffffff !important;
+}
+
+html.theme-dark .diagnostic-compact .quiz-window .problem-options .quiz-problem-option,
+html.theme-dark .diagnostic-compact .quiz-window .quiz-options:not(.problem-options) > button {
+  color: var(--theme-text) !important;
+  border-color: var(--theme-border) !important;
+  background: var(--theme-surface-raised) !important;
+}
+
+html.theme-dark .diagnostic-compact .quiz-window .problem-options .quiz-problem-option > strong,
+html.theme-dark .diagnostic-compact .quiz-window .quiz-options:not(.problem-options) > button > strong {
+  color: var(--theme-text) !important;
+}
+
+html.theme-dark .diagnostic-compact .quiz-pane > p,
+html.theme-dark .diagnostic-compact .quiz-back {
+  color: var(--theme-text-muted) !important;
+}
+
+html.theme-dark .diagnostic-compact .quiz-window .quiz-options button:hover,
+html.theme-dark .diagnostic-compact .quiz-window .quiz-options button.active {
+  color: #ffffff !important;
+  border-color: #a884ff !important;
+  background: rgba(105, 41, 242, 0.42) !important;
+}
+
+html.theme-dark .diagnostic-compact .quiz-window .quiz-options button:hover > strong,
+html.theme-dark .diagnostic-compact .quiz-window .quiz-options button.active > strong {
+  color: #ffffff !important;
 }
