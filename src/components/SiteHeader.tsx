@@ -55,6 +55,7 @@ export default function SiteHeader() {
     <header className="site-header">
       <Link className="brand" href="/" aria-label="Artmonia ana səhifə">
         <img className="brand-logo brand-logo-light" src="/assets/artmonia-logo.webp" alt="Artmonia" />
+        <img className="brand-logo brand-logo-dark" src="/assets/artmonia-logo-dark.webp" alt="" aria-hidden="true" />
       </Link>
 
       <nav className="desktop-nav" aria-label="Əsas naviqasiya">
