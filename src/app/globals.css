@@ -19464,6 +19464,7 @@ html.theme-dark .diagnostic-compact {
   inset: -4px;
   border: 1px dashed rgba(105, 41, 242, 0.55);
   border-radius: inherit;
+  pointer-events: none;
   animation: heroCtaOrbit 9s linear infinite;
 }
 
@@ -19477,6 +19478,7 @@ html.theme-dark .diagnostic-compact {
   margin-left: -3.5px;
   border-radius: 50%;
   background: var(--brand-orange);
+  pointer-events: none;
   transform-origin: 3.5px 35px;
   animation: heroCtaOrbit 4.8s linear infinite;
 }
@@ -19555,11 +19557,24 @@ html.theme-dark .diagnostic-compact {
     min-height: 50px;
     gap: 8px;
     padding: 4px 4px 4px 11px;
-    animation: heroCtaMobileReveal 6.8s cubic-bezier(0.2, 0.82, 0.25, 1) both;
+    animation: none;
   }
 
-  .statue-reveal.is-awake .hero-reveal-cta {
-    animation: none;
+  .statue-reveal.is-awake:not(.is-mobile-cta-ready) .hero-reveal-cta,
+  .statue-reveal:hover:not(.is-mobile-cta-ready) .hero-reveal-cta {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate3d(-50%, 16px, 0);
+    transition-delay: 0s, 0s, 620ms;
+  }
+
+  .statue-reveal.is-mobile-cta-ready .hero-reveal-cta {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate3d(-50%, 0, 0);
+    transition-delay: 0s, 0s, 0s;
   }
 
   .hero-reveal-cta p {
@@ -19572,9 +19587,11 @@ html.theme-dark .diagnostic-compact {
   }
 
   .hero-reveal-cta-button {
+    z-index: 1;
     width: 46px;
     height: 46px;
     flex-basis: 46px;
+    touch-action: manipulation;
   }
 
   .hero-reveal-cta-button::before {
