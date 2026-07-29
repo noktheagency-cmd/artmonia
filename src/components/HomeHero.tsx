@@ -5,15 +5,6 @@ import Link from "next/link";
 import { useState } from "react";
 import styles from "./HomeHero.module.css";
 
-function SplitArrowIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 28 18">
-      <path d="m10 3-6 6 6 6" />
-      <path d="m18 3 6 6-6 6" />
-    </svg>
-  );
-}
-
 function DownArrowIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -60,7 +51,8 @@ export default function HomeHero() {
             alt=""
             width={1000}
             height={755}
-            sizes="(max-width: 760px) 190px, 540px"
+            sizes="(max-width: 760px) 260px, 540px"
+            priority
           />
         </div>
 
@@ -80,7 +72,6 @@ export default function HomeHero() {
           aria-expanded={cardsOpen}
           onClick={() => setCardsOpen((open) => !open)}
         >
-          <SplitArrowIcon />
         </button>
 
         <Link
