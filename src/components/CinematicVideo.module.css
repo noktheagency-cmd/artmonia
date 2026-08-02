@@ -1,0 +1,79 @@
+.frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0c0259;
+  isolation: isolate;
+}
+
+.poster,
+.video {
+  position: absolute;
+  inset: -2%;
+  width: 104%;
+  height: 104%;
+  object-fit: cover;
+}
+
+.poster {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(1.015);
+  animation: cinematicPosterDrift 14s ease-in-out infinite alternate;
+}
+
+.video {
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+
+.ready .video {
+  opacity: 1;
+}
+
+.grain {
+  position: absolute;
+  z-index: 3;
+  inset: -30%;
+  opacity: 0.13;
+  background-image:
+    radial-gradient(circle at 23% 31%, rgba(255, 255, 255, 0.2) 0 0.7px, transparent 0.8px),
+    radial-gradient(circle at 67% 71%, rgba(12, 2, 89, 0.2) 0 0.8px, transparent 0.9px);
+  background-size: 9px 9px, 11px 11px;
+  mix-blend-mode: soft-light;
+  animation: cinematicGrain 850ms steps(2, end) infinite;
+  pointer-events: none;
+}
+
+@keyframes cinematicPosterDrift {
+  0% {
+    transform: scale(1.015) translate3d(-0.35%, -0.2%, 0);
+  }
+
+  100% {
+    transform: scale(1.055) translate3d(0.5%, 0.35%, 0);
+  }
+}
+
+@keyframes cinematicGrain {
+  0% {
+    transform: translate3d(-2%, -1%, 0);
+  }
+
+  50% {
+    transform: translate3d(1%, 2%, 0);
+  }
+
+  100% {
+    transform: translate3d(2%, -2%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster,
+  .grain {
+    animation: none;
+  }
+}

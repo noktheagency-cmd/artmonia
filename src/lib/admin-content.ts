@@ -37,7 +37,7 @@ export type SiteSectionRecord = {
 };
 
 const definitions = [
-  ["hero_paper_settings", "Hero kagiz animasiyasi", "Hero yirtilan kagizinin 3 qati, rengleri ve oval effekti", "website", heroPaperSettings],
+  ["hero_paper_settings", "Başlanğıc vizualının rəngləri", "Ana təqdimatdakı üç fon qatının rəng və yumşaqlıq ayarları", "website", heroPaperSettings],
   ["nav_items", "Naviqasiya", "Sayt menyusu və keçidlər", "website", navItems],
   ["hero_stats", "Başlanğıc statistikası", "Ana təqdimatdakı qısa göstəricilər", "website", heroStats],
   ["pain_points", "Problem mətni", "Ziyarətçinin əsas ehtiyacları", "website", painPoints],

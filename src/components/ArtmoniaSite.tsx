@@ -18,7 +18,10 @@ import {
 import SiteHeader from "@/components/SiteHeader";
 import HomeNewsSection from "@/components/HomeNewsSection";
 import HomeHero from "@/components/HomeHero";
+import CinematicJourney from "@/components/CinematicJourney";
+import CinematicVideo from "@/components/CinematicVideo";
 import { SiteContentProvider, useSiteContentValue } from "@/components/SiteContentContext";
+import { videoExperience } from "@/data/videoExperience";
 import type { SiteContentMap } from "@/lib/site-content";
 
 function ArrowIcon() {
@@ -638,18 +641,65 @@ function TeachersAtelier() {
 function AuditPrivacyFooter() {
   const dynamicContact = useSiteContentValue("contact", contact);
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=Nizami+Cinema+Center%2C+Baku";
+  const [ctaEngaged, setCtaEngaged] = useState(false);
+  const footerCtaRef = useRef<HTMLDivElement | null>(null);
+  const atelierAsset = videoExperience.atelier;
+
+  useEffect(() => {
+    const node = footerCtaRef.current;
+
+    if (!node) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        document.documentElement.classList.toggle(
+          "cinematic-footer-active",
+          entry.isIntersecting,
+        );
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove("cinematic-footer-active");
+    };
+  }, []);
 
   return (
     <footer className="site-footer scroll-section" id="contact">
-      <div className="footer-top scroll-block">
-        <div>
+      <div ref={footerCtaRef} className="footer-top cinematic-footer-top scroll-block">
+        <div className="footer-cinema-media">
+          <CinematicVideo
+            poster={atelierAsset.poster}
+            src={atelierAsset.src}
+            playbackRate={ctaEngaged ? 0.72 : 1}
+          />
+        </div>
+        <div className="footer-cinema-scrim" aria-hidden="true" />
+        <div className="footer-top-content">
           <h2>Gözləmə. Başla.</h2>
           <p>Növbəti qrup tezliklə başlayır. Yerini indi ayır və rəsm səyahətinə başla.</p>
-          <a href="/muraciet" className="button inverse">
+          <a
+            href="/muraciet"
+            className="button inverse"
+            onPointerEnter={() => setCtaEngaged(true)}
+            onPointerLeave={() => setCtaEngaged(false)}
+            onFocus={() => setCtaEngaged(true)}
+            onBlur={() => setCtaEngaged(false)}
+          >
             Akademiyaya qoşul <ArrowIcon />
           </a>
         </div>
-        <img className="footer-top-portrait" src="/assets/footer-cta-portrait.webp" alt="Rəngli Artmonia portreti" loading="lazy" decoding="async" />
+        <div className="footer-cinema-coordinate" aria-hidden="true">
+          <span>40.4093° N</span>
+          <i />
+          <span>49.8671° E</span>
+        </div>
       </div>
       <div className="footer-contact-map scroll-block" data-scroll-order="1">
         <div className="footer-map-frame">
@@ -726,6 +776,7 @@ function ArtmoniaSiteInner() {
       <HomeHero />
       <main>
         <HomeNewsSection />
+        <CinematicJourney />
         <ProblemTransformation />
         <Programs />
         <PricingSection />

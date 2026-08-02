@@ -1,4 +1,12 @@
 .hero {
+  --hero-pointer-x: 50%;
+  --hero-pointer-y: 48%;
+  --hero-shift-x: 0px;
+  --hero-shift-y: 0px;
+  --hero-scroll: 0;
+  --hero-scroll-shift: 0px;
+  --hero-scroll-scale: 1.02;
+
   position: relative;
   z-index: 1;
   min-height: max(860px, 100svh);
@@ -11,16 +19,54 @@
 .background {
   position: absolute;
   z-index: -2;
+  inset: -14px;
+  overflow: hidden;
+  background: #f5f2fb;
+  transform:
+    translate3d(var(--hero-shift-x), calc(var(--hero-shift-y) - var(--hero-scroll-shift)), 0)
+    scale(var(--hero-scroll-scale));
+  transition: filter 700ms ease, transform 160ms linear;
+  will-change: filter, transform;
+}
+
+.heroFilm {
   inset: 0;
-  background: #f5f2fb url("/assets/artmonia-cloud-hands-hero.webp") center center / cover no-repeat;
+}
+
+.pointerAura {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  opacity: 0.36;
+  background:
+    radial-gradient(
+      circle at var(--hero-pointer-x) var(--hero-pointer-y),
+      rgba(105, 41, 242, 0.2) 0,
+      rgba(242, 142, 20, 0.08) 7%,
+      transparent 23%
+    );
+  mix-blend-mode: screen;
+  transition: opacity 500ms ease;
+  pointer-events: none;
 }
 
 .background::after {
   content: "";
   position: absolute;
+  z-index: 4;
   inset: 0;
-  background: linear-gradient(180deg, transparent 76%, rgba(247, 245, 253, 0.38) 100%);
+  background:
+    linear-gradient(180deg, rgba(245, 242, 251, 0.08), transparent 36%),
+    linear-gradient(180deg, transparent 70%, rgba(247, 245, 253, 0.52) 100%);
   pointer-events: none;
+}
+
+.heroActive .background {
+  filter: saturate(1.12) contrast(1.025);
+}
+
+.heroActive .pointerAura {
+  opacity: 0.86;
 }
 
 .heading {
@@ -478,7 +524,7 @@
   }
 
   .background {
-    background: #f5f2fb url("/assets/artmonia-cloud-hands-mobile-v1.webp") center top / cover no-repeat;
+    inset: -8px;
   }
 
   .background::after {

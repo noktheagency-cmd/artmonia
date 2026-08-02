@@ -6,8 +6,9 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminPage() {
-  const configured = isSupabaseConfigured();
+export default async function AdminPage({ searchParams }: { searchParams: Promise<{ demo?: string }> }) {
+  const previewMode = process.env.NODE_ENV !== "production" && (await searchParams).demo === "1";
+  const configured = isSupabaseConfigured() && !previewMode;
   let adminName = "Administrator";
   let messages: AdminMessage[] = [];
   let media: MediaAsset[] = [];

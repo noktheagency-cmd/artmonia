@@ -5,6 +5,7 @@ import { ChevronDown, ChevronRight, ChevronUp, Newspaper, Plus, Trash2 } from "l
 import { newsItems, type NewsItem } from "@/data/site";
 import type { SiteSectionRecord } from "@/lib/admin-content";
 import { mergeNewsItems } from "@/lib/news";
+import MediaField, { type MediaLibraryItem } from "./MediaField";
 
 function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
   if (!Array.isArray(content)) return [];
@@ -32,8 +33,8 @@ function newItem(): NewsItem {
     category: "Elan",
     title: "Yeni xəbər",
     excerpt: "",
-    image: "/assets/studio-room.webp",
-    images: ["/assets/studio-room.webp"],
+    image: "",
+    images: [],
     body: [""]
   };
 }
@@ -41,11 +42,15 @@ function newItem(): NewsItem {
 export default function NewsEditor({
   section,
   busy,
-  onSave
+  onSave,
+  onUpload,
+  media
 }: {
   section: SiteSectionRecord;
   busy: boolean;
   onSave: (section: SiteSectionRecord) => Promise<void>;
+  onUpload: (file: File) => Promise<string | null>;
+  media: MediaLibraryItem[];
 }) {
   const initialItems = useMemo(
     () => mergeNewsItems(parseItems(section.content), newsItems),
@@ -121,10 +126,17 @@ export default function NewsEditor({
                 <label className="admin-field wide"><span>Xəbər başlığı</span><input value={selected.title} onChange={(event) => updateSelected({ title: event.target.value })} /></label>
                 <label className="admin-field"><span>Kateqoriya</span><input value={selected.category} onChange={(event) => updateSelected({ category: event.target.value })} /></label>
                 <label className="admin-field"><span>Tarix</span><input type="date" value={selected.date} onChange={(event) => updateSelected({ date: event.target.value })} /></label>
-                <label className="admin-field wide"><span>Şəkil URL-i və ya media yolu</span><input value={selected.image ?? ""} placeholder="/assets/studio-room.webp" onChange={(event) => updateSelected({ image: event.target.value })} /><small>Məsələn: /assets/sekil.webp və ya tam https ünvanı.</small></label>
-                <label className="admin-field wide"><span>Detail qalereya şəkilləri</span><textarea rows={4} value={(selected.images ?? []).join("\n")} onChange={(event) => updateSelected({ images: event.target.value.split(/\r?\n/).map((value) => value.trim()).filter(Boolean) })} /><small>Hər sətirdə bir şəkil yolu yazın. Birdən çox şəkil detail səhifəsində qalereya kimi görünəcək.</small></label>
                 <label className="admin-field wide"><span>Qısa mətn</span><textarea rows={3} value={selected.excerpt} onChange={(event) => updateSelected({ excerpt: event.target.value })} /></label>
                 <label className="admin-field wide"><span>Tam mətn</span><textarea rows={10} value={selected.body.join("\n\n")} onChange={(event) => updateSelected({ body: event.target.value.split(/\n\s*\n/).map((value) => value.trim()).filter(Boolean) })} /><small>Abzasları bir boş sətirlə ayırın.</small></label>
+              </div>
+              <div className="news-media-fields">
+                <div className="admin-field"><span>Xəbərin əsas şəkli</span><MediaField value={selected.image ?? ""} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} /></div>
+                <div className="admin-field"><span>Detallı səhifə qalereyası</span><small>Şəkilləri əlavə edin, dəyişin və ya silin.</small>
+                  <div className="news-gallery-editor">
+                    {(selected.images ?? []).map((image, index) => <div key={`${selected.id}-${index}`}><MediaField compact value={image} onChange={(nextImage) => updateSelected({ images: (selected.images ?? []).map((current, itemIndex) => itemIndex === index ? nextImage : current).filter(Boolean) })} onUpload={onUpload} media={media} /><button type="button" onClick={() => updateSelected({ images: (selected.images ?? []).filter((_, itemIndex) => itemIndex !== index) })}><Trash2 /> Şəkli sil</button></div>)}
+                    <button className="json-add" type="button" onClick={() => updateSelected({ images: [...(selected.images ?? []), ""] })}><Plus /> Qalereyaya şəkil əlavə et</button>
+                  </div>
+                </div>
               </div>
               <footer className="collection-form-actions">
                 <button className="collection-delete" type="button" onClick={removeSelected}><Trash2 /> Xəbəri sil</button>
