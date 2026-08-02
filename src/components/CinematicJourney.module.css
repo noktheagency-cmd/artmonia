@@ -1,0 +1,207 @@
+.section {
+  --film-progress: 0;
+
+  position: relative;
+  z-index: 2;
+  height: 240svh;
+  color: #ffffff;
+  background: #0c0259;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 680px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.media {
+  transform:
+    scale(calc(1.02 + var(--film-progress) * 0.055))
+    translate3d(calc(var(--film-progress) * -1.7%), 0, 0);
+  transition: filter 300ms ease;
+}
+
+.media::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(7, 2, 46, 0.87) 0%, rgba(7, 2, 46, 0.42) 37%, transparent 69%),
+    linear-gradient(180deg, rgba(5, 2, 30, 0.2), transparent 42%, rgba(5, 2, 30, 0.48));
+}
+
+.inkMask {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 0;
+  width: calc(16% + var(--film-progress) * 54%);
+  height: clamp(2px, calc(2px + var(--film-progress) * 6px), 8px);
+  background: linear-gradient(90deg, #f28e14, #6929f2 74%, transparent);
+  box-shadow:
+    0 0 28px rgba(105, 41, 242, 0.7),
+    0 0 48px rgba(242, 142, 20, 0.3);
+  transform: translateY(-50%);
+  transform-origin: left center;
+  opacity: calc(0.25 + var(--film-progress) * 0.75);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  width: min(1240px, calc(100% - 48px));
+  height: 100%;
+  margin: 0 auto;
+  align-content: center;
+}
+
+.steps {
+  display: grid;
+  width: min(680px, 70vw);
+  gap: clamp(10px, 1.8vh, 22px);
+}
+
+.step {
+  --step-start: calc(var(--step-index) * 0.19);
+  --step-local: clamp(0, calc((var(--film-progress) - var(--step-start)) * 6), 1);
+
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 20px;
+  opacity: var(--step-local);
+  transform:
+    translate3d(calc((1 - var(--step-local)) * -56px), 0, 0)
+    skewX(calc((1 - var(--step-local)) * -4deg));
+}
+
+.step span {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+}
+
+.step strong {
+  font-family: var(--serif);
+  font-size: clamp(64px, 9vw, 138px);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 0.76;
+}
+
+.statement {
+  max-width: 470px;
+  margin: clamp(36px, 7vh, 70px) 0 0 70px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(14px, 1.3vw, 18px);
+  line-height: 1.65;
+  opacity: clamp(0, calc((var(--film-progress) - 0.54) * 5), 1);
+  transform: translateY(calc((1 - var(--film-progress)) * 28px));
+}
+
+.progress {
+  position: absolute;
+  right: 8px;
+  bottom: 46px;
+  width: 150px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.23);
+}
+
+.progress span {
+  display: block;
+  width: calc(var(--film-progress) * 100%);
+  height: 100%;
+  background: #f28e14;
+  box-shadow: 0 0 10px rgba(242, 142, 20, 0.72);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .section {
+    height: 200svh;
+  }
+
+  .sticky {
+    min-height: 620px;
+  }
+
+  .media {
+    transform:
+      scale(calc(1.08 + var(--film-progress) * 0.07))
+      translate3d(calc(var(--film-progress) * -2%), 0, 0);
+  }
+
+  .media::after {
+    background:
+      linear-gradient(90deg, rgba(7, 2, 46, 0.92), rgba(7, 2, 46, 0.3) 72%, transparent),
+      linear-gradient(180deg, rgba(5, 2, 30, 0.2), transparent 48%, rgba(5, 2, 30, 0.62));
+  }
+
+  .content {
+    width: calc(100% - 34px);
+    align-content: center;
+  }
+
+  .steps {
+    width: 100%;
+  }
+
+  .step {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .step strong {
+    font-size: clamp(56px, 20vw, 88px);
+  }
+
+  .statement {
+    max-width: 310px;
+    margin: 34px 0 0 44px;
+    font-size: 13px;
+  }
+
+  .progress {
+    right: 0;
+    bottom: 28px;
+    width: 112px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section {
+    height: auto;
+  }
+
+  .sticky {
+    position: relative;
+    min-height: 760px;
+  }
+
+  .media,
+  .step,
+  .statement {
+    opacity: 1;
+    transform: none;
+  }
+
+  .inkMask {
+    width: 62%;
+  }
+}

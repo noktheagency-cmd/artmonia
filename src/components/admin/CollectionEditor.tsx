@@ -3,10 +3,11 @@
 /* Collection images can come from Supabase Storage or existing site assets. */
 /* eslint-disable @next/next/no-img-element */
 
-import { useMemo, useRef, useState } from "react";
-import { ChevronDown, ChevronRight, ChevronUp, ImagePlus, Plus, Trash2, UploadCloud, X } from "lucide-react";
+import { useMemo, useState } from "react";
+import { ChevronDown, ChevronRight, ChevronUp, ImagePlus, Plus, Trash2 } from "lucide-react";
 import type { CollectionEntry } from "@/data/collections";
 import type { SiteSectionRecord } from "@/lib/admin-content";
+import MediaField, { type MediaLibraryItem } from "./MediaField";
 
 type CollectionKind = "results" | "awards";
 
@@ -66,20 +67,20 @@ export default function CollectionEditor({
   section,
   busy,
   onSave,
-  onUpload
+  onUpload,
+  media
 }: {
   kind: CollectionKind;
   section: SiteSectionRecord;
   busy: boolean;
   onSave: (section: SiteSectionRecord) => Promise<void>;
   onUpload: (file: File) => Promise<string | null>;
+  media: MediaLibraryItem[];
 }) {
   const labels = copy[kind];
   const [items, setItems] = useState<CollectionEntry[]>(() => parseItems(section.content));
   const [selectedId, setSelectedId] = useState<string | null>(() => parseItems(section.content)[0]?.id ?? null);
   const [published, setPublished] = useState(section.is_published);
-  const [uploading, setUploading] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
   const selected = useMemo(() => items.find((item) => item.id === selectedId) ?? null, [items, selectedId]);
 
   function addItem() {
@@ -108,18 +109,6 @@ export default function CollectionEditor({
     const next = [...items];
     [next[index], next[nextIndex]] = [next[nextIndex], next[index]];
     setItems(next);
-  }
-
-  async function acceptFile(file?: File) {
-    if (!file || !file.type.startsWith("image/")) return;
-    setUploading(true);
-    try {
-      const url = await onUpload(file);
-      if (url) updateSelected({ image: url });
-    } finally {
-      setUploading(false);
-      if (fileRef.current) fileRef.current.value = "";
-    }
   }
 
   return (
@@ -163,21 +152,8 @@ export default function CollectionEditor({
               </div>
 
               <div className="collection-upload-field">
-                <span>Şəkli kompüterdən yüklə</span>
-                <input ref={fileRef} hidden type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => acceptFile(event.target.files?.[0])} />
-                <button
-                  type="button"
-                  className="collection-dropzone"
-                  disabled={uploading}
-                  onClick={() => fileRef.current?.click()}
-                  onDragOver={(event) => event.preventDefault()}
-                  onDrop={(event) => { event.preventDefault(); acceptFile(event.dataTransfer.files[0]); }}
-                >
-                  <UploadCloud />
-                  <strong>{uploading ? "Şəkil yüklənir..." : "Faylı buraya sürükləyin və ya seçmək üçün klikləyin"}</strong>
-                  <small>JPG, PNG, WEBP və ya GIF · maksimum 10 MB</small>
-                </button>
-                {selected.image ? <div className="collection-image-preview"><img src={selected.image} alt={selected.title} /><button type="button" onClick={() => updateSelected({ image: "" })} aria-label="Şəkli sil"><X /></button></div> : null}
+                <span>Şəkil</span>
+                <MediaField value={selected.image} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} />
               </div>
 
               <footer className="collection-form-actions">

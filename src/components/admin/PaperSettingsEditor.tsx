@@ -67,7 +67,7 @@ export default function PaperSettingsEditor({ value, onChange }: Props) {
           </label>
         ))}
         <label className="wide">
-          <span>Oval radius: {settings.ovalRadius}px</span>
+          <span>Künclərin yumşaqlığı: {settings.ovalRadius}</span>
           <input
             type="range"
             min={8}
