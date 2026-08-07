@@ -6,6 +6,7 @@
 import Link from "next/link";
 import { useMemo, useRef } from "react";
 import { newsItems } from "@/data/site";
+import { homePageCopy } from "@/data/site-copy";
 import { useSiteContentValue } from "@/components/SiteContentContext";
 import { formatNewsDate, getNewsImages, isNewsItem, mergeNewsItems } from "@/lib/news";
 import styles from "./HomeNewsSection.module.css";
@@ -26,6 +27,7 @@ function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
 export default function HomeNewsSection() {
   const railRef = useRef<HTMLDivElement | null>(null);
   const dynamicItems = useSiteContentValue("news_items", newsItems);
+  const copy = useSiteContentValue("home_page_copy", homePageCopy).news;
   const items = useMemo(() => {
     const publishedItems = Array.isArray(dynamicItems) ? dynamicItems.filter(isNewsItem) : [];
     return mergeNewsItems(publishedItems, newsItems, 10);
@@ -41,14 +43,14 @@ export default function HomeNewsSection() {
     <section className={`${styles.section} scroll-section`} id="academy" aria-labelledby="home-news-title">
       <div className={styles.heading}>
         <div>
-          <h2 id="home-news-title">Yeniliklər</h2>
+          <h2 id="home-news-title">{copy.title}</h2>
           <span aria-hidden="true" />
-          <p>Artmonia-da sənət hər gün yenilənir.</p>
+          <p>{copy.subtitle}</p>
         </div>
 
         <div className={styles.headingActions}>
-          <Link href="/yenilikler">Bütün yeniliklər</Link>
-          <span>{String(items.length).padStart(2, "0")} xəbər</span>
+          <Link href="/yenilikler">{copy.allLink}</Link>
+          <span>{String(items.length).padStart(2, "0")} {copy.countSuffix}</span>
           <div className={styles.scrollButtons} aria-label="Xəbər relsini idarə et">
             <button type="button" onClick={() => scrollRail(-1)} aria-label="Əvvəlki xəbərlər">
               <Arrow direction="left" />
@@ -83,7 +85,7 @@ export default function HomeNewsSection() {
                 <i aria-hidden="true" />
                 <span className={styles.excerpt}>{item.excerpt}</span>
                 <span className={styles.readMore}>
-                  Ətraflı oxu
+                  {copy.readMore}
                   <Arrow />
                 </span>
               </span>

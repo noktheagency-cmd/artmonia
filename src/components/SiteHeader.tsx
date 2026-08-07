@@ -7,34 +7,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useSiteContentValue } from "@/components/SiteContentContext";
+import { globalCopy } from "@/data/site-copy";
 
-const navigation = [
-  {
-    label: "Proqramlar",
-    href: "/#program",
-    children: [
-      { label: "Proqramlar", href: "/#program" },
-      { label: "Qiymətlər", href: "/#pricing" }
-    ]
-  },
-  {
-    label: "Akademiya",
-    href: "/akademiya",
-    children: [
-      { label: "İnteryer", href: "/akademiya#interyer" },
-      { label: "Haqqımızda", href: "/akademiya#haqqimizda" }
-    ]
-  },
-  {
-    label: "Nəticələr",
-    href: "/neticeler",
-    children: [
-      { label: "Uğur hekayələri", href: "/neticeler#ugur-hekayeleri" },
-      { label: "Tələbə nəticələri", href: "/neticeler#telebe-neticeleri" }
-    ]
-  },
-  { label: "Müəllimlər", href: "/#teachers" },
-  { label: "Əlaqə", href: "/#contact" }
+const navigationRoutes = [
+  { href: "/#program", children: ["/#program", "/#pricing"] },
+  { href: "/akademiya", children: ["/akademiya#interyer", "/akademiya#haqqimizda"] },
+  { href: "/neticeler", children: ["/neticeler#ugur-hekayeleri", "/neticeler#telebe-neticeleri"] },
+  { href: "/#teachers", children: [] },
+  { href: "/#contact", children: [] }
 ];
 
 function ArrowIcon() {
@@ -67,6 +48,19 @@ function MenuIcon({ open }: { open: boolean }) {
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const copy = useSiteContentValue("global_copy", globalCopy);
+  const navigation = navigationRoutes.map((route, index) => {
+    const item = copy.navigation[index] ?? globalCopy.navigation[index];
+    const fallbackItem = globalCopy.navigation[index];
+    return {
+      label: item.label,
+      href: route.href,
+      children: route.children.map((href, childIndex) => ({
+        href,
+        label: item.children[childIndex] ?? fallbackItem.children[childIndex]
+      }))
+    };
+  });
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -82,7 +76,7 @@ export default function SiteHeader() {
 
       <nav className="desktop-nav" aria-label="Əsas naviqasiya">
         {navigation.map((item) =>
-          item.children ? (
+          item.children.length ? (
             <div className="nav-program-menu" key={item.label}>
               <Link
                 className={isActive(item.href) ? "nav-program-trigger is-active" : "nav-program-trigger"}
@@ -115,7 +109,7 @@ export default function SiteHeader() {
       <div className="header-actions">
         <ThemeToggle />
         <Link className="nav-cta" href="/muraciet">
-          Müraciət et <ArrowIcon />
+          {copy.applicationCta} <ArrowIcon />
         </Link>
       </div>
 
@@ -134,11 +128,11 @@ export default function SiteHeader() {
 
       <nav id="mobile-navigation" className={open ? "mobile-nav open" : "mobile-nav"} aria-label="Mobil naviqasiya">
         {navigation.map((item) => (
-          <div className={item.children ? "mobile-program-group" : undefined} key={item.label}>
+          <div className={item.children.length ? "mobile-program-group" : undefined} key={item.label}>
             <Link href={item.href} onClick={() => setOpen(false)}>
               {item.label}
             </Link>
-            {item.children ? (
+            {item.children.length ? (
               <div className="mobile-program-links">
                 {item.children.map((child) => (
                   <Link href={child.href} key={child.href} onClick={() => setOpen(false)}>
@@ -150,7 +144,7 @@ export default function SiteHeader() {
           </div>
         ))}
         <Link className="mobile-cta" href="/muraciet" onClick={() => setOpen(false)}>
-          Müraciət et <ArrowIcon />
+          {copy.applicationCta} <ArrowIcon />
         </Link>
       </nav>
     </header>

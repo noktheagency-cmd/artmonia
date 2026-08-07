@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSiteContentValue } from "@/components/SiteContentContext";
+import { globalCopy } from "@/data/site-copy";
 
 const THEME_STORAGE_KEY = "artmonia-theme";
 const THEME_CHANGE_EVENT = "artmonia-theme-change";
@@ -58,6 +60,7 @@ function SunIcon() {
 
 export default function ThemeToggle({ className = "" }: { className?: string }) {
   const [theme, setTheme] = useState<Theme>("light");
+  const copy = useSiteContentValue("global_copy", globalCopy);
 
   useEffect(() => {
     const currentTheme: Theme =
@@ -120,7 +123,7 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
   };
 
   const isDark = theme === "dark";
-  const label = isDark ? "İşıqlı temaya keç" : "Qaranlıq temaya keç";
+  const label = isDark ? copy.lightThemeLabel : copy.darkThemeLabel;
 
   return (
     <button

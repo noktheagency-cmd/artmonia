@@ -6,6 +6,7 @@ import SiteHeader from "@/components/SiteHeader";
 import { SiteContentProvider } from "@/components/SiteContentContext";
 import type { NewsItem } from "@/data/site";
 import type { SiteContentMap } from "@/lib/site-content";
+import { globalCopy, newsPageCopy, type GlobalCopy, type NewsPageCopy } from "@/data/site-copy";
 import { formatNewsDate, getNewsImages } from "@/lib/news";
 import styles from "./NewsDetailPage.module.css";
 
@@ -30,6 +31,8 @@ export default function NewsDetailPage({
   nextItem?: NewsItem;
 }) {
   const images = getNewsImages(item, itemIndex);
+  const copy = (content.news_page_copy as unknown as NewsPageCopy | undefined) ?? newsPageCopy;
+  const global = (content.global_copy as unknown as GlobalCopy | undefined) ?? globalCopy;
 
   return (
     <SiteContentProvider content={content}>
@@ -38,7 +41,7 @@ export default function NewsDetailPage({
         <article className={styles.article}>
           <Link className={styles.backLink} href="/yenilikler">
             <Arrow direction="left" />
-            Yeniliklərə qayıt
+            {copy.backToNews}
           </Link>
 
           <header className={styles.header}>
@@ -64,12 +67,12 @@ export default function NewsDetailPage({
 
           <footer className={styles.articleFooter}>
             <Link href="/yenilikler">
-              Bütün yeniliklər
+              {copy.allNews}
               <Arrow />
             </Link>
             {nextItem ? (
               <Link className={styles.nextStory} href={`/yenilikler/${encodeURIComponent(nextItem.id)}`}>
-                <span>Növbəti xəbər</span>
+                <span>{copy.nextNews}</span>
                 <strong>{nextItem.title}</strong>
                 <Arrow />
               </Link>
@@ -77,7 +80,7 @@ export default function NewsDetailPage({
           </footer>
         </article>
       </main>
-      <footer className={styles.siteFooter}>© 2026 Artmonia Academy</footer>
+      <footer className={styles.siteFooter}>{global.copyright}</footer>
     </SiteContentProvider>
   );
 }
