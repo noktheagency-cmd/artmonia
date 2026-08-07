@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import CinematicVideo from "@/components/CinematicVideo";
+import { useSiteContentValue } from "@/components/SiteContentContext";
+import { homePageCopy } from "@/data/site-copy";
 import { videoExperience } from "@/data/videoExperience";
 import styles from "./HomeHero.module.css";
 
@@ -28,6 +30,7 @@ export default function HomeHero() {
   const [cardsOpen, setCardsOpen] = useState(false);
   const heroRef = useRef<HTMLElement | null>(null);
   const heroAsset = videoExperience.hero;
+  const copy = useSiteContentValue("home_page_copy", homePageCopy).hero;
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -92,14 +95,10 @@ export default function HomeHero() {
         <p className={styles.eyebrow}>
           <span className={styles.eyebrowSpark} aria-hidden="true">✦</span>
           <span className={styles.eyebrowWords}>
-            <span>Xəyal</span>
-            <span>etdiyin</span>
-            <span>hər</span>
-            <span>şey</span>
-            <span>gerçəkdir</span>
+            {copy.eyebrow.split(/\s+/).map((word, index) => <span key={`${word}-${index}`}>{word}</span>)}
           </span>
         </p>
-        <h1 id="home-hero-title">Artmonia Academy</h1>
+        <h1 id="home-hero-title">{copy.title}</h1>
       </div>
 
       <div className={cardsOpen ? `${styles.cards} ${styles.cardsOpen}` : styles.cards}>
@@ -116,12 +115,10 @@ export default function HomeHero() {
         </div>
 
         <article className={`${styles.card} ${styles.cardLeft}`}>
-          <p className={styles.cardLabel}>Artmonia Academy</p>
-          <h2>Fırçanı tut,<br />sənətkar ol.</h2>
+          <p className={styles.cardLabel}>{copy.leftLabel}</p>
+          <h2>{copy.leftTitle.split("\n").map((line, index) => <span key={`${line}-${index}`}>{line}{index < copy.leftTitle.split("\n").length - 1 ? <br /> : null}</span>)}</h2>
           <span className={styles.cardRule} aria-hidden="true" />
-          <p className={styles.cardText}>
-            Sistem. Rəy. Nəticə — peşəkar mentorlarla 6 həftəlik akademik rəsm proqramı.
-          </p>
+          <p className={styles.cardText}>{copy.leftText}</p>
         </article>
 
         <button
@@ -138,17 +135,15 @@ export default function HomeHero() {
           href="/muraciet"
           tabIndex={cardsOpen ? 0 : -1}
         >
-          <span>Ödənişsiz konsultasiyaya qoşul</span>
+          <span>{copy.cta}</span>
           <ArrowUpRightIcon />
         </Link>
 
         <article className={`${styles.card} ${styles.cardRight}`}>
-          <p className={styles.cardLabel}>Akademik ritm</p>
-          <h2>Klassik rəsm<br />intizamı,<br />müasir tədris.</h2>
+          <p className={styles.cardLabel}>{copy.rightLabel}</p>
+          <h2>{copy.rightTitle.split("\n").map((line, index) => <span key={`${line}-${index}`}>{line}{index < copy.rightTitle.split("\n").length - 1 ? <br /> : null}</span>)}</h2>
           <span className={styles.cardRule} aria-hidden="true" />
-          <p className={styles.cardText}>
-            Texnika, müşahidə və yaradıcılıq birləşir, sənət formalaşır.
-          </p>
+          <p className={styles.cardText}>{copy.rightText}</p>
         </article>
       </div>
 

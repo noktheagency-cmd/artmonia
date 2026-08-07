@@ -1,18 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useSiteContentValue } from "@/components/SiteContentContext";
+import { academyPageCopy, globalCopy } from "@/data/site-copy";
 import styles from "./AcademyPage.module.css";
-
-const studioDetails = [
-  ["Gün işığı", "Rəng və formanı təbii işıqda müşahidə etmək üçün."],
-  ["Fərdi iş sahəsi", "Hər tələbəyə rahat hərəkət və fokus imkanı."],
-  ["Peşəkar materiallar", "Məşqdən yekun işə qədər lazım olan hər detal."]
-];
-
-const principles = [
-  ["Sistemli yanaşma", "Hər addım əvvəlkini tamamlayır və inkişafı görünən edir."],
-  ["Peşəkar rəhbərlik", "Mentor rəyi dəqiq yön, düzgün texnika və davamlı dəstək verir."],
-  ["Nəticəyə yönəlik təhsil", "Praktika ölçülən irəliləyişə və şəxsi üsluba çevrilir."]
-];
 
 function ArrowIcon() {
   return (
@@ -24,23 +16,23 @@ function ArrowIcon() {
 }
 
 export default function AcademyPage() {
+  const copy = useSiteContentValue("academy_page_copy", academyPageCopy);
+  const global = useSiteContentValue("global_copy", globalCopy);
+
   return (
     <main className={styles.page}>
       <section className={styles.interior} id="interyer" aria-labelledby="academy-title">
         <div className={styles.gridTexture} aria-hidden="true" />
         <div className={styles.interiorShell}>
           <header className={styles.titleBlock}>
-            <h1 id="academy-title">Akademiya</h1>
+            <h1 id="academy-title">{copy.pageTitle}</h1>
             <span className={styles.titleStroke} aria-hidden="true" />
           </header>
 
           <div className={styles.interiorCopy}>
-            <h2>İnteryer</h2>
-            <p className={styles.sectionLead}>Sənətin nəfəs aldığı məkan.</p>
-            <p className={styles.bodyCopy}>
-              Sakitlik, təbii işıq və yaradıcılıq üçün düşünülmüş hər detal tələbənin diqqətini işinə yönəldir.
-              Artmonia sadəcə dərs otağı deyil — ideyanın formaya çevrildiyi canlı studiyadır.
-            </p>
+            <h2>{copy.interiorTitle}</h2>
+            <p className={styles.sectionLead}>{copy.interiorLead}</p>
+            <p className={styles.bodyCopy}>{copy.interiorText}</p>
           </div>
 
           <figure className={styles.roomFigure}>
@@ -51,7 +43,7 @@ export default function AcademyPage() {
               priority
               sizes="(max-width: 760px) 100vw, 58vw"
             />
-            <figcaption>İşıq · Məkan · Fokus</figcaption>
+            <figcaption>{copy.roomCaption}</figcaption>
           </figure>
 
           <figure className={styles.brushFigure}>
@@ -64,25 +56,18 @@ export default function AcademyPage() {
           </figure>
 
           <div className={styles.studioDetails} aria-label="Studiyanın imkanları">
-            {studioDetails.map(([title, copy]) => (
-              <div key={title}>
-                <strong>{title}</strong>
-                <p>{copy}</p>
+            {copy.studioDetails.map((item) => (
+              <div key={item.title}>
+                <strong>{item.title}</strong>
+                <p>{item.text}</p>
               </div>
             ))}
           </div>
 
           <div className={styles.interiorNarrative}>
-            <h3>Bir studiyadan daha artıq.</h3>
+            <h3>{copy.narrativeTitle}</h3>
             <div>
-              <p>
-                Məkanımız dərsin tempinə uyğun qurulub: müşahidə üçün sakit zona, uzunmüddətli iş üçün rahat
-                molbert məsafəsi və müəllimin hər tələbəyə yaxınlaşa bildiyi açıq plan.
-              </p>
-              <p>
-                Divarlardakı işlər, klassik formalar və materialların daim əlçatan olması tələbəyə yalnız tapşırığı
-                yerinə yetirməyi deyil, sənətin içində yaşamağı öyrədir.
-              </p>
+              {copy.narrativeParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
           </div>
 
@@ -95,34 +80,25 @@ export default function AcademyPage() {
       <section className={styles.about} id="haqqimizda" aria-labelledby="about-title">
         <div className={styles.aboutShell}>
           <div className={styles.aboutCopy}>
-            <h2 id="about-title">Haqqımızda</h2>
-            <p className={styles.aboutLead}>Sistem. Rəhbərlik. Nəticə.</p>
-            <p className={styles.aboutStatement}>
-              Artmonia — istedadı sistemli inkişaf etdirən sənət akademiyasıdır.
-            </p>
+            <h2 id="about-title">{copy.aboutTitle}</h2>
+            <p className={styles.aboutLead}>{copy.aboutLead}</p>
+            <p className={styles.aboutStatement}>{copy.aboutStatement}</p>
             <div className={styles.aboutText}>
-              <p>
-                Biz rəsmə yalnız texnika kimi baxmırıq. Məqsədimiz tələbənin müşahidə etmə, qərar vermə və öz
-                vizual dilini qurma bacarığını mərhələli şəkildə inkişaf etdirməkdir.
-              </p>
-              <p>
-                Proqramlarımız ilk dəfə fırça tutanlardan portfolio hazırlayanlara qədər fərqli səviyyələr üçün
-                qurulur. Hər tələbə eyni nəticəni deyil, öz potensialının ən güclü versiyasını hədəfləyir.
-              </p>
+              {copy.aboutParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </div>
 
             <div className={styles.principles}>
-              <h3>Tədris yanaşmamız</h3>
-              {principles.map(([title, copy]) => (
-                <div key={title}>
-                  <strong>{title}</strong>
-                  <p>{copy}</p>
+              <h3>{copy.principlesTitle}</h3>
+              {copy.principles.map((item) => (
+                <div key={item.title}>
+                  <strong>{item.title}</strong>
+                  <p>{item.text}</p>
                 </div>
               ))}
             </div>
 
             <Link className={styles.aboutCta} href="/muraciet">
-              Müraciət et <ArrowIcon />
+              {copy.applicationCta} <ArrowIcon />
             </Link>
           </div>
 
@@ -138,11 +114,11 @@ export default function AcademyPage() {
       </section>
 
       <footer className={styles.footer}>
-        <span>© 2026 Artmonia Academy</span>
+        <span>{global.copyright}</span>
         <div>
-          <Link href="/akademiya#interyer">İnteryer</Link>
-          <Link href="/akademiya#haqqimizda">Haqqımızda</Link>
-          <Link href="/">Ana səhifə</Link>
+          <Link href="/akademiya#interyer">{copy.footerLinks[0]}</Link>
+          <Link href="/akademiya#haqqimizda">{copy.footerLinks[1]}</Link>
+          <Link href="/">{copy.footerLinks[2]}</Link>
         </div>
       </footer>
     </main>

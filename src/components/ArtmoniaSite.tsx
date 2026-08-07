@@ -22,6 +22,7 @@ import CinematicJourney from "@/components/CinematicJourney";
 import CinematicVideo from "@/components/CinematicVideo";
 import { SiteContentProvider, useSiteContentValue } from "@/components/SiteContentContext";
 import { videoExperience } from "@/data/videoExperience";
+import { globalCopy, homePageCopy } from "@/data/site-copy";
 import type { SiteContentMap } from "@/lib/site-content";
 
 function ArrowIcon() {
@@ -179,6 +180,7 @@ function ProblemTransformation() {
   const dynamicPainPoints = useSiteContentValue("pain_points", painPoints);
   const dynamicTransformations = useSiteContentValue("transformations", transformations);
   const dynamicGalleryImages = useSiteContentValue("gallery_images", galleryImages);
+  const copy = useSiteContentValue("home_page_copy", homePageCopy).problem;
   return (
     <section className="split-band scroll-section" id="problem">
       <Reveal className="problem-showcase" variant="boom">
@@ -199,11 +201,9 @@ function ProblemTransformation() {
           </div>
         </div>
         <div className="problem-question">
-          <p className="small-label">Problem</p>
-          <h2>Tanış gəlir?</h2>
-          <p>
-            Artmonia-da hər xətt planla çəkilir, mentor rəyi ilə düzəlir və ardıcıl praktika ilə nəticəyə çevrilir.
-          </p>
+          <p className="small-label">{copy.label}</p>
+          <h2>{copy.title}</h2>
+          <p>{copy.text}</p>
         </div>
       </Reveal>
       <Reveal className="atelier-panel" variant="boom">
@@ -211,7 +211,7 @@ function ProblemTransformation() {
           <img src={dynamicGalleryImages[1].src} alt={dynamicGalleryImages[1].alt} loading="lazy" decoding="async" />
           <div className="board-wash" />
           <div className="sketch-stage">
-            <span className="sketch-label">Sketch To Result</span>
+            <span className="sketch-label">{copy.sketchLabel}</span>
             <svg className="sketch-lines" viewBox="0 0 520 440" aria-hidden="true">
               <path className="ghost-sketch" d="M126 320 C150 220 190 146 260 126 C340 104 388 172 382 250 C374 344 284 382 204 344 C166 326 144 302 126 320Z" />
               <path className="ghost-sketch" d="M182 246 C234 214 298 214 348 246" />
@@ -223,15 +223,15 @@ function ProblemTransformation() {
               <path className="sketch-path path-four" d="M176 336 C214 286 294 286 350 334" />
               <path className="sketch-path path-five" d="M96 374 C182 404 316 406 430 366" />
             </svg>
-            <div className="stage-chip chip-system">Sistem xətti</div>
-            <div className="stage-chip chip-feedback">Feedback işarəsi</div>
-            <div className="stage-chip chip-mentor">Mentor qeydi</div>
-            <div className="portfolio-stamp">Portfolio</div>
+            <div className="stage-chip chip-system">{copy.systemChip}</div>
+            <div className="stage-chip chip-feedback">{copy.feedbackChip}</div>
+            <div className="stage-chip chip-mentor">{copy.mentorChip}</div>
+            <div className="portfolio-stamp">{copy.portfolioStamp}</div>
           </div>
         </div>
         <div className="transformation-copy">
-          <p className="small-label">Transformasiya</p>
-          <h2>Proqram sənə nə verir?</h2>
+          <p className="small-label">{copy.transformationLabel}</p>
+          <h2>{copy.transformationTitle}</h2>
           <div className="transformation-grid">
             {dynamicTransformations.map((item, index) => (
               <article
@@ -253,11 +253,12 @@ function ProblemTransformation() {
 
 function Programs() {
   const dynamicCourses = useSiteContentValue("courses", courses);
+  const copy = useSiteContentValue("home_page_copy", homePageCopy).programs;
   return (
     <section className="section-shell scroll-section" id="program">
       <Reveal className="section-heading wide" variant="from-right">
-        <p>Proqramlar</p>
-        <h2>Peşəkar kurslar,<br />müasir nəticə.</h2>
+        <p>{copy.label}</p>
+        <h2>{copy.title.split("\n").map((line, index) => <span key={`${line}-${index}`}>{line}{index < copy.title.split("\n").length - 1 ? <br /> : null}</span>)}</h2>
       </Reveal>
       <div className="courses-grid">
         {dynamicCourses.map((course, index) => (
@@ -272,11 +273,11 @@ function Programs() {
               <span>{course.duration}</span>
             </div>
             <div className="course-copy">
-              <span className="course-label">Artmonia proqramı</span>
+              <span className="course-label">{copy.cardLabel}</span>
               <h3>{course.title}</h3>
               <p>{course.text}</p>
               <a href="#lead">
-                Proqramı seç <ArrowIcon />
+                {copy.selectCta} <ArrowIcon />
               </a>
             </div>
           </Reveal>
@@ -564,12 +565,13 @@ function PricingSection() {
 
 function Pricing() {
   const dynamicPackages = useSiteContentValue("packages", packages);
+  const copy = useSiteContentValue("home_page_copy", homePageCopy).pricing;
 
   return (
     <Reveal className="pricing-wrap pricing-unified" id="pricing" variant="from-bottom">
       <div className="pricing-unified-heading">
-        <h2>Dərs paketləri və qiymətlər</h2>
-        <p>Öyrənmə ritminə uyğun planı seç.</p>
+        <h2>{copy.title}</h2>
+        <p>{copy.subtitle}</p>
       </div>
       <div className="pricing-saas-grid">
         {dynamicPackages.map((pack, index) => {
@@ -613,26 +615,30 @@ function Pricing() {
 }
 
 const teacherPortraits = [
-  { name: "Vaqif Əsrər", role: "Peşəkar akademik müəllim", line: "Akademik təməl və beynəlxalq baxış.", image: "/assets/teacher-vaqif.webp", tone: "ochre" },
-  { name: "Əsmər Ramazanova", role: "Akademik müəllim", line: "Qara qələm, forma və intizam.", image: "/assets/teacher-esmer.webp", tone: "ink" },
-  { name: "Əminə Cəmaləddinova", role: "Həvəskar rəsm müəllimi", line: "Art terapiya ilə yaradıcı yol.", image: "/assets/teacher-emine.webp", tone: "meadow" }
+  { image: "/assets/teacher-vaqif.webp", tone: "ochre" },
+  { image: "/assets/teacher-esmer.webp", tone: "ink" },
+  { image: "/assets/teacher-emine.webp", tone: "meadow" }
 ];
 
 function TeachersAtelier() {
+  const copy = useSiteContentValue("home_page_copy", homePageCopy).teachers;
   return (
     <section className="teacher-atelier scroll-section" id="teachers">
       <Reveal className="teacher-atelier-heading" variant="from-left">
-        <p className="small-label">Müəllim heyəti</p>
-        <h2>İlhamı <em>istiqamətə</em> çevirən insanlar.</h2>
-        <p>Hər müəllim öz texnikası, müşahidəsi və fərqli tədris ritmi ilə sənə yol göstərir.</p>
+        <p className="small-label">{copy.label}</p>
+        <h2>{copy.titleStart} <em>{copy.titleEmphasis}</em> {copy.titleEnd}</h2>
+        <p>{copy.subtitle}</p>
       </Reveal>
       <div className="teacher-poster-stage">
-        {teacherPortraits.map((teacher, index) => (
-          <Reveal key={teacher.name} className={`teacher-poster teacher-poster-${teacher.tone}`} variant={index === 1 ? "boom" : index === 0 ? "from-left" : "from-right"}>
-            <div className="teacher-poster-image"><img src={teacher.image} alt={teacher.name} loading="lazy" decoding="async" /></div>
+        {teacherPortraits.map((visual, index) => {
+          const teacher = copy.people[index] ?? homePageCopy.teachers.people[index];
+          return (
+          <Reveal key={`${teacher.name}-${index}`} className={`teacher-poster teacher-poster-${visual.tone}`} variant={index === 1 ? "boom" : index === 0 ? "from-left" : "from-right"}>
+            <div className="teacher-poster-image"><img src={visual.image} alt={teacher.name} loading="lazy" decoding="async" /></div>
             <div className="teacher-poster-caption"><span>{teacher.role}</span><strong>{teacher.name}</strong><p>{teacher.line}</p></div>
           </Reveal>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
@@ -640,6 +646,8 @@ function TeachersAtelier() {
 
 function AuditPrivacyFooter() {
   const dynamicContact = useSiteContentValue("contact", contact);
+  const global = useSiteContentValue("global_copy", globalCopy);
+  const copy = useSiteContentValue("home_page_copy", homePageCopy).footer;
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=Nizami+Cinema+Center%2C+Baku";
   const [ctaEngaged, setCtaEngaged] = useState(false);
   const footerCtaRef = useRef<HTMLDivElement | null>(null);
@@ -682,8 +690,8 @@ function AuditPrivacyFooter() {
         </div>
         <div className="footer-cinema-scrim" aria-hidden="true" />
         <div className="footer-top-content">
-          <h2>Gözləmə. Başla.</h2>
-          <p>Növbəti qrup tezliklə başlayır. Yerini indi ayır və rəsm səyahətinə başla.</p>
+          <h2>{copy.title}</h2>
+          <p>{copy.text}</p>
           <a
             href="/muraciet"
             className="button inverse"
@@ -692,13 +700,13 @@ function AuditPrivacyFooter() {
             onFocus={() => setCtaEngaged(true)}
             onBlur={() => setCtaEngaged(false)}
           >
-            Akademiyaya qoşul <ArrowIcon />
+            {copy.cta} <ArrowIcon />
           </a>
         </div>
         <div className="footer-cinema-coordinate" aria-hidden="true">
-          <span>40.4093° N</span>
+          <span>{copy.latitude}</span>
           <i />
-          <span>49.8671° E</span>
+          <span>{copy.longitude}</span>
         </div>
       </div>
       <div className="footer-contact-map scroll-block" data-scroll-order="1">
@@ -712,54 +720,54 @@ function AuditPrivacyFooter() {
           <a className="footer-map-visit" href={mapUrl} target="_blank" rel="noreferrer">
             <span className="footer-map-visit-icon"><ContactIcon name="pin" /></span>
             <span>
-              <strong>Bizi ziyarət edin</strong>
-              <small>Artmonia Academy</small>
+              <strong>{copy.visitTitle}</strong>
+              <small>{copy.visitSubtitle}</small>
             </span>
           </a>
           <a className="footer-map-open" href={mapUrl} target="_blank" rel="noreferrer">
             <span className="footer-map-open-icon"><ContactIcon name="external" /></span>
-            Xəritədə aç
+            {copy.openMap}
             <ArrowIcon />
           </a>
         </div>
         <address className="footer-contact">
           <div className="footer-contact-heading">
-            <h2>Əlaqə</h2>
+            <h2>{copy.contactTitle}</h2>
             <span aria-hidden="true" />
           </div>
           <div className="footer-contact-list">
             <div className="footer-contact-row">
               <span className="footer-contact-icon"><ContactIcon name="phone" /></span>
               <div>
-                <span className="footer-contact-caption">Telefon</span>
+                <span className="footer-contact-caption">{copy.phoneLabel}</span>
                 <a href={`tel:${dynamicContact.phone.replace(/\s/g, "")}`}>{dynamicContact.phone}</a>
               </div>
             </div>
             <div className="footer-contact-row">
               <span className="footer-contact-icon"><ContactIcon name="mail" /></span>
               <div>
-                <span className="footer-contact-caption">E-poçt</span>
+                <span className="footer-contact-caption">{copy.emailLabel}</span>
                 <a href={`mailto:${dynamicContact.email}`}>{dynamicContact.email}</a>
               </div>
             </div>
             <div className="footer-contact-row">
               <span className="footer-contact-icon"><ContactIcon name="pin" /></span>
               <div>
-                <span className="footer-contact-caption">Ünvan</span>
+                <span className="footer-contact-caption">{copy.addressLabel}</span>
                 <p className="footer-location">{dynamicContact.address}</p>
               </div>
             </div>
           </div>
           <div className="footer-contact-note">
             <span className="footer-contact-icon"><ContactIcon name="clock" /></span>
-            <p><strong>Sizi görməyə şad olarıq!</strong>Gəlməzdən əvvəl əlaqə saxlayın.</p>
+            <p><strong>{copy.noteTitle}</strong>{copy.noteText}</p>
             <i aria-hidden="true" />
           </div>
         </address>
       </div>
       <div className="footer-bottom scroll-block" data-scroll-order="2">
-        <span>© 2026 Artmonia Academy.</span>
-        <span className="footer-quote">&ldquo;İstək varsa, yol da var.&rdquo; - Leonardo da Vinçi</span>
+        <span>{global.copyright}</span>
+        <span className="footer-quote">{copy.quote}</span>
       </div>
     </footer>
   );

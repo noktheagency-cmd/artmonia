@@ -2,17 +2,15 @@
 
 import { useEffect, useRef } from "react";
 import CinematicVideo from "@/components/CinematicVideo";
+import { useSiteContentValue } from "@/components/SiteContentContext";
+import { homePageCopy } from "@/data/site-copy";
 import { videoExperience } from "@/data/videoExperience";
 import styles from "./CinematicJourney.module.css";
 
-const journeySteps = [
-  { index: "01", word: "Xəyal" },
-  { index: "02", word: "Sistem" },
-  { index: "03", word: "Nəticə" }
-];
-
 export default function CinematicJourney() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const copy = useSiteContentValue("home_page_copy", homePageCopy).journey;
+  const journeySteps = copy.steps.map((word, index) => ({ index: String(index + 1).padStart(2, "0"), word }));
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -67,7 +65,7 @@ export default function CinematicJourney() {
         <div className={styles.inkMask} aria-hidden="true" />
         <div className={styles.content}>
           <h2 id="cinematic-journey-title" className={styles.srOnly}>
-            Xəyal, sistem və nəticə
+            {copy.steps.join(", ")}
           </h2>
           <div className={styles.steps}>
             {journeySteps.map((step, index) => (
@@ -82,7 +80,7 @@ export default function CinematicJourney() {
             ))}
           </div>
           <p className={styles.statement}>
-            Hər xətt planla çəkilir. Mentor rəyi ilə düzəlir. Nəticəyə çevrilir.
+            {copy.statement}
           </p>
           <div className={styles.progress} aria-hidden="true">
             <span />

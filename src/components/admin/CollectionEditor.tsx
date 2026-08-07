@@ -46,7 +46,8 @@ function parseItems(content: SiteSectionRecord["content"]): CollectionEntry[] {
       subtitle: typeof item.subtitle === "string" ? item.subtitle : "",
       description: typeof item.description === "string" ? item.description : "",
       image: typeof item.image === "string" ? item.image : "",
-      date: typeof item.date === "string" ? item.date : ""
+      date: typeof item.date === "string" ? item.date : "",
+      category: item.category === "travel" ? "travel" : "cash"
     }];
   });
 }
@@ -58,7 +59,8 @@ function newEntry(kind: CollectionKind): CollectionEntry {
     subtitle: "",
     description: "",
     image: "",
-    date: new Date().toISOString().slice(0, 10)
+    date: new Date().toISOString().slice(0, 10),
+    category: kind === "awards" ? "cash" : undefined
   };
 }
 
@@ -149,6 +151,7 @@ export default function CollectionEditor({
                 <label className="admin-field"><span>{labels.subtitle}</span><input value={selected.subtitle} onChange={(event) => updateSelected({ subtitle: event.target.value })} /></label>
                 <label className="admin-field wide"><span>Qısa izah</span><textarea rows={4} value={selected.description} onChange={(event) => updateSelected({ description: event.target.value })} /></label>
                 <label className="admin-field"><span>Tarix</span><input type="date" value={selected.date} onChange={(event) => updateSelected({ date: event.target.value })} /></label>
+                {kind === "awards" ? <label className="admin-field"><span>Mükafat kateqoriyası</span><select value={selected.category ?? "cash"} onChange={(event) => updateSelected({ category: event.target.value as "cash" | "travel" })}><option value="cash">Pul mükafatı</option><option value="travel">Səyahət mükafatı</option></select></label> : null}
               </div>
 
               <div className="collection-upload-field">

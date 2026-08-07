@@ -1,4 +1,4 @@
-import { defaultContent, defaultSections, type JsonValue, type SiteSectionRecord } from "./admin-content";
+import { defaultContent, defaultSections, managedSectionKeys, type JsonValue, type SiteSectionRecord } from "./admin-content";
 import { createClient } from "./supabase/server";
 import { isSupabaseConfigured } from "./supabase/config";
 
@@ -10,15 +10,16 @@ export async function getPublishedContent(): Promise<SiteContentMap> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("site_sections")
-    .select("key, content")
-    .eq("is_published", true)
+    .select("key, content, is_published")
     .order("sort_order");
 
   if (error || !data?.length) return defaultContent;
-  return {
-    ...defaultContent,
-    ...Object.fromEntries(data.map((row) => [row.key, row.content as JsonValue]))
-  };
+  const publishedContent: SiteContentMap = { ...defaultContent };
+  data.forEach((row) => {
+    if (row.is_published) publishedContent[row.key] = row.content as JsonValue;
+    else delete publishedContent[row.key];
+  });
+  return publishedContent;
 }
 
 export async function getAdminSections(): Promise<SiteSectionRecord[]> {
@@ -26,7 +27,20 @@ export async function getAdminSections(): Promise<SiteSectionRecord[]> {
   const supabase = await createClient();
   const { data, error } = await supabase.from("site_sections").select("*").order("sort_order");
   if (error || !data?.length) return defaultSections;
-  const storedSections = data as SiteSectionRecord[];
+  const storedSections = (data as SiteSectionRecord[])
+    .filter((section) => managedSectionKeys.has(section.key))
+    .map((section) => {
+      if (section.key !== "contact" || !section.content || typeof section.content !== "object" || Array.isArray(section.content)) return section;
+      const fallback = defaultContent.contact as { phone: JsonValue; email: JsonValue; address: JsonValue };
+      return {
+        ...section,
+        content: {
+          phone: section.content.phone ?? fallback.phone,
+          email: section.content.email ?? fallback.email,
+          address: section.content.address ?? fallback.address
+        }
+      };
+    });
   const storedKeys = new Set(storedSections.map((section) => section.key));
   return [
     ...storedSections,

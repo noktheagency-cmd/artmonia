@@ -8,6 +8,7 @@ import SiteHeader from "@/components/SiteHeader";
 import { SiteContentProvider } from "@/components/SiteContentContext";
 import type { NewsItem } from "@/data/site";
 import type { SiteContentMap } from "@/lib/site-content";
+import { globalCopy, newsPageCopy, type GlobalCopy, type NewsPageCopy } from "@/data/site-copy";
 import { formatNewsDate, getNewsImages } from "@/lib/news";
 import styles from "./NewsPage.module.css";
 
@@ -49,6 +50,8 @@ export default function NewsPage({
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const visibleItems = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   const pagination = pageWindow(currentPage, totalPages);
+  const copy = (content.news_page_copy as unknown as NewsPageCopy | undefined) ?? newsPageCopy;
+  const global = (content.global_copy as unknown as GlobalCopy | undefined) ?? globalCopy;
 
   return (
     <SiteContentProvider content={content}>
@@ -56,12 +59,9 @@ export default function NewsPage({
       <main className={styles.page} id="top">
         <header className={styles.intro}>
           <div className={styles.introCopy}>
-            <h1>Yeniliklər</h1>
+            <h1>{copy.title}</h1>
             <span className={styles.titleStroke} aria-hidden="true" />
-            <p>
-              Artmonia-da yaradıcılıq daim hərəkətdədir. Sərgilər, kurslar,
-              ustad dərsləri və tələbələrimizin uğurları haqqında ən son xəbərlər.
-            </p>
+            <p>{copy.intro}</p>
           </div>
 
           <div className={styles.introArtwork} aria-hidden="true">
@@ -73,8 +73,8 @@ export default function NewsPage({
 
         <section className={styles.archive} id="yenilikler-arxivi" aria-label="Artmonia yenilikləri">
           <div className={styles.archiveHeading}>
-            <p>Son xəbərlər</p>
-            <span>{String(items.length).padStart(2, "0")} qeyd</span>
+            <p>{copy.archiveLabel}</p>
+            <span>{String(items.length).padStart(2, "0")} {copy.countSuffix}</span>
           </div>
 
           <div className={styles.grid}>
@@ -104,7 +104,7 @@ export default function NewsPage({
                     <p className={styles.excerpt}>{item.excerpt}</p>
 
                     <span className={styles.readButton}>
-                      Ətraflı oxu
+                      {copy.readMore}
                       <Arrow />
                     </span>
                   </div>
@@ -150,7 +150,7 @@ export default function NewsPage({
         </section>
       </main>
 
-      <footer className={styles.footer}>© 2026 Artmonia Academy</footer>
+      <footer className={styles.footer}>{global.copyright}</footer>
     </SiteContentProvider>
   );
 }

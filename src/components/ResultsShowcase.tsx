@@ -7,38 +7,30 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import styles from "@/components/ResultsShowcase.module.css";
 import { useSiteContentValue } from "@/components/SiteContentContext";
 import { successStories, type SuccessStoryEntry } from "@/data/collections";
+import { collectionsPageCopy } from "@/data/site-copy";
 
 type ResultComparison = {
   id: "portrait" | "color";
-  title: string;
   before: string;
   beforeAlt: string;
   after: string;
   afterAlt: string;
-  note: string;
-  period: string;
 };
 
 const resultComparisons: ResultComparison[] = [
   {
     id: "portrait",
-    title: "Xətdən ifadəyə",
     before: "/assets/module-proportion.webp",
     beforeAlt: "Əvvəl: ilkin anatomiya və proporsiya eskizləri",
     after: "/assets/article-portrait-technique.webp",
-    afterAlt: "Sonra: tamamlanmış qrafit portret işi",
-    note: "Proporsiya, ton keçidləri və detal nəzarətində aydın inkişaf görünür.",
-    period: "6 həftə"
+    afterAlt: "Sonra: tamamlanmış qrafit portret işi"
   },
   {
     id: "color",
-    title: "Tondan rəngə",
     before: "/assets/module-light-shadow.webp",
     beforeAlt: "Əvvəl: işıq və kölgə məşqi",
     after: "/assets/module-final-project.webp",
-    afterAlt: "Sonra: rəng və kompozisiya ilə tamamlanmış final işi",
-    note: "İşıq məntiqi qorunaraq rəng, faktura və kompozisiya vahid nəticəyə çevrilib.",
-    period: "8 həftə"
+    afterAlt: "Sonra: rəng və kompozisiya ilə tamamlanmış final işi"
   }
 ];
 
@@ -47,6 +39,7 @@ const comparisonStyle = (position: number) =>
 
 export default function ResultsShowcase() {
   const dynamicStories = useSiteContentValue<SuccessStoryEntry[]>("success_stories", successStories);
+  const copy = useSiteContentValue("collections_page_copy", collectionsPageCopy).results;
   const stories = Array.isArray(dynamicStories) && dynamicStories.length ? dynamicStories : successStories;
   const [storyPlaying, setStoryPlaying] = useState(false);
   const [storyModalOpen, setStoryModalOpen] = useState(false);
@@ -99,10 +92,10 @@ export default function ResultsShowcase() {
       <section id="ugur-hekayeleri" className={`results-scene results-story-scene ${styles.anchorScene}`} aria-labelledby="success-stories-title">
         <header className="results-scene-heading">
           <div>
-            <span className="results-scene-kicker">Video gündəlik</span>
-            <h2 id="success-stories-title">Uğur hekayələri</h2>
+            <span className="results-scene-kicker">{copy.storiesKicker}</span>
+            <h2 id="success-stories-title">{copy.storiesTitle}</h2>
           </div>
-          <p>Tələbənin ilk xəttindən öz üslubunu tapdığı ana qədər keçdiyi yolu bir hekayədə izlə.</p>
+          <p>{copy.storiesText}</p>
         </header>
 
         <div className={styles.storyGallery}>
@@ -136,13 +129,14 @@ export default function ResultsShowcase() {
       <section id="telebe-neticeleri" className={`results-scene results-comparison-scene ${styles.anchorScene}`} aria-labelledby="student-results-title">
         <header className="results-scene-heading">
           <div>
-            <span className="results-scene-kicker">İnkişaf müqayisəsi</span>
-            <h2 id="student-results-title">Tələbə nəticələri</h2>
+            <span className="results-scene-kicker">{copy.comparisonKicker}</span>
+            <h2 id="student-results-title">{copy.comparisonTitle}</h2>
           </div>
         </header>
 
         <div className={styles.studentResultsPair}>
-          {resultComparisons.map((result) => {
+          {resultComparisons.map((result, index) => {
+            const resultCopy = copy.comparisons[index] ?? collectionsPageCopy.results.comparisons[index];
             const comparisonPosition = comparisonPositions[result.id];
             return (
               <article className={`before-after-card ${styles.compactResultCard}`} key={result.id}>
@@ -167,8 +161,8 @@ export default function ResultsShowcase() {
                     />
                   </div>
 
-                  <span className="comparison-label comparison-label--before">Əvvəl</span>
-                  <span className="comparison-label comparison-label--after">Sonra</span>
+                  <span className="comparison-label comparison-label--before">{copy.beforeLabel}</span>
+                  <span className="comparison-label comparison-label--after">{copy.afterLabel}</span>
                   <div className="comparison-divider" aria-hidden="true">
                     <span><MoveHorizontal /></span>
                   </div>
@@ -182,24 +176,24 @@ export default function ResultsShowcase() {
                       const position = Number(event.target.value);
                       setComparisonPositions((current) => ({ ...current, [result.id]: position }));
                     }}
-                    aria-label={`${result.title}: əvvəl və sonra şəkillərinin müqayisə xətti`}
+                    aria-label={`${resultCopy.title}: əvvəl və sonra şəkillərinin müqayisə xətti`}
                   />
                 </div>
 
                 <div className={`before-after-details ${styles.compactDetails}`}>
                   <div className="before-after-title">
-                    <span>Tələbə işi</span>
-                    <h3>{result.title}</h3>
+                    <span>{copy.studentWorkLabel}</span>
+                    <h3>{resultCopy.title}</h3>
                   </div>
                   <div className="before-after-note">
-                    <span>Mentor qeydi</span>
-                    <p>{result.note}</p>
+                    <span>{copy.mentorNoteLabel}</span>
+                    <p>{resultCopy.note}</p>
                   </div>
                   <div className="before-after-period">
                     <Clock3 aria-hidden="true" />
                     <div>
-                      <span>İnkişaf müddəti</span>
-                      <strong>{result.period}</strong>
+                      <span>{copy.periodLabel}</span>
+                      <strong>{resultCopy.period}</strong>
                     </div>
                   </div>
                 </div>
