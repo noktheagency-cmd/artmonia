@@ -1,5 +1,6 @@
 export type CinematicAsset = {
   poster: string;
+  mobilePoster?: string;
   src?: string;
 };
 
@@ -13,7 +14,8 @@ export const videoExperience: Record<
   CinematicAsset
 > = {
   hero: {
-    poster: "/assets/artmonia-hero-creation-hd.webp"
+    poster: "/assets/artmonia-hero-painted-hands-desktop.webp",
+    mobilePoster: "/assets/artmonia-hero-painted-hands-mobile.webp"
   },
   journey: {
     poster: "/assets/artmonia-line-to-art-hd.webp"
