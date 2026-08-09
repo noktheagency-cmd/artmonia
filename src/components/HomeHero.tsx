@@ -86,6 +86,7 @@ export default function HomeHero() {
           eager
           playbackRate={cardsOpen ? 1.16 : 1}
           poster={heroAsset.poster}
+          mobilePoster={heroAsset.mobilePoster}
           src={heroAsset.src}
         />
         <span className={styles.pointerAura} />

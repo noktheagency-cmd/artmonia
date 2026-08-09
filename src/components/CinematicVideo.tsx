@@ -12,6 +12,7 @@ type NavigatorWithConnection = Navigator & {
 type CinematicVideoProps = {
   className?: string;
   eager?: boolean;
+  mobilePoster?: string;
   playbackRate?: number;
   poster: string;
   src?: string;
@@ -20,6 +21,7 @@ type CinematicVideoProps = {
 export default function CinematicVideo({
   className = "",
   eager = false,
+  mobilePoster,
   playbackRate = 1,
   poster,
   src
@@ -104,13 +106,19 @@ export default function CinematicVideo({
   return (
     <div
       ref={frameRef}
-      className={`${styles.frame} ${isReady ? styles.ready : ""} ${className}`}
+      className={`${styles.frame} ${mobilePoster ? styles.hasMobilePoster : ""} ${isReady ? styles.ready : ""} ${className}`}
       aria-hidden="true"
     >
       <div
         className={styles.poster}
         style={{ backgroundImage: `url("${poster}")` }}
       />
+      {mobilePoster ? (
+        <div
+          className={`${styles.poster} ${styles.mobilePoster}`}
+          style={{ backgroundImage: `url("${mobilePoster}")` }}
+        />
+      ) : null}
       {shouldRenderVideo ? (
         <video
           ref={videoRef}
