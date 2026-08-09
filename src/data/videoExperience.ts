@@ -13,12 +13,12 @@ export const videoExperience: Record<
   CinematicAsset
 > = {
   hero: {
-    poster: "/assets/artmonia-hero-creation-poster.png"
+    poster: "/assets/artmonia-hero-creation-hd.webp"
   },
   journey: {
-    poster: "/assets/artmonia-line-to-art-poster.png"
+    poster: "/assets/artmonia-line-to-art-hd.webp"
   },
   atelier: {
-    poster: "/assets/artmonia-future-atelier-poster.png"
+    poster: "/assets/artmonia-future-atelier-hd.webp"
   }
 };
