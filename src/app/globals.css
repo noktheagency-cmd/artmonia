@@ -22193,6 +22193,55 @@ html.theme-dark .site-header .mobile-nav {
   box-shadow: 0 28px 64px rgba(0, 0, 0, 0.42);
 }
 
+/* Keep the floating glass navigation legible over the cinematic photo scenes. */
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header {
+  color: #ffffff;
+  border-color: rgba(221, 209, 255, 0.3) !important;
+  background:
+    linear-gradient(118deg, rgba(17, 8, 67, 0.94), rgba(8, 3, 43, 0.88)) !important;
+  box-shadow:
+    0 24px 62px rgba(2, 0, 28, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(26px) saturate(1.3) !important;
+}
+
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header::before {
+  border-color: rgba(220, 205, 255, 0.12);
+}
+
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .brand,
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .desktop-nav {
+  border-color: rgba(220, 205, 255, 0.13);
+  background: rgba(255, 255, 255, 0.065) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .desktop-nav > a,
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .nav-program-trigger {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .desktop-nav > a:hover,
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .desktop-nav > a:focus-visible,
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .desktop-nav > a.is-active,
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .nav-program-trigger:hover,
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .nav-program-trigger:focus-visible,
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .nav-program-trigger.is-active {
+  color: #ffffff;
+  background: rgba(168, 132, 255, 0.16);
+}
+
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .theme-toggle {
+  color: #ffffff;
+  border-color: rgba(220, 205, 255, 0.18);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .site-header .nav-program-dropdown a {
+  color: var(--brand-navy);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-header,
   .site-header :is(a, button, .icon) {
