@@ -570,13 +570,14 @@
   }
 
   .statueReveal {
+    z-index: 2;
     width: clamp(240px, 70vw, 290px);
     transform: translate(-50%, -28%) scale(0.24);
   }
 
   .cards.cardsOpen .statueReveal {
     animation: none;
-    transform: translate(-50%, -108%) scale(1.08);
+    transform: translate(-50%, -150%) scale(0.98);
   }
 
   .card {
@@ -870,7 +871,7 @@
   100% {
     opacity: 1;
     filter: blur(0) drop-shadow(0 28px 34px rgba(26, 10, 80, 0.3));
-    transform: translate(-50%, -108%) scale(1.08);
+    transform: translate(-50%, -150%) scale(0.98);
   }
 }
 
