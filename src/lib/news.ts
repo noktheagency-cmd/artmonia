@@ -9,6 +9,19 @@ export const newsFallbackImages = [
   "/assets/article-color-harmony-crisp.webp"
 ];
 
+const newsImageOverrides: Record<string, string> = {
+  "d4dc5bbb-8b14-4da0-814e-250eeb97f7b2.jpeg": "/assets/news-clean/student-results-1-clean.webp",
+  "dc57ba2a-c022-454b-a2a3-87049a34f509.jpeg": "/assets/news-clean/student-results-2-clean.webp",
+  "f9951863-b7bb-4ac6-9ce0-f13d443c30ea.jpeg": "/assets/news-clean/student-results-3-clean.webp"
+};
+
+function resolveNewsImage(image: string) {
+  const override = Object.entries(newsImageOverrides)
+    .find(([sourceName]) => image.includes(sourceName));
+
+  return override?.[1] ?? image;
+}
+
 export function isNewsItem(value: unknown): value is NewsItem {
   if (!value || typeof value !== "object" || Array.isArray(value)) return false;
   const item = value as Partial<NewsItem>;
@@ -31,7 +44,7 @@ export function getNewsImages(item: NewsItem, fallbackIndex = 0) {
   const candidates = [
     ...(item.images ?? []),
     ...(item.image ? [item.image] : [])
-  ].filter(Boolean);
+  ].filter(Boolean).map(resolveNewsImage);
   const uniqueImages = Array.from(new Set(candidates));
 
   return uniqueImages.length
