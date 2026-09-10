@@ -5,6 +5,8 @@ import { ChevronDown, ChevronRight, ChevronUp, Newspaper, Plus, Trash2 } from "l
 import type { NewsItem } from "@/data/site";
 import type { SiteSectionRecord } from "@/lib/admin-content";
 import MediaField, { type MediaLibraryItem } from "./MediaField";
+import { getNewsImages } from "@/lib/news";
+import styles from "./NewsGalleryPreview.module.css";
 
 function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
   if (!Array.isArray(content)) return [];
@@ -60,6 +62,7 @@ export default function NewsEditor({
   const [selectedId, setSelectedId] = useState<string | null>(initialItems[0]?.id ?? null);
   const [published, setPublished] = useState(section.is_published);
   const selected = items.find((item) => item.id === selectedId) ?? null;
+  const previewImages = selected ? getNewsImages(selected).slice(1) : [];
 
   function addItem() {
     const item = newItem();
@@ -138,6 +141,16 @@ export default function NewsEditor({
                     <button className="json-add" type="button" onClick={() => updateSelected({ images: [...(selected.images ?? []), ""] })}><Plus /> Qalereyaya şəkil əlavə et</button>
                   </div>
                   <small>Şəkillər 4:3 formatında göstərilir. Tövsiyə olunan ölçü: 1200 × 900 px. Şaquli (9:16) şəkillərin yuxarı və aşağı hissələri kəsiləcək.</small>
+                  {previewImages.length > 0 && <details key={selected.id} className={styles.preview}>
+                    <summary>Saytda necə görünəcək? — Önizləməni aç</summary>
+                    <p>Bu, yalnız baxış üçündür. Şəkilləri yuxarıdakı sahədən dəyişin.</p>
+                    <div className={styles.grid}>
+                      {previewImages.map((image, index) => <figure key={image}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={image} alt={`Yayım önizləməsi — şəkil ${index + 1}`} />
+                      </figure>)}
+                    </div>
+                  </details>}
                 </div>
               </div>
               <footer className="collection-form-actions">
