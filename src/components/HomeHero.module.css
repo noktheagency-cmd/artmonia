@@ -541,7 +541,10 @@
 
 @media (max-width: 760px) {
   .hero {
-    min-height: clamp(980px, 120svh, 1100px);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: max(640px, 100svh);
+    padding: 108px 0 86px;
   }
 
   .background {
@@ -555,7 +558,8 @@
   }
 
   .heading {
-    top: clamp(104px, 13svh, 124px);
+    position: relative;
+    top: auto;
     width: calc(100% - 24px);
   }
 
@@ -581,32 +585,36 @@
   }
 
   .cards {
-    --paper-open-distance: clamp(20px, 6.4vw, 28px);
+    --paper-open-distance: clamp(18px, 5vw, 24px);
 
-    top: clamp(380px, 50svh, 440px);
+    position: relative;
+    top: auto;
+    align-self: center;
+    margin-block: 28px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: min(316px, calc(100% - 48px));
+    width: min(320px, calc(100% - 64px));
+    aspect-ratio: 1;
     perspective: 900px;
     filter: drop-shadow(0 18px 22px rgba(32, 20, 91, 0.12));
   }
 
   .statueReveal {
-    z-index: 2;
-    width: clamp(240px, 70vw, 290px);
+    z-index: 7;
+    width: clamp(220px, 64vw, 260px);
     transform: translate(-50%, -28%) scale(0.24);
   }
 
   .cards.cardsOpen .statueReveal {
     animation: none;
-    transform: translate(-50%, -150%) scale(0.98);
+    transform: translate(-50%, -85%) scale(0.98);
   }
 
   .card {
-    min-height: clamp(320px, 92vw, 356px);
-    padding:
-      clamp(24px, 6.6vw, 30px)
-      clamp(13px, 4vw, 18px)
-      clamp(22px, 6vw, 28px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+    padding: clamp(14px, 4vw, 20px) clamp(10px, 3vw, 14px);
     backdrop-filter: blur(14px) saturate(1.03);
   }
 
@@ -621,24 +629,24 @@
   }
 
   .card h2 {
-    font-size: clamp(23px, 6.9vw, 29px);
-    line-height: 0.96;
+    font-size: clamp(20px, 5.8vw, 24px);
+    line-height: 1;
   }
 
   .cardRule {
     width: 32px;
-    margin: clamp(17px, 4.6vw, 20px) 0 13px;
+    margin: 14px 0 10px;
   }
 
   .cardLabel {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     font-size: clamp(7px, 2vw, 9px);
     letter-spacing: 0.13em;
   }
 
   .cardText {
-    font-size: clamp(9.5px, 2.75vw, 11.5px);
-    line-height: 1.46;
+    font-size: clamp(10px, 2.7vw, 11px);
+    line-height: 1.4;
   }
 
   .cardAction {
@@ -892,7 +900,7 @@
   100% {
     opacity: 1;
     filter: blur(0) drop-shadow(0 28px 34px rgba(26, 10, 80, 0.3));
-    transform: translate(-50%, -150%) scale(0.98);
+    transform: translate(-50%, -85%) scale(0.98);
   }
 }
 
