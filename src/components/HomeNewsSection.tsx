@@ -75,13 +75,13 @@ export default function HomeNewsSection() {
             >
               <span className={styles.image}>
                 <img src={image} alt="" loading={index < 4 ? "eager" : "lazy"} decoding="async" />
+                <strong className={styles.title}>{item.title}</strong>
               </span>
               <span className={styles.content}>
                 <span className={styles.meta}>
                   <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
                   <b>{item.category}</b>
                 </span>
-                <strong>{item.title}</strong>
                 <i aria-hidden="true" />
                 <span className={styles.excerpt}>{item.excerpt}</span>
                 <span className={styles.readMore}>

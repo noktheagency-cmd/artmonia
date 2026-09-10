@@ -53,16 +53,18 @@ export default function NewsDetailPage({
             <p>{item.excerpt}</p>
           </header>
 
-          <div className={`${styles.gallery} ${images.length === 1 ? styles.singleImage : ""}`} aria-label={`${item.title} foto qalereyası`}>
-            {images.map((image, index) => (
-              <figure className={index === 0 ? styles.primaryImage : undefined} key={`${image}-${index}`}>
-                <img src={image} alt={`${item.title} — şəkil ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
-              </figure>
-            ))}
-          </div>
+          <div className={styles.storyContent}>
+            <div className={styles.gallery} aria-label={`${item.title} foto qalereyası`}>
+              {images.map((image, index) => (
+                <figure key={`${image}-${index}`}>
+                  <img src={image} alt={`${item.title} — şəkil ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
+                </figure>
+              ))}
+            </div>
 
-          <div className={styles.body}>
-            {item.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <div className={styles.body}>
+              {item.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            </div>
           </div>
 
           <footer className={styles.articleFooter}>
