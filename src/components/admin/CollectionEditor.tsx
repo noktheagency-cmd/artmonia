@@ -8,10 +8,22 @@ import { ChevronDown, ChevronRight, ChevronUp, ImagePlus, Plus, Trash2 } from "l
 import type { CollectionEntry } from "@/data/collections";
 import type { SiteSectionRecord } from "@/lib/admin-content";
 import MediaField, { type MediaLibraryItem } from "./MediaField";
+import ResultPortrait from "../ResultPortrait";
 
-type CollectionKind = "results" | "awards";
+type CollectionKind = "results" | "awards" | "home_results";
 
 const copy = {
+  home_results: {
+    title: "Ana səhifə · Nəticələr lenti",
+    helper: "Yeniliklərin altındakı hərəkətli lent. Foto 3:4 göstərilir. İlkin profillər nümunədir — real tələbə məlumatları ilə əvəz edin.",
+    add: "Yeni tələbə əlavə et",
+    list: "Tələbələrin siyahısı",
+    editor: "Tələbə kartını redaktə et",
+    name: "Ad və soyad",
+    subtitle: "Nəticə — bir qısa cümlə",
+    delete: "Tələbə kartını sil",
+    newTitle: "Yeni tələbə"
+  },
   results: {
     title: "Nəticələr",
     helper: "Şagirdlərin işlərini əlavə edin, sıralayın və saytda yayımlayın.",
@@ -47,6 +59,7 @@ function parseItems(content: SiteSectionRecord["content"]): CollectionEntry[] {
       description: typeof item.description === "string" ? item.description : "",
       image: typeof item.image === "string" ? item.image : "",
       date: typeof item.date === "string" ? item.date : "",
+      ...(typeof item.demoPortrait === "number" ? { demoPortrait: item.demoPortrait } : {}),
       category: item.category === "travel" ? "travel" : "cash"
     }];
   });
@@ -127,7 +140,7 @@ export default function CollectionEditor({
             <div className="collection-item-list">
               {items.map((item, index) => (
                 <button key={item.id} type="button" className={item.id === selectedId ? "selected" : ""} onClick={() => setSelectedId(item.id)}>
-                  <span className="collection-thumb">{item.image ? <img src={item.image} alt="" /> : <ImagePlus />}</span>
+                  <span className="collection-thumb">{kind === "home_results" ? <ResultPortrait student={item} /> : item.image ? <img src={item.image} alt="" /> : <ImagePlus />}</span>
                   <span><strong>{item.title || labels.newTitle}</strong><small><i />{published ? "Dərc olunub" : "Qaralama"}</small></span>
                   <ChevronRight />
                   <em>{index + 1}</em>
@@ -147,16 +160,17 @@ export default function CollectionEditor({
                 <div><button type="button" title="Yuxarı daşı" onClick={() => moveSelected(-1)}><ChevronUp /></button><button type="button" title="Aşağı daşı" onClick={() => moveSelected(1)}><ChevronDown /></button></div>
               </header>
               <div className="collection-form-fields">
-                <label className="admin-field"><span>{labels.name}</span><input value={selected.title} onChange={(event) => updateSelected({ title: event.target.value })} /></label>
-                <label className="admin-field"><span>{labels.subtitle}</span><input value={selected.subtitle} onChange={(event) => updateSelected({ subtitle: event.target.value })} /></label>
-                <label className="admin-field wide"><span>Qısa izah</span><textarea rows={4} value={selected.description} onChange={(event) => updateSelected({ description: event.target.value })} /></label>
-                <label className="admin-field"><span>Tarix</span><input type="date" value={selected.date} onChange={(event) => updateSelected({ date: event.target.value })} /></label>
+                <label className="admin-field"><span>{labels.name}</span><input maxLength={kind === "home_results" ? 60 : undefined} value={selected.title} onChange={(event) => updateSelected({ title: event.target.value })} /></label>
+                <label className="admin-field"><span>{labels.subtitle}</span><input maxLength={kind === "home_results" ? 100 : undefined} value={selected.subtitle} onChange={(event) => updateSelected({ subtitle: event.target.value })} /></label>
+                {kind !== "home_results" ? <><label className="admin-field wide"><span>Qısa izah</span><textarea rows={4} value={selected.description} onChange={(event) => updateSelected({ description: event.target.value })} /></label>
+                <label className="admin-field"><span>Tarix</span><input type="date" value={selected.date} onChange={(event) => updateSelected({ date: event.target.value })} /></label></> : null}
                 {kind === "awards" ? <label className="admin-field"><span>Mükafat kateqoriyası</span><select value={selected.category ?? "cash"} onChange={(event) => updateSelected({ category: event.target.value as "cash" | "travel" })}><option value="cash">Pul mükafatı</option><option value="travel">Səyahət mükafatı</option></select></label> : null}
               </div>
 
               <div className="collection-upload-field">
                 <span>Şəkil</span>
-                <MediaField value={selected.image} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} />
+                {kind === "home_results" ? <div style={{ width: 180, maxWidth: "100%", marginBottom: 16 }}><ResultPortrait student={selected} /></div> : null}
+                <MediaField value={selected.image} onChange={(image) => updateSelected({ image, ...(kind === "home_results" ? { demoPortrait: undefined } : {}) })} onUpload={onUpload} media={media} />
               </div>
 
               <footer className="collection-form-actions">

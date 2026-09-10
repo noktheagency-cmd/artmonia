@@ -7,6 +7,7 @@ import {
   transformations
 } from "@/data/site";
 import { awards, successStories } from "@/data/collections";
+import { homeResults } from "@/data/home-results";
 import {
   academyPageCopy,
   applicationPageCopy,
@@ -48,6 +49,7 @@ const definitions = [
   ["application_page_copy", "Müraciət səhifəsi mətnləri", "Addımlar, proqram seçimləri, forma və nəticə mesajları", "academy", applicationPageCopy],
   ["news_page_copy", "Yeniliklər səhifəsi mətnləri", "Səhifə başlığı, arxiv və xəbər keçidi mətnləri", "content", newsPageCopy],
   ["news_items", "Yeniliklər", "Ana səhifə lentində və yeniliklər səhifəsində görünən xəbərlər", "content", newsItems],
+  ["home_results", "Ana səhifə · Nəticələr lenti", "Yeniliklərin altındakı tələbə fotoları, ad-soyad və nəticə cümlələri", "content", homeResults],
   ["collections_page_copy", "Nəticə və mükafat səhifəsi mətnləri", "Nəticələr, müqayisələr, mükafat kateqoriyaları və boş vəziyyət mətnləri", "content", collectionsPageCopy],
   ["success_stories", "Uğur hekayələri", "Nəticələr səhifəsində görünən tələbə adı, mətn, şəkil və video məlumatı", "content", successStories],
   ["awards", "Mükafatlar", "Mükafatlar səhifəsində görünən nailiyyətlər", "content", awards]
