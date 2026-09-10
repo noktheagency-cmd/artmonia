@@ -27,19 +27,6 @@ export function isNewsItem(value: unknown): value is NewsItem {
   );
 }
 
-export function mergeNewsItems(primary: NewsItem[], fallback: NewsItem[], limit?: number) {
-  const merged = [...primary];
-  const usedIds = new Set(merged.map((item) => item.id));
-
-  for (const item of fallback) {
-    if (!usedIds.has(item.id)) merged.push(item);
-    usedIds.add(item.id);
-    if (limit && merged.length >= limit) break;
-  }
-
-  return limit ? merged.slice(0, limit) : merged;
-}
-
 export function getNewsImages(item: NewsItem, fallbackIndex = 0) {
   const candidates = [
     ...(item.images ?? []),

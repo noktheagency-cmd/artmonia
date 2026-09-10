@@ -2,9 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { ChevronDown, ChevronRight, ChevronUp, Newspaper, Plus, Trash2 } from "lucide-react";
-import { newsItems, type NewsItem } from "@/data/site";
+import type { NewsItem } from "@/data/site";
 import type { SiteSectionRecord } from "@/lib/admin-content";
-import { mergeNewsItems } from "@/lib/news";
 import MediaField, { type MediaLibraryItem } from "./MediaField";
 
 function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
@@ -53,7 +52,7 @@ export default function NewsEditor({
   media: MediaLibraryItem[];
 }) {
   const initialItems = useMemo(
-    () => mergeNewsItems(parseItems(section.content), newsItems),
+    () => parseItems(section.content),
     [section.content]
   );
   const [items, setItems] = useState<NewsItem[]>(initialItems);
@@ -145,7 +144,7 @@ export default function NewsEditor({
               </footer>
             </>
           ) : (
-            <div className="collection-form-empty"><Newspaper /><h2>Redaktə üçün xəbər seçin</h2><p>Sol siyahıdan seçim edin və ya yeni xəbər əlavə edin.</p><button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button></div>
+            <div className="collection-form-empty"><Newspaper /><h2>Redaktə üçün xəbər seçin</h2><p>Sol siyahıdan seçim edin və ya yeni xəbər əlavə edin.</p><button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button>{!items.length ? <button className="secondary-action" type="button" disabled={busy} onClick={() => onSave({ ...section, content: [], is_published: published })}>{busy ? "Saxlanılır..." : "Boş siyahını saxla"}</button> : null}</div>
           )}
         </div>
       </div>
