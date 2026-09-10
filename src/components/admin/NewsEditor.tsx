@@ -5,8 +5,6 @@ import { ChevronDown, ChevronRight, ChevronUp, Newspaper, Plus, Trash2 } from "l
 import type { NewsItem } from "@/data/site";
 import type { SiteSectionRecord } from "@/lib/admin-content";
 import MediaField, { type MediaLibraryItem } from "./MediaField";
-import { getNewsImages } from "@/lib/news";
-import styles from "./NewsGalleryPreview.module.css";
 
 function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
   if (!Array.isArray(content)) return [];
@@ -62,7 +60,6 @@ export default function NewsEditor({
   const [selectedId, setSelectedId] = useState<string | null>(initialItems[0]?.id ?? null);
   const [published, setPublished] = useState(section.is_published);
   const selected = items.find((item) => item.id === selectedId) ?? null;
-  const previewImages = selected ? getNewsImages(selected).slice(1) : [];
 
   function addItem() {
     const item = newItem();
@@ -140,18 +137,7 @@ export default function NewsEditor({
                     {(selected.images ?? []).map((image, index) => <div key={`${selected.id}-${index}`}><MediaField compact value={image} onChange={(nextImage) => updateSelected({ images: (selected.images ?? []).map((current, itemIndex) => itemIndex === index ? nextImage : current).filter(Boolean) })} onUpload={onUpload} media={media} /><button type="button" onClick={() => updateSelected({ images: (selected.images ?? []).filter((_, itemIndex) => itemIndex !== index) })}><Trash2 /> Şəkli sil</button></div>)}
                     <button className="json-add" type="button" onClick={() => updateSelected({ images: [...(selected.images ?? []), ""] })}><Plus /> Qalereyaya şəkil əlavə et</button>
                   </div>
-                  <section className={styles.preview} aria-label="Əlavə şəkillərin yayım önizləməsi">
-                    <h3>Şəkillər saytda belə görünəcək</h3>
-                    <p>Əlavə şəkillər 4:3 çərçivədə mərkəzdən kəsilir. 9:16 kimi şaquli şəkillərin yuxarı və aşağı hissələri görünməyə bilər. Tövsiyə: 1200 × 900 px. Orijinal fayl dəyişmir.</p>
-                    <small>Kompüter görünüşü: iki şəkil yan-yana, son tək şəkil tam enində. Telefonda şəkillər alt-alta görünür.</small>
-                    {previewImages.length ? <div className={styles.grid}>
-                      {previewImages.map((image, index) => <figure key={image}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={image} alt={`Yayım önizləməsi — şəkil ${index + 1}`} />
-                        <figcaption>Şəkil {index + 1} · 4:3</figcaption>
-                      </figure>)}
-                    </div> : <p>Şəkil seçdikdə yayım önizləməsi burada görünəcək.</p>}
-                  </section>
+                  <small>Şəkillər 4:3 formatında göstərilir. Tövsiyə olunan ölçü: 1200 × 900 px. Şaquli (9:16) şəkillərin yuxarı və aşağı hissələri kəsiləcək.</small>
                 </div>
               </div>
               <footer className="collection-form-actions">
