@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
 import { useSiteContentValue } from "@/components/SiteContentContext";
 import { academyPageCopy, globalCopy } from "@/data/site-copy";
 import styles from "./AcademyPage.module.css";
@@ -18,62 +19,39 @@ function ArrowIcon() {
 export default function AcademyPage() {
   const copy = useSiteContentValue("academy_page_copy", academyPageCopy);
   const global = useSiteContentValue("global_copy", globalCopy);
+  const railRef = useRef<HTMLDivElement>(null);
+  const scrollGallery = (direction: number) => {
+    const rail = railRef.current;
+    if (rail) rail.scrollBy({ left: direction * rail.clientWidth * 0.8, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+  };
 
   return (
     <main className={styles.page}>
       <section className={styles.interior} id="interyer" aria-labelledby="academy-title">
         <div className={styles.gridTexture} aria-hidden="true" />
-        <div className={styles.interiorShell}>
-          <header className={styles.titleBlock}>
-            <h1 id="academy-title">{copy.pageTitle}</h1>
-            <span className={styles.titleStroke} aria-hidden="true" />
-          </header>
-
-          <div className={styles.interiorCopy}>
-            <h2>{copy.interiorTitle}</h2>
+        <div className={styles.galleryShell}>
+          <header className={styles.galleryHeading}>
+            <h1 id="academy-title">{copy.pageTitle} · {copy.interiorTitle}</h1>
             <p className={styles.sectionLead}>{copy.interiorLead}</p>
-            <p className={styles.bodyCopy}>{copy.interiorText}</p>
+            <p className={styles.galleryIntro}>{copy.interiorText}</p>
+          </header>
+          <div className={styles.galleryControls} aria-label="İnteryer qalereyasını idarə et">
+            <button type="button" onClick={() => scrollGallery(-1)} aria-label="Əvvəlki şəkil"><span className={styles.previousArrow}><ArrowIcon /></span></button>
+            <button type="button" onClick={() => scrollGallery(1)} aria-label="Növbəti şəkil"><ArrowIcon /></button>
           </div>
-
-          <figure className={styles.roomFigure}>
-            <Image
-              src="/assets/studio-room.webp"
-              alt="Artmonia Academy-nin gün işıqlı, molbertli studiya interyeri"
-              fill
-              priority
-              sizes="(max-width: 760px) 100vw, 58vw"
-            />
-            <figcaption>{copy.roomCaption}</figcaption>
-          </figure>
-
-          <figure className={styles.brushFigure}>
-            <Image
-              src="/assets/studio-brushes.webp"
-              alt="Artmonia studiyasındakı rəngli peşəkar fırçalar"
-              fill
-              sizes="(max-width: 760px) 88vw, 32vw"
-            />
-          </figure>
-
-          <div className={styles.studioDetails} aria-label="Studiyanın imkanları">
-            {copy.studioDetails.map((item) => (
-              <div key={item.title}>
-                <strong>{item.title}</strong>
-                <p>{item.text}</p>
-              </div>
+          <div className={styles.galleryRail} ref={railRef} tabIndex={0} role="region" aria-label="İnteryer şəkilləri — üfüqi sürüşdürün">
+            {[
+              { image: "/assets/studio-room.webp", title: copy.roomCaption, text: copy.narrativeParagraphs[0] },
+              { image: "/assets/studio-brushes.webp", title: copy.studioDetails[2]?.title ?? copy.narrativeTitle, text: copy.narrativeParagraphs[1] }
+            ].map((item, index) => (
+              <figure className={styles.galleryCard} key={item.image}>
+                <div className={styles.galleryImage}>
+                  <Image src={item.image} alt={item.title} fill priority={index === 0} sizes="(max-width: 760px) 85vw, 760px" />
+                </div>
+                <figcaption><h2>{item.title}</h2><p>{item.text}</p></figcaption>
+              </figure>
             ))}
           </div>
-
-          <div className={styles.interiorNarrative}>
-            <h3>{copy.narrativeTitle}</h3>
-            <div>
-              {copy.narrativeParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            </div>
-          </div>
-
-          <svg className={styles.gestureLine} aria-hidden="true" viewBox="0 0 320 90" preserveAspectRatio="none">
-            <path d="M3 66C77 18 118 79 177 42C225 12 259 25 317 57" />
-          </svg>
         </div>
       </section>
 
