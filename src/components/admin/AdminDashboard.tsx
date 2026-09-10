@@ -332,7 +332,7 @@ export default function AdminDashboard({
   }
 
   const dashboardLinks: Array<{ view: View; icon: typeof Home; title: string; text: string; count?: string }> = [
-    { view: "homepage", icon: Home, title: "Sayt məzmunu", text: "Başlıqlar, kurslar, müəllimlər, qiymətlər və əlaqə məlumatları", count: `${homepageSections.length} bölmə` },
+    { view: "homepage", icon: Home, title: "Sayt məzmunu", text: "Başlıqlar, kurslar, müəllimlər və əlaqə məlumatları", count: `${homepageSections.length} bölmə` },
     { view: "news", icon: Newspaper, title: "Yeniliklər", text: "Ana səhifə lentində və yeniliklər səhifəsində görünən xəbərləri idarə edin", count: `${countCollection(getSection("news_items"))} xəbər` },
     { view: "results", icon: Medal, title: "Nəticələr", text: "Nəticə səhifəsinin mətnlərini və uğur hekayələrini idarə edin", count: `${countCollection(sections.find((section) => section.key === "success_stories"))} hekayə` },
     { view: "awards", icon: Award, title: "Mükafatlar", text: "Akademiyanın mükafat və nailiyyətlərini idarə edin", count: `${countCollection(getSection("awards"))} mükafat` },
