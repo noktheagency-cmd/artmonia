@@ -9,6 +9,8 @@ import { homePageCopy } from "@/data/site-copy";
 import { videoExperience } from "@/data/videoExperience";
 import styles from "./HomeHero.module.css";
 
+const desktopHoverQuery = "(min-width: 761px) and (hover: hover) and (pointer: fine)";
+
 function DownArrowIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -102,7 +104,25 @@ export default function HomeHero() {
         <h1 id="home-hero-title">{copy.title}</h1>
       </div>
 
-      <div className={cardsOpen ? `${styles.cards} ${styles.cardsOpen}` : styles.cards}>
+      <div
+        className={cardsOpen ? `${styles.cards} ${styles.cardsOpen}` : styles.cards}
+        onPointerEnter={(event) => {
+          if (event.pointerType === "mouse" && window.matchMedia(desktopHoverQuery).matches) {
+            setCardsOpen(true);
+          }
+        }}
+        onPointerLeave={(event) => {
+          if (event.pointerType === "mouse" && window.matchMedia(desktopHoverQuery).matches) {
+            setCardsOpen(false);
+          }
+        }}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setCardsOpen(false);
+        }}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") setCardsOpen(false);
+        }}
+      >
         <div className={styles.statueReveal} aria-hidden="true">
           <Image
             className={styles.statue}
@@ -127,7 +147,12 @@ export default function HomeHero() {
           type="button"
           aria-label={cardsOpen ? "Kartları bağla" : "Kartları aç"}
           aria-expanded={cardsOpen}
-          onClick={() => setCardsOpen((open) => !open)}
+          onClick={(event) => {
+            // Keep keyboard activation available; desktop pointer clicks do not toggle.
+            if (event.detail === 0 || !window.matchMedia(desktopHoverQuery).matches) {
+              setCardsOpen((open) => !open);
+            }
+          }}
         >
         </button>
 
