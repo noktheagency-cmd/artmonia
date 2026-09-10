@@ -182,8 +182,8 @@
   height: 300px;
   display: grid;
   place-items: center;
-  margin: 0;
-  border-radius: 0;
+  margin: 12px 12px 0;
+  border-radius: 12px;
   background: #f2efe8;
   clip-path: none;
   overflow: hidden;
