@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import NewsDetailPage from "@/components/NewsDetailPage";
-import { newsItems } from "@/data/site";
 import { getPublishedContent } from "@/lib/site-content";
-import { isNewsItem, mergeNewsItems } from "@/lib/news";
+import { isNewsItem } from "@/lib/news";
 
 async function getNewsCollection() {
   const content = await getPublishedContent();
   const dynamicItems = content.news_items;
-  const publishedItems = Array.isArray(dynamicItems) ? dynamicItems.filter(isNewsItem) : [];
-  const items = mergeNewsItems(publishedItems, newsItems);
+  const items = Array.isArray(dynamicItems) ? dynamicItems.filter(isNewsItem) : [];
 
   return {
     content,

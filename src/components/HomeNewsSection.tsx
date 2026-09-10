@@ -8,7 +8,7 @@ import { useMemo, useRef } from "react";
 import { newsItems } from "@/data/site";
 import { homePageCopy } from "@/data/site-copy";
 import { useSiteContentValue } from "@/components/SiteContentContext";
-import { formatNewsDate, getNewsImages, isNewsItem, mergeNewsItems } from "@/lib/news";
+import { formatNewsDate, getNewsImages, isNewsItem } from "@/lib/news";
 import styles from "./HomeNewsSection.module.css";
 
 function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
@@ -30,7 +30,7 @@ export default function HomeNewsSection() {
   const copy = useSiteContentValue("home_page_copy", homePageCopy).news;
   const items = useMemo(() => {
     const publishedItems = Array.isArray(dynamicItems) ? dynamicItems.filter(isNewsItem) : [];
-    return mergeNewsItems(publishedItems, newsItems, 10);
+    return publishedItems.slice(0, 10);
   }, [dynamicItems]);
 
   function scrollRail(direction: -1 | 1) {

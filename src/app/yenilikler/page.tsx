@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import NewsPage from "@/components/NewsPage";
-import { newsItems } from "@/data/site";
 import { getPublishedContent } from "@/lib/site-content";
-import { isNewsItem, mergeNewsItems } from "@/lib/news";
+import { isNewsItem } from "@/lib/news";
 
 export const metadata: Metadata = {
   title: "Yeniliklər | Artmonia Academy",
@@ -20,7 +19,6 @@ export default async function UpdatesPage({
   const requestedPage = Number.isFinite(parsedPage) ? parsedPage : 1;
   const dynamicItems = content.news_items;
   const publishedItems = Array.isArray(dynamicItems) ? dynamicItems.filter(isNewsItem) : [];
-  const items = mergeNewsItems(publishedItems, newsItems);
 
-  return <NewsPage content={content} items={items} requestedPage={requestedPage} />;
+  return <NewsPage content={content} items={publishedItems} requestedPage={requestedPage} />;
 }
