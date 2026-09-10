@@ -42,8 +42,8 @@ export function isNewsItem(value: unknown): value is NewsItem {
 
 export function getNewsImages(item: NewsItem, fallbackIndex = 0) {
   const candidates = [
-    ...(item.images ?? []),
-    ...(item.image ? [item.image] : [])
+    ...(item.image ? [item.image] : []),
+    ...(item.images ?? [])
   ].filter(Boolean).map(resolveNewsImage);
   const uniqueImages = Array.from(new Set(candidates));
 
