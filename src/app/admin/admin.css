@@ -628,6 +628,50 @@ html.theme-dark :is(.smart-media-library, .smart-media-library > div > button, .
 html.theme-dark :is(.smart-media-upload, .news-gallery-editor > div, .json-field.system-field input) { color: var(--admin-muted); border-color: var(--admin-line); background: #100d32; }
 html.theme-dark :is(.smart-media-upload strong, .smart-media-library > header strong, .media-editor-dialog > header h2) { color: var(--admin-ink); }
 
+/* Keep editor labels and nested helper text readable on dark admin surfaces. */
+html.theme-dark .admin-root { color-scheme: dark; }
+html.theme-dark .admin-root :is(
+  .admin-field > span, .editor-meta label > span, .json-field > span,
+  .collection-upload-field > span, .quick-preview > span,
+  .recent-list strong, .content-name strong, .dashboard-hub-copy strong,
+  .admin-topbar strong, .admin-profile > svg, .admin-menu-button,
+  .collection-form-empty h2, .collection-list-empty h2
+) { color: var(--admin-ink); }
+html.theme-dark .admin-root :is(
+  .admin-field small, .smart-media-field > small, .json-field > span small,
+  .message-copy p, .admin-demo-banner span
+) { color: var(--admin-muted); }
+html.theme-dark .admin-root :is(
+  .json-field input, .json-field textarea, .json-field select,
+  .json-array-item > input, .json-array-item > textarea,
+  .content-toolbar input
+) { color: var(--admin-ink); background: #1a1648; border-color: var(--admin-line); }
+html.theme-dark .admin-root :is(input, textarea)::placeholder {
+  color: #aaa3c9; opacity: 1;
+}
+html.theme-dark .admin-root select option { color: var(--admin-ink); background: #1a1648; }
+html.theme-dark .admin-root :is(
+  .dashboard-hub-list > button, .admin-demo-banner,
+  .messages-list article.unread, .json-add,
+  .smart-media-library > header button, .media-editor-dialog > header button,
+  .editor-drawer > header button, .logout-button
+) { color: var(--admin-ink); background: #1a1648; border-color: var(--admin-line); }
+html.theme-dark .admin-root :is(
+  .dashboard-hub-list > button:hover, .smart-media-upload:hover,
+  .collection-dropzone:hover, .media-upload-zone:hover, .row-actions button:hover
+) { color: var(--admin-ink); background: #282058; }
+html.theme-dark .admin-root :is(
+  .admin-view-site, .admin-panel-heading button, .admin-demo-banner button,
+  .editor-drawer > header span, .settings-number,
+  .settings-grid button:not(.primary-action), .collection-list-empty button,
+  .smart-media-library-button svg, .media-editor-dialog > header span,
+  .json-add
+) { color: #c4a7ff; }
+html.theme-dark .admin-root :is(.collection-delete, .news-gallery-editor > div > button, .logout-button, .message-actions > button) { color: #ffaaa3; }
+html.theme-dark .admin-root .settings-status { color: #ffd08a; }
+html.theme-dark .admin-root .settings-status.live { color: #70e0b6; }
+html.theme-dark .admin-root .json-field.system-field { opacity: 1; }
+
 @media (max-width: 680px) {
   .smart-media-actions, .news-gallery-editor { grid-template-columns: 1fr; }
   .smart-media-library-button { min-height: 42px; }
