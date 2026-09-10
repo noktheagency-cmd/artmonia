@@ -54,7 +54,7 @@ export default function NewsDetailPage({
 
           <div className={styles.storyContent}>
             <div className={styles.gallery} aria-label={`${item.title} foto qalereyası`}>
-              {images.map((image, index) => (
+              {images.slice(0, 1).map((image, index) => (
                 <figure key={`${image}-${index}`}>
                   <img src={image} alt={`${item.title} — şəkil ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
                 </figure>
@@ -77,6 +77,16 @@ export default function NewsDetailPage({
               <a className={styles.whatsappLink} href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp ilə əlaqə saxla</a>
             </div>
           </div>
+
+          {images.length > 1 ? (
+            <div className={styles.additionalGallery} aria-label="Xəbərin əlavə şəkilləri">
+              {images.slice(1).map((image, index) => (
+                <figure key={`${image}-${index}`}>
+                  <img src={image} alt={`${item.title} — əlavə şəkil ${index + 1}`} loading="lazy" />
+                </figure>
+              ))}
+            </div>
+          ) : null}
 
           <footer className={styles.articleFooter}>
             <Link href="/yenilikler">
