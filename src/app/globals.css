@@ -18701,8 +18701,8 @@ html.theme-dark .diagnostic-compact {
     position: absolute !important;
     top: 50% !important;
     right: 7px !important;
-    grid-column: 2 !important;
-    grid-row: 1 !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
     opacity: 1 !important;
     visibility: visible !important;
     color: var(--brand-navy) !important;
