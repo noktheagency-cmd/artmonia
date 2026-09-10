@@ -43,8 +43,8 @@ export default function AcademyPage() {
             {[
               { image: "/assets/studio-room.webp", title: copy.roomCaption, text: copy.narrativeParagraphs[0] },
               { image: "/assets/studio-brushes.webp", title: copy.studioDetails[2]?.title ?? copy.narrativeTitle, text: copy.narrativeParagraphs[1] }
-            ].map((item, index) => (
-              <figure className={styles.galleryCard} key={item.image}>
+            ].flatMap((item) => Array.from({ length: 3 }, () => item)).map((item, index) => (
+              <figure className={styles.galleryCard} key={`${item.image}-${index}`}>
                 <div className={styles.galleryImage}>
                   <Image src={item.image} alt={item.title} fill priority={index === 0} sizes="(max-width: 760px) 85vw, 760px" />
                 </div>
