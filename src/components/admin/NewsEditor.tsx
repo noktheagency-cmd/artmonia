@@ -141,7 +141,7 @@ export default function NewsEditor({
                     {(selected.images ?? []).map((image, index) => <div key={`${selected.id}-${index}`}><MediaField compact previewRatio="4 / 3" value={image} onChange={(nextImage) => updateSelected({ images: (selected.images ?? []).map((current, itemIndex) => itemIndex === index ? nextImage : current).filter(Boolean) })} onUpload={onUpload} media={media} /><button type="button" onClick={() => updateSelected({ images: (selected.images ?? []).filter((_, itemIndex) => itemIndex !== index) })}><Trash2 /> Şəkli sil</button></div>)}
                     <button className="json-add" type="button" onClick={() => updateSelected({ images: [...(selected.images ?? []), ""] })}><Plus /> Qalereyaya şəkil əlavə et</button>
                   </div>
-                  <small>Şəkillər 4:3 formatında göstərilir. Tövsiyə olunan ölçü: 1200 × 900 px. Şaquli (9:16) şəkillərin yuxarı və aşağı hissələri kəsiləcək.</small>
+                  <small>Əlavə şəkillər burada gördüyünüz kimi 4:3 nisbətində, mərkəzdən kəsilərək göstəriləcək — tövsiyə: 1200 × 900 px.</small>
                 </div>
               </div>
               <footer className="collection-form-actions">
