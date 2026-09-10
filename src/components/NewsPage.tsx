@@ -80,6 +80,7 @@ export default function NewsPage({
           <div className={styles.grid}>
             {visibleItems.map((item, index) => {
               const image = getNewsImages(item, startIndex + index)[0];
+              const isResultPoster = image.includes("/assets/news-clean/");
 
               return (
                 <Link
@@ -91,7 +92,19 @@ export default function NewsPage({
                 >
                   <div className={styles.imageWrap}>
                     {/* Admin images can come from different providers, so a native image is intentional. */}
-                    <img src={image} alt={item.title} loading={index < 3 ? "eager" : "lazy"} />
+                    <img
+                      className={styles.imageBackdrop}
+                      src={image}
+                      alt=""
+                      aria-hidden="true"
+                      loading={index < 3 ? "eager" : "lazy"}
+                    />
+                    <img
+                      className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
+                      src={image}
+                      alt={item.title}
+                      loading={index < 3 ? "eager" : "lazy"}
+                    />
                   </div>
 
                   <div className={styles.cardContent}>

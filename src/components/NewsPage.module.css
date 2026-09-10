@@ -155,7 +155,7 @@
 
 .card {
   min-width: 0;
-  height: 550px;
+  height: 615px;
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(12, 2, 89, 0.15);
@@ -178,8 +178,8 @@
 
 .imageWrap {
   position: relative;
-  flex: 0 0 235px;
-  height: 235px;
+  flex: 0 0 300px;
+  height: 300px;
   display: grid;
   place-items: center;
   margin: 0;
@@ -197,7 +197,24 @@
   height: 100%;
   border-radius: 0;
   clip-path: none;
+}
+
+.imageBackdrop {
+  z-index: 0;
   object-fit: cover;
+  filter: blur(18px) saturate(0.82);
+  opacity: 0.5;
+  transform: scale(1.12);
+}
+
+.imageMain {
+  z-index: 1;
+  object-fit: contain;
+}
+
+.resultPoster {
+  object-fit: cover;
+  object-position: center top;
 }
 
 .cardContent {
@@ -543,12 +560,12 @@
   }
 
   .card {
-    height: 515px;
+    height: 565px;
   }
 
   .imageWrap {
-    flex-basis: 220px;
-    height: 220px;
+    flex-basis: 270px;
+    height: 270px;
     aspect-ratio: 4 / 3;
   }
 
