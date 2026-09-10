@@ -134,7 +134,18 @@ export default function NewsEditor({
                 <label className="admin-field wide"><span>Tam mətn</span><textarea rows={10} value={selected.body.join("\n\n")} onChange={(event) => updateSelected({ body: event.target.value.split(/\n\s*\n/).map((value) => value.trim()).filter(Boolean) })} /><small>Abzasları bir boş sətirlə ayırın.</small></label>
               </div>
               <div className="news-media-fields">
-                <div className="admin-field"><span>Kartın əsas şəkli (üz qabığı)</span><small>Ana səhifə və yenilik kartında yalnız bu şəkil görünür. Detail səhifəsində də ilk göstərilir.</small><MediaField value={selected.image ?? ""} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} /></div>
+                <div className="admin-field">
+                  <span>Kartın əsas şəkli (üz qabığı)</span>
+                  <small>Ana səhifə və yenilik kartında yalnız bu şəkil görünür. Detail səhifəsində də ilk göstərilir.</small>
+                  <MediaField value={selected.image ?? ""} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} />
+                  <small>Poster üçün tövsiyə: 4:5 formatı, 1080 × 1350 px. Detail səhifəsində şəkil öz ölçü nisbətində, kəsilmədən göstərilir. Ana səhifədə kartın ölçüsünə görə kənarlar kəsilə bilər.</small>
+                  {selected.image && <details key={`poster-${selected.id}`} className={styles.preview}>
+                    <summary>Poster detaildə necə görünəcək? — Önizləməni aç</summary>
+                    <p>Bu, detail səhifəsinin kəsilməyən poster görünüşüdür. Şəkli yuxarıdakı sahədən dəyişin.</p>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img className={styles.poster} src={getNewsImages(selected)[0]} alt="Əsas posterin detail önizləməsi" />
+                  </details>}
+                </div>
                 <div className="admin-field"><span>Detail səhifəsinin əlavə şəkilləri</span><small>Bu şəkillər yalnız “Ətraflı oxu” səhifəsində görünür. Kart şəklini dəyişmir.</small>
                   <div className="news-gallery-editor">
                     {(selected.images ?? []).map((image, index) => <div key={`${selected.id}-${index}`}><MediaField compact value={image} onChange={(nextImage) => updateSelected({ images: (selected.images ?? []).map((current, itemIndex) => itemIndex === index ? nextImage : current).filter(Boolean) })} onUpload={onUpload} media={media} /><button type="button" onClick={() => updateSelected({ images: (selected.images ?? []).filter((_, itemIndex) => itemIndex !== index) })}><Trash2 /> Şəkli sil</button></div>)}
