@@ -82,18 +82,11 @@ export default function HomeNewsSection() {
                   loading={index < 4 ? "eager" : "lazy"}
                   decoding="async"
                 />
-                <strong className={styles.title}>{item.title}</strong>
               </span>
               <span className={styles.content}>
                 <span className={styles.meta}>
                   <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
                   <b>{item.category}</b>
-                </span>
-                <i aria-hidden="true" />
-                <span className={styles.excerpt}>{item.excerpt}</span>
-                <span className={styles.readMore}>
-                  {copy.readMore}
-                  <Arrow />
                 </span>
               </span>
             </Link>

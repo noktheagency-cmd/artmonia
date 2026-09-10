@@ -166,7 +166,7 @@
   position: relative;
   isolation: isolate;
   min-width: 0;
-  height: 615px;
+  height: auto;
   align-self: start;
   display: flex;
   flex-direction: column;
@@ -249,10 +249,12 @@
 }
 
 .content {
-  flex: 1;
+  flex: none;
   display: flex;
   flex-direction: column;
-  padding: 22px 24px 24px;
+  justify-content: center;
+  min-height: 56px;
+  padding: 16px 20px;
 }
 
 .meta {
@@ -375,7 +377,7 @@
   }
 
   .card {
-    height: 565px;
+    height: auto;
   }
 
   .image {
@@ -384,7 +386,8 @@
   }
 
   .content {
-    padding: 20px 21px 22px;
+    min-height: 52px;
+    padding: 15px 18px;
   }
 
   .title {
