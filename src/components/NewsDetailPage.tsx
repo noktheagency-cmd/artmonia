@@ -4,7 +4,7 @@
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import { SiteContentProvider } from "@/components/SiteContentContext";
-import type { NewsItem } from "@/data/site";
+import { contact, type NewsItem } from "@/data/site";
 import type { SiteContentMap } from "@/lib/site-content";
 import { globalCopy, newsPageCopy, type GlobalCopy, type NewsPageCopy } from "@/data/site-copy";
 import { formatNewsDate, getNewsImages } from "@/lib/news";
@@ -31,6 +31,14 @@ export default function NewsDetailPage({
   nextItem?: NewsItem;
 }) {
   const images = getNewsImages(item, itemIndex);
+  const contactContent = content.contact as { phone?: string } | undefined;
+  const phone = (contactContent?.phone || contact.phone).replace(/\D/g, "");
+  const fallbackWhatsApp = `https://wa.me/${phone}?text=${encodeURIComponent(`Salam, “${item.title}” haqqında məlumat almaq istəyirəm.`)}`;
+  let whatsappUrl = fallbackWhatsApp;
+  try {
+    const customUrl = new URL(item.whatsappUrl?.trim() || fallbackWhatsApp);
+    if (customUrl.protocol === "https:" && ["wa.me", "api.whatsapp.com", "www.whatsapp.com", "whatsapp.com"].includes(customUrl.hostname)) whatsappUrl = customUrl.href;
+  } catch { /* Invalid custom links fall back to the contact number. */ }
   const copy = (content.news_page_copy as unknown as NewsPageCopy | undefined) ?? newsPageCopy;
   const global = (content.global_copy as unknown as GlobalCopy | undefined) ?? globalCopy;
 
@@ -66,6 +74,7 @@ export default function NewsDetailPage({
               <div className={styles.body}>
                 {item.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               </div>
+              <a className={styles.whatsappLink} href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp ilə əlaqə saxla</a>
             </div>
           </div>
 

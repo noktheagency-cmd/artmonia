@@ -15,6 +15,7 @@ export type NewsItem = {
   excerpt: string;
   image?: string;
   images?: string[];
+  whatsappUrl?: string;
   body: string[];
 };
 
@@ -39,6 +40,17 @@ export const heroPaperSettings: HeroPaperSettings = {
 };
 
 export const newsItems: NewsItem[] = [
+  {
+    id: "qalereya-whatsapp-numune",
+    date: "2026-09-11",
+    category: "Nümunə",
+    title: "Studiya qalereyası — nümunə xəbər",
+    excerpt: "Bir əsas kart şəkli, əlavə qalereya şəkilləri və WhatsApp əlaqə keçidinin nümunəsi.",
+    image: "/assets/studio-room.webp",
+    images: ["/assets/studio-brushes.webp", "/assets/module-color.webp"],
+    whatsappUrl: "https://wa.me/994103831393",
+    body: ["Kartda studiyanın əsas şəkli görünür. Bu səhifədə isə əsas şəkillə birlikdə əlavə iki qalereya şəkli yerləşir.", "WhatsApp düyməsi vasitəsilə akademiya ilə əlaqə saxlaya bilərsiniz."]
+  },
   {
     id: "yay-qrupuna-on-qeydiyyat",
     date: "2026-07-21",

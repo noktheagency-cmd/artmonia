@@ -19,6 +19,7 @@ function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
       title: typeof item.title === "string" ? item.title : "",
       excerpt: typeof item.excerpt === "string" ? item.excerpt : "",
       image: typeof item.image === "string" ? item.image : "",
+      whatsappUrl: typeof item.whatsappUrl === "string" ? item.whatsappUrl : "",
       images: Array.isArray(item.images) ? item.images.filter((image): image is string => typeof image === "string") : undefined,
       body: Array.isArray(item.body) ? item.body.filter((paragraph): paragraph is string => typeof paragraph === "string") : []
     }];
@@ -126,11 +127,12 @@ export default function NewsEditor({
                 <label className="admin-field"><span>Kateqoriya</span><input value={selected.category} onChange={(event) => updateSelected({ category: event.target.value })} /></label>
                 <label className="admin-field"><span>Tarix</span><input type="date" value={selected.date} onChange={(event) => updateSelected({ date: event.target.value })} /></label>
                 <label className="admin-field wide"><span>Qısa mətn</span><textarea rows={3} value={selected.excerpt} onChange={(event) => updateSelected({ excerpt: event.target.value })} /></label>
+                <label className="admin-field wide"><span>WhatsApp keçidi</span><input type="url" placeholder="https://wa.me/994103831393" value={selected.whatsappUrl ?? ""} onChange={(event) => updateSelected({ whatsappUrl: event.target.value })} /><small>Boş saxlasanız, Əlaqə bölməsindəki telefon nömrəsi istifadə olunacaq. Məsələn: https://wa.me/994103831393</small></label>
                 <label className="admin-field wide"><span>Tam mətn</span><textarea rows={10} value={selected.body.join("\n\n")} onChange={(event) => updateSelected({ body: event.target.value.split(/\n\s*\n/).map((value) => value.trim()).filter(Boolean) })} /><small>Abzasları bir boş sətirlə ayırın.</small></label>
               </div>
               <div className="news-media-fields">
-                <div className="admin-field"><span>Xəbərin əsas şəkli</span><MediaField value={selected.image ?? ""} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} /></div>
-                <div className="admin-field"><span>Detallı səhifə qalereyası</span><small>Şəkilləri əlavə edin, dəyişin və ya silin.</small>
+                <div className="admin-field"><span>Kartın əsas şəkli (üz qabığı)</span><small>Ana səhifə və yenilik kartında yalnız bu şəkil görünür. Detail səhifəsində də ilk göstərilir.</small><MediaField value={selected.image ?? ""} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} /></div>
+                <div className="admin-field"><span>Detail səhifəsinin əlavə şəkilləri</span><small>Bu şəkillər yalnız “Ətraflı oxu” səhifəsində görünür. Kart şəklini dəyişmir.</small>
                   <div className="news-gallery-editor">
                     {(selected.images ?? []).map((image, index) => <div key={`${selected.id}-${index}`}><MediaField compact value={image} onChange={(nextImage) => updateSelected({ images: (selected.images ?? []).map((current, itemIndex) => itemIndex === index ? nextImage : current).filter(Boolean) })} onUpload={onUpload} media={media} /><button type="button" onClick={() => updateSelected({ images: (selected.images ?? []).filter((_, itemIndex) => itemIndex !== index) })}><Trash2 /> Şəkli sil</button></div>)}
                     <button className="json-add" type="button" onClick={() => updateSelected({ images: [...(selected.images ?? []), ""] })}><Plus /> Qalereyaya şəkil əlavə et</button>
