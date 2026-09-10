@@ -497,6 +497,27 @@
   stroke-linejoin: round;
 }
 
+/* Keep equal space above and below the paper, independent of its copy height. */
+@media (min-width: 761px) {
+  .hero {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding-top: clamp(126px, 13.2vh, 150px);
+  }
+
+  .heading {
+    position: relative;
+    top: auto;
+  }
+
+  .cards {
+    position: relative;
+    top: auto;
+    align-self: center;
+    margin-block: 64px;
+  }
+}
+
 @media (min-width: 761px) and (max-width: 1040px) {
   .cards {
     --paper-open-distance: clamp(72px, 10vw, 104px);
