@@ -1,12 +1,21 @@
 import { defaultContent, defaultSections, managedSectionKeys, type JsonValue, type SiteSectionRecord } from "./admin-content";
 import { createClient } from "./supabase/server";
 import { isSupabaseConfigured } from "./supabase/config";
+import { courses } from "@/data/site";
 
 export type SiteContentMap = Record<string, JsonValue>;
 
 const removedHomeCopyKeys = new Set(["journey", "pricing"]);
 
 function sanitizeSectionContent(key: string, content: JsonValue): JsonValue {
+  if (key === "courses" && Array.isArray(content)) {
+    return content.map((item, index) => {
+      if (!item || typeof item !== "object" || Array.isArray(item)) return item;
+      const fallback = courses.find((course) => course.title === item.title) ?? courses[index];
+      return fallback ? { ...fallback, ...item } : item;
+    }) as JsonValue;
+  }
+
   if (!content || typeof content !== "object" || Array.isArray(content)) return content;
 
   if (key === "home_page_copy") {

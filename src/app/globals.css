@@ -4430,6 +4430,240 @@ textarea {
   }
 }
 
+/* Compact program details dialog. */
+#program .course-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin-top: auto;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+#program .course-select .icon {
+  width: 20px;
+  transition: transform 180ms ease;
+}
+
+#program .course-select:hover .icon,
+#program .course-select:focus-visible .icon {
+  transform: translateX(4px);
+}
+
+.program-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(5, 2, 28, 0.78);
+  backdrop-filter: blur(12px);
+}
+
+.program-modal {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.78fr) minmax(0, 1.22fr);
+  width: min(820px, 100%);
+  max-height: calc(100dvh - 48px);
+  overflow: auto;
+  border: 1px solid rgba(139, 102, 232, 0.42);
+  border-radius: 22px;
+  color: #f8f5ff;
+  background: #120b40;
+  box-shadow: 0 32px 90px rgba(3, 0, 28, 0.55);
+  animation: programModalIn 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.program-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(12, 6, 48, 0.76);
+  cursor: pointer;
+}
+
+.program-modal-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.program-modal-media {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  border-radius: 21px 0 0 21px;
+}
+
+.program-modal-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.program-modal-media span {
+  position: absolute;
+  bottom: 22px;
+  left: 22px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: #150c43;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.program-modal-content {
+  display: flex;
+  min-width: 0;
+  padding: 44px 42px 36px;
+  flex-direction: column;
+}
+
+.program-modal-label {
+  color: #ff9518;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.program-modal-content h2 {
+  margin: 12px 48px 14px 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: 500;
+  line-height: 0.98;
+}
+
+.program-modal-summary {
+  margin: 0;
+  color: #fff;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.program-modal-details {
+  margin: 18px 0 28px;
+  color: rgba(239, 233, 255, 0.76);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.program-modal-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: auto;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.program-modal-price {
+  display: grid;
+  gap: 6px;
+}
+
+.program-modal-price span {
+  color: rgba(239, 233, 255, 0.62);
+  font-size: 12px;
+}
+
+.program-modal-price strong {
+  color: #ff9518;
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.program-modal-cta {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 999px;
+  color: #fff;
+  background: #6d28e8;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.program-modal-cta .icon {
+  width: 19px;
+}
+
+@keyframes programModalIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 680px) {
+  .program-modal-backdrop {
+    padding: 12px;
+  }
+
+  .program-modal {
+    grid-template-columns: 1fr;
+    width: min(440px, 100%);
+    max-height: calc(100dvh - 24px);
+  }
+
+  .program-modal-media {
+    min-height: 190px;
+    max-height: 230px;
+    border-radius: 21px 21px 0 0;
+  }
+
+  .program-modal-content {
+    padding: 28px 24px 24px;
+  }
+
+  .program-modal-content h2 {
+    margin-right: 38px;
+    font-size: clamp(32px, 10vw, 44px);
+  }
+
+  .program-modal-details {
+    margin-bottom: 22px;
+  }
+
+  .program-modal-footer {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .program-modal-cta {
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .program-modal {
+    animation: none;
+  }
+}
+
 /* Compact editorial composition: calm canvas, centered scenes, selective color. */
 :root {
   --site-canvas: #f6f4ee;
