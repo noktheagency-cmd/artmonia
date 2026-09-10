@@ -194,10 +194,10 @@
 
 .image {
   position: relative;
-  flex: 0 0 300px;
+  flex: 0 0 380px;
   display: block;
   width: 100%;
-  height: 300px;
+  height: 380px;
   border-radius: 0;
   background: #f2efe8;
   clip-path: none;
@@ -379,8 +379,8 @@
   }
 
   .image {
-    flex-basis: 270px;
-    height: 270px;
+    flex-basis: 330px;
+    height: 330px;
   }
 
   .content {
