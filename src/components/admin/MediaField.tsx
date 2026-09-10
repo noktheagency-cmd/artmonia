@@ -21,6 +21,7 @@ type Props = {
   media: MediaLibraryItem[];
   accept?: "image" | "video" | "both";
   compact?: boolean;
+  previewRatio?: "original" | "4 / 3";
 };
 
 export default function MediaField({
@@ -29,11 +30,13 @@ export default function MediaField({
   onUpload,
   media,
   accept = "image",
-  compact = false
+  compact = false,
+  previewRatio
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [libraryOpen, setLibraryOpen] = useState(false);
+  const [dimensions, setDimensions] = useState({ source: "", width: 0, height: 0 });
   const acceptValue = accept === "image"
     ? "image/jpeg,image/png,image/webp,image/gif"
     : accept === "video"
@@ -58,11 +61,12 @@ export default function MediaField({
     <div className={`smart-media-field ${compact ? "compact" : ""}`}>
       <input ref={inputRef} hidden type="file" accept={acceptValue} onChange={(event) => void handleFile(event.target.files?.[0])} />
       {value ? (
-        <div className="smart-media-preview">
-          {isVideo ? <video src={value} muted controls /> : <img src={value} alt="Seçilmiş media" />}
+        <div className="smart-media-preview" style={previewRatio ? { minHeight: 0, maxHeight: "none", width: "100%", maxWidth: previewRatio === "original" ? 240 : undefined, aspectRatio: previewRatio === "original" ? undefined : previewRatio } : undefined}>
+          {isVideo ? <video src={value} muted controls /> : <img src={value} alt="Seçilmiş media" onLoad={(event) => setDimensions({ source: value, width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight })} style={previewRatio ? { minHeight: 0, maxHeight: "none", height: previewRatio === "original" ? "auto" : "100%", aspectRatio: previewRatio === "original" ? undefined : previewRatio } : undefined} />}
           <button type="button" onClick={() => onChange("")} aria-label="Medianı sil"><X /></button>
         </div>
       ) : null}
+      {previewRatio === "original" && dimensions.source === value && dimensions.width > 0 && <small>Poster detaildə öz nisbətində, kəsilmədən görünəcək — {dimensions.width} × {dimensions.height} px.</small>}
       <div className="smart-media-actions">
         <button
           type="button"

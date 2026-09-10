@@ -5,8 +5,6 @@ import { ChevronDown, ChevronRight, ChevronUp, Newspaper, Plus, Trash2 } from "l
 import type { NewsItem } from "@/data/site";
 import type { SiteSectionRecord } from "@/lib/admin-content";
 import MediaField, { type MediaLibraryItem } from "./MediaField";
-import { getNewsImages } from "@/lib/news";
-import styles from "./NewsGalleryPreview.module.css";
 
 function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
   if (!Array.isArray(content)) return [];
@@ -62,7 +60,6 @@ export default function NewsEditor({
   const [selectedId, setSelectedId] = useState<string | null>(initialItems[0]?.id ?? null);
   const [published, setPublished] = useState(section.is_published);
   const selected = items.find((item) => item.id === selectedId) ?? null;
-  const previewImages = selected ? getNewsImages(selected).slice(1) : [];
 
   function addItem() {
     const item = newItem();
@@ -137,31 +134,14 @@ export default function NewsEditor({
                 <div className="admin-field">
                   <span>Kartın əsas şəkli (üz qabığı)</span>
                   <small>Ana səhifə və yenilik kartında yalnız bu şəkil görünür. Detail səhifəsində də ilk göstərilir.</small>
-                  <MediaField value={selected.image ?? ""} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} />
-                  <small>Poster üçün tövsiyə: 4:5 formatı, 1080 × 1350 px. Detail səhifəsində şəkil öz ölçü nisbətində, kəsilmədən göstərilir. Ana səhifədə kartın ölçüsünə görə kənarlar kəsilə bilər.</small>
-                  {selected.image && <details key={`poster-${selected.id}`} className={styles.preview}>
-                    <summary>Poster detaildə necə görünəcək? — Önizləməni aç</summary>
-                    <p>Bu, detail səhifəsinin kəsilməyən poster görünüşüdür. Şəkli yuxarıdakı sahədən dəyişin.</p>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img className={styles.poster} src={getNewsImages(selected)[0]} alt="Əsas posterin detail önizləməsi" />
-                  </details>}
+                  <MediaField previewRatio="original" value={selected.image ?? ""} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} />
                 </div>
                 <div className="admin-field"><span>Detail səhifəsinin əlavə şəkilləri</span><small>Bu şəkillər yalnız “Ətraflı oxu” səhifəsində görünür. Kart şəklini dəyişmir.</small>
                   <div className="news-gallery-editor">
-                    {(selected.images ?? []).map((image, index) => <div key={`${selected.id}-${index}`}><MediaField compact value={image} onChange={(nextImage) => updateSelected({ images: (selected.images ?? []).map((current, itemIndex) => itemIndex === index ? nextImage : current).filter(Boolean) })} onUpload={onUpload} media={media} /><button type="button" onClick={() => updateSelected({ images: (selected.images ?? []).filter((_, itemIndex) => itemIndex !== index) })}><Trash2 /> Şəkli sil</button></div>)}
+                    {(selected.images ?? []).map((image, index) => <div key={`${selected.id}-${index}`}><MediaField compact previewRatio="4 / 3" value={image} onChange={(nextImage) => updateSelected({ images: (selected.images ?? []).map((current, itemIndex) => itemIndex === index ? nextImage : current).filter(Boolean) })} onUpload={onUpload} media={media} /><button type="button" onClick={() => updateSelected({ images: (selected.images ?? []).filter((_, itemIndex) => itemIndex !== index) })}><Trash2 /> Şəkli sil</button></div>)}
                     <button className="json-add" type="button" onClick={() => updateSelected({ images: [...(selected.images ?? []), ""] })}><Plus /> Qalereyaya şəkil əlavə et</button>
                   </div>
                   <small>Şəkillər 4:3 formatında göstərilir. Tövsiyə olunan ölçü: 1200 × 900 px. Şaquli (9:16) şəkillərin yuxarı və aşağı hissələri kəsiləcək.</small>
-                  {previewImages.length > 0 && <details key={selected.id} className={styles.preview}>
-                    <summary>Saytda necə görünəcək? — Önizləməni aç</summary>
-                    <p>Bu, yalnız baxış üçündür. Şəkilləri yuxarıdakı sahədən dəyişin.</p>
-                    <div className={styles.grid}>
-                      {previewImages.map((image, index) => <figure key={image}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={image} alt={`Yayım önizləməsi — şəkil ${index + 1}`} />
-                      </figure>)}
-                    </div>
-                  </details>}
                 </div>
               </div>
               <footer className="collection-form-actions">
