@@ -10,7 +10,6 @@ import {
   contact,
   courses,
   galleryImages,
-  packages,
   painPoints,
   testimonials,
   transformations
@@ -18,7 +17,6 @@ import {
 import SiteHeader from "@/components/SiteHeader";
 import HomeNewsSection from "@/components/HomeNewsSection";
 import HomeHero from "@/components/HomeHero";
-import CinematicJourney from "@/components/CinematicJourney";
 import CinematicVideo from "@/components/CinematicVideo";
 import { SiteContentProvider, useSiteContentValue } from "@/components/SiteContentContext";
 import { videoExperience } from "@/data/videoExperience";
@@ -287,14 +285,6 @@ function Programs() {
   );
 }
 
-function CheckIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className="pricing-check-icon">
-      <path d="m4 10.5 3.5 3.5L16 6" />
-    </svg>
-  );
-}
-
 function Results() {
   const dynamicTestimonials = useSiteContentValue("testimonials", testimonials);
   return (
@@ -555,65 +545,6 @@ function QuizGenreIcon({ genre }: { genre: QuizGenre }) {
   );
 }
 
-function PricingSection() {
-  return (
-    <section className="quiz-pricing scroll-section">
-      <Pricing />
-    </section>
-  );
-}
-
-function Pricing() {
-  const dynamicPackages = useSiteContentValue("packages", packages);
-  const copy = useSiteContentValue("home_page_copy", homePageCopy).pricing;
-
-  return (
-    <Reveal className="pricing-wrap pricing-unified" id="pricing" variant="from-bottom">
-      <div className="pricing-unified-heading">
-        <h2>{copy.title}</h2>
-        <p>{copy.subtitle}</p>
-      </div>
-      <div className="pricing-saas-grid">
-        {dynamicPackages.map((pack, index) => {
-          const [amount, currency = "AZN"] = pack.price.split(" ");
-          const isFeatured = index === 1;
-
-          return (
-            <article
-              key={pack.title}
-              className={isFeatured ? "pricing-plan pricing-plan--featured" : "pricing-plan"}
-              aria-label={`${pack.title} paketi`}
-            >
-              <div className="pricing-plan-topline" aria-hidden="true" />
-              {pack.highlight ? <span className="pricing-plan-label">{pack.highlight}</span> : null}
-              <div className="pricing-plan-heading">
-                <h3>{pack.title}</h3>
-                <div className="pricing-plan-price">
-                  <strong>{amount}</strong>
-                  <span>{currency}</span>
-                </div>
-                <p>{pack.text}</p>
-              </div>
-              <ul>
-                {pack.features.slice(0, 5).map((feature) => (
-                  <li key={feature}>
-                    <CheckIcon />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <a href="#lead">
-                {pack.cta}
-                <ArrowIcon />
-              </a>
-            </article>
-          );
-        })}
-      </div>
-    </Reveal>
-  );
-}
-
 const teacherPortraits = [
   { image: "/assets/teacher-vaqif.webp", tone: "ochre" },
   { image: "/assets/teacher-esmer.webp", tone: "ink" },
@@ -784,10 +715,8 @@ function ArtmoniaSiteInner() {
       <HomeHero />
       <main>
         <HomeNewsSection />
-        <CinematicJourney />
         <ProblemTransformation />
         <Programs />
-        <PricingSection />
         <TeachersAtelier />
       </main>
       <AuditPrivacyFooter />
