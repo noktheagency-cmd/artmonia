@@ -2,7 +2,7 @@ export const globalCopy = {
   navigation: [
     {
       label: "Proqramlar",
-      children: ["Proqramlar", "Qiymətlər"]
+      children: ["Proqramlar"]
     },
     {
       label: "Akademiya",
@@ -40,10 +40,6 @@ export const homePageCopy = {
     countSuffix: "xəbər",
     readMore: "Ətraflı oxu"
   },
-  journey: {
-    steps: ["Xəyal", "Sistem", "Nəticə"],
-    statement: "Hər xətt planla çəkilir. Mentor rəyi ilə düzəlir. Nəticəyə çevrilir."
-  },
   problem: {
     label: "Problem",
     title: "Tanış gəlir?",
@@ -61,10 +57,6 @@ export const homePageCopy = {
     title: "Peşəkar kurslar,\nmüasir nəticə.",
     cardLabel: "Artmonia proqramı",
     selectCta: "Proqramı seç"
-  },
-  pricing: {
-    title: "Dərs paketləri və qiymətlər",
-    subtitle: "Öyrənmə ritminə uyğun planı seç."
   },
   teachers: {
     label: "Müəllim heyəti",

@@ -3,7 +3,6 @@ import {
   courses,
   galleryImages,
   newsItems,
-  packages,
   painPoints,
   transformations
 } from "@/data/site";
@@ -43,7 +42,6 @@ const definitions = [
   ["pain_points", "Ana səhifə · Problem kartları", "Problem bölməsində görünən dörd qısa mətn", "website", painPoints],
   ["transformations", "Ana səhifə · Nəticə kartları", "Transformasiya bölməsində görünən başlıq və açıqlamalar", "website", transformations],
   ["courses", "Ana səhifə · Proqramlar", "Ekranda görünən kurs kartları, müddət, mətn və şəkillər", "website", courses],
-  ["packages", "Ana səhifə · Qiymətlər", "Ekranda görünən paket, qiymət və üstünlük mətnləri", "website", packages],
   ["contact", "Ana səhifə · Əlaqə", "Footer-də görünən telefon, e-poçt və ünvan", "settings", visibleContact],
   ["gallery_images", "Ana səhifə · Bölmə şəkilləri", "Problem və transformasiya sahəsində görünən şəkillər", "content", galleryImages],
   ["academy_page_copy", "Akademiya səhifəsi mətnləri", "İnteryer, haqqımızda, yanaşma və footer mətnləri", "academy", academyPageCopy],
