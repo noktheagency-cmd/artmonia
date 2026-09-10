@@ -13,20 +13,23 @@
 .galleryControls svg { display: block; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; }
 .previousArrow { transform: rotate(180deg); }
 .galleryRail { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--brand-purple) transparent; }
-.galleryCard { flex: 0 0 min(760px, 78%); min-width: 0; margin: 0; scroll-snap-align: start; overflow: hidden; border: 1px solid rgba(105,41,242,.2); border-radius: 18px; }
-.galleryImage { position: relative; aspect-ratio: 16 / 10; }
+.galleryCard { flex: 0 0 calc((100% - 72px) / 4); min-width: 0; margin: 0; scroll-snap-align: start; overflow: hidden; border: 1px solid rgba(105,41,242,.2); border-radius: 18px; }
+.galleryImage { position: relative; aspect-ratio: 16 / 9; }
 .galleryImage img { object-fit: cover; }
-.galleryCard figcaption { padding: 24px 28px 28px; }
-.galleryCard h2 { margin: 0 0 12px; font-family: var(--serif); font-size: 28px; font-weight: 500; line-height: 1.2; }
-.galleryCard p { margin: 0; font-size: 15px; line-height: 1.65; opacity: .75; }
+.galleryCard figcaption { padding: 14px 16px 18px; }
+.galleryCard h2 { margin: 0 0 10px; font-family: var(--serif); font-size: 23px; font-weight: 500; line-height: 1.2; }
+.galleryCard p { margin: 0; font-size: 13px; line-height: 1.55; opacity: .75; }
 .galleryRail:focus-visible, .galleryControls button:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 3px; }
 :global(html.theme-dark) .galleryCard { background: var(--theme-surface); border-color: var(--theme-border); }
 @media (max-width: 760px) {
-  .galleryCard { flex-basis: 88%; }
+  .galleryCard { flex-basis: calc((100% - 16px) / 2); }
   .galleryRail { gap: 16px; }
   .galleryCard figcaption { padding: 20px; }
   .galleryCard h2 { font-size: 24px; }
   .galleryIntro { font-size: 14px; }
+}
+@media (max-width: 480px) {
+  .galleryCard { flex-basis: 80%; }
 }
 
 .interior,
