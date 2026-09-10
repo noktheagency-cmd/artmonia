@@ -111,7 +111,7 @@
 .additionalGallery figure:only-child { grid-column: 1 / -1; }
 .additionalGallery img {
   aspect-ratio: 4 / 3;
-  object-fit: contain;
+  object-fit: cover;
   background: var(--theme-surface, #f5f2fb);
   display: block;
   width: 100%;
@@ -162,7 +162,7 @@
   height: auto;
   max-height: calc(100vh - 176px);
   display: block;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .storyCopy {
