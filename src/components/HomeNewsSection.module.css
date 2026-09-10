@@ -196,9 +196,10 @@
   position: relative;
   flex: 0 0 380px;
   display: block;
-  width: 100%;
+  width: calc(100% - 24px);
+  margin: 12px 12px 0;
   height: 380px;
-  border-radius: 0;
+  border-radius: 12px;
   background: #f2efe8;
   clip-path: none;
   overflow: hidden;
