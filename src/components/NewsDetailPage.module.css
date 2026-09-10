@@ -1,5 +1,4 @@
 .page {
-  container-type: inline-size;
   min-height: 100vh;
   padding: 148px 24px 86px;
   color: var(--brand-navy);
@@ -103,19 +102,22 @@
 }
 
 .additionalGallery {
-  width: 100cqw;
-  margin-inline: calc((100% - 100cqw) / 2);
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px;
   margin-block: 0 48px;
 }
 .additionalGallery figure { margin: 0; min-width: 0; }
+.additionalGallery figure:only-child { grid-column: 1 / -1; }
 .additionalGallery img {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 16px;
+}
+
+@media (max-width: 640px) {
+  .additionalGallery { grid-template-columns: minmax(0, 1fr); gap: 20px; }
 }
 
 .whatsappLink {
