@@ -44,6 +44,7 @@ const fieldLabels: Record<string, string> = {
   date: "Tarix",
   darkThemeLabel: "Qaranlıq tema düyməsi",
   description: "Açıqlama",
+  details: "Ətraflı məlumat",
   duration: "Müddət",
   eyebrow: "Hero üst mətni",
   email: "E-poçt",

@@ -245,37 +245,49 @@ export const courses = [
   {
     title: "Akademik Rəsm",
     duration: "12 həftə",
+    price: "",
     text: "Proporsiya, anatomiya və klassik çəkim texnikaları ilə möhkəm təməl.",
+    details: "Akademik rəsm proqramı müşahidə, proporsiya, perspektiv, anatomiya və işıq-kölgə biliklərini ardıcıl məşqlərlə inkişaf etdirir. Dərslər müəllim rəyi və fərdi düzəlişlərlə aparılır.",
     image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1100&q=72"
   },
   {
     title: "Rəng & Boyama",
     duration: "10 həftə",
+    price: "",
     text: "Yağlı boya, akrilik və akvarel texnikaları ilə rəng nəzəriyyəsi.",
+    details: "Rəng nəzəriyyəsi, palitra quruluşu, ton münasibətləri və yağlı boya, akrilik, akvarel texnikaları praktiki tapşırıqlarla öyrədilir. Proqram fərdi üslubun formalaşmasına kömək edir.",
     image: "/assets/module-color.webp"
   },
   {
     title: "Rəqəmsal Sənət",
     duration: "8 həftə",
+    price: "",
     text: "Procreate və Photoshop ilə müasir rəqəmsal illüstrasiya.",
+    details: "Procreate və Photoshop alətlərindən başlayaraq rəqəmsal eskiz, rəngləmə, işıq və kompozisiya üzərində işləyəcəksiniz. Kursun sonunda təqdim edilə bilən rəqəmsal iş hazırlanır.",
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1100&q=72"
   },
   {
     title: "Kompozisiya",
     duration: "6 həftə",
+    price: "",
     text: "Vizual tarazlıq, ritm və baxışı idarə etmək sənəti.",
+    details: "Kompozisiyada tarazlıq, ritm, dominant nöqtə, kadr quruluşu və vizual istiqamətləndirmə prinsipləri öyrədilir. Mövzular eskiz və tamamlanmış işlər üzərində tətbiq olunur.",
     image: "/assets/module-composition.webp"
   },
   {
     title: "Portret Sənəti",
     duration: "8 həftə",
+    price: "",
     text: "İnsan üzünün anatomiyası, ifadə və işıq-kölgə ustalığı.",
+    details: "Üz anatomiyası, düzgün proporsiyalar, xarakter və ifadə, işıq-kölgə keçidləri mərhələli şəkildə işlənir. Canlı müşahidə və referenslərlə portret bacarığı möhkəmləndirilir.",
     image: "/assets/module-portrait.webp"
   },
   {
     title: "Portfolyo Hazırlığı",
     duration: "4 həftə",
+    price: "",
     text: "Karyera üçün peşəkar portfolyo yaratma və təqdimat.",
+    details: "Mövcud işlərin seçilməsi, çatışmayan işlərin planlanması, portfolyonun ardıcıllığı və təqdimat dili fərdi məqsədə uyğun hazırlanır. Qəbul və karyera istiqamətinə fokuslanır.",
     image: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1100&q=72"
   }
 ];

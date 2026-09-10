@@ -5,6 +5,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { X } from "lucide-react";
 import Link from "next/link";
 import {
   contact,
@@ -250,38 +252,89 @@ function ProblemTransformation() {
 }
 
 function Programs() {
-  const dynamicCourses = useSiteContentValue("courses", courses);
+  const dynamicCourses = useSiteContentValue<typeof courses>("courses", courses);
   const copy = useSiteContentValue("home_page_copy", homePageCopy).programs;
+  const [selectedCourse, setSelectedCourse] = useState<(typeof courses)[number] | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!selectedCourse) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedCourse(null);
+    };
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", closeOnEscape);
+    requestAnimationFrame(() => closeButtonRef.current?.focus());
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [selectedCourse]);
+
   return (
-    <section className="section-shell scroll-section" id="program">
-      <Reveal className="section-heading wide" variant="from-right">
-        <p>{copy.label}</p>
-        <h2>{copy.title.split("\n").map((line, index) => <span key={`${line}-${index}`}>{line}{index < copy.title.split("\n").length - 1 ? <br /> : null}</span>)}</h2>
-      </Reveal>
-      <div className="courses-grid">
-        {dynamicCourses.map((course, index) => (
-          <Reveal
-            key={course.title}
-            className={`course-card ${index % 2 === 0 ? "media-left" : "media-right"}`}
-            variant={index % 2 === 0 ? "from-left" : "from-right"}
-            style={{ "--step": index } as React.CSSProperties}
-          >
-            <div className="course-media">
-              <img src={course.image} alt={`${course.title} proqramı üçün nümunə sənət işi`} loading="lazy" decoding="async" />
-              <span>{course.duration}</span>
+    <>
+      <section className="section-shell scroll-section" id="program">
+        <Reveal className="section-heading wide" variant="from-right">
+          <p>{copy.label}</p>
+          <h2>{copy.title.split("\n").map((line, index) => <span key={`${line}-${index}`}>{line}{index < copy.title.split("\n").length - 1 ? <br /> : null}</span>)}</h2>
+        </Reveal>
+        <div className="courses-grid">
+          {dynamicCourses.map((course, index) => (
+            <Reveal
+              key={course.title}
+              className={`course-card ${index % 2 === 0 ? "media-left" : "media-right"}`}
+              variant={index % 2 === 0 ? "from-left" : "from-right"}
+              style={{ "--step": index } as React.CSSProperties}
+            >
+              <div className="course-media">
+                <img src={course.image} alt={`${course.title} proqramı üçün nümunə sənət işi`} loading="lazy" decoding="async" />
+                <span>{course.duration}</span>
+              </div>
+              <div className="course-copy">
+                <span className="course-label">{copy.cardLabel}</span>
+                <h3>{course.title}</h3>
+                <p>{course.text}</p>
+                <button className="course-select" type="button" onClick={() => setSelectedCourse(course)} aria-haspopup="dialog">
+                  {copy.selectCta} <ArrowIcon />
+                </button>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+      {selectedCourse && typeof document !== "undefined" ? createPortal(
+        <div className="program-modal-backdrop" onMouseDown={(event) => {
+          if (event.target === event.currentTarget) setSelectedCourse(null);
+        }}>
+          <article className="program-modal" role="dialog" aria-modal="true" aria-labelledby="program-modal-title">
+            <button ref={closeButtonRef} className="program-modal-close" type="button" onClick={() => setSelectedCourse(null)} aria-label="Pəncərəni bağla">
+              <X aria-hidden="true" />
+            </button>
+            <div className="program-modal-media">
+              <img src={selectedCourse.image} alt={`${selectedCourse.title} proqramı`} />
+              <span>{selectedCourse.duration}</span>
             </div>
-            <div className="course-copy">
-              <span className="course-label">{copy.cardLabel}</span>
-              <h3>{course.title}</h3>
-              <p>{course.text}</p>
-              <a href="#lead">
-                {copy.selectCta} <ArrowIcon />
-              </a>
+            <div className="program-modal-content">
+              <span className="program-modal-label">{copy.cardLabel}</span>
+              <h2 id="program-modal-title">{selectedCourse.title}</h2>
+              <p className="program-modal-summary">{selectedCourse.text}</p>
+              <p className="program-modal-details">{selectedCourse.details || selectedCourse.text}</p>
+              <div className="program-modal-footer">
+                <div className="program-modal-price">
+                  <span>Proqramın qiyməti</span>
+                  <strong>{selectedCourse.price || "Qiymət üçün əlaqə saxlayın"}</strong>
+                </div>
+                <Link className="program-modal-cta" href="/muraciet">
+                  Müraciət et <ArrowIcon />
+                </Link>
+              </div>
             </div>
-          </Reveal>
-        ))}
-      </div>
-    </section>
+          </article>
+        </div>,
+        document.body
+      ) : null}
+    </>
   );
 }
 
