@@ -4,6 +4,28 @@ import { isSupabaseConfigured } from "./supabase/config";
 
 export type SiteContentMap = Record<string, JsonValue>;
 
+const removedHomeCopyKeys = new Set(["journey", "pricing"]);
+
+function sanitizeSectionContent(key: string, content: JsonValue): JsonValue {
+  if (!content || typeof content !== "object" || Array.isArray(content)) return content;
+
+  if (key === "home_page_copy") {
+    return Object.fromEntries(
+      Object.entries(content).filter(([contentKey]) => !removedHomeCopyKeys.has(contentKey))
+    ) as JsonValue;
+  }
+
+  if (key === "global_copy" && Array.isArray(content.navigation)) {
+    const navigation = content.navigation.map((item, index) => {
+      if (index !== 0 || !item || typeof item !== "object" || Array.isArray(item) || !Array.isArray(item.children)) return item;
+      return { ...item, children: item.children.slice(0, 1) };
+    });
+    return { ...content, navigation };
+  }
+
+  return content;
+}
+
 export async function getPublishedContent(): Promise<SiteContentMap> {
   if (!isSupabaseConfigured()) return defaultContent;
 
@@ -16,7 +38,8 @@ export async function getPublishedContent(): Promise<SiteContentMap> {
   if (error || !data?.length) return defaultContent;
   const publishedContent: SiteContentMap = { ...defaultContent };
   data.forEach((row) => {
-    if (row.is_published) publishedContent[row.key] = row.content as JsonValue;
+    if (!managedSectionKeys.has(row.key)) return;
+    if (row.is_published) publishedContent[row.key] = sanitizeSectionContent(row.key, row.content as JsonValue);
     else delete publishedContent[row.key];
   });
   return publishedContent;
@@ -30,14 +53,15 @@ export async function getAdminSections(): Promise<SiteSectionRecord[]> {
   const storedSections = (data as SiteSectionRecord[])
     .filter((section) => managedSectionKeys.has(section.key))
     .map((section) => {
-      if (section.key !== "contact" || !section.content || typeof section.content !== "object" || Array.isArray(section.content)) return section;
+      const sanitizedSection = { ...section, content: sanitizeSectionContent(section.key, section.content) };
+      if (section.key !== "contact" || !sanitizedSection.content || typeof sanitizedSection.content !== "object" || Array.isArray(sanitizedSection.content)) return sanitizedSection;
       const fallback = defaultContent.contact as { phone: JsonValue; email: JsonValue; address: JsonValue };
       return {
-        ...section,
+        ...sanitizedSection,
         content: {
-          phone: section.content.phone ?? fallback.phone,
-          email: section.content.email ?? fallback.email,
-          address: section.content.address ?? fallback.address
+          phone: sanitizedSection.content.phone ?? fallback.phone,
+          email: sanitizedSection.content.email ?? fallback.email,
+          address: sanitizedSection.content.address ?? fallback.address
         }
       };
     });

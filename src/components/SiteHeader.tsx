@@ -11,7 +11,7 @@ import { useSiteContentValue } from "@/components/SiteContentContext";
 import { globalCopy } from "@/data/site-copy";
 
 const navigationRoutes = [
-  { href: "/#program", children: ["/#program", "/#pricing"] },
+  { href: "/#program", children: ["/#program"] },
   { href: "/akademiya", children: ["/akademiya#interyer", "/akademiya#haqqimizda"] },
   { href: "/neticeler", children: ["/neticeler#ugur-hekayeleri", "/neticeler#telebe-neticeleri"] },
   { href: "/#teachers", children: [] },

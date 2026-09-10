@@ -10,15 +10,12 @@ export type CinematicAsset = {
  * transition from the photo to video without any component changes.
  */
 export const videoExperience: Record<
-  "hero" | "journey" | "atelier",
+  "hero" | "atelier",
   CinematicAsset
 > = {
   hero: {
     poster: "/assets/artmonia-hero-painted-hands-desktop.webp",
     mobilePoster: "/assets/artmonia-hero-painted-hands-mobile.webp"
-  },
-  journey: {
-    poster: "/assets/artmonia-line-to-art-hd.webp"
   },
   atelier: {
     poster: "/assets/artmonia-future-atelier-hd.webp"
