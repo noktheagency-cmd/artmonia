@@ -65,6 +65,7 @@ export default function HomeNewsSection() {
       <div className={styles.rail} ref={railRef} aria-label="Son yeniliklər">
         {items.map((item, index) => {
           const image = getNewsImages(item, index)[0];
+          const isResultPoster = image.includes("/assets/news-clean/");
 
           return (
             <Link
@@ -74,7 +75,13 @@ export default function HomeNewsSection() {
               key={item.id}
             >
               <span className={styles.image}>
-                <img src={image} alt="" loading={index < 4 ? "eager" : "lazy"} decoding="async" />
+                <img
+                  className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
+                  src={image}
+                  alt=""
+                  loading={index < 4 ? "eager" : "lazy"}
+                  decoding="async"
+                />
                 <strong className={styles.title}>{item.title}</strong>
               </span>
               <span className={styles.content}>

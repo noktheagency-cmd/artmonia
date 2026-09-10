@@ -44,15 +44,6 @@ export default function NewsDetailPage({
             {copy.backToNews}
           </Link>
 
-          <header className={styles.header}>
-            <div className={styles.meta}>
-              <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
-              <span>{item.category}</span>
-            </div>
-            <h1>{item.title}</h1>
-            <p>{item.excerpt}</p>
-          </header>
-
           <div className={styles.storyContent}>
             <div className={styles.gallery} aria-label={`${item.title} foto qalereyası`}>
               {images.map((image, index) => (
@@ -62,8 +53,19 @@ export default function NewsDetailPage({
               ))}
             </div>
 
-            <div className={styles.body}>
-              {item.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <div className={styles.storyCopy}>
+              <header className={styles.header}>
+                <div className={styles.meta}>
+                  <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
+                  <span>{item.category}</span>
+                </div>
+                <h1>{item.title}</h1>
+                <p>{item.excerpt}</p>
+              </header>
+
+              <div className={styles.body}>
+                {item.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
             </div>
           </div>
 

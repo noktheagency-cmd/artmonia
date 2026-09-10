@@ -199,17 +199,9 @@
   clip-path: none;
 }
 
-.imageBackdrop {
-  z-index: 0;
-  object-fit: cover;
-  filter: blur(18px) saturate(0.82);
-  opacity: 0.5;
-  transform: scale(1.12);
-}
-
 .imageMain {
   z-index: 1;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .resultPoster {

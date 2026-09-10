@@ -166,7 +166,7 @@
   position: relative;
   isolation: isolate;
   min-width: 0;
-  min-height: 0;
+  height: 615px;
   align-self: start;
   display: flex;
   flex-direction: column;
@@ -194,8 +194,10 @@
 
 .image {
   position: relative;
+  flex: 0 0 300px;
   display: block;
   width: 100%;
+  height: 300px;
   border-radius: 0;
   background: #f2efe8;
   clip-path: none;
@@ -203,12 +205,23 @@
 }
 
 .image img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   border-radius: 0;
   clip-path: none;
-  object-fit: contain;
+}
+
+.imageMain {
+  z-index: 1;
+  object-fit: cover;
+}
+
+.resultPoster {
+  object-fit: cover;
+  object-position: center top;
 }
 
 .title {
@@ -216,6 +229,7 @@
   right: 18px;
   bottom: 18px;
   left: 18px;
+  z-index: 2;
   display: -webkit-box;
   padding: 0;
   overflow: hidden;
@@ -358,6 +372,15 @@
     grid-auto-columns: min(82vw, 310px);
     margin-right: -10px;
     padding-right: 18px;
+  }
+
+  .card {
+    height: 565px;
+  }
+
+  .image {
+    flex-basis: 270px;
+    height: 270px;
   }
 
   .content {
