@@ -22311,8 +22311,14 @@ html.cinematic-footer-active .nav-cta {
 
   .site-header .menu-button {
     display: grid;
-    width: 52px;
-    height: 52px;
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    margin: 0;
+    padding: 0;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
     place-items: center;
     border: 1px solid rgba(105, 41, 242, 0.1);
     border-radius: 50%;
@@ -22322,13 +22328,33 @@ html.cinematic-footer-active .nav-cta {
   }
 
   .site-header .compact-mobile-theme-toggle {
-    top: 6px;
-    right: 62px;
+    position: absolute;
+    top: 50%;
+    right: 57px;
+    margin: 0;
+    padding: 0;
+    transform: translateY(-50%);
     display: inline-flex;
-    width: 52px;
-    min-width: 52px;
-    height: 52px;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
     border-radius: 50%;
+  }
+
+  .site-header .menu-button:hover,
+  .site-header .compact-mobile-theme-toggle:hover {
+    transform: translateY(-50%);
+  }
+
+  .site-header .menu-svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .site-header .compact-mobile-theme-toggle .theme-toggle-icon-wrap,
+  .site-header .compact-mobile-theme-toggle .theme-toggle-icon {
+    width: 20px;
+    height: 20px;
   }
 
   .site-header .mobile-nav {
@@ -22425,6 +22451,16 @@ html.theme-dark .site-header .mobile-nav {
   border-color: rgba(210, 196, 255, 0.16);
   background: rgba(13, 9, 46, 0.96);
   box-shadow: 0 28px 64px rgba(0, 0, 0, 0.42);
+}
+
+html.theme-dark .site-header .mobile-nav > div > a {
+  color: #f7f3ff;
+}
+
+html.theme-dark .site-header .mobile-nav > div > a:hover,
+html.theme-dark .site-header .mobile-nav > div > a:focus-visible {
+  color: #ffffff;
+  background: rgba(168, 132, 255, 0.14);
 }
 
 /* Keep the floating glass navigation legible over the cinematic photo scenes. */
