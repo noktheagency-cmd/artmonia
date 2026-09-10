@@ -44,8 +44,8 @@
 }
 
 .header {
-  max-width: 990px;
-  margin: clamp(44px, 7vw, 86px) 0 42px;
+  max-width: 680px;
+  margin: 0 0 34px;
 }
 
 .meta {
@@ -76,10 +76,10 @@
 }
 
 .header h1 {
-  max-width: 1080px;
+  max-width: 680px;
   margin: 0;
   font-family: var(--serif);
-  font-size: clamp(3.6rem, 7.4vw, 7.5rem);
+  font-size: clamp(3.2rem, 5vw, 5.8rem);
   font-weight: 500;
   line-height: 0.91;
   letter-spacing: -0.05em;
@@ -95,14 +95,17 @@
 
 .storyContent {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
   align-items: start;
   gap: clamp(32px, 5vw, 72px);
-  margin: 0 0 58px;
+  margin: clamp(38px, 6vw, 68px) 0 58px;
 }
 
 .gallery {
+  position: sticky;
+  top: 126px;
   display: grid;
+  justify-items: center;
   gap: 16px;
 }
 
@@ -117,14 +120,17 @@
 .gallery img {
   width: 100%;
   height: auto;
+  max-height: calc(100vh - 176px);
   display: block;
   object-fit: contain;
 }
 
+.storyCopy {
+  min-width: 0;
+}
+
 .body {
-  position: sticky;
-  top: 126px;
-  max-width: 520px;
+  max-width: 650px;
 }
 
 .body::before {
@@ -214,8 +220,15 @@
     gap: 38px;
   }
 
-  .body {
+  .gallery {
     position: static;
+  }
+
+  .gallery img {
+    max-height: min(70vh, 620px);
+  }
+
+  .body {
     max-width: 780px;
   }
 }

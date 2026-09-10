@@ -93,13 +93,6 @@ export default function NewsPage({
                   <div className={styles.imageWrap}>
                     {/* Admin images can come from different providers, so a native image is intentional. */}
                     <img
-                      className={styles.imageBackdrop}
-                      src={image}
-                      alt=""
-                      aria-hidden="true"
-                      loading={index < 3 ? "eager" : "lazy"}
-                    />
-                    <img
                       className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
                       src={image}
                       alt={item.title}
