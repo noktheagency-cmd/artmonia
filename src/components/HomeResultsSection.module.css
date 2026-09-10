@@ -17,14 +17,16 @@
 .track { display: flex; width: max-content; animation: travel 48s linear infinite; }
 .track[data-paused="true"] { animation-play-state: paused; }
 .group { display: flex; flex: none; gap: var(--gap); margin: 0; padding: 0 var(--gap) 0 0; list-style: none; }
-.card { display: flex; flex-direction: column; flex: 0 0 auto; width: calc((100cqw - 5 * var(--gap)) / 6); aspect-ratio: 5 / 7; overflow: hidden; border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1px rgb(26 21 50 / 9%); }
-.portrait { flex: 1; min-height: 0; background-image: url('/assets/results-demo-students.webp'); background-size: 500% 200%; background-repeat: no-repeat; background-color: #d8d8d8; }
+.card { display: flex; flex-direction: column; flex: 0 0 auto; width: calc((100cqw - 4 * var(--gap)) / 5); overflow: hidden; border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1px rgb(26 21 50 / 9%); }
+.portrait { position: relative; flex: none; aspect-ratio: 3 / 4; overflow: hidden; background-color: #d8d8d8; }
+.portrait::before { content: ""; position: absolute; inset: 0 auto 0 50%; width: 133.333333%; transform: translateX(-50%); background-image: url('/assets/results-demo-students.webp'); background-size: 500% 200%; background-position: inherit; background-repeat: no-repeat; }
 .caption { flex: none; padding: 10px 10px 12px; }
-.caption h3 { margin: 0 0 4px; font: 600 12px/1.2 var(--sans, sans-serif); letter-spacing: -.015em; }
-.caption p { margin: 0; font-size: 10px; line-height: 1.35; opacity: .72; }
+.caption h3 { margin: 0 0 5px; color: #bd6800; font: 700 14px/1.2 var(--sans, sans-serif); letter-spacing: -.015em; }
+.caption p { margin: 0; font-size: 12px; line-height: 1.35; opacity: .8; }
 @keyframes travel { to { transform: translateX(-50%); } }
 :global(html.theme-dark) .section { color: var(--theme-text); }
 :global(html.theme-dark) .card { background: var(--theme-surface); box-shadow: inset 0 0 0 1px var(--theme-border); }
+:global(html.theme-dark) .caption h3 { color: #ffb52e; }
 @media (max-width: 1023px) { .card { width: calc((100cqw - 3 * var(--gap)) / 4); } }
 @media (max-width: 639px) {
   .section { width: calc(100% - 32px); }
