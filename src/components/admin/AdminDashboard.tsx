@@ -57,12 +57,13 @@ export type MediaAsset = {
   created_at: string;
 };
 
-type View = "dashboard" | "homepage" | "news" | "results" | "awards" | "media" | "messages" | "settings";
+type View = "dashboard" | "homepage" | "news" | "home_results" | "results" | "awards" | "media" | "messages" | "settings";
 
 const nav = [
   { id: "dashboard" as const, label: "Ana panel", icon: LayoutDashboard },
   { id: "homepage" as const, label: "Sayt məzmunu", icon: Home },
   { id: "news" as const, label: "Yeniliklər", icon: Newspaper },
+  { id: "home_results" as const, label: "Ana səhifə · Nəticələr", icon: Medal },
   { id: "results" as const, label: "Nəticələr", icon: Medal },
   { id: "awards" as const, label: "Mükafatlar", icon: Award },
   { id: "media" as const, label: "Media", icon: ImageIcon },
@@ -117,7 +118,7 @@ export default function AdminDashboard({
   const fileRef = useRef<HTMLInputElement>(null);
 
   const unread = messages.filter((message) => message.status === "new").length;
-  const homepageSections = useMemo(() => sections.filter((section) => !["news_items", "awards"].includes(section.key)), [sections]);
+  const homepageSections = useMemo(() => sections.filter((section) => !["news_items", "home_results", "awards"].includes(section.key)), [sections]);
   const resultSections = useMemo(() => sections.filter((section) => ["collections_page_copy", "success_stories"].includes(section.key)), [sections]);
   const filteredSections = useMemo(() => {
     const query = search.trim().toLocaleLowerCase("az");
@@ -125,7 +126,7 @@ export default function AdminDashboard({
     return homepageSections.filter((section) => `${section.label} ${section.description}`.toLocaleLowerCase("az").includes(query));
   }, [homepageSections, search]);
 
-  function getSection(key: "news_items" | "awards") {
+  function getSection(key: "news_items" | "awards" | "home_results") {
     return sections.find((section) => section.key === key)
       ?? defaultSections.find((section) => section.key === key)!;
   }
@@ -332,6 +333,7 @@ export default function AdminDashboard({
   }
 
   const dashboardLinks: Array<{ view: View; icon: typeof Home; title: string; text: string; count?: string }> = [
+    { view: "home_results", icon: Medal, title: "Ana səhifə · Nəticələr", text: "Hərəkətli lentdəki tələbə fotoları, ad-soyad və nəticə cümlələri", count: `${countCollection(getSection("home_results"))} tələbə` },
     { view: "homepage", icon: Home, title: "Sayt məzmunu", text: "Başlıqlar, kurslar, müəllimlər və əlaqə məlumatları", count: `${homepageSections.length} bölmə` },
     { view: "news", icon: Newspaper, title: "Yeniliklər", text: "Ana səhifə lentində və yeniliklər səhifəsində görünən xəbərləri idarə edin", count: `${countCollection(getSection("news_items"))} xəbər` },
     { view: "results", icon: Medal, title: "Nəticələr", text: "Nəticə səhifəsinin mətnlərini və uğur hekayələrini idarə edin", count: `${countCollection(sections.find((section) => section.key === "success_stories"))} hekayə` },
@@ -401,6 +403,7 @@ export default function AdminDashboard({
           ) : null}
 
           {view === "news" ? <NewsEditor key={`news-${getSection("news_items").updated_at ?? "default"}`} section={getSection("news_items")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}
+          {view === "home_results" ? <CollectionEditor key={`home-results-${getSection("home_results").updated_at ?? "default"}`} kind="home_results" section={getSection("home_results")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}
           {view === "results" ? (
             <section className="admin-view-section">
               <div className="admin-page-title"><div><h1>Nəticələr</h1><p>Ekranda görünən nəticə mətnlərini və uğur hekayələrini dəyişin.</p></div></div>
