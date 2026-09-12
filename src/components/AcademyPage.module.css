@@ -5,7 +5,12 @@
 }
 
 .galleryShell { position: relative; width: min(1240px, 100%); margin-inline: auto; }
-.galleryHeading { max-width: 850px; margin: 0 auto 28px; text-align: center; }
+.interiorFeature { display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 620px); justify-content: center; align-items: stretch; gap: clamp(32px, 6vw, 90px); margin-bottom: 44px; }
+.galleryHeading { display: flex; flex-direction: column; justify-content: center; margin: 0; text-align: left; }
+.videoCrop { position: relative; width: 100%; aspect-ratio: 264 / 469; overflow: hidden; border-radius: 28px; background: #080808; container-type: inline-size; isolation: isolate; }
+/* Keep Instagram's layout fixed, scaling only its visible video window. */
+.videoStage { position: absolute; width: 264px; height: 469px; transform-origin: top left; transform: scale(calc(100cqw / 264px)); }
+.videoStage iframe { position: absolute; width: 400px; height: 710px; left: -56px; top: -60px; border: 0; }
 .galleryHeading h1 { margin: 0; font-family: var(--serif); font-size: clamp(40px, 5.5vw, 76px); font-weight: 500; line-height: 1.08; letter-spacing: -0.035em; }
 .galleryIntro { max-width: 740px; margin: 20px auto 0; font-size: 16px; line-height: 1.7; opacity: 0.75; }
 .galleryControls { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 16px; }
@@ -13,7 +18,7 @@
 .galleryControls svg { display: block; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; }
 .previousArrow { transform: rotate(180deg); }
 .galleryRail { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--brand-purple) transparent; }
-.galleryCard { flex: 0 0 calc((100% - 72px) / 4); min-width: 0; margin: 0; scroll-snap-align: start; overflow: hidden; border: 0; border-radius: 50%; }
+.galleryCard { flex: 0 0 calc((100% - 48px) / 3); min-width: 0; margin: 0; scroll-snap-align: start; overflow: hidden; border: 0; border-radius: 50%; }
 .galleryImage { position: relative; aspect-ratio: 16 / 9; }
 .galleryImage img { object-fit: cover; }
 .interiorVideo { width: min(400px, 100%); margin: 32px auto 0; }
@@ -26,6 +31,9 @@
 .galleryRail:focus-visible, .galleryControls button:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 3px; }
 :global(html.theme-dark) .galleryCard { background: var(--theme-surface); border-color: var(--theme-border); }
 @media (max-width: 760px) {
+  .interiorFeature { grid-template-columns: 1fr; gap: 28px; }
+  .videoCrop { width: min(280px, 100%); justify-self: center; }
+  .galleryHeading { text-align: center; }
   .galleryCard { flex-basis: calc((100% - 16px) / 2); }
   .galleryRail { gap: 16px; }
   .galleryCard figcaption { padding: 20px; }
