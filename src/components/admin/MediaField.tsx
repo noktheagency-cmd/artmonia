@@ -21,7 +21,7 @@ type Props = {
   media: MediaLibraryItem[];
   accept?: "image" | "video" | "both";
   compact?: boolean;
-  previewRatio?: "original" | "4 / 3";
+  previewRatio?: "original" | "4 / 3" | "4 / 5";
 };
 
 export default function MediaField({
@@ -61,8 +61,8 @@ export default function MediaField({
     <div className={`smart-media-field ${compact ? "compact" : ""}`}>
       <input ref={inputRef} hidden type="file" accept={acceptValue} onChange={(event) => void handleFile(event.target.files?.[0])} />
       {value ? (
-        <div className="smart-media-preview" style={previewRatio ? { minHeight: 0, maxHeight: "none", width: "100%", maxWidth: previewRatio === "original" ? 240 : undefined, aspectRatio: previewRatio === "original" ? undefined : previewRatio } : undefined}>
-          {isVideo ? <video src={value} muted controls /> : <img src={value} alt="Seçilmiş media" onLoad={(event) => setDimensions({ source: value, width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight })} style={previewRatio ? { minHeight: 0, maxHeight: "none", height: previewRatio === "original" ? "auto" : "100%", aspectRatio: previewRatio === "original" ? undefined : previewRatio } : undefined} />}
+        <div className="smart-media-preview" style={previewRatio ? { minHeight: 0, maxHeight: "none", width: "100%", maxWidth: previewRatio !== "4 / 3" ? 240 : undefined, aspectRatio: previewRatio === "original" ? undefined : previewRatio } : undefined}>
+          {isVideo ? <video src={value} muted controls /> : <img src={value} alt="Seçilmiş media" onLoad={(event) => setDimensions({ source: value, width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight })} style={previewRatio ? { minHeight: 0, maxHeight: "none", height: previewRatio === "original" ? "auto" : "100%", aspectRatio: previewRatio === "original" ? undefined : previewRatio, objectFit: previewRatio === "4 / 5" ? "contain" : undefined } : undefined} />}
           <button type="button" onClick={() => onChange("")} aria-label="Medianı sil"><X /></button>
         </div>
       ) : null}

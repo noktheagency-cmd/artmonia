@@ -92,7 +92,7 @@ export default function NewsEditor({
   return (
     <section className="collection-editor-view news-editor-view">
       <div className="admin-page-title collection-page-title">
-        <div><h1>Yeniliklər</h1><p>Hero lentində və yeniliklər səhifəsində görünən xəbərləri idarə edin.</p></div>
+        <div><h1>Yeniliklər</h1><p>Ana səhifənin sonsuz lentində siyahıdakı ilk 10 xəbər göstərilir; sıralamanı yuxarı və aşağı düymələri ilə dəyişin.</p></div>
         <button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button>
       </div>
 
@@ -133,8 +133,9 @@ export default function NewsEditor({
               <div className="news-media-fields">
                 <div className="admin-field">
                   <span>Kartın əsas şəkli (üz qabığı)</span>
-                  <small>Ana səhifə və yenilik kartında yalnız bu şəkil görünür. Detail səhifəsində də ilk göstərilir.</small>
-                  <MediaField previewRatio="original" value={selected.image ?? ""} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} />
+                  <small>Ana səhifədə yalnız poster görünür; başlıq, açıqlama, tarix və kateqoriya detail səhifəsində saxlanır.</small>
+                  <MediaField previewRatio="4 / 5" value={selected.image ?? ""} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} />
+                  <small>Poster ana səhifədə buradakı kimi 4:5 çərçivəyə kəsilmədən yerləşir (tövsiyə: 1080 × 1350 px), detaildə isə öz nisbətində görünür.</small>
                 </div>
                 <div className="admin-field"><span>Detail səhifəsinin əlavə şəkilləri</span><small>Bu şəkillər yalnız “Ətraflı oxu” səhifəsində görünür. Kart şəklini dəyişmir.</small>
                   <div className="news-gallery-editor">
