@@ -8,7 +8,6 @@
 
 .heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
 .heading h2 { margin: 0; font-family: var(--serif); font-size: clamp(3.5rem, 6.2vw, 6.8rem); font-weight: 500; line-height: .88; letter-spacing: -.045em; }
-.underline { display: block; width: 54px; height: 3px; margin: 23px 0 16px; background: var(--brand-orange); }
 .heading p { margin: 0; font-size: 12px; line-height: 1.5; opacity: .65; }
 .toggle { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; padding: 0; border: 1px solid currentColor; border-radius: 50%; color: inherit; background: transparent; cursor: pointer; }
 .toggle:hover { color: var(--brand-orange); }
