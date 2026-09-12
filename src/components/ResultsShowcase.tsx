@@ -113,7 +113,7 @@ export default function ResultsShowcase() {
                   src={story.poster}
                   alt={story.alt}
                   fill
-                  sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, 33vw"
+                  sizes="(max-width: 560px) 100vw, (max-width: 800px) 50vw, 25vw"
                 />
                 <span className={styles.storyPreviewPlay} aria-hidden="true"><Play /></span>
               </span>
