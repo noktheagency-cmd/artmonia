@@ -8,6 +8,7 @@ import {
 } from "@/data/site";
 import { awards, successStories } from "@/data/collections";
 import { homeResults } from "@/data/home-results";
+import { homeFaq } from "@/data/home-faq";
 import {
   academyPageCopy,
   applicationPageCopy,
@@ -44,6 +45,7 @@ const definitions = [
   ["transformations", "Ana səhifə · Nəticə kartları", "Transformasiya bölməsində görünən başlıq və açıqlamalar", "website", transformations],
   ["courses", "Ana səhifə · Proqramlar", "Ekranda görünən kurs kartları, müddət, mətn və şəkillər", "website", courses],
   ["contact", "Ana səhifə · Əlaqə", "Footer-də görünən telefon, e-poçt və ünvan", "settings", visibleContact],
+  ["home_faq", "Ana səhifə · Suallar və cavablar", "Əlaqədən əvvəlki FAQ: başlığı, sualları və cavabları dəyişin, əlavə edin və sıralayın", "website", homeFaq],
   ["gallery_images", "Ana səhifə · Bölmə şəkilləri", "Problem və transformasiya sahəsində görünən şəkillər", "content", galleryImages],
   ["academy_page_copy", "Akademiya səhifəsi mətnləri", "İnteryer, haqqımızda, yanaşma və footer mətnləri", "academy", academyPageCopy],
   ["application_page_copy", "Müraciət səhifəsi mətnləri", "Addımlar, proqram seçimləri, forma və nəticə mesajları", "academy", applicationPageCopy],

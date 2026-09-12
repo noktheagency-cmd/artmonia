@@ -118,6 +118,7 @@ const fieldLabels: Record<string, string> = {
   progressPrefix: "Addım göstəricisi",
   program: "Proqram",
   q: "Sual",
+  questions: "Sual",
   quote: "Rəy mətni",
   readMore: "Ətraflı oxu mətni",
   rightLabel: "Sağ kart etiketi",
@@ -230,7 +231,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
             )}
           </div>
         ))}
-        <button className="json-add" type="button" onClick={() => onChange([...value, isMediaGallery ? "" : blankLike(value.at(-1) ?? "")])}>
+        <button className="json-add" type="button" onClick={() => onChange([...value, isMediaGallery ? "" : blankLike(value.at(-1) ?? (fieldKey === "questions" ? { q: "", a: "" } : ""))])}>
           <Plus /> {isMediaGallery ? "Yeni şəkil əlavə et" : `Yeni ${friendlyLabel(fieldKey).toLocaleLowerCase("az")} əlavə et`}
         </button>
       </div>
@@ -271,7 +272,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   }
   if (fieldKey === "color") return <div className="json-color-field"><input type="color" value={text || "#ffffff"} onChange={(event) => onChange(event.target.value)} /><input value={text} onChange={(event) => onChange(event.target.value)} /></div>;
   if (fieldKey === "date") return <input type="date" value={text} onChange={(event) => onChange(event.target.value)} />;
-  if (["body", "description", "lead", "note", "quote", "summary", "text"].includes(fieldKey) || text.length > 90) {
+  if (["q", "a", "body", "description", "lead", "note", "quote", "summary", "text"].includes(fieldKey) || text.length > 90) {
     return <textarea value={text} onChange={(event) => onChange(event.target.value)} rows={4} />;
   }
   return <input value={text} onChange={(event) => onChange(event.target.value)} />;
