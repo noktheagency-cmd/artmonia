@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import "./globals.css";
 import "./studio-heading.css";
 
@@ -46,7 +47,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitializer }} />
       </head>
-      <body>{children}</body>
+      <body>{children}<WhatsAppButton /></body>
     </html>
   );
 }
