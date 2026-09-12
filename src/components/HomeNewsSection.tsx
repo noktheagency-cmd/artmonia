@@ -4,11 +4,11 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { newsItems } from "@/data/site";
 import { homePageCopy } from "@/data/site-copy";
 import { useSiteContentValue } from "@/components/SiteContentContext";
-import { formatNewsDate, getNewsImages, isNewsItem } from "@/lib/news";
+import { getNewsImages, isNewsItem } from "@/lib/news";
 import styles from "./HomeNewsSection.module.css";
 
 function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
@@ -26,6 +26,8 @@ function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
 
 export default function HomeNewsSection() {
   const railRef = useRef<HTMLDivElement | null>(null);
+  const interacting = useRef(false);
+  const [paused, setPaused] = useState(false);
   const dynamicItems = useSiteContentValue("news_items", newsItems);
   const copy = useSiteContentValue("home_page_copy", homePageCopy).news;
   const items = useMemo(() => {
@@ -33,7 +35,33 @@ export default function HomeNewsSection() {
     return publishedItems.slice(0, 10);
   }, [dynamicItems]);
 
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail || paused) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    let previous = 0;
+    let direction = 1;
+    let position = rail.scrollLeft;
+    function tick(now: number) {
+      if (!rail) return;
+      const elapsed = previous ? Math.min(now - previous, 50) : 0;
+      previous = now;
+      const max = rail.scrollWidth - rail.clientWidth;
+      if (!reduced.matches && !interacting.current && !document.hidden && max > 0) {
+        position += direction * elapsed * 0.025;
+        if (position >= max) { position = max; direction = -1; }
+        if (position <= 0) { position = 0; direction = 1; }
+        rail.scrollLeft = position;
+      } else { position = rail.scrollLeft; }
+      frame = requestAnimationFrame(tick);
+    }
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [items, paused]);
+
   function scrollRail(direction: -1 | 1) {
+    setPaused(true);
     const rail = railRef.current;
     if (!rail) return;
     rail.scrollBy({ left: direction * rail.clientWidth * 0.78, behavior: "smooth" });
@@ -44,14 +72,11 @@ export default function HomeNewsSection() {
       <div className={styles.heading}>
         <div>
           <h2 id="home-news-title">{copy.title}</h2>
-          <span aria-hidden="true" />
-          <p>{copy.subtitle}</p>
         </div>
 
         <div className={styles.headingActions}>
-          <Link href="/yenilikler">{copy.allLink}</Link>
-          <span>{String(items.length).padStart(2, "0")} {copy.countSuffix}</span>
           <div className={styles.scrollButtons} aria-label="Xəbər relsini idarə et">
+            <button type="button" onClick={() => setPaused(!paused)} aria-label={paused ? "Xəbər lentini davam etdir" : "Xəbər lentini dayandır"} aria-pressed={paused}>{paused ? "▶" : "Ⅱ"}</button>
             <button type="button" onClick={() => scrollRail(-1)} aria-label="Əvvəlki xəbərlər">
               <Arrow direction="left" />
             </button>
@@ -62,7 +87,12 @@ export default function HomeNewsSection() {
         </div>
       </div>
 
-      <div className={styles.rail} ref={railRef} aria-label="Son yeniliklər">
+      <div className={styles.rail} ref={railRef} aria-label="Son yeniliklər"
+        onPointerEnter={() => { interacting.current = true; }}
+        onPointerLeave={() => { interacting.current = false; }}
+        onFocusCapture={() => { interacting.current = true; }}
+        onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) interacting.current = false; }}
+        onTouchStart={() => setPaused(true)} onWheel={() => setPaused(true)}>
         {items.map((item, index) => {
           const image = getNewsImages(item, index)[0];
           const isResultPoster = image.includes("/assets/news-clean/");
@@ -82,12 +112,6 @@ export default function HomeNewsSection() {
                   loading={index < 4 ? "eager" : "lazy"}
                   decoding="async"
                 />
-              </span>
-              <span className={styles.content}>
-                <span className={styles.meta}>
-                  <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
-                  <b>{item.category}</b>
-                </span>
               </span>
             </Link>
           );
