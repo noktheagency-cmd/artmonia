@@ -14,6 +14,7 @@ function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
     if (typeof item.id !== "string") return [];
     return [{
       id: item.id,
+      createdAt: typeof item.createdAt === "string" ? item.createdAt : undefined,
       date: typeof item.date === "string" ? item.date : "",
       category: typeof item.category === "string" ? item.category : "",
       title: typeof item.title === "string" ? item.title : "",
@@ -29,6 +30,7 @@ function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
 function newItem(): NewsItem {
   return {
     id: `yenilik-${crypto.randomUUID()}`,
+    createdAt: new Date().toISOString(),
     date: new Date().toISOString().slice(0, 10),
     category: "Elan",
     title: "Yeni xəbər",
@@ -92,7 +94,7 @@ export default function NewsEditor({
   return (
     <section className="collection-editor-view news-editor-view">
       <div className="admin-page-title collection-page-title">
-        <div><h1>Yeniliklər</h1><p>Ana səhifənin sonsuz lentində siyahıdakı ilk 10 xəbər göstərilir; sıralamanı yuxarı və aşağı düymələri ilə dəyişin.</p></div>
+        <div><h1>Yeniliklər</h1><p>Ana səhifənin sonsuz lentində ən son əlavə olunan 10 xəbər, yenidən köhnəyə göstərilir; redaktə etmək xəbərin əlavə olunma vaxtını dəyişmir.</p></div>
         <button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button>
       </div>
 
