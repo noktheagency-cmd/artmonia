@@ -30,11 +30,24 @@ export default function AcademyPage() {
       <section className={styles.interior} id="interyer" aria-labelledby="academy-title">
         <div className={styles.gridTexture} aria-hidden="true" />
         <div className={styles.galleryShell}>
+          <div className={styles.interiorFeature}>
+            <div className={styles.videoCrop}>
+              <div className={styles.videoStage}>
+                <iframe
+                  src="https://www.instagram.com/reel/DPJxZ5Hiltp/embed/"
+                  title="Artmonia interyer videosu — Instagram"
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
+              </div>
+            </div>
           <header className={styles.galleryHeading}>
             <h1 id="academy-title">{copy.pageTitle} · {copy.interiorTitle}</h1>
             <p className={styles.sectionLead}>{copy.interiorLead}</p>
             <p className={styles.galleryIntro}>{copy.interiorText}</p>
           </header>
+          </div>
           <div className={styles.galleryControls} aria-label="İnteryer qalereyasını idarə et">
             <button type="button" onClick={() => scrollGallery(-1)} aria-label="Əvvəlki şəkil"><span className={styles.previousArrow}><ArrowIcon /></span></button>
             <button type="button" onClick={() => scrollGallery(1)} aria-label="Növbəti şəkil"><ArrowIcon /></button>
@@ -50,17 +63,6 @@ export default function AcademyPage() {
                 </div>
               </figure>
             ))}
-          </div>
-          <div className={styles.interiorVideo}>
-            <iframe
-              src="https://www.instagram.com/reel/DPJxZ5Hiltp/embed/"
-              title="Artmonia interyer videosu — Instagram"
-              loading="lazy"
-              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-              allowFullScreen
-              referrerPolicy="strict-origin-when-cross-origin"
-            />
-            <a href="https://www.instagram.com/reel/DPJxZ5Hiltp/" target="_blank" rel="noopener noreferrer">Video açılmırsa, Instagram-da izlə</a>
           </div>
         </div>
       </section>
