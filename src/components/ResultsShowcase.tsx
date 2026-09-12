@@ -119,7 +119,6 @@ export default function ResultsShowcase() {
               </span>
               <span className={styles.storyPreviewCopy}>
                 <strong>{story.name}</strong>
-                <span>{story.summary || story.quote}</span>
               </span>
             </button>
           ))}

@@ -59,7 +59,7 @@
 .storyPreviewImage {
   position: relative;
   display: block;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 9 / 16;
   overflow: hidden;
   background: #edeaf5;
 }
@@ -113,15 +113,15 @@
 
 .storyPreviewCopy {
   display: grid;
-  align-content: start;
-  gap: 11px;
-  min-height: 150px;
-  padding: 24px 24px 27px;
+  place-items: center;
+  min-height: 64px;
+  padding: 16px 20px;
+  text-align: center;
 }
 
 .storyPreviewCopy strong {
   font-family: var(--serif);
-  font-size: clamp(27px, 2.3vw, 34px);
+  font-size: clamp(20px, 2vw, 26px);
   font-weight: 600;
   line-height: 1;
 }
@@ -471,11 +471,11 @@
 
   .storyPreviewCopy {
     min-height: 0;
-    padding: 21px 20px 24px;
+    padding: 16px 20px;
   }
 
   .storyPreviewCopy strong {
-    font-size: 29px;
+    font-size: 22px;
   }
 
   .storyModalBackdrop {
