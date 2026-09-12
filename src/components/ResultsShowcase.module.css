@@ -104,6 +104,24 @@
   fill: currentColor;
 }
 
+.storyPreviewName {
+  position: absolute;
+  z-index: 2;
+  left: 18px;
+  right: 80px;
+  bottom: 18px;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.6vw, 24px);
+  font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
+}
+
 .storyPreviewCard:hover .storyPreviewPlay,
 .storyPreviewCard:focus-visible .storyPreviewPlay {
   color: #ffffff;
