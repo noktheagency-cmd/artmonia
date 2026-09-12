@@ -20,7 +20,6 @@ export default function HomeResultsSection() {
       <div className={styles.heading}>
         <div>
           <h2 id="home-results-title">Nəticələr</h2>
-          <span className={styles.underline} aria-hidden="true" />
         </div>
         <button
           type="button"

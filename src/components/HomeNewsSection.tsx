@@ -4,6 +4,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
+import { Pause, Play } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { newsItems } from "@/data/site";
 import { homePageCopy } from "@/data/site-copy";
@@ -81,7 +82,7 @@ export default function HomeNewsSection() {
 
         <div className={styles.headingActions}>
           <div className={styles.scrollButtons} aria-label="Xəbər relsini idarə et">
-            <button type="button" onClick={() => setPaused(!paused)} aria-label={paused ? "Xəbər lentini davam etdir" : "Xəbər lentini dayandır"} aria-pressed={paused}>{paused ? "▶" : "Ⅱ"}</button>
+            <button type="button" onClick={() => setPaused(!paused)} aria-label={paused ? "Xəbər lentini davam etdir" : "Xəbər lentini dayandır"} aria-pressed={paused}>{paused ? <Play size={18} aria-hidden="true" /> : <Pause size={18} aria-hidden="true" />}</button>
             <button type="button" onClick={() => scrollRail(-1)} aria-label="Əvvəlki xəbərlər">
               <Arrow direction="left" />
             </button>
