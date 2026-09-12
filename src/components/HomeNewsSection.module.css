@@ -2,7 +2,7 @@
   position: relative;
   width: min(1500px, calc(100% - 56px));
   margin: 6px auto;
-  padding: clamp(58px, 6vw, 86px) 0;
+  padding: clamp(32px, 4vw, 54px) 0 20px;
   color: var(--brand-navy);
   background: transparent;
   scroll-margin-top: 110px;
@@ -138,11 +138,10 @@
   grid-auto-columns: calc((100% - (var(--rail-gap) * 3)) / 4);
   align-items: start;
   gap: var(--rail-gap);
-  padding: 2px 2px 18px;
+  padding: 6px 2px 8px;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
-  scroll-behavior: smooth;
-  scroll-snap-type: x proximity;
+  scroll-behavior: auto;
   scrollbar-color: var(--brand-purple) rgba(105, 41, 242, 0.09);
   scrollbar-width: thin;
   touch-action: pan-x pan-y;
@@ -196,8 +195,8 @@
   position: relative;
   flex: 0 0 380px;
   display: block;
-  width: calc(100% - 24px);
-  margin: 12px 12px 0;
+  width: 100%;
+  margin: 0;
   height: 380px;
   border-radius: 12px;
   background: #f2efe8;
@@ -341,7 +340,7 @@
 @media (max-width: 640px) {
   .section {
     width: calc(100% - 20px);
-    padding: 50px 0 58px;
+    padding: 32px 0 16px;
     scroll-margin-top: 88px;
   }
 
