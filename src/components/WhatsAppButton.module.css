@@ -1,0 +1,50 @@
+.button {
+  position: fixed;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #17664f, #0c4235);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(5, 35, 28, .2), inset 0 1px 0 rgba(255, 255, 255, .12);
+  text-decoration: none;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.button svg { width: 26px; height: 26px; }
+.label {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  padding: 10px 15px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 14px;
+  background: #103e33;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(5, 35, 28, .14);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(6px, -50%);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+}
+.button:focus-visible .label { opacity: 1; visibility: visible; transform: translate(0, -50%); }
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(5, 35, 28, .28); }
+  .button:hover .label { opacity: 1; visibility: visible; transform: translate(0, -50%); }
+}
+.button:focus-visible { outline: 3px solid var(--brand-orange, #ff9900); outline-offset: 4px; }
+@media (max-width: 600px) {
+  .button { right: max(16px, env(safe-area-inset-right)); bottom: calc(16px + env(safe-area-inset-bottom)); width: 52px; height: 52px; }
+  .button svg { width: 26px; height: 26px; }
+}
+@media (prefers-reduced-motion: reduce) { .button, .label { transition: none; } }
