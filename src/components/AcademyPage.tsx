@@ -48,9 +48,19 @@ export default function AcademyPage() {
                 <div className={styles.galleryImage}>
                   <Image src={item.image} alt={item.title} fill priority={index === 0} sizes="(max-width: 760px) 85vw, 760px" />
                 </div>
-                <figcaption><h2>{item.title}</h2><p>{item.text}</p></figcaption>
               </figure>
             ))}
+          </div>
+          <div className={styles.interiorVideo}>
+            <iframe
+              src="https://www.instagram.com/reel/DPJxZ5Hiltp/embed/"
+              title="Artmonia interyer videosu — Instagram"
+              loading="lazy"
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+            <a href="https://www.instagram.com/reel/DPJxZ5Hiltp/" target="_blank" rel="noopener noreferrer">Video açılmırsa, Instagram-da izlə</a>
           </div>
         </div>
       </section>
