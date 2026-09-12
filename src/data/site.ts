@@ -9,6 +9,7 @@ export const navItems = [
 
 export type NewsItem = {
   id: string;
+  createdAt?: string;
   date: string;
   category: string;
   title: string;

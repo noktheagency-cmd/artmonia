@@ -32,7 +32,12 @@ export default function HomeNewsSection() {
   const copy = useSiteContentValue("home_page_copy", homePageCopy).news;
   const items = useMemo(() => {
     const publishedItems = Array.isArray(dynamicItems) ? dynamicItems.filter(isNewsItem) : [];
-    return publishedItems.slice(0, 10);
+    // Legacy entries have no creation timestamp and retain their existing newest-first order.
+    const createdTime = (item: (typeof publishedItems)[number]) => {
+      const time = item.createdAt ? Date.parse(item.createdAt) : 0;
+      return Number.isFinite(time) ? time : 0;
+    };
+    return publishedItems.sort((a, b) => createdTime(b) - createdTime(a)).slice(0, 10);
   }, [dynamicItems]);
   const cycleItems = items.length ? Array.from({ length: Math.ceil(5 / items.length) }, () => items).flat() : [];
   const loopItems = [...cycleItems, ...cycleItems];
