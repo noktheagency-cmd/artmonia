@@ -13,9 +13,13 @@
 .galleryControls svg { display: block; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; }
 .previousArrow { transform: rotate(180deg); }
 .galleryRail { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--brand-purple) transparent; }
-.galleryCard { flex: 0 0 calc((100% - 72px) / 4); min-width: 0; margin: 0; scroll-snap-align: start; overflow: hidden; border: 1px solid rgba(105,41,242,.2); border-radius: 18px; }
+.galleryCard { flex: 0 0 calc((100% - 72px) / 4); min-width: 0; margin: 0; scroll-snap-align: start; overflow: hidden; border: 0; border-radius: 50%; }
 .galleryImage { position: relative; aspect-ratio: 16 / 9; }
 .galleryImage img { object-fit: cover; }
+.interiorVideo { width: min(400px, 100%); margin: 32px auto 0; }
+.interiorVideo iframe { display: block; width: 100%; height: 710px; border: 0; border-radius: 18px; background: #fff; }
+.interiorVideo > a { display: block; margin-top: 10px; color: var(--brand-purple); font-size: 12px; text-align: center; }
+:global(html.theme-dark) .interiorVideo > a { color: #c4a7ff; }
 .galleryCard figcaption { padding: 14px 16px 18px; }
 .galleryCard h2 { margin: 0 0 10px; font-family: var(--serif); font-size: 23px; font-weight: 500; line-height: 1.2; }
 .galleryCard p { margin: 0; font-size: 13px; line-height: 1.55; opacity: .75; }
