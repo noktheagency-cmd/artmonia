@@ -26,7 +26,6 @@ function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
 
 export default function HomeNewsSection() {
   const railRef = useRef<HTMLDivElement | null>(null);
-  const interacting = useRef(false);
   const [paused, setPaused] = useState(false);
   const dynamicItems = useSiteContentValue("news_items", newsItems);
   const copy = useSiteContentValue("home_page_copy", homePageCopy).news;
@@ -56,7 +55,8 @@ export default function HomeNewsSection() {
       const first = rail.children[0] as HTMLElement | undefined;
       const repeat = rail.children[cycleItems.length] as HTMLElement | undefined;
       const cycle = first && repeat ? repeat.offsetLeft - first.offsetLeft : 0;
-      if (!reduced.matches && !interacting.current && !document.hidden && cycle > 0) {
+      if (!reduced.matches && !document.hidden && cycle > 0) {
+        if (Math.abs(rail.scrollLeft - position) > 2) position = rail.scrollLeft;
         position = (position + elapsed * 0.025) % cycle;
         rail.scrollLeft = position;
       } else { position = rail.scrollLeft; }
@@ -67,10 +67,9 @@ export default function HomeNewsSection() {
   }, [items, paused, cycleItems.length]);
 
   function scrollRail(direction: -1 | 1) {
-    setPaused(true);
     const rail = railRef.current;
     if (!rail) return;
-    rail.scrollBy({ left: direction * rail.clientWidth * 0.78, behavior: "smooth" });
+    rail.scrollBy({ left: direction * rail.clientWidth * 0.78, behavior: "auto" });
   }
 
   return (
@@ -93,12 +92,7 @@ export default function HomeNewsSection() {
         </div>
       </div>
 
-      <div className={styles.rail} ref={railRef} aria-label="Son yeniliklər"
-        onPointerEnter={() => { interacting.current = true; }}
-        onPointerLeave={() => { interacting.current = false; }}
-        onFocusCapture={() => { interacting.current = true; }}
-        onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) interacting.current = false; }}
-        onTouchStart={() => setPaused(true)} onWheel={() => setPaused(true)}>
+      <div className={styles.rail} ref={railRef} aria-label="Son yeniliklər">
         {loopItems.map((item, index) => {
           const image = getNewsImages(item, index)[0];
           const isResultPoster = image.includes("/assets/news-clean/");
