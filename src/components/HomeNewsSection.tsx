@@ -34,6 +34,8 @@ export default function HomeNewsSection() {
     const publishedItems = Array.isArray(dynamicItems) ? dynamicItems.filter(isNewsItem) : [];
     return publishedItems.slice(0, 10);
   }, [dynamicItems]);
+  const cycleItems = items.length ? Array.from({ length: Math.ceil(5 / items.length) }, () => items).flat() : [];
+  const loopItems = [...cycleItems, ...cycleItems];
 
   useEffect(() => {
     const rail = railRef.current;
@@ -41,24 +43,23 @@ export default function HomeNewsSection() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
     let previous = 0;
-    let direction = 1;
     let position = rail.scrollLeft;
     function tick(now: number) {
       if (!rail) return;
       const elapsed = previous ? Math.min(now - previous, 50) : 0;
       previous = now;
-      const max = rail.scrollWidth - rail.clientWidth;
-      if (!reduced.matches && !interacting.current && !document.hidden && max > 0) {
-        position += direction * elapsed * 0.025;
-        if (position >= max) { position = max; direction = -1; }
-        if (position <= 0) { position = 0; direction = 1; }
+      const first = rail.children[0] as HTMLElement | undefined;
+      const repeat = rail.children[cycleItems.length] as HTMLElement | undefined;
+      const cycle = first && repeat ? repeat.offsetLeft - first.offsetLeft : 0;
+      if (!reduced.matches && !interacting.current && !document.hidden && cycle > 0) {
+        position = (position + elapsed * 0.025) % cycle;
         rail.scrollLeft = position;
       } else { position = rail.scrollLeft; }
       frame = requestAnimationFrame(tick);
     }
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [items, paused]);
+  }, [items, paused, cycleItems.length]);
 
   function scrollRail(direction: -1 | 1) {
     setPaused(true);
@@ -93,7 +94,7 @@ export default function HomeNewsSection() {
         onFocusCapture={() => { interacting.current = true; }}
         onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) interacting.current = false; }}
         onTouchStart={() => setPaused(true)} onWheel={() => setPaused(true)}>
-        {items.map((item, index) => {
+        {loopItems.map((item, index) => {
           const image = getNewsImages(item, index)[0];
           const isResultPoster = image.includes("/assets/news-clean/");
 
@@ -102,7 +103,9 @@ export default function HomeNewsSection() {
               className={styles.card}
               href={`/yenilikler/${encodeURIComponent(item.id)}`}
               aria-label={`${item.title} xəbərini ətraflı oxu`}
-              key={item.id}
+              key={`${item.id}-${index}`}
+              aria-hidden={index >= items.length ? true : undefined}
+              tabIndex={index >= items.length ? -1 : undefined}
             >
               <span className={styles.image}>
                 <img
