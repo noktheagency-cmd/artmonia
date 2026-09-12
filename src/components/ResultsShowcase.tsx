@@ -116,9 +116,7 @@ export default function ResultsShowcase() {
                   sizes="(max-width: 560px) 100vw, (max-width: 800px) 50vw, 25vw"
                 />
                 <span className={styles.storyPreviewPlay} aria-hidden="true"><Play /></span>
-              </span>
-              <span className={styles.storyPreviewCopy}>
-                <strong>{story.name}</strong>
+                <strong className={styles.storyPreviewName}>{story.name}</strong>
               </span>
             </button>
           ))}
