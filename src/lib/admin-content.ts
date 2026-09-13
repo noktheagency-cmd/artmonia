@@ -11,6 +11,7 @@ import { homeResults } from "@/data/home-results";
 import { interiorMedia } from "@/data/interior-media";
 import { testimonials } from "@/data/testimonials";
 import { homeFaq } from "@/data/home-faq";
+import { studentWorks } from "@/data/student-works";
 import {
   academyPageCopy,
   applicationPageCopy,
@@ -41,6 +42,7 @@ export type SiteSectionRecord = {
 };
 
 const definitions = [
+  ["student_works", "Ana səhifə · Tələbə işləri", "Nəticələrin altındakı qalereya. Nümunə şəkilləri real işlərlə əvəz edin. Kateqoriya adları filtrləri avtomatik yaradır; ad, proqram, şəkil və rəy dəyişdirilə bilər.", "website", studentWorks],
   ["student_testimonials", "Tələbə rəyləri", "FAQ-ın altında hərəkətli rəy kartları: ad-soyad və ya Anonim, maksimum 250 simvolluq rəy", "website", testimonials],
   ["global_copy", "Ortaq menyu mətnləri", "Bütün səhifələrdə görünən menyu, müraciət düyməsi və müəllif hüququ mətni", "settings", globalCopy],
   ["home_page_copy", "Ana səhifə mətnləri", "Hero, bölmə başlıqları, düymələr, müəllimlər və footer mətnləri", "website", homePageCopy],

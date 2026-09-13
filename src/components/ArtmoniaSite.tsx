@@ -22,6 +22,7 @@ import HomeNewsSection from "@/components/HomeNewsSection";
 import HomeFaq from "@/components/HomeFaq";
 import HomeTestimonials from "@/components/HomeTestimonials";
 import HomeResultsSection from "@/components/HomeResultsSection";
+import HomeStudentWorks from "@/components/HomeStudentWorks";
 import HomeHero from "@/components/HomeHero";
 import CinematicVideo from "@/components/CinematicVideo";
 import { SiteContentProvider, useSiteContentValue } from "@/components/SiteContentContext";
@@ -801,6 +802,7 @@ function ArtmoniaSiteInner() {
       <main>
         <HomeNewsSection />
         <HomeResultsSection />
+        <HomeStudentWorks />
         <ProblemTransformation />
         <Programs />
         <TeachersAtelier />
