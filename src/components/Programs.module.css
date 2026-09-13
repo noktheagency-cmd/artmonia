@@ -1,7 +1,9 @@
 .section { overflow-x: clip; }
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: min(100%, 990px);
+  margin-inline: auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
 }
 .card { min-width: 0; display: flex; --course-color: #eee2ff; }
