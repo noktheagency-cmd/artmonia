@@ -7,7 +7,7 @@ import { TESTIMONIAL_LIMIT, TESTIMONIAL_NAME_LIMIT, TESTIMONIAL_TEXT_LIMIT, type
 import styles from "./HomeTestimonials.module.css";
 
 export default function HomeTestimonials() {
-  const content = useSiteContentValue<Testimonial[]>("testimonials", []);
+  const content = useSiteContentValue<Testimonial[]>("student_testimonials", []);
   const [paused, setPaused] = useState(false);
   const reviews = (Array.isArray(content) ? content : []).filter((item) => item && typeof item.text === "string" && item.text.trim()).slice(0, TESTIMONIAL_LIMIT);
   if (!reviews.length) return null;

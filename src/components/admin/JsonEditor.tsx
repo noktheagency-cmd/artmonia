@@ -210,7 +210,7 @@ function templateAtPath(path: string): JsonValue | undefined {
 }
 
 export default function JsonEditor({ value, onChange, onUpload, media, path = "content", fieldKey = "content" }: Props) {
-  if (fieldKey === "testimonials") return <TestimonialsEditor value={value} onChange={onChange} />;
+  if (fieldKey === "student_testimonials") return <TestimonialsEditor value={value} onChange={onChange} />;
   if (Array.isArray(value)) {
     const template = templateAtPath(path);
     const arrayTemplate = Array.isArray(template) ? template[0] : undefined;

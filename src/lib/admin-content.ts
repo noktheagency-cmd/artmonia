@@ -41,7 +41,7 @@ export type SiteSectionRecord = {
 };
 
 const definitions = [
-  ["testimonials", "Tələbə rəyləri", "FAQ-ın altında hərəkətli rəy kartları: ad-soyad və ya Anonim, maksimum 400 simvolluq rəy", "website", testimonials],
+  ["student_testimonials", "Tələbə rəyləri", "FAQ-ın altında hərəkətli rəy kartları: ad-soyad və ya Anonim, maksimum 400 simvolluq rəy", "website", testimonials],
   ["global_copy", "Ortaq menyu mətnləri", "Bütün səhifələrdə görünən menyu, müraciət düyməsi və müəllif hüququ mətni", "settings", globalCopy],
   ["home_page_copy", "Ana səhifə mətnləri", "Hero, bölmə başlıqları, düymələr, müəllimlər və footer mətnləri", "website", homePageCopy],
   ["pain_points", "Ana səhifə · Problem kartları", "Problem bölməsində görünən dörd qısa mətn", "website", painPoints],
