@@ -10,7 +10,7 @@ export default function HomeFaq() {
 
   return (
     <section id="faq" className={styles.section} aria-labelledby="home-faq-title">
-      <h2 id="home-faq-title" className={styles.title}>{content.title}</h2>
+      <h2 id="home-faq-title" className={styles.title}>{!content.title || ["Ən çox verilən suallar", "Tez-tez verilən suallar"].includes(content.title.trim()) ? "FAQ" : content.title}</h2>
       <div className={styles.list}>
         {questions.map((item, index) => (
           <details className={styles.item} key={`${index}-${item.q}`}>
