@@ -21,7 +21,7 @@ type Props = {
   media: MediaLibraryItem[];
   accept?: "image" | "video" | "both";
   compact?: boolean;
-  previewRatio?: "original" | "4 / 3" | "4 / 5";
+  previewRatio?: "original" | "4 / 3" | "4 / 5" | "9 / 16" | "3 / 4";
 };
 
 export default function MediaField({

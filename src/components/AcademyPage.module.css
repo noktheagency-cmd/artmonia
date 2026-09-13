@@ -7,6 +7,7 @@
 .galleryShell { position: relative; width: min(1240px, 100%); margin-inline: auto; }
 .interiorFeature { display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 620px); justify-content: center; align-items: stretch; gap: clamp(32px, 6vw, 90px); margin-bottom: 44px; }
 .galleryHeading { display: flex; flex-direction: column; justify-content: center; margin: 0; text-align: left; }
+.galleryHeading:only-child { grid-column: 1 / -1; }
 .videoCrop { position: relative; width: 100%; aspect-ratio: 264 / 469; overflow: hidden; border-radius: 28px; background: #080808; container-type: inline-size; isolation: isolate; }
 /* Keep Instagram's layout fixed, scaling only its visible video window. */
 .videoStage { position: absolute; width: 264px; height: 469px; transform-origin: top left; transform: scale(calc(100cqw / 264px)); }

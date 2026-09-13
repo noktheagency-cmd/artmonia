@@ -19,6 +19,7 @@ import {
 import SiteHeader from "@/components/SiteHeader";
 import HomeNewsSection from "@/components/HomeNewsSection";
 import HomeFaq from "@/components/HomeFaq";
+import HomeTestimonials from "@/components/HomeTestimonials";
 import HomeResultsSection from "@/components/HomeResultsSection";
 import HomeHero from "@/components/HomeHero";
 import CinematicVideo from "@/components/CinematicVideo";
@@ -775,6 +776,7 @@ function ArtmoniaSiteInner() {
         <Programs />
         <TeachersAtelier />
         <HomeFaq />
+        <HomeTestimonials />
       </main>
       <AuditPrivacyFooter />
     </>

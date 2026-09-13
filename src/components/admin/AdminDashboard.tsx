@@ -461,7 +461,7 @@ export default function AdminDashboard({
                 <button className={`publish-switch ${editing.is_published ? "on" : ""}`} type="button" onClick={() => setEditing({ ...editing, is_published: !editing.is_published })}><i />{editing.is_published ? "Dərc olunur" : "Qaralama"}</button>
               </div>
               <div className="editor-content-heading"><div><h3>Məzmun sahələri</h3><p>Mətnləri və siyahıları aşağıdakı sahələrdən dəyişin.</p></div></div>
-              <JsonEditor value={editing.content as JsonValue} onChange={(content) => setEditing({ ...editing, content })} onUpload={uploadMedia} media={media} />
+              <JsonEditor value={editing.content as JsonValue} path={editing.key} fieldKey={editing.key} onChange={(content) => setEditing({ ...editing, content })} onUpload={uploadMedia} media={media} />
             </div>
             <footer><button type="button" className="secondary-action" onClick={() => setEditing(null)}>Ləğv et</button><button type="button" className="primary-action" disabled={busy || !editing.label} onClick={() => saveSection(editing)}>{busy ? "Saxlanılır..." : "Dəyişiklikləri saxla"}</button></footer>
           </div>

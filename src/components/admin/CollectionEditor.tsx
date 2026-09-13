@@ -15,7 +15,7 @@ type CollectionKind = "results" | "awards" | "home_results";
 const copy = {
   home_results: {
     title: "Ana səhifə · Nəticələr lenti",
-    helper: "Yeniliklərin altındakı hərəkətli lent. Foto 3:4 göstərilir. İlkin profillər nümunədir — real tələbə məlumatları ilə əvəz edin.",
+    helper: "Hərəkətli lentdə desktopda 5 kart görünür. Foto 3:4-dür. Ad birinci, nəticə ikinci sətirdə göstərilir; uzun mətnlər üç nöqtə ilə qısaldılır.",
     add: "Yeni tələbə əlavə et",
     list: "Tələbələrin siyahısı",
     editor: "Tələbə kartını redaktə et",
