@@ -7,6 +7,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
+import programStyles from "./Programs.module.css";
 import Link from "next/link";
 import {
   contact,
@@ -259,49 +260,69 @@ function Programs() {
   const copy = useSiteContentValue("home_page_copy", homePageCopy).programs;
   const [selectedCourse, setSelectedCourse] = useState<(typeof courses)[number] | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const programDialogRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!selectedCourse) return;
     const previousOverflow = document.body.style.overflow;
+    const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") setSelectedCourse(null);
+      if (event.key === "Tab") {
+        const controls = programDialogRef.current?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], [tabindex="0"]');
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (!programDialogRef.current?.contains(document.activeElement)) {
+          event.preventDefault();
+          (event.shiftKey ? last : first).focus();
+        } else if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", closeOnEscape);
-    requestAnimationFrame(() => closeButtonRef.current?.focus());
+    const focusFrame = requestAnimationFrame(() => closeButtonRef.current?.focus());
     return () => {
+      cancelAnimationFrame(focusFrame);
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", closeOnEscape);
+      trigger?.focus({ preventScroll: true });
     };
   }, [selectedCourse]);
 
   return (
     <>
-      <section className="section-shell scroll-section" id="program">
-        <Reveal className="section-heading wide" variant="from-right">
+      <section className={`section-shell scroll-section ${programStyles.section}`} id="program">
+        <Reveal className="section-heading wide" variant="from-bottom">
           <p>{copy.label}</p>
           <h2>{copy.title.split("\n").map((line, index) => <span key={`${line}-${index}`}>{line}{index < copy.title.split("\n").length - 1 ? <br /> : null}</span>)}</h2>
         </Reveal>
-        <div className="courses-grid">
+        <div className={programStyles.grid}>
           {dynamicCourses.map((course, index) => (
             <Reveal
               key={course.title}
-              className={`course-card ${index % 2 === 0 ? "media-left" : "media-right"}`}
-              variant={index % 2 === 0 ? "from-left" : "from-right"}
+              className={programStyles.card}
+              variant="from-bottom"
               style={{ "--step": index } as React.CSSProperties}
             >
-              <div className="course-media">
-                <img src={course.image} alt={`${course.title} proqramı üçün nümunə sənət işi`} loading="lazy" decoding="async" />
-                <span>{course.duration}</span>
-              </div>
-              <div className="course-copy">
-                <span className="course-label">{copy.cardLabel}</span>
-                <h3>{course.title}</h3>
-                <p>{course.text}</p>
-                <button className="course-select" type="button" onClick={() => setSelectedCourse(course)} aria-haspopup="dialog">
-                  {copy.selectCta} <ArrowIcon />
-                </button>
-              </div>
+              <button className={programStyles.select} type="button" onClick={() => setSelectedCourse(course)} aria-haspopup="dialog" aria-label={`${course.title} — ${copy.selectCta}`}>
+                <span className={programStyles.top}>
+                  <span className={programStyles.duration}>{course.duration}</span>
+                  <span className={programStyles.arrow}><ArrowIcon /></span>
+                </span>
+                <span className={programStyles.media}>
+                  <img src={course.image} alt="" loading="lazy" decoding="async" />
+                </span>
+                <span className={programStyles.name}>{course.title}</span>
+                <span className={programStyles.description}>{course.text}</span>
+                <span className={programStyles.cta}>{copy.selectCta}</span>
+              </button>
             </Reveal>
           ))}
         </div>
@@ -310,7 +331,7 @@ function Programs() {
         <div className="program-modal-backdrop" onMouseDown={(event) => {
           if (event.target === event.currentTarget) setSelectedCourse(null);
         }}>
-          <article className="program-modal" role="dialog" aria-modal="true" aria-labelledby="program-modal-title">
+          <article ref={programDialogRef} className="program-modal" role="dialog" aria-modal="true" aria-labelledby="program-modal-title">
             <button ref={closeButtonRef} className="program-modal-close" type="button" onClick={() => setSelectedCourse(null)} aria-label="Pəncərəni bağla">
               <X aria-hidden="true" />
             </button>
@@ -326,7 +347,7 @@ function Programs() {
               <div className="program-modal-footer">
                 <div className="program-modal-price">
                   <span>Proqramın qiyməti</span>
-                  <strong>{selectedCourse.price || "Qiymət üçün əlaqə saxlayın"}</strong>
+                  <strong>{selectedCourse.price?.trim() || "Qiymət üçün əlaqə saxlayın"}</strong>
                 </div>
                 <Link className="program-modal-cta" href="/muraciet">
                   Müraciət et <ArrowIcon />
