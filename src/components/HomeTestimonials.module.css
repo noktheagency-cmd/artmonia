@@ -7,18 +7,21 @@
 .track { display: flex; width: max-content; animation: travel linear infinite; }
 .track[data-paused="true"] { animation-play-state: paused; }
 .group { display: flex; flex: none; gap: 22px; list-style: none; margin: 0; padding: 0 22px 0 0; }
-.card { box-sizing: border-box; width: calc((100cqw - 66px) / 4); min-height: 260px; padding: 24px; border-radius: 26px; background: linear-gradient(145deg, #eee4ff, #f7f1ff); border: 1px solid #d9c3ff; }
-.card:nth-child(4n + 2) { background: linear-gradient(145deg, #ffe4c4, #fff3e3); border-color: #f3c68c; }
-.card:nth-child(4n + 3) { background: linear-gradient(145deg, #d7f1e9, #eefaf5); border-color: #abd9ca; }
-.card:nth-child(4n + 4) { background: linear-gradient(145deg, #ffe0e9, #fff0f4); border-color: #edbacb; }
+.card { --paint: #9155d9; position: relative; isolation: isolate; overflow: hidden; box-sizing: border-box; width: calc((100cqw - 66px) / 4); min-height: 260px; padding: 24px; border-radius: 26px; background: #faf8f4; border: 1px solid #e9e2da; }
+.card:nth-child(4n + 2) { --paint: #df922c; }
+.card:nth-child(4n + 3) { --paint: #319c84; }
+.card:nth-child(4n + 4) { --paint: #ce608b; }
+.card::before, .card::after { content: ""; position: absolute; z-index: -1; pointer-events: none; }
+.card::before { width: 180px; height: 110px; right: -28px; top: -12px; opacity: .24; transform: rotate(-24deg); background: repeating-linear-gradient(4deg, transparent 0 2px, var(--paint) 3px 7px, transparent 8px 9px); clip-path: polygon(8% 28%, 28% 19%, 17% 13%, 57% 8%, 79% 0, 100% 14%, 92% 38%, 100% 50%, 84% 62%, 93% 77%, 60% 87%, 24% 100%, 30% 82%, 0 91%, 12% 64%, 3% 52%, 23% 38%); }
+.card::after { inset: 0; opacity: .3; background: radial-gradient(ellipse 29px 12px at 4% 95%, var(--paint) 65%, transparent 72%), radial-gradient(circle at 15% 86%, var(--paint) 0 3px, transparent 4px), radial-gradient(circle at 22% 94%, var(--paint) 0 2px, transparent 3px), radial-gradient(circle at 8% 78%, var(--paint) 0 1px, transparent 2px), radial-gradient(circle at 90% 35%, var(--paint) 0 3px, transparent 4px), radial-gradient(circle at 81% 29%, var(--paint) 0 1px, transparent 2px), radial-gradient(circle at 96% 44%, var(--paint) 0 2px, transparent 3px); }
+.card:nth-child(even)::before { top: auto; bottom: -25px; transform: rotate(155deg); }
 .card h3 { margin: 0 0 16px; font: 700 17px/1.4 var(--sans, sans-serif); overflow-wrap: anywhere; }
 .card p { margin: 0; font-size: 14px; line-height: 1.65; white-space: pre-line; overflow-wrap: anywhere; }
 @keyframes travel { to { transform: translateX(-50%); } }
 :global(html.theme-dark) .section { color: var(--theme-text); }
-:global(html.theme-dark) .card { background: linear-gradient(145deg, #35205b, #22163c); border-color: #65418b; }
-:global(html.theme-dark) .card:nth-child(4n + 2) { background: linear-gradient(145deg, #53351d, #34231c); border-color: #8b6035; }
-:global(html.theme-dark) .card:nth-child(4n + 3) { background: linear-gradient(145deg, #193f3b, #152b2d); border-color: #3b7266; }
-:global(html.theme-dark) .card:nth-child(4n + 4) { background: linear-gradient(145deg, #4e2542, #321d32); border-color: #854668; }
+:global(html.theme-dark) .card { background: #1c1730; border-color: #393047; }
+:global(html.theme-dark) .card::before { opacity: .36; }
+:global(html.theme-dark) .card::after { opacity: .45; }
 @media (max-width: 1000px) { .card { width: calc((100cqw - 22px) / 2); } }
 @media (max-width: 560px) { .section { width: calc(100% - 32px); } .card { width: 85cqw; padding: 24px; } }
 @media (prefers-reduced-motion: reduce) { .track { animation: none; } .viewport { overflow-x: auto; } .group[aria-hidden="true"], .card[aria-hidden="true"] { display: none; } }
