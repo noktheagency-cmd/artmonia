@@ -255,6 +255,14 @@ function ProblemTransformation() {
   );
 }
 
+function programColorStyle(color?: string): React.CSSProperties {
+  if (!color || !/^#[0-9a-f]{6}$/i.test(color)) return {};
+  const rgb = [1, 3, 5].map((offset) => parseInt(color.slice(offset, offset + 2), 16) / 255)
+    .map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+  const luminance = rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722;
+  return { "--course-color": color, "--course-ink": luminance > 0.179 ? "#170d3b" : "#ffffff" } as React.CSSProperties;
+}
+
 function Programs() {
   const dynamicCourses = useSiteContentValue<typeof courses>("courses", courses);
   const copy = useSiteContentValue("home_page_copy", homePageCopy).programs;
@@ -309,7 +317,7 @@ function Programs() {
               key={course.title}
               className={programStyles.card}
               variant="from-bottom"
-              style={{ "--step": index } as React.CSSProperties}
+              style={{ "--step": index, ...programColorStyle(course.color) } as React.CSSProperties}
             >
               <button className={programStyles.select} type="button" onClick={() => setSelectedCourse(course)} aria-haspopup="dialog" aria-label={`${course.title} — ${copy.selectCta}`}>
                 <span className={programStyles.top}>

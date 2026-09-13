@@ -46,7 +46,7 @@ const definitions = [
   ["home_page_copy", "Ana səhifə mətnləri", "Hero, bölmə başlıqları, düymələr, müəllimlər və footer mətnləri", "website", homePageCopy],
   ["pain_points", "Ana səhifə · Problem kartları", "Problem bölməsində görünən dörd qısa mətn", "website", painPoints],
   ["transformations", "Ana səhifə · Nəticə kartları", "Transformasiya bölməsində görünən başlıq və açıqlamalar", "website", transformations],
-  ["courses", "Ana səhifə · Proqramlar", "Ekranda görünən kurs kartları, müddət, mətn və şəkillər", "website", courses],
+  ["courses", "Ana səhifə · Proqramlar", "3 sütunlu proqram kartları: başlıq, müddət, fon rəngi, şəkil, qısa mətn, pəncərənin ətraflı mətni və qiymət. Kartları əlavə edin, silin və sıralayın.", "website", courses],
   ["contact", "Ana səhifə · Əlaqə", "Footer-də görünən telefon, e-poçt və ünvan", "settings", visibleContact],
   ["home_faq", "Ana səhifə · Suallar və cavablar", "Əlaqədən əvvəlki FAQ: başlığı, sualları və cavabları dəyişin, əlavə edin və sıralayın", "website", homeFaq],
   ["gallery_images", "Ana səhifə · Bölmə şəkilləri", "Problem və transformasiya sahəsində görünən şəkillər", "content", galleryImages],
