@@ -1,5 +1,5 @@
 export const TESTIMONIAL_NAME_LIMIT = 60;
-export const TESTIMONIAL_TEXT_LIMIT = 400;
+export const TESTIMONIAL_TEXT_LIMIT = 300;
 export const TESTIMONIAL_LIMIT = 30;
 export type Testimonial = { id: string; name: string; anonymous: boolean; text: string };
 // Clearly labelled design samples, not statements from real students.
