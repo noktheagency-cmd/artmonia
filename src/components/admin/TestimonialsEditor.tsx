@@ -23,6 +23,7 @@ export default function TestimonialsEditor({ value, onChange }: { value: JsonVal
       {!item.anonymous && <label className="admin-field"><span>Ad və soyad ({item.name.length}/{TESTIMONIAL_NAME_LIMIT})</span><input maxLength={TESTIMONIAL_NAME_LIMIT} value={item.name} onChange={(event) => update(index, { name: event.target.value })} /></label>}
       <label className="admin-field"><span>Tələbənin rəyi ({item.text.length}/{TESTIMONIAL_TEXT_LIMIT})</span><textarea rows={6} maxLength={TESTIMONIAL_TEXT_LIMIT} value={item.text} onChange={(event) => update(index, { text: event.target.value })} /></label>
       <small>Görünən ad: {item.anonymous || !item.name.trim() ? "Anonim" : item.name}</small>
+      {item.text.length > TESTIMONIAL_TEXT_LIMIT && <p role="alert">Bu rəy əvvəlki limitlə yazılıb. Saytda ilk {TESTIMONIAL_TEXT_LIMIT} simvol görünür. Mətni qısaldın; mövcud rəy avtomatik silinmir.</p>}
     </div>)}
     <button className="json-add" type="button" disabled={items.length >= TESTIMONIAL_LIMIT} onClick={() => onChange([...items, { id: crypto.randomUUID(), name: "", anonymous: false, text: "" }])}>Yeni rəy əlavə et</button>
   </div>;
