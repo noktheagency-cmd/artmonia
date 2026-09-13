@@ -1,10 +1,13 @@
 "use client";
 
 import { ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-react";
-import type { JsonValue } from "@/lib/admin-content";
+import { defaultContent, type JsonValue } from "@/lib/admin-content";
 import MediaField, { type MediaLibraryItem } from "./MediaField";
+import { successStories } from "@/data/collections";
+import TestimonialsEditor from "./TestimonialsEditor";
 
 const fieldLabels: Record<string, string> = {
+  success_stories: "Uğur hekayəsi",
   a: "Cavab",
   aboutLead: "Haqqımızda giriş mətni",
   aboutParagraphs: "Haqqımızda paraqrafları",
@@ -73,6 +76,7 @@ const fieldLabels: Record<string, string> = {
   interiorLead: "İnteryer giriş mətni",
   interiorText: "İnteryer əsas mətni",
   interiorTitle: "İnteryer başlığı",
+  reelUrl: "Instagram reels keçidi (boş saxlasanız video gizlənir)",
   instagram: "Instagram keçidi",
   interests: "Proqram seçimləri",
   label: "Görünən ad",
@@ -194,8 +198,22 @@ type Props = {
   fieldKey?: string;
 };
 
+function templateAtPath(path: string): JsonValue | undefined {
+  const [section, ...segments] = path.split(".");
+  let value: JsonValue | undefined = defaultContent[section];
+  for (const segment of segments) {
+    if (Array.isArray(value)) value = value[Number(segment)] ?? value[0];
+    else if (value && typeof value === "object") value = value[segment];
+    else return undefined;
+  }
+  return value;
+}
+
 export default function JsonEditor({ value, onChange, onUpload, media, path = "content", fieldKey = "content" }: Props) {
+  if (fieldKey === "testimonials") return <TestimonialsEditor value={value} onChange={onChange} />;
   if (Array.isArray(value)) {
+    const template = templateAtPath(path);
+    const arrayTemplate = Array.isArray(template) ? template[0] : undefined;
     const isMediaGallery = fieldKey === "images" || (fieldKey === "gallery" && value.every((item) => typeof item === "string"));
     return (
       <div className={`json-array ${isMediaGallery ? "media-array" : ""}`}>
@@ -231,7 +249,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
             )}
           </div>
         ))}
-        <button className="json-add" type="button" onClick={() => onChange([...value, isMediaGallery ? "" : blankLike(value.at(-1) ?? (fieldKey === "questions" ? { q: "", a: "" } : ""))])}>
+        <button className="json-add" type="button" onClick={() => onChange([...value, isMediaGallery ? "" : blankLike(value.at(-1) ?? (fieldKey === "success_stories" ? { ...successStories[0], video: "" } : arrayTemplate ?? (fieldKey === "questions" ? { q: "", a: "" } : "")))])}>
           <Plus /> {isMediaGallery ? "Yeni şəkil əlavə et" : `Yeni ${friendlyLabel(fieldKey).toLocaleLowerCase("az")} əlavə et`}
         </button>
       </div>
@@ -241,9 +259,9 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   if (value && typeof value === "object") {
     return (
       <div className="json-object">
-        {Object.entries(value).filter(([key]) => key !== "id").map(([key, child]) => (
-          <label className={`json-field ${key === "id" ? "system-field" : ""}`} key={`${path}-${key}`}>
-            <span>{friendlyLabel(key)}{key === "id" ? <small>Avtomatik yaradılır, dəyişməyin</small> : null}</span>
+        {Object.entries(path.startsWith("success_stories.") && "name" in value ? { video: "", ...value } : value).filter(([key]) => key !== "id" && !(path.startsWith("success_stories.") && key === "summary")).map(([key, child]) => (
+          <div role="group" aria-labelledby={`${path}-${key}-label`} className={`json-field ${key === "id" ? "system-field" : ""}`} key={`${path}-${key}`}>
+            <span id={`${path}-${key}-label`}>{friendlyLabel(key)}{key === "id" ? <small>Avtomatik yaradılır, dəyişməyin</small> : null}</span>
             <JsonEditor
               value={child}
               path={`${path}.${key}`}
@@ -252,7 +270,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
               media={media}
               onChange={(nextChild) => onChange({ ...value, [key]: nextChild })}
             />
-          </label>
+          </div>
         ))}
       </div>
     );
@@ -268,7 +286,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
 
   const text = value == null ? "" : String(value);
   if (mediaKeys.has(fieldKey)) {
-    return <MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} accept={fieldKey === "video" ? "video" : "image"} />;
+    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio={path.startsWith("success_stories.") ? "9 / 16" : undefined} accept={fieldKey === "video" ? "video" : "image"} />{path.startsWith("success_stories.") && <small>Reels ölçüsü 9:16 (1080 × 1920 px). Kartda yalnız ad görüntünün üzərində göstərilir; digər mətnlər açılan detallardadır.</small>}</>;
   }
   if (fieldKey === "color") return <div className="json-color-field"><input type="color" value={text || "#ffffff"} onChange={(event) => onChange(event.target.value)} /><input value={text} onChange={(event) => onChange(event.target.value)} /></div>;
   if (fieldKey === "date") return <input type="date" value={text} onChange={(event) => onChange(event.target.value)} />;

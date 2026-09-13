@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { useSiteContentValue } from "@/components/SiteContentContext";
 import { academyPageCopy, globalCopy } from "@/data/site-copy";
 import styles from "./AcademyPage.module.css";
+import { interiorMedia } from "@/data/interior-media";
 
 function ArrowIcon() {
   return (
@@ -19,6 +20,8 @@ function ArrowIcon() {
 export default function AcademyPage() {
   const copy = useSiteContentValue("academy_page_copy", academyPageCopy);
   const global = useSiteContentValue("global_copy", globalCopy);
+  const media = useSiteContentValue("interior_media", interiorMedia);
+  const reelId = media.reelUrl?.match(/^https:\/\/(?:www\.)?instagram\.com\/reel\/([\w-]+)\/?(?:[?#].*)?$/)?.[1];
   const railRef = useRef<HTMLDivElement>(null);
   const scrollGallery = (direction: number) => {
     const rail = railRef.current;
@@ -31,17 +34,17 @@ export default function AcademyPage() {
         <div className={styles.gridTexture} aria-hidden="true" />
         <div className={styles.galleryShell}>
           <div className={styles.interiorFeature}>
-            <div className={styles.videoCrop}>
+            {reelId && <div className={styles.videoCrop}>
               <div className={styles.videoStage}>
                 <iframe
-                  src="https://www.instagram.com/reel/DPJxZ5Hiltp/embed/"
+                  src={`https://www.instagram.com/reel/${reelId}/embed/`}
                   title="Artmonia interyer videosu — Instagram"
                   allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
                   allowFullScreen
                   referrerPolicy="strict-origin-when-cross-origin"
                 />
               </div>
-            </div>
+            </div>}
           <header className={styles.galleryHeading}>
             <h1 id="academy-title">{copy.pageTitle} · {copy.interiorTitle}</h1>
             <p className={styles.sectionLead}>{copy.interiorLead}</p>
@@ -53,13 +56,10 @@ export default function AcademyPage() {
             <button type="button" onClick={() => scrollGallery(1)} aria-label="Növbəti şəkil"><ArrowIcon /></button>
           </div>
           <div className={styles.galleryRail} ref={railRef} tabIndex={0} role="region" aria-label="İnteryer şəkilləri — üfüqi sürüşdürün">
-            {[
-              { image: "/assets/studio-room.webp", title: copy.roomCaption, text: copy.narrativeParagraphs[0] },
-              { image: "/assets/studio-brushes.webp", title: copy.studioDetails[2]?.title ?? copy.narrativeTitle, text: copy.narrativeParagraphs[1] }
-            ].flatMap((item) => Array.from({ length: 3 }, () => item)).map((item, index) => (
-              <figure className={styles.galleryCard} key={`${item.image}-${index}`}>
+            {media.images.filter(Boolean).map((image, index) => (
+              <figure className={styles.galleryCard} key={`${image}-${index}`}>
                 <div className={styles.galleryImage}>
-                  <Image src={item.image} alt={item.title} fill priority={index === 0} sizes="(max-width: 760px) 85vw, 760px" />
+                  <Image src={image} alt={`${copy.interiorTitle} — ${index + 1}`} fill priority={index === 0} sizes="(max-width: 480px) 80vw, (max-width: 760px) 50vw, 25vw" />
                 </div>
               </figure>
             ))}

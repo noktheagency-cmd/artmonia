@@ -40,7 +40,7 @@ const comparisonStyle = (position: number) =>
 export default function ResultsShowcase() {
   const dynamicStories = useSiteContentValue<SuccessStoryEntry[]>("success_stories", successStories);
   const copy = useSiteContentValue("collections_page_copy", collectionsPageCopy).results;
-  const stories = Array.isArray(dynamicStories) && dynamicStories.length ? dynamicStories : successStories;
+  const stories = Array.isArray(dynamicStories) ? dynamicStories : successStories;
   const [storyPlaying, setStoryPlaying] = useState(false);
   const [storyModalOpen, setStoryModalOpen] = useState(false);
   const [selectedStoryId, setSelectedStoryId] = useState(successStories[0].id);

@@ -8,6 +8,8 @@ import {
 } from "@/data/site";
 import { awards, successStories } from "@/data/collections";
 import { homeResults } from "@/data/home-results";
+import { interiorMedia } from "@/data/interior-media";
+import { testimonials } from "@/data/testimonials";
 import { homeFaq } from "@/data/home-faq";
 import {
   academyPageCopy,
@@ -39,6 +41,7 @@ export type SiteSectionRecord = {
 };
 
 const definitions = [
+  ["testimonials", "Tələbə rəyləri", "FAQ-ın altında hərəkətli rəy kartları: ad-soyad və ya Anonim, maksimum 400 simvolluq rəy", "website", testimonials],
   ["global_copy", "Ortaq menyu mətnləri", "Bütün səhifələrdə görünən menyu, müraciət düyməsi və müəllif hüququ mətni", "settings", globalCopy],
   ["home_page_copy", "Ana səhifə mətnləri", "Hero, bölmə başlıqları, düymələr, müəllimlər və footer mətnləri", "website", homePageCopy],
   ["pain_points", "Ana səhifə · Problem kartları", "Problem bölməsində görünən dörd qısa mətn", "website", painPoints],
@@ -48,6 +51,7 @@ const definitions = [
   ["home_faq", "Ana səhifə · Suallar və cavablar", "Əlaqədən əvvəlki FAQ: başlığı, sualları və cavabları dəyişin, əlavə edin və sıralayın", "website", homeFaq],
   ["gallery_images", "Ana səhifə · Bölmə şəkilləri", "Problem və transformasiya sahəsində görünən şəkillər", "content", galleryImages],
   ["academy_page_copy", "Akademiya səhifəsi mətnləri", "İnteryer, haqqımızda, yanaşma və footer mətnləri", "academy", academyPageCopy],
+  ["interior_media", "İnteryer · Video və şəkillər", "Instagram reels solda, mətnlər sağda. Şəkillər desktopda 4-lü, 4:3 oval kəsimdə göstərilir. Reel dəyişəndə kəsimi saytda yoxlayın.", "academy", interiorMedia],
   ["application_page_copy", "Müraciət səhifəsi mətnləri", "Addımlar, proqram seçimləri, forma və nəticə mesajları", "academy", applicationPageCopy],
   ["news_page_copy", "Yeniliklər səhifəsi mətnləri", "Səhifə başlığı, arxiv və xəbər keçidi mətnləri", "content", newsPageCopy],
   ["news_items", "Yeniliklər", "Ana səhifə lentində və yeniliklər səhifəsində görünən xəbərlər", "content", newsItems],
