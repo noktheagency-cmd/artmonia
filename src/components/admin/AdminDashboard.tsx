@@ -32,6 +32,7 @@ import JsonEditor from "./JsonEditor";
 import { createClient } from "@/lib/supabase/client";
 import { defaultSections, type JsonValue, type SiteSectionRecord } from "@/lib/admin-content";
 import { logout } from "@/app/admin/actions";
+import { validateStudentWorks } from "@/lib/student-works";
 
 export type AdminMessage = {
   id: string;
@@ -137,6 +138,10 @@ export default function AdminDashboard({
   }
 
   async function saveSection(section: SiteSectionRecord) {
+    if (section.key === "student_works") {
+      const error = validateStudentWorks(section.content);
+      if (error) { flash(error); return; }
+    }
     setBusy(true);
     try {
       let saved: SiteSectionRecord = { ...section, updated_at: new Date().toISOString() };
@@ -181,6 +186,11 @@ export default function AdminDashboard({
 
   async function removeSection(section: SiteSectionRecord) {
     if (!window.confirm(`“${section.label}” bölməsi silinsin?`)) return;
+    // Keep an empty record so deleting the gallery cannot restore demo defaults.
+    if (section.key === "student_works" && section.content && typeof section.content === "object" && !Array.isArray(section.content)) {
+      await saveSection({ ...section, is_published: false, content: { ...section.content, items: [] } });
+      return;
+    }
     setBusy(true);
     try {
       if (configured && section.id) {

@@ -5,8 +5,12 @@ import { defaultContent, type JsonValue } from "@/lib/admin-content";
 import MediaField, { type MediaLibraryItem } from "./MediaField";
 import { successStories } from "@/data/collections";
 import TestimonialsEditor from "./TestimonialsEditor";
+import { useState } from "react";
+import { newestWorks } from "@/lib/student-works";
+import { studentWorks } from "@/data/student-works";
 
 const fieldLabels: Record<string, string> = {
+  items: "İş kartı",
   success_stories: "Uğur hekayəsi",
   a: "Cavab",
   aboutLead: "Haqqımızda giriş mətni",
@@ -182,7 +186,7 @@ function friendlyLabel(key: string) {
 function blankLike(value: JsonValue): JsonValue {
   if (Array.isArray(value)) return [];
   if (value && typeof value === "object") {
-    return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, key === "id" ? crypto.randomUUID() : blankLike(child)]));
+    return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, key === "id" ? crypto.randomUUID() : key === "createdAt" ? new Date().toISOString() : blankLike(child)]));
   }
   if (typeof value === "number") return 0;
   if (typeof value === "boolean") return false;
@@ -209,7 +213,31 @@ function templateAtPath(path: string): JsonValue | undefined {
   return value;
 }
 
+function StudentWorksEditor({ value, onChange, onUpload, media, path }: Props & { value: JsonValue[]; path: string }) {
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const ordered = newestWorks(value.map((item, index) => ({ item, index, createdAt: item && typeof item === "object" && !Array.isArray(item) && typeof item.createdAt === "string" ? item.createdAt : "" })));
+  const filtered = ordered.filter(({ item }) => JSON.stringify(item).toLocaleLowerCase("az").includes(query.trim().toLocaleLowerCase("az")));
+  const pages = Math.max(1, Math.ceil(filtered.length / 5));
+  const currentPage = Math.min(page, pages);
+  return <div className="json-array">
+    <p>Ən yeni işlər əvvəl göstərilir. Ana səhifədə son 10 iş, qalereyada hər səhifədə 20 iş görünür. Ad, kateqoriya və şəkil mütləqdir.</p>
+    <input aria-label="Tələbə işlərində axtar" placeholder="Ad, proqram və ya kateqoriya axtar..." value={query} onChange={(e) => { setQuery(e.target.value); setPage(1); }} />
+    <button className="json-add" type="button" onClick={() => {
+      onChange([...value, { ...blankLike(studentWorks.items[0]) as Record<string, JsonValue>, id: crypto.randomUUID(), createdAt: new Date().toISOString() }]);
+      setQuery(""); setPage(1);
+    }}><Plus /> Yeni iş kartı əlavə et</button>
+    <p role="status">{filtered.length} iş · səhifə {currentPage} / {pages}</p>
+    {filtered.slice((currentPage - 1) * 5, currentPage * 5).map(({ item, index }) => <div className="json-array-item" key={item && typeof item === "object" && !Array.isArray(item) && typeof item.id === "string" ? item.id : index}>
+      <div className="json-array-toolbar"><span>İş kartı {index + 1}</span><button type="button" title="İşi sil" onClick={() => { if (window.confirm("Bu işi siyahıdan silmək istəyirsiniz? Dəyişiklik saxlandıqdan sonra sayta tətbiq olunacaq.")) onChange(value.filter((_, i) => i !== index)); }}><Trash2 /></button></div>
+      <JsonEditor value={item} path={`${path}.${index}`} fieldKey="work" onUpload={onUpload} media={media} onChange={(next) => onChange(value.map((old, i) => i === index ? next : old))} />
+    </div>)}
+    <div className="json-array-toolbar"><button type="button" disabled={currentPage === 1} onClick={() => setPage(currentPage - 1)}>Əvvəlki 5 iş</button><button type="button" disabled={currentPage === pages} onClick={() => setPage(currentPage + 1)}>Növbəti 5 iş</button></div>
+  </div>;
+}
+
 export default function JsonEditor({ value, onChange, onUpload, media, path = "content", fieldKey = "content" }: Props) {
+  if (path === "student_works.items" && Array.isArray(value)) return <StudentWorksEditor value={value} onChange={onChange} onUpload={onUpload} media={media} path={path} />;
   if (fieldKey === "student_testimonials") return <TestimonialsEditor value={value} onChange={onChange} />;
   if (Array.isArray(value)) {
     const template = templateAtPath(path);
@@ -249,7 +277,10 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
             )}
           </div>
         ))}
-        <button className="json-add" type="button" onClick={() => onChange([...value, isMediaGallery ? "" : blankLike(value.at(-1) ?? (fieldKey === "success_stories" ? { ...successStories[0], video: "" } : arrayTemplate ?? (fieldKey === "questions" ? { q: "", a: "" } : "")))])}>
+        <button className="json-add" type="button" onClick={() => {
+          const item = isMediaGallery ? "" : blankLike(value.at(-1) ?? (fieldKey === "success_stories" ? { ...successStories[0], video: "" } : arrayTemplate ?? (fieldKey === "questions" ? { q: "", a: "" } : "")));
+          onChange([...value, path.startsWith("student_works") && fieldKey === "items" && item && typeof item === "object" && !Array.isArray(item) ? { ...item, createdAt: new Date().toISOString() } : item]);
+        }}>
           <Plus /> {isMediaGallery ? "Yeni şəkil əlavə et" : `Yeni ${friendlyLabel(fieldKey).toLocaleLowerCase("az")} əlavə et`}
         </button>
       </div>
@@ -259,7 +290,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   if (value && typeof value === "object") {
     return (
       <div className="json-object">
-        {Object.entries(path.startsWith("success_stories.") && "name" in value ? { video: "", ...value } : value).filter(([key]) => key !== "id" && !(path.startsWith("success_stories.") && key === "summary")).map(([key, child]) => (
+        {Object.entries(path.startsWith("success_stories.") && "name" in value ? { video: "", ...value } : value).filter(([key]) => key !== "id" && key !== "createdAt" && !(path.startsWith("success_stories.") && key === "summary")).map(([key, child]) => (
           <div role="group" aria-labelledby={`${path}-${key}-label`} className={`json-field ${key === "id" ? "system-field" : ""}`} key={`${path}-${key}`}>
             <span id={`${path}-${key}-label`}>{friendlyLabel(key)}{key === "id" ? <small>Avtomatik yaradılır, dəyişməyin</small> : null}</span>
             <JsonEditor
@@ -285,6 +316,9 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   }
 
   const text = value == null ? "" : String(value);
+  if (path.startsWith("student_works.items.") && fieldKey === "image") {
+    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio="3 / 4" /><input aria-label="İş şəklinin ünvanı" placeholder="https://... və ya /assets/..." value={text} onChange={(event) => onChange(event.target.value)} /><small>Şəkli yükləyin, kitabxanadan seçin və ya mövcud şəklin ünvanını daxil edin.</small></>;
+  }
   if (mediaKeys.has(fieldKey)) {
     return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio={path.startsWith("success_stories.") ? "9 / 16" : undefined} accept={fieldKey === "video" ? "video" : "image"} />{path.startsWith("success_stories.") && <small>Reels ölçüsü 9:16 (1080 × 1920 px). Kartda yalnız ad görüntünün üzərində göstərilir; digər mətnlər açılan detallardadır.</small>}</>;
   }
