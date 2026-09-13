@@ -1,0 +1,30 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const ts = require('typescript');
+const cache = new Map();
+function load(file) {
+  file = path.resolve(file);
+  if (cache.has(file)) return cache.get(file);
+  const module = { exports: {} };
+  cache.set(file, module.exports);
+  const output = ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText;
+  new Function('require', 'module', 'exports', output)((id) => load(path.resolve(path.dirname(file), id + '.ts')), module, module.exports);
+  return module.exports;
+}
+const { emptySectionContent, validateTestimonials, publicTestimonials } = load('src/lib/section-editing.ts');
+const review = { id: 'test', name: 'Private name', anonymous: true, text: 'a'.repeat(250) };
+assert.deepEqual(emptySectionContent([review]), []);
+assert.deepEqual(emptySectionContent([]), []);
+assert.deepEqual(emptySectionContent({ title: 'Gallery', items: [review] }), { title: 'Gallery', items: [] });
+assert.equal(emptySectionContent({ phone: '123' }), undefined);
+assert.equal(validateTestimonials([review]), undefined);
+assert.ok(validateTestimonials([{ ...review, text: 'a'.repeat(251) }]));
+assert.ok(validateTestimonials(Array(31).fill(review)));
+assert.ok(validateTestimonials([{ ...review, anonymous: false, name: 'a'.repeat(61) }]));
+assert.equal(publicTestimonials([review])[0].name, '');
+assert.equal(publicTestimonials([{ ...review, text: 'a'.repeat(400) }])[0].text.length, 250);
+assert.deepEqual(publicTestimonials([{ ...review, text: '  ' }]), []);
+assert.deepEqual(publicTestimonials(emptySectionContent([review])), []);
+assert.equal(publicTestimonials([{ ...review, anonymous: false }])[0].name, review.name);
+console.log('PASS: 13 section deletion, limit, anonymous privacy and empty-state assertions');

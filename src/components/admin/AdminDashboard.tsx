@@ -33,6 +33,7 @@ import { createClient } from "@/lib/supabase/client";
 import { defaultSections, type JsonValue, type SiteSectionRecord } from "@/lib/admin-content";
 import { logout } from "@/app/admin/actions";
 import { validateStudentWorks } from "@/lib/student-works";
+import { emptySectionContent, publicTestimonials, validateTestimonials } from "@/lib/section-editing";
 
 export type AdminMessage = {
   id: string;
@@ -138,6 +139,11 @@ export default function AdminDashboard({
   }
 
   async function saveSection(section: SiteSectionRecord) {
+    if (section.key === "student_testimonials") {
+      const error = validateTestimonials(section.content);
+      if (error) { flash(error); return; }
+      section = { ...section, content: publicTestimonials(section.content) };
+    }
     if (section.key === "student_works") {
       const error = validateStudentWorks(section.content);
       if (error) { flash(error); return; }
@@ -185,25 +191,13 @@ export default function AdminDashboard({
   }
 
   async function removeSection(section: SiteSectionRecord) {
-    if (!window.confirm(`“${section.label}” bölməsi silinsin?`)) return;
-    // Keep an empty record so deleting the gallery cannot restore demo defaults.
-    if (section.key === "student_works" && section.content && typeof section.content === "object" && !Array.isArray(section.content)) {
-      await saveSection({ ...section, is_published: false, content: { ...section.content, items: [] } });
+    const content = emptySectionContent(section.content);
+    if (content === undefined) {
+      flash("Bu əsas ayar bölməsidir. Məzmununu redaktə edin; bütöv silinmir.");
       return;
     }
-    setBusy(true);
-    try {
-      if (configured && section.id) {
-        const { error } = await createClient().from("site_sections").delete().eq("id", section.id);
-        if (error) throw error;
-      }
-      setSections((current) => current.filter((item) => item.key !== section.key));
-      flash("Bölmə silindi.");
-    } catch (error) {
-      flash(error instanceof Error ? error.message : "Silmək mümkün olmadı.");
-    } finally {
-      setBusy(false);
-    }
+    if (!window.confirm(`“${section.label}” siyahısındakı bütün elementlər silinsin? Bölmə yeni məlumat əlavə etmək üçün qalacaq.`)) return;
+    await saveSection({ ...section, content, is_published: true });
   }
 
   async function updateMessage(message: AdminMessage, status: AdminMessage["status"]) {
@@ -406,7 +400,7 @@ export default function AdminDashboard({
                   <span>{categoryLabels[section.category]}</span>
                   <span className={`status-label ${section.is_published ? "published" : "draft"}`}><i />{section.is_published ? "Dərc olunub" : "Qaralama"}</span>
                   <time>{dateLabel(section.updated_at)}</time>
-                  <div className="row-actions"><button onClick={() => setEditing(section)} title="Redaktə et"><Pencil /></button><button onClick={() => removeSection(section)} title="Sil"><Trash2 /></button></div>
+                  <div className="row-actions"><button onClick={() => setEditing(section)} title="Redaktə et"><Pencil /></button>{emptySectionContent(section.content) !== undefined && <button disabled={busy} onClick={() => removeSection(section)} title="Siyahını təmizlə"><Trash2 /></button>}</div>
                 </article>)}
               </div>
             </section>
