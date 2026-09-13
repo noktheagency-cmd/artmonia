@@ -257,6 +257,7 @@ export const transformations = [
 export const courses = [
   {
     title: "Akademik Rəsm",
+    color: "#eee2ff",
     duration: "12 həftə",
     price: "",
     text: "Proporsiya, anatomiya və klassik çəkim texnikaları ilə möhkəm təməl.",
@@ -265,6 +266,7 @@ export const courses = [
   },
   {
     title: "Rəng & Boyama",
+    color: "#fff0b6",
     duration: "10 həftə",
     price: "",
     text: "Yağlı boya, akrilik və akvarel texnikaları ilə rəng nəzəriyyəsi.",
@@ -273,6 +275,7 @@ export const courses = [
   },
   {
     title: "Rəqəmsal Sənət",
+    color: "#dceeff",
     duration: "8 həftə",
     price: "",
     text: "Procreate və Photoshop ilə müasir rəqəmsal illüstrasiya.",
@@ -281,6 +284,7 @@ export const courses = [
   },
   {
     title: "Kompozisiya",
+    color: "#e6f5d3",
     duration: "6 həftə",
     price: "",
     text: "Vizual tarazlıq, ritm və baxışı idarə etmək sənəti.",
@@ -289,6 +293,7 @@ export const courses = [
   },
   {
     title: "Portret Sənəti",
+    color: "#ffe2dc",
     duration: "8 həftə",
     price: "",
     text: "İnsan üzünün anatomiyası, ifadə və işıq-kölgə ustalığı.",
@@ -297,6 +302,7 @@ export const courses = [
   },
   {
     title: "Portfolyo Hazırlığı",
+    color: "#e6e0fa",
     duration: "4 həftə",
     price: "",
     text: "Karyera üçün peşəkar portfolyo yaratma və təqdimat.",

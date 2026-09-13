@@ -23,7 +23,7 @@
   border: 0;
   border-radius: 8px 36px 36px 36px;
   background: var(--course-color);
-  color: #170d3b;
+  color: var(--course-ink, #170d3b);
   font-family: var(--sans);
   text-align: center;
   cursor: pointer;
@@ -33,8 +33,8 @@
 .select:hover { transform: translateY(-5px); box-shadow: 0 14px 28px rgba(36, 14, 68, .1); }
 .select:focus-visible { outline: 3px solid #7737d6; outline-offset: 5px; }
 .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.duration { padding: 7px 15px; border-radius: 30px; background: rgba(255,255,255,.85); font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
-.arrow { flex: 0 0 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #fff; }
+.duration { padding: 7px 15px; border-radius: 30px; background: rgba(255,255,255,.85); color: #170d3b; font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
+.arrow { flex: 0 0 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #fff; color: #170d3b; }
 .arrow svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.7; transform: rotate(-45deg); }
 .media { display: block; width: 100%; aspect-ratio: 4 / 3; margin: 26px 0 22px; overflow: hidden; border-radius: 18px; }
 .media img { display: block; width: 100%; height: 100%; object-fit: cover; }
