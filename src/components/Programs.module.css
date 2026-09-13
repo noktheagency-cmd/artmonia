@@ -1,0 +1,44 @@
+.section { overflow-x: clip; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+}
+.card { min-width: 0; display: flex; --course-color: #eee2ff; }
+.card:nth-child(6n + 2) { --course-color: #fff0b6; }
+.card:nth-child(6n + 3) { --course-color: #dceeff; }
+.card:nth-child(6n + 4) { --course-color: #e6f5d3; }
+.card:nth-child(6n + 5) { --course-color: #ffe2dc; }
+.card:nth-child(6n + 6) { --course-color: #e6e0fa; }
+.select {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  padding: 24px;
+  border: 0;
+  border-radius: 8px 36px 36px 36px;
+  background: var(--course-color);
+  color: #170d3b;
+  font-family: var(--sans);
+  text-align: center;
+  cursor: pointer;
+  box-shadow: none;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.select:hover { transform: translateY(-5px); box-shadow: 0 14px 28px rgba(36, 14, 68, .1); }
+.select:focus-visible { outline: 3px solid #7737d6; outline-offset: 5px; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.duration { padding: 7px 15px; border-radius: 30px; background: rgba(255,255,255,.85); font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
+.arrow { flex: 0 0 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #fff; }
+.arrow svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.7; transform: rotate(-45deg); }
+.media { display: block; width: 100%; aspect-ratio: 4 / 3; margin: 26px 0 22px; overflow: hidden; border-radius: 18px; }
+.media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.name { font-family: var(--serif); font-size: clamp(24px, 2vw, 32px); line-height: 1.15; font-weight: 500; overflow-wrap: anywhere; }
+.description { display: block; margin-top: 14px; font-size: 14px; line-height: 1.65; overflow-wrap: anywhere; }
+.cta { margin-top: auto; padding-top: 24px; font-size: 12px; font-weight: 700; }
+@media (max-width: 1050px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .grid { grid-template-columns: minmax(0, 1fr); gap: 18px; } .select { padding: 22px; } .media { aspect-ratio: 16 / 9; } .name { font-size: 28px; } }
+@media (prefers-reduced-motion: reduce) { .select { transition: none; } .select:hover { transform: none; } }
