@@ -1,5 +1,5 @@
 export const homeFaq = {
-  title: "Ən çox verilən suallar",
+  title: "FAQ",
   questions: [
     { q: "Rəsmə sıfırdan başlaya bilərəm?", a: "Başlamaq üçün əvvəlcədən rəsm təcrübənizin olması vacib deyil. Səviyyənizi və məqsədinizi bizimlə bölüşün ki, uyğun proqramı birlikdə seçək." },
     { q: "Hansı proqramı seçməliyəm?", a: "Akademik rəsm, rəng və boyama, rəqəmsal sənət və digər proqramlarla ana səhifədə tanış ola bilərsiniz. Seçimdə tərəddüd edirsinizsə, maraqlarınızı və hədəflərinizi bizə yazın." },
