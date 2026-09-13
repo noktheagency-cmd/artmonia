@@ -213,7 +213,7 @@ function ProblemTransformation() {
       </Reveal>
       <Reveal className="atelier-panel" variant="boom">
         <div className="sketch-result-board scroll-sketch" aria-label="Artmonia rəsm materialları">
-          <img src={dynamicGalleryImages[1].src} alt={dynamicGalleryImages[1].alt} loading="lazy" decoding="async" />
+          {dynamicGalleryImages[1] && <img src={dynamicGalleryImages[1].src} alt={dynamicGalleryImages[1].alt} loading="lazy" decoding="async" />}
           <div className="board-wash" />
           <div className="sketch-stage">
             <span className="sketch-label">{copy.sketchLabel}</span>

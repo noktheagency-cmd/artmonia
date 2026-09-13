@@ -2,6 +2,7 @@ import { defaultContent, defaultSections, managedSectionKeys, type JsonValue, ty
 import { createClient } from "./supabase/server";
 import { isSupabaseConfigured } from "./supabase/config";
 import { courses } from "@/data/site";
+import { publicTestimonials } from "./section-editing";
 
 export type SiteContentMap = Record<string, JsonValue>;
 
@@ -48,7 +49,7 @@ export async function getPublishedContent(): Promise<SiteContentMap> {
   const publishedContent: SiteContentMap = { ...defaultContent };
   data.forEach((row) => {
     if (!managedSectionKeys.has(row.key)) return;
-    if (row.is_published) publishedContent[row.key] = sanitizeSectionContent(row.key, row.content as JsonValue);
+    if (row.is_published) publishedContent[row.key] = row.key === "student_testimonials" ? publicTestimonials(row.content as JsonValue) : sanitizeSectionContent(row.key, row.content as JsonValue);
     else delete publishedContent[row.key];
   });
   return publishedContent;

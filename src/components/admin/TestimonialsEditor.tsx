@@ -12,7 +12,7 @@ export default function TestimonialsEditor({ value, onChange }: { value: JsonVal
     onChange(next);
   };
   return <div className="json-array">
-    <p>FAQ-dan sonra sonsuz hərəkətli lent. Desktopda 4 kart. Maksimum {TESTIMONIAL_LIMIT} rəy; ad {TESTIMONIAL_NAME_LIMIT}, rəy {TESTIMONIAL_TEXT_LIMIT} simvol. Boş rəylər yayımlanmır. Anonim seçildikdə ad sayta göndərilmir.</p>
+    <p>FAQ-dan sonra sonsuz hərəkətli lent. Kartlar ekran ölçüsünə uyğunlaşır. Maksimum {TESTIMONIAL_LIMIT} rəy; ad {TESTIMONIAL_NAME_LIMIT}, rəy {TESTIMONIAL_TEXT_LIMIT} simvol. Boş rəylər yayımlanmır. Anonim seçildikdə ad sayta göndərilmir. Bütün rəyləri silib yadda saxladıqda lent gizlənir və nümunələr geri qayıtmır.</p>
     {items.map((item, index) => <div className="json-array-item" key={item.id}>
       <div className="json-array-toolbar"><strong>Rəy {index + 1}</strong><div>
         <button type="button" disabled={!index} onClick={() => move(index, -1)}>Yuxarı</button>
