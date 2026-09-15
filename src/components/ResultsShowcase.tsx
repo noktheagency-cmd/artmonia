@@ -9,7 +9,8 @@ import { useSiteContentValue } from "@/components/SiteContentContext";
 import { successStories, type SuccessStoryEntry } from "@/data/collections";
 import { collectionsPageCopy } from "@/data/site-copy";
 
-const resultComparisons = [] as Array<any>;
+type RemovedComparison = { id: "portrait" | "color"; before: string; beforeAlt: string; after: string; afterAlt: string };
+const resultComparisons: RemovedComparison[] = [];
 const comparisonStyle = (position: number) => ({ "--comparison-position": `${position}%` }) as CSSProperties;
 
 export default function ResultsShowcase() {
