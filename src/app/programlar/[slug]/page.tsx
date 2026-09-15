@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import { SiteContentProvider } from "@/components/SiteContentContext";
@@ -28,7 +29,7 @@ export default async function ProgramDetail({ params }: { params: Promise<{ slug
   const course = dynamic.find((item) => slugFor(item.title) === decodeURIComponent(slug));
   if (!course) notFound();
   return <SiteContentProvider content={content}><SiteHeader /><main className={styles.page}>
-    <a className={styles.back} href="/#program">← Proqramlara qayıt</a>
+    <Link className={styles.back} href="/#program">← Proqramlara qayıt</Link>
     <section className={styles.hero} style={{ "--accent": course.color } as CSSProperties}>
       <div className={styles.media}><img src={course.image} alt={course.title} /></div>
       <div className={styles.copy}><span className={styles.duration}>{course.duration}</span><h1>{course.title}</h1><p className={styles.lead}>{course.text}</p><a className={styles.cta} href="/muraciet">Müraciət et <span>↗</span></a></div>
