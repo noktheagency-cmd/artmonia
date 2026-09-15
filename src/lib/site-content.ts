@@ -25,6 +25,11 @@ function sanitizeSectionContent(key: string, content: JsonValue): JsonValue {
     ) as JsonValue;
   }
 
+  if (key === "collections_page_copy" && content.results && typeof content.results === "object" && !Array.isArray(content.results)) {
+    const { comparisonKicker, comparisonTitle, beforeLabel, afterLabel, studentWorkLabel, mentorNoteLabel, periodLabel, comparisons, ...results } = content.results as Record<string, JsonValue>;
+    return { ...content, results } as JsonValue;
+  }
+
   if (key === "global_copy" && Array.isArray(content.navigation)) {
     const navigation = content.navigation.map((item, index) => {
       if (index !== 0 || !item || typeof item !== "object" || Array.isArray(item) || !Array.isArray(item.children)) return item;
