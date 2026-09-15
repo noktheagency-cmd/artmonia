@@ -43,8 +43,8 @@ export default function ResultsShowcase() {
   const stories = Array.isArray(dynamicStories) ? dynamicStories : successStories;
   const [storyPlaying, setStoryPlaying] = useState(false);
   const [storyModalOpen, setStoryModalOpen] = useState(false);
-  const [selectedStoryId, setSelectedStoryId] = useState(successStories[0].id);
   const [comparisonPositions, setComparisonPositions] = useState({ portrait: 52, color: 48 });
+  const [selectedStoryId, setSelectedStoryId] = useState(successStories[0].id);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const selectedStory = stories.find((story) => story.id === selectedStoryId) ?? stories[0];
@@ -123,7 +123,7 @@ export default function ResultsShowcase() {
         </div>
       </section>
 
-      <section id="telebe-neticeleri" className={`results-scene results-comparison-scene ${styles.anchorScene}`} aria-labelledby="student-results-title">
+      {false && <section id="telebe-neticeleri" className={`results-scene results-comparison-scene ${styles.anchorScene}`} aria-labelledby="student-results-title">
         <header className="results-scene-heading">
           <div>
             <span className="results-scene-kicker">{copy.comparisonKicker}</span>
@@ -198,7 +198,7 @@ export default function ResultsShowcase() {
             );
           })}
         </div>
-      </section>
+      </section>}
     </div>
   );
 
