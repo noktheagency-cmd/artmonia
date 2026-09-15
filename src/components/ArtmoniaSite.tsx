@@ -320,7 +320,7 @@ function Programs() {
               variant="from-bottom"
               style={{ "--step": index, ...programColorStyle(course.color) } as React.CSSProperties}
             >
-              <button className={programStyles.select} type="button" onClick={() => setSelectedCourse(course)} aria-haspopup="dialog" aria-label={`${course.title} — ${copy.selectCta}`}>
+              <Link className={programStyles.select} href={`/programlar/${encodeURIComponent(course.title.toLowerCase().replace(/\s+/g, "-"))}`} aria-label={`${course.title} — ${copy.selectCta}`}>
                 <span className={programStyles.top}>
                   <span className={programStyles.duration}>{course.duration}</span>
                   <span className={programStyles.arrow}><ArrowIcon /></span>
@@ -331,7 +331,7 @@ function Programs() {
                 <span className={programStyles.name}>{course.title}</span>
                 <span className={programStyles.description}>{course.text}</span>
                 <span className={programStyles.cta}>{copy.selectCta}</span>
-              </button>
+              </Link>
             </Reveal>
           ))}
         </div>
