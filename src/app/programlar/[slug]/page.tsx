@@ -24,7 +24,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function ProgramDetail({ params }: { params: Promise<{ slug: string }> }) {
   const content = await getPublishedContent();
   const dynamic = Array.isArray(content.courses) ? content.courses as Course[] : courses;
-  const course = dynamic.find((item) => slugFor(item.title) === decodeURIComponent((await params).slug));
+  const { slug } = await params;
+  const course = dynamic.find((item) => slugFor(item.title) === decodeURIComponent(slug));
   if (!course) notFound();
   return <SiteContentProvider content={content}><SiteHeader /><main className={styles.page}>
     <a className={styles.back} href="/#program">← Proqramlara qayıt</a>
