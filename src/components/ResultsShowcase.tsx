@@ -9,7 +9,7 @@ import { useSiteContentValue } from "@/components/SiteContentContext";
 import { successStories, type SuccessStoryEntry } from "@/data/collections";
 import { collectionsPageCopy } from "@/data/site-copy";
 
-const resultComparisons = [] as any[];
+const resultComparisons = [] as Array<any>;
 const comparisonStyle = (position: number) => ({ "--comparison-position": `${position}%` }) as CSSProperties;
 
 export default function ResultsShowcase() {
@@ -18,7 +18,7 @@ export default function ResultsShowcase() {
   const stories = Array.isArray(dynamicStories) ? dynamicStories : successStories;
   const [storyPlaying, setStoryPlaying] = useState(false);
   const [storyModalOpen, setStoryModalOpen] = useState(false);
-  const [comparisonPositions, setComparisonPositions] = useState({ portrait: 52, color: 48 });
+  const [comparisonPositions, setComparisonPositions] = useState<Record<string, number>>({ portrait: 52, color: 48 });
   const [selectedStoryId, setSelectedStoryId] = useState(successStories[0].id);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
