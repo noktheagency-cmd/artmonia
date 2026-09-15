@@ -9,33 +9,8 @@ import { useSiteContentValue } from "@/components/SiteContentContext";
 import { successStories, type SuccessStoryEntry } from "@/data/collections";
 import { collectionsPageCopy } from "@/data/site-copy";
 
-type ResultComparison = {
-  id: "portrait" | "color";
-  before: string;
-  beforeAlt: string;
-  after: string;
-  afterAlt: string;
-};
-
-const resultComparisons: ResultComparison[] = [
-  {
-    id: "portrait",
-    before: "/assets/module-proportion.webp",
-    beforeAlt: "Əvvəl: ilkin anatomiya və proporsiya eskizləri",
-    after: "/assets/article-portrait-technique.webp",
-    afterAlt: "Sonra: tamamlanmış qrafit portret işi"
-  },
-  {
-    id: "color",
-    before: "/assets/module-light-shadow.webp",
-    beforeAlt: "Əvvəl: işıq və kölgə məşqi",
-    after: "/assets/module-final-project.webp",
-    afterAlt: "Sonra: rəng və kompozisiya ilə tamamlanmış final işi"
-  }
-];
-
-const comparisonStyle = (position: number) =>
-  ({ "--comparison-position": `${position}%` }) as CSSProperties;
+const resultComparisons = [] as any[];
+const comparisonStyle = (position: number) => ({ "--comparison-position": `${position}%` }) as CSSProperties;
 
 export default function ResultsShowcase() {
   const dynamicStories = useSiteContentValue<SuccessStoryEntry[]>("success_stories", successStories);
@@ -123,7 +98,7 @@ export default function ResultsShowcase() {
         </div>
       </section>
 
-      {false && <section id="telebe-neticeleri" className={`results-scene results-comparison-scene ${styles.anchorScene}`} aria-labelledby="student-results-title">
+      {/* before/after comparison removed */}{false && <section id="telebe-neticeleri" className={`results-scene results-comparison-scene ${styles.anchorScene}`} aria-labelledby="student-results-title">
         <header className="results-scene-heading">
           <div>
             <span className="results-scene-kicker">{copy.comparisonKicker}</span>
