@@ -26,7 +26,8 @@ function sanitizeSectionContent(key: string, content: JsonValue): JsonValue {
   }
 
   if (key === "collections_page_copy" && content.results && typeof content.results === "object" && !Array.isArray(content.results)) {
-    const { comparisonKicker, comparisonTitle, beforeLabel, afterLabel, studentWorkLabel, mentorNoteLabel, periodLabel, comparisons, ...results } = content.results as Record<string, JsonValue>;
+    const results = { ...(content.results as Record<string, JsonValue>) };
+    ["comparisonKicker", "comparisonTitle", "beforeLabel", "afterLabel", "studentWorkLabel", "mentorNoteLabel", "periodLabel", "comparisons"].forEach((field) => delete results[field]);
     return { ...content, results } as JsonValue;
   }
 
