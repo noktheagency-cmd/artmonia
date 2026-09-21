@@ -30,6 +30,11 @@ function load(file) {
     record("gallery_images", [{ src: "/unused.jpg" }, { src: "/existing.jpg", alt: "Existing photo" }])
   ];
   const sections = await getAdminSections();
+  assert.equal(sections.find(s => s.key === "home_page_copy").content.problem.image, "/assets/problem-center-girl.webp");
+  rows[2].content.problem.image = "/custom-person.png";
+  assert.equal((await getPublishedContent()).home_page_copy.problem.image, "/custom-person.png");
+  rows[2].content.problem.image = "";
+  assert.equal((await getPublishedContent()).home_page_copy.problem.image, "");
   const program = sections.find(s => s.key === "courses").content[0];
   assert.equal(program.detail.image, "/original.jpg");
   assert.equal(program.detail.syllabus[0].text, "Original syllabus");
