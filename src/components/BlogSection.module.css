@@ -25,8 +25,8 @@
 .lead { font-size: 21px; line-height: 1.6; opacity: .78; max-width: 780px; }
 .detailLayout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; gap: clamp(28px, 4vw, 64px); margin-top: 36px; }
 .textOnly { grid-template-columns: minmax(0, 1fr); max-width: 850px; margin-inline: auto; }
-.coverPanel { position: sticky; top: 125px; padding: 12px; border: 1px solid rgb(128 112 164 / 22%); border-radius: 24px; }
-.cover { display: block; width: 100%; max-height: calc(100svh - 180px); object-fit: contain; border-radius: 14px; }
+.coverPanel { position: sticky; top: 125px; width: min(100%, calc((100svh - 180px) * .75 + 24px)); justify-self: center; padding: 12px; border: 1px solid rgb(128 112 164 / 22%); border-radius: 24px; }
+.cover { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: center; border-radius: 14px; }
 .detailCopy { min-width: 0; }
 .detailCopy .meta { margin-top: 0; }
 .detailCopy .lead { margin-bottom: 28px; }
@@ -42,7 +42,7 @@
 .archiveGroup { display: contents; }
 @keyframes blogTravel { to { transform: translateX(-50%); } }
 @media (max-width: 1000px) { .group .card { width: calc((100cqw - 22px) / 2); } }
-@media (max-width: 800px) { .detailLayout { grid-template-columns: minmax(0, 1fr); } .coverPanel { position: static; } .cover { max-height: 60svh; } }
+@media (max-width: 800px) { .detailLayout { grid-template-columns: minmax(0, 1fr); } .coverPanel { position: static; width: min(100%, calc(60svh * .75 + 24px)); } }
 @media (max-width: 600px) { .group .card { width: 82cqw; } .actions { flex-wrap: wrap; } }
 @media (prefers-reduced-motion: reduce) { .track { animation: none; } .viewport { overflow-x: auto; } .group[aria-hidden="true"], .group .card[aria-hidden="true"], .pause { display: none; } }
 :global(html.theme-dark) .section { color: var(--theme-text); }
