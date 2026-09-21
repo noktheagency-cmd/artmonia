@@ -3,17 +3,37 @@ import { createClient } from "./supabase/server";
 import { isSupabaseConfigured } from "./supabase/config";
 import { courses } from "@/data/site";
 import { publicTestimonials } from "./section-editing";
+import { withProgramDetail } from "./program-content";
+import { transformationDefaults } from "./transformation-content";
 
 export type SiteContentMap = Record<string, JsonValue>;
 
 const removedHomeCopyKeys = new Set(["journey", "pricing"]);
 
-function sanitizeSectionContent(key: string, content: JsonValue): JsonValue {
+function sanitizeSectionContent(key: string, content: JsonValue, rows: { key: string; content: unknown }[] = []): JsonValue {
+  if (key === "transformations") {
+    if (Array.isArray(content)) {
+      const home = rows.find((row) => row.key === "home_page_copy")?.content as JsonValue;
+      const problem = home && typeof home === "object" && !Array.isArray(home) ? home.problem : null;
+      const copy = problem && typeof problem === "object" && !Array.isArray(problem) ? problem : {};
+      const gallery = rows.find((row) => row.key === "gallery_images")?.content as JsonValue;
+      const photo = Array.isArray(gallery) ? gallery[1] : null;
+      const image = photo && typeof photo === "object" && !Array.isArray(photo) ? photo : {};
+      return { ...transformationDefaults,
+        label: copy.transformationLabel ?? transformationDefaults.label,
+        title: copy.transformationTitle ?? transformationDefaults.title,
+        image: image.src ?? transformationDefaults.image,
+        alt: image.alt ?? transformationDefaults.alt,
+        items: content.map((item) => item && typeof item === "object" && !Array.isArray(item) ? { image: "", ...item } : item)
+      };
+    }
+    if (content && typeof content === "object") return { ...transformationDefaults, ...content };
+  }
   if (key === "courses" && Array.isArray(content)) {
     return content.map((item, index) => {
       if (!item || typeof item !== "object" || Array.isArray(item)) return item;
       const fallback = courses.find((course) => course.title === item.title) ?? courses[index];
-      return fallback ? { ...fallback, ...item } : item;
+      return withProgramDetail({ ...(fallback ?? { title: "", color: "#eee2ff", duration: "", price: "", text: "", details: "", image: "" }), ...item } as Parameters<typeof withProgramDetail>[0]);
     }) as JsonValue;
   }
 
@@ -55,7 +75,7 @@ export async function getPublishedContent(): Promise<SiteContentMap> {
   const publishedContent: SiteContentMap = { ...defaultContent };
   data.forEach((row) => {
     if (!managedSectionKeys.has(row.key)) return;
-    if (row.is_published) publishedContent[row.key] = row.key === "student_testimonials" ? publicTestimonials(row.content as JsonValue) : sanitizeSectionContent(row.key, row.content as JsonValue);
+    if (row.is_published) publishedContent[row.key] = row.key === "student_testimonials" ? publicTestimonials(row.content as JsonValue) : sanitizeSectionContent(row.key, row.content as JsonValue, data);
     else delete publishedContent[row.key];
   });
   return publishedContent;
@@ -69,7 +89,8 @@ export async function getAdminSections(): Promise<SiteSectionRecord[]> {
   const storedSections = (data as SiteSectionRecord[])
     .filter((section) => managedSectionKeys.has(section.key))
     .map((section) => {
-      const sanitizedSection = { ...section, content: sanitizeSectionContent(section.key, section.content) };
+      const definition = defaultSections.find((item) => item.key === section.key);
+      const sanitizedSection = { ...section, label: definition?.label ?? section.label, description: definition?.description ?? section.description, content: sanitizeSectionContent(section.key, section.content, data) };
       if (section.key !== "contact" || !sanitizedSection.content || typeof sanitizedSection.content !== "object" || Array.isArray(sanitizedSection.content)) return sanitizedSection;
       const fallback = defaultContent.contact as { phone: JsonValue; email: JsonValue; address: JsonValue };
       return {

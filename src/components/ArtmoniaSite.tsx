@@ -18,6 +18,7 @@ import {
   transformations
 } from "@/data/site";
 import SiteHeader from "@/components/SiteHeader";
+import { transformationDefaults } from "@/lib/transformation-content";
 import HomeNewsSection from "@/components/HomeNewsSection";
 import HomeFaq from "@/components/HomeFaq";
 import HomeTestimonials from "@/components/HomeTestimonials";
@@ -183,8 +184,7 @@ function useTiltTargets() {
 
 function ProblemTransformation() {
   const dynamicPainPoints = useSiteContentValue("pain_points", painPoints);
-  const dynamicTransformations = useSiteContentValue("transformations", transformations);
-  const dynamicGalleryImages = useSiteContentValue("gallery_images", galleryImages);
+  const benefits = useSiteContentValue("transformations", transformationDefaults);
   const copy = useSiteContentValue("home_page_copy", homePageCopy).problem;
   return (
     <section className="split-band scroll-section" id="problem">
@@ -213,7 +213,7 @@ function ProblemTransformation() {
       </Reveal>
       <Reveal className="atelier-panel" variant="boom">
         <div className="sketch-result-board scroll-sketch" aria-label="Artmonia rəsm materialları">
-          {dynamicGalleryImages[1] && <img src={dynamicGalleryImages[1].src} alt={dynamicGalleryImages[1].alt} loading="lazy" decoding="async" />}
+          {benefits.image && <img src={benefits.image} alt={benefits.alt} loading="lazy" decoding="async" />}
           <div className="board-wash" />
           <div className="sketch-stage">
             <span className="sketch-label">{copy.sketchLabel}</span>
@@ -235,16 +235,17 @@ function ProblemTransformation() {
           </div>
         </div>
         <div className="transformation-copy">
-          <p className="small-label">{copy.transformationLabel}</p>
-          <h2>{copy.transformationTitle}</h2>
+          <p className="small-label">{benefits.label}</p>
+          <h2>{benefits.title}</h2>
           <div className="transformation-grid">
-            {dynamicTransformations.map((item, index) => (
+            {benefits.items.map((item, index) => (
               <article
                 key={item.title}
                 className={`stage-card stage-card-${index + 1} scroll-block`}
                 data-scroll-order={index}
                 style={{ "--step": index } as React.CSSProperties}
               >
+                {item.image && <img src={item.image} alt={item.title} style={{ width: "100%", height: 140, objectFit: "cover", borderRadius: 16, marginBottom: 16 }} loading="lazy" />}
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
               </article>
