@@ -1,0 +1,10 @@
+.section { margin-bottom: 64px; color: var(--brand-navy); scroll-margin-top: 120px; }
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; padding: 0; margin: 0; list-style: none; }
+.grid .card { width: 100%; min-width: 0; }
+.status { margin: 24px 0 0; text-align: center; font-size: 13px; opacity: .7; }
+.more { display: flex; align-items: center; justify-content: center; gap: 24px; margin: 18px auto 0; padding: 14px 30px; border: 1px solid currentColor; border-radius: 999px; background: transparent; color: inherit; font: 600 14px/1.4 var(--sans, sans-serif); cursor: pointer; }
+.more:hover { background: var(--brand-navy); color: #fff; }
+.more:focus-visible { outline: 3px solid var(--brand-orange); outline-offset: 4px; }
+:global(html.theme-dark) .section { color: var(--theme-text); }
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; } }
+@media (max-width: 420px) { .grid { gap: 12px; } }
