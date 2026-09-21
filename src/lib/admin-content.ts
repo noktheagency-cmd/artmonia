@@ -60,7 +60,7 @@ const definitions = [
   ["news_items", "Yeniliklər", "Ana səhifə lentində və yeniliklər səhifəsində görünən xəbərlər", "content", newsItems],
   ["home_results", "Ana səhifə · Nəticələr lenti", "Yeniliklərin altındakı tələbə fotoları, ad-soyad və nəticə cümlələri", "content", homeResults],
   ["collections_page_copy", "Nəticə və mükafat səhifəsi mətnləri", "Nəticələr və mükafat kateqoriyaları üçün mətnlər", "content", collectionsPageCopy],
-  ["success_stories", "Uğur hekayələri", "Nəticələr səhifəsində görünən tələbə adı, mətn, şəkil və video məlumatı", "content", successStories],
+  ["success_stories", "Uğur hekayələri", "Nəticələr səhifəsinin YouTube video kartları. Tələbə adını və YouTube linkini daxil edin; üz qabığı avtomatik görünür. Desktopda 2, mobildə 1 kart.", "content", successStories],
   ["awards", "Mükafatlar", "Mükafatlar səhifəsində görünən nailiyyətlər", "content", awards]
 ] as const;
 

@@ -8,6 +8,7 @@ import TestimonialsEditor from "./TestimonialsEditor";
 import { useState } from "react";
 import { newestWorks } from "@/lib/student-works";
 import { studentWorks } from "@/data/student-works";
+import { youtubeId } from "@/lib/youtube";
 
 const fieldLabels: Record<string, string> = {
   courses: "Proqram",
@@ -302,9 +303,9 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   if (value && typeof value === "object") {
     return (
       <div className="json-object">
-        {Object.entries(path.startsWith("success_stories.") && "name" in value ? { video: "", ...value } : value).filter(([key]) => key !== "id" && key !== "createdAt" && !(path.startsWith("success_stories.") && key === "summary") && !(path === "home_page_copy.problem" && ["transformationLabel", "transformationTitle"].includes(key))).map(([key, child]) => (
+        {Object.entries(path.startsWith("success_stories.") && "name" in value ? { video: "", ...value } : value).filter(([key]) => key !== "id" && key !== "createdAt" && !(path.startsWith("success_stories.") && ["summary", "duration", "quote", "note", "program"].includes(key)) && !(path === "home_page_copy.problem" && ["transformationLabel", "transformationTitle"].includes(key))).map(([key, child]) => (
           <div role="group" aria-labelledby={`${path}-${key}-label`} className={`json-field ${key === "id" ? "system-field" : ""}`} key={`${path}-${key}`}>
-            <span id={`${path}-${key}-label`}>{friendlyLabel(key)}{key === "id" ? <small>Avtomatik yaradılır, dəyişməyin</small> : null}</span>
+            <span id={`${path}-${key}-label`}>{path.startsWith("success_stories.") && key === "video" ? "YouTube video linki" : friendlyLabel(key)}{key === "id" ? <small>Avtomatik yaradılır, dəyişməyin</small> : null}</span>
             <JsonEditor
               value={child}
               path={`${path}.${key}`}
@@ -328,6 +329,15 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   }
 
   const text = value == null ? "" : String(value);
+  if (path.startsWith("success_stories.") && fieldKey === "video") {
+    const id = youtubeId(text);
+    return <>
+      <input type="url" aria-label="YouTube video linki" placeholder="https://www.youtube.com/watch?v=..." value={text} onChange={(event) => onChange(event.target.value)} aria-invalid={Boolean(text && !id)} />
+      <small>YouTube linkini daxil edin (watch, youtu.be və ya Shorts). Video kartın daxilində açılır; fayl yükləmək lazım deyil.</small>
+      {text && !id && <small role="alert">Bu YouTube video linki deyil. Köhnə video faylının yerinə YouTube linkini daxil edin.</small>}
+      {id && <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="YouTube video üz qabığı" style={{ width: "100%", maxWidth: 360, aspectRatio: "16 / 9", objectFit: "cover", borderRadius: 12 }} />}
+    </>;
+  }
   if (path === "home_page_copy.problem.image") {
     return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} accept="image" /><small>“Tanış gəlir?” bölməsinin mərkəzindəki xanımın şəkli. Şəffaf fonlu PNG və ya WEBP yükləyin; şəkil mövcud ölçüyə uyğun göstəriləcək.</small></>;
   }
@@ -335,7 +345,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
     return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio="3 / 4" /><input aria-label="İş şəklinin ünvanı" placeholder="https://... və ya /assets/..." value={text} onChange={(event) => onChange(event.target.value)} /><small>Şəkli yükləyin, kitabxanadan seçin və ya mövcud şəklin ünvanını daxil edin.</small></>;
   }
   if (mediaKeys.has(fieldKey)) {
-    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio={path.startsWith("success_stories.") ? "9 / 16" : undefined} accept={fieldKey === "video" ? "video" : "image"} />{path.startsWith("success_stories.") && <small>Reels ölçüsü 9:16 (1080 × 1920 px). Kartda yalnız ad görüntünün üzərində göstərilir; digər mətnlər açılan detallardadır.</small>}</>;
+    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio={path.startsWith("success_stories.") ? "16 / 9" : undefined} accept={fieldKey === "video" ? "video" : "image"} />{path.startsWith("success_stories.") && <small>YouTube linki əlavə ediləndə videonun öz üz qabığı görünür. Bu şəkil yalnız link olmayan kart üçün ehtiyatdır. Kart ölçüsü 16:9-dur.</small>}</>;
   }
   if (fieldKey === "color") return <div className="json-color-field"><input type="color" value={text || "#ffffff"} onChange={(event) => onChange(event.target.value)} /><input value={text} onChange={(event) => onChange(event.target.value)} /></div>;
   if (fieldKey === "date") return <input type="date" value={text} onChange={(event) => onChange(event.target.value)} />;
