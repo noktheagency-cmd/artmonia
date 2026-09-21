@@ -10,6 +10,23 @@ import { newestWorks } from "@/lib/student-works";
 import { studentWorks } from "@/data/student-works";
 
 const fieldLabels: Record<string, string> = {
+  courses: "Proqram",
+  detail: "Detail səhifəsi",
+  audience: "Kimlər üçündür — kartlar",
+  audienceLabel: "Auditoriya bölməsinin üst etiketi",
+  audienceTitle: "Auditoriya bölməsinin başlığı",
+  learningLabel: "Tədris bölməsinin üst etiketi",
+  learningTitle: "Tədris bölməsinin başlığı",
+  syllabus: "Tədris bölməsi",
+  enrollLabel: "Müraciət bölməsinin üst etiketi",
+  enrollTitle: "Müraciət bölməsinin başlığı",
+  enrollText: "Müraciət bölməsinin açıqlaması",
+  enrollImage: "Müraciət bölməsinin şəkli",
+  enrollCta: "Konsultasiya düyməsinin mətni",
+  durationLabel: "Müddət etiketi",
+  priceLabel: "Qiymət etiketi",
+  priceFallback: "Qiymət boş olanda görünən mətn",
+  backLabel: "Geri keçidin mətni",
   items: "İş kartı",
   success_stories: "Uğur hekayəsi",
   a: "Cavab",
@@ -169,7 +186,7 @@ const fieldLabels: Record<string, string> = {
   week: "Həftə"
 };
 
-const mediaKeys = new Set(["image", "src", "poster", "video"]);
+const mediaKeys = new Set(["image", "src", "poster", "video", "enrollImage"]);
 
 function friendlyLabel(key: string) {
   return fieldLabels[key] ?? key
@@ -285,7 +302,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   if (value && typeof value === "object") {
     return (
       <div className="json-object">
-        {Object.entries(path.startsWith("success_stories.") && "name" in value ? { video: "", ...value } : value).filter(([key]) => key !== "id" && key !== "createdAt" && !(path.startsWith("success_stories.") && key === "summary")).map(([key, child]) => (
+        {Object.entries(path.startsWith("success_stories.") && "name" in value ? { video: "", ...value } : value).filter(([key]) => key !== "id" && key !== "createdAt" && !(path.startsWith("success_stories.") && key === "summary") && !(path === "home_page_copy.problem" && ["transformationLabel", "transformationTitle"].includes(key))).map(([key, child]) => (
           <div role="group" aria-labelledby={`${path}-${key}-label`} className={`json-field ${key === "id" ? "system-field" : ""}`} key={`${path}-${key}`}>
             <span id={`${path}-${key}-label`}>{friendlyLabel(key)}{key === "id" ? <small>Avtomatik yaradılır, dəyişməyin</small> : null}</span>
             <JsonEditor

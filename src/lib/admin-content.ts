@@ -3,8 +3,7 @@ import {
   courses,
   galleryImages,
   newsItems,
-  painPoints,
-  transformations
+  painPoints
 } from "@/data/site";
 import { awards, successStories } from "@/data/collections";
 import { homeResults } from "@/data/home-results";
@@ -12,6 +11,8 @@ import { interiorMedia } from "@/data/interior-media";
 import { testimonials } from "@/data/testimonials";
 import { homeFaq } from "@/data/home-faq";
 import { studentWorks } from "@/data/student-works";
+import { withProgramDetail } from "./program-content";
+import { transformationDefaults } from "./transformation-content";
 import {
   academyPageCopy,
   applicationPageCopy,
@@ -47,8 +48,8 @@ const definitions = [
   ["global_copy", "Ortaq menyu mətnləri", "Bütün səhifələrdə görünən menyu, müraciət düyməsi və müəllif hüququ mətni", "settings", globalCopy],
   ["home_page_copy", "Ana səhifə mətnləri", "Hero, bölmə başlıqları, düymələr, müəllimlər və footer mətnləri", "website", homePageCopy],
   ["pain_points", "Ana səhifə · Problem kartları", "Problem bölməsində görünən dörd qısa mətn", "website", painPoints],
-  ["transformations", "Ana səhifə · Nəticə kartları", "Transformasiya bölməsində görünən başlıq və açıqlamalar", "website", transformations],
-  ["courses", "Ana səhifə · Proqramlar", "3 sütunlu proqram kartları: başlıq, müddət, fon rəngi, şəkil, qısa mətn, pəncərənin ətraflı mətni və qiymət. Kartları əlavə edin, silin və sıralayın.", "website", courses],
+  ["transformations", "Ana səhifə · Proqram sənə nə verir?", "Bölmənin başlığı, əsas fotosu və fayda kartları. Kartları əlavə edin, silin, sıralayın; mətn və şəkillərini dəyişin.", "website", transformationDefaults],
+  ["courses", "Proqramlar · Kartlar və detail səhifələri", "Hər proqramın kartı, hero fotosu, auditoriya kartları, tədris bölmələri və müraciət mətnləri.", "website", courses.map(withProgramDetail)],
   ["contact", "Ana səhifə · Əlaqə", "Footer-də görünən telefon, e-poçt və ünvan", "settings", visibleContact],
   ["home_faq", "Ana səhifə · Suallar və cavablar", "Əlaqədən əvvəlki FAQ: başlığı, sualları və cavabları dəyişin, əlavə edin və sıralayın", "website", homeFaq],
   ["gallery_images", "Ana səhifə · Bölmə şəkilləri", "Problem və transformasiya sahəsində görünən şəkillər", "content", galleryImages],
