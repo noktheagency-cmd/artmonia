@@ -59,6 +59,7 @@ function parseItems(content: SiteSectionRecord["content"]): CollectionEntry[] {
       description: typeof item.description === "string" ? item.description : "",
       image: typeof item.image === "string" ? item.image : "",
       date: typeof item.date === "string" ? item.date : "",
+      resultCategory: typeof item.resultCategory === "string" ? item.resultCategory : "",
       ...(typeof item.demoPortrait === "number" ? { demoPortrait: item.demoPortrait } : {}),
       category: item.category === "travel" ? "travel" : "cash"
     }];
@@ -162,6 +163,7 @@ export default function CollectionEditor({
               <div className="collection-form-fields">
                 <label className="admin-field"><span>{labels.name}</span><input maxLength={kind === "home_results" ? 60 : undefined} value={selected.title} onChange={(event) => updateSelected({ title: event.target.value })} /></label>
                 <label className="admin-field"><span>{labels.subtitle}</span><input maxLength={kind === "home_results" ? 100 : undefined} value={selected.subtitle} onChange={(event) => updateSelected({ subtitle: event.target.value })} /></label>
+                {kind !== "awards" ? <label className="admin-field wide"><span>Nəticə kateqoriyası</span><input list="result-category-options" maxLength={60} placeholder="Məsələn: Portret, Rəngkarlıq" value={selected.resultCategory ?? ""} onChange={(event) => updateSelected({ resultCategory: event.target.value })} onBlur={(event) => updateSelected({ resultCategory: event.target.value.trim() })} /><datalist id="result-category-options">{Array.from(new Set(items.map((item) => item.resultCategory?.trim()).filter(Boolean))).map((category) => <option key={category} value={category} />)}</datalist><small>Mövcud kateqoriyanı seçin və ya yenisini yazın. Düymələr hər iki səhifədə avtomatik yaranır. Boş saxlanılanlar “Digər” bölməsində görünür.</small></label> : null}
                 {kind !== "home_results" ? <><label className="admin-field wide"><span>Qısa izah</span><textarea rows={4} value={selected.description} onChange={(event) => updateSelected({ description: event.target.value })} /></label>
                 <label className="admin-field"><span>Tarix</span><input type="date" value={selected.date} onChange={(event) => updateSelected({ date: event.target.value })} /></label></> : null}
                 {kind === "awards" ? <label className="admin-field"><span>Mükafat kateqoriyası</span><select value={selected.category ?? "cash"} onChange={(event) => updateSelected({ category: event.target.value as "cash" | "travel" })}><option value="cash">Pul mükafatı</option><option value="travel">Səyahət mükafatı</option></select></label> : null}

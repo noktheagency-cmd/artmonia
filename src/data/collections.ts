@@ -7,6 +7,7 @@ export type CollectionEntry = {
   date: string;
   category?: "cash" | "travel";
   demoPortrait?: number;
+  resultCategory?: string;
 };
 
 export type SuccessStoryEntry = {

@@ -5,12 +5,16 @@ import { Pause, Play } from "lucide-react";
 import type { CollectionEntry } from "@/data/collections";
 import { useSiteContentValue } from "./SiteContentContext";
 import ResultPortrait from "./ResultPortrait";
+import ResultCategories, { resultCategory } from "./ResultCategories";
 import styles from "./HomeResultsSection.module.css";
 
 export default function HomeResultsSection() {
   const [paused, setPaused] = useState(false);
+  const [category, setCategory] = useState<string | null>(null);
   const content = useSiteContentValue<CollectionEntry[]>("home_results", []);
-  const students = Array.isArray(content) ? content.filter((student) => student && typeof student.title === "string") : [];
+  const allStudents = Array.isArray(content) ? content.filter((student) => student && typeof student.title === "string") : [];
+  const activeCategory = category && allStudents.some((item) => resultCategory(item) === category) ? category : null;
+  const students = activeCategory ? allStudents.filter((item) => resultCategory(item) === activeCategory) : allStudents;
   // Fill each loop even when only one or two results remain. Never restore deleted seed records.
   const loopStudents = students.length ? Array.from({ length: Math.max(1, Math.ceil(6 / students.length)) }, () => students).flat() : [];
   if (!students.length) return null;
@@ -31,7 +35,8 @@ export default function HomeResultsSection() {
           {paused ? <Play size={18} aria-hidden="true" /> : <Pause size={18} aria-hidden="true" />}
         </button>
       </div>
-      <div className={styles.viewport} tabIndex={0} aria-label={`${students.length} tələbə nəticəsi`}>
+      <ResultCategories items={allStudents} selected={activeCategory} onSelect={setCategory} />
+      <div key={activeCategory} className={styles.viewport} tabIndex={0} aria-label={`${students.length} tələbə nəticəsi`}>
         <div className={styles.track} data-paused={paused}>
           {[0, 1].map((copy) => (
             <ul className={styles.group} key={copy} aria-hidden={copy === 1 ? true : undefined}>
