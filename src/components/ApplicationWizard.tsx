@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -50,6 +50,9 @@ export default function ApplicationWizard() {
   const [step, setStep] = useState<Step>(1);
   const [interest, setInterest] = useState("");
   const [form, setForm] = useState<ApplicationForm>(initialForm);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const submittingRef = useRef(false);
   const copy = useSiteContentValue("application_page_copy", applicationPageCopy);
   const interests = interestVisuals.map((visual, index) => ({
     ...visual,
@@ -62,16 +65,40 @@ export default function ApplicationWizard() {
     setForm((current) => ({ ...current, [field]: value }));
   }
 
-  function submitApplication(event: FormEvent<HTMLFormElement>) {
+  async function submitApplication(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // The selected program and form state are kept together so a future backend
-    // request can send this payload without changing the UI flow.
-    setStep(3);
+    if (submittingRef.current) return;
+    if (!form.firstName.trim() || !form.lastName.trim() || !selectedInterest) {
+      setSubmitError("Ad, soyad və proqram seçimini yoxlayın.");
+      return;
+    }
+    submittingRef.current = true;
+    setSubmitting(true);
+    setSubmitError("");
+    const payload = new FormData();
+    payload.set("full_name", `${form.firstName.trim()} ${form.lastName.trim()}`);
+    payload.set("phone", form.phone.trim());
+    payload.set("email", form.email.trim());
+    payload.set("interest", selectedInterest.title);
+    try {
+      const response = await fetch("/api/contact", { method: "POST", body: payload, signal: AbortSignal.timeout(30000) });
+      const result = await response.json().catch(() => null);
+      if (!response.ok || result?.ok !== true) {
+        throw new Error(result?.error || "Müraciət göndərilmədi. Yenidən cəhd edin.");
+      }
+      setStep(3);
+    } catch (error) {
+      setSubmitError(error instanceof Error && !(error instanceof TypeError) && error.name !== "TimeoutError" ? error.message : "Bağlantı alınmadı. Yazdıqlarınız formadadır; yenidən cəhd edin.");
+    } finally {
+      submittingRef.current = false;
+      setSubmitting(false);
+    }
   }
 
   function resetWizard() {
     setInterest("");
     setForm(initialForm);
+    setSubmitError("");
     setStep(1);
   }
 
@@ -142,7 +169,7 @@ export default function ApplicationWizard() {
         ) : null}
 
         {step === 2 ? (
-          <form className={styles.stepPanel} onSubmit={submitApplication}>
+          <form className={styles.stepPanel} onSubmit={submitApplication} aria-busy={submitting}>
             <div className={styles.sectionTitle}>
               <h2>{copy.contactTitle}</h2>
               <p><strong>{selectedInterest?.title}</strong> {copy.contactTextSuffix}</p>
@@ -167,12 +194,13 @@ export default function ApplicationWizard() {
               </label>
             </div>
 
+            {submitError && <p role="alert">{submitError}</p>}
             <div className={styles.stepActions}>
-              <button className={styles.secondaryButton} type="button" onClick={() => setStep(1)}>
+              <button className={styles.secondaryButton} type="button" disabled={submitting} onClick={() => setStep(1)}>
                 <ArrowLeft aria-hidden="true" /> {copy.backButton}
               </button>
-              <button className={styles.primaryButton} type="submit">
-                {copy.submitButton} <ArrowRight aria-hidden="true" />
+              <button className={styles.primaryButton} type="submit" disabled={submitting}>
+                {submitting ? "Göndərilir..." : copy.submitButton} <ArrowRight aria-hidden="true" />
               </button>
             </div>
           </form>
