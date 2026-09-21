@@ -5,6 +5,7 @@ import { courses } from "@/data/site";
 import { publicTestimonials } from "./section-editing";
 import { withProgramDetail } from "./program-content";
 import { transformationDefaults } from "./transformation-content";
+import { publishedBlog } from "./blog";
 
 export type SiteContentMap = Record<string, JsonValue>;
 
@@ -82,6 +83,8 @@ export async function getPublishedContent(): Promise<SiteContentMap> {
     if (row.is_published) publishedContent[row.key] = row.key === "student_testimonials" ? publicTestimonials(row.content as JsonValue) : sanitizeSectionContent(row.key, row.content as JsonValue, data);
     else delete publishedContent[row.key];
   });
+  // Draft article bodies must not be serialized into public client providers.
+  if (publishedContent.blog_posts) publishedContent.blog_posts = publishedBlog(publishedContent.blog_posts);
   return publishedContent;
 }
 

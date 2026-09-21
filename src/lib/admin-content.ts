@@ -7,6 +7,7 @@ import {
 } from "@/data/site";
 import { awards, successStories } from "@/data/collections";
 import { homeResults } from "@/data/home-results";
+import { blogPosts } from "./blog";
 import { interiorMedia } from "@/data/interior-media";
 import { testimonials } from "@/data/testimonials";
 import { homeFaq } from "@/data/home-faq";
@@ -43,6 +44,7 @@ export type SiteSectionRecord = {
 };
 
 const definitions = [
+  ["blog_posts", "Blog", "Blog yazıları: başlıq, kateqoriya, tarix, müəllif, üz qabığı, mətn və dərc statusu", "content", blogPosts],
   ["student_works", "Ana səhifə · Tələbə işləri", "Nəticələrin altındakı qalereya. Nümunə şəkilləri real işlərlə əvəz edin. Kateqoriya adları filtrləri avtomatik yaradır; ad, proqram, şəkil və rəy dəyişdirilə bilər.", "website", studentWorks],
   ["student_testimonials", "Tələbə rəyləri", "FAQ-ın altında hərəkətli rəy kartları: ad-soyad və ya Anonim, maksimum 250 simvolluq rəy", "website", testimonials],
   ["global_copy", "Ortaq menyu mətnləri", "Bütün səhifələrdə görünən menyu, müraciət düyməsi və müəllif hüququ mətni", "settings", globalCopy],
