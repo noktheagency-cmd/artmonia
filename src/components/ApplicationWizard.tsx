@@ -131,8 +131,13 @@ export default function ApplicationWizard() {
         {step === 1 ? (
           <div className={styles.stepPanel}>
             <div className={styles.sectionTitle}>
+              <div>
               <h2>{copy.firstStepTitle}</h2>
               <p>{copy.firstStepText}</p>
+              </div>
+              <button className={styles.primaryButton} type="button" disabled={!interest} onClick={() => setStep(2)}>
+                {copy.continueButton} <ArrowRight aria-hidden="true" />
+              </button>
             </div>
 
             <div className={styles.optionGrid} role="radiogroup" aria-label="Proqram istiqaməti">
@@ -160,11 +165,6 @@ export default function ApplicationWizard() {
               })}
             </div>
 
-            <div className={styles.stepActionsEnd}>
-              <button className={styles.primaryButton} type="button" disabled={!interest} onClick={() => setStep(2)}>
-                {copy.continueButton} <ArrowRight aria-hidden="true" />
-              </button>
-            </div>
           </div>
         ) : null}
 
