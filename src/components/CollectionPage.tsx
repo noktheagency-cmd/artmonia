@@ -17,6 +17,8 @@ export default async function CollectionPage({ type }: CollectionPageProps) {
   const global = (siteContent.global_copy as unknown as GlobalCopy | undefined) ?? globalCopy;
   const pageCopy = copy[type];
   const items = (siteContent[type === "results" ? "student_results" : "awards"] as unknown as CollectionEntry[] | undefined) ?? [];
+  const homeResults = (siteContent.home_results as unknown as CollectionEntry[] | undefined) ?? [];
+  const results = Array.from(new Map([...homeResults, ...items].map((item) => [item.id, item])).values());
   const cashAwards = items.filter((item) => item.category === "cash");
   const travelAwards = items.filter((item) => item.category === "travel");
 
@@ -39,7 +41,16 @@ export default async function CollectionPage({ type }: CollectionPageProps) {
 
         <section className="collection-content" aria-label={`${pageCopy.title} siyahısı`}>
           {type === "results" ? (
-            <ResultsShowcase />
+            <>
+              {results.length > 0 ? (
+                <div className="student-results-grid" id="telebe-neticeleri">
+                  {results.map((result, index) => (
+                    <StudentResultCard key={result.id} {...result} index={index} type="results" />
+                  ))}
+                </div>
+              ) : null}
+              <ResultsShowcase />
+            </>
           ) : (
             <div className="awards-categories">
               <section className="awards-category awards-category--cash" id="pul-mukafatlari" aria-labelledby="cash-awards-title">
