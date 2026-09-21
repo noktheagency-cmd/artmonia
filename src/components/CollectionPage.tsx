@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import ResultsShowcase from "@/components/ResultsShowcase";
+import ResultsGrid from "@/components/ResultsGrid";
 import StudentResultCard from "@/components/StudentResultCard";
 import { SiteContentProvider } from "@/components/SiteContentContext";
 import type { CollectionEntry } from "@/data/collections";
@@ -42,13 +43,7 @@ export default async function CollectionPage({ type }: CollectionPageProps) {
         <section className="collection-content" aria-label={`${pageCopy.title} siyahısı`}>
           {type === "results" ? (
             <>
-              {results.length > 0 ? (
-                <div className="student-results-grid" id="telebe-neticeleri">
-                  {results.map((result, index) => (
-                    <StudentResultCard key={result.id} {...result} index={index} type="results" />
-                  ))}
-                </div>
-              ) : null}
+              <ResultsGrid results={results} />
               <ResultsShowcase />
             </>
           ) : (
