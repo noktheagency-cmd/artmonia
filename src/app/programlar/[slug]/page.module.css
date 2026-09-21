@@ -41,7 +41,7 @@
 .back { grid-column: 1 / -1; justify-self: start; color: #d5cadd; text-decoration: none; font-size: 14px; padding: 8px 0; transition: color .2s, transform .2s; }
 .back:hover { color: #fff; transform: translateX(-4px); }
 .copy { min-width: 0; }
-.eyebrow { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: #cfc0df; }
+.eyebrow { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; color: #cfc0df; }
 .copy h1 { font: clamp(50px, 6.8vw, 98px)/1 Georgia, serif; letter-spacing: -.045em; margin: 22px 0 28px; color: #fff; overflow-wrap: anywhere; }
 .lead { color: #c1b9ca; font-size: clamp(17px, 1.6vw, 22px); line-height: 1.7; }
 .media { aspect-ratio: 4/3; border-radius: 28px; overflow: hidden; }
@@ -51,7 +51,7 @@
 .cta:hover, .secondaryCta:hover { transform: translateY(-3px); background: #8540ed; }
 .page a:focus-visible, .syllabus summary:focus-visible { outline: 3px solid #b981fa; outline-offset: 6px; }
 .audience, .learning { max-width: 1240px; margin: auto; padding: 100px 28px 0; }
-.sectionHeading > span { color: var(--purple); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 800; }
+.sectionHeading > span { color: var(--purple); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; }
 .sectionHeading h2, .details h2 { font: clamp(40px, 5vw, 68px)/1.08 Georgia, serif; letter-spacing: -.04em; color: var(--text); margin: 18px 0 38px; }
 .sectionHeading em, .details em { color: var(--purple); font-weight: inherit; }
 .audienceGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
