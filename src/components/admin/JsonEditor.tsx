@@ -133,7 +133,7 @@ const fieldLabels: Record<string, string> = {
   price: "Qiymət",
   principles: "Tədris prinsipləri",
   principlesTitle: "Prinsiplər başlığı",
-  problem: "Problem bölməsi mətnləri",
+  problem: "Problem · Tanış gəlir? — mətnlər və xanımın şəkli",
   programs: "Proqram bölməsi mətnləri",
   progressPrefix: "Addım göstəricisi",
   program: "Proqram",
@@ -328,6 +328,9 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   }
 
   const text = value == null ? "" : String(value);
+  if (path === "home_page_copy.problem.image") {
+    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} accept="image" /><small>“Tanış gəlir?” bölməsinin mərkəzindəki xanımın şəkli. Şəffaf fonlu PNG və ya WEBP yükləyin; şəkil mövcud ölçüyə uyğun göstəriləcək.</small></>;
+  }
   if (path.startsWith("student_works.items.") && fieldKey === "image") {
     return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio="3 / 4" /><input aria-label="İş şəklinin ünvanı" placeholder="https://... və ya /assets/..." value={text} onChange={(event) => onChange(event.target.value)} /><small>Şəkli yükləyin, kitabxanadan seçin və ya mövcud şəklin ünvanını daxil edin.</small></>;
   }
