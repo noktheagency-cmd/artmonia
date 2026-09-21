@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import CollectionEditor from "./CollectionEditor";
 import NewsEditor from "./NewsEditor";
+import BlogEditor from "./BlogEditor";
 import JsonEditor from "./JsonEditor";
 import { createClient } from "@/lib/supabase/client";
 import { defaultSections, type JsonValue, type SiteSectionRecord } from "@/lib/admin-content";
@@ -59,12 +60,13 @@ export type MediaAsset = {
   created_at: string;
 };
 
-type View = "dashboard" | "homepage" | "news" | "home_results" | "results" | "awards" | "media" | "messages" | "settings";
+type View = "dashboard" | "homepage" | "news" | "blog" | "home_results" | "results" | "awards" | "media" | "messages" | "settings";
 
 const nav = [
   { id: "dashboard" as const, label: "Ana panel", icon: LayoutDashboard },
   { id: "homepage" as const, label: "Sayt məzmunu", icon: Home },
   { id: "news" as const, label: "Yeniliklər", icon: Newspaper },
+  { id: "blog" as const, label: "Blog", icon: Newspaper },
   { id: "home_results" as const, label: "Ana səhifə · Nəticələr", icon: Medal },
   { id: "results" as const, label: "Nəticələr", icon: Medal },
   { id: "awards" as const, label: "Mükafatlar", icon: Award },
@@ -120,7 +122,7 @@ export default function AdminDashboard({
   const fileRef = useRef<HTMLInputElement>(null);
 
   const unread = messages.filter((message) => message.status === "new").length;
-  const homepageSections = useMemo(() => sections.filter((section) => !["news_items", "home_results", "awards"].includes(section.key)), [sections]);
+  const homepageSections = useMemo(() => sections.filter((section) => !["news_items", "blog_posts", "home_results", "awards"].includes(section.key)), [sections]);
   const resultSections = useMemo(() => sections.filter((section) => ["collections_page_copy", "success_stories"].includes(section.key)), [sections]);
   const filteredSections = useMemo(() => {
     const query = search.trim().toLocaleLowerCase("az");
@@ -128,7 +130,7 @@ export default function AdminDashboard({
     return homepageSections.filter((section) => `${section.label} ${section.description}`.toLocaleLowerCase("az").includes(query));
   }, [homepageSections, search]);
 
-  function getSection(key: "news_items" | "awards" | "home_results") {
+  function getSection(key: "news_items" | "blog_posts" | "awards" | "home_results") {
     return sections.find((section) => section.key === key)
       ?? defaultSections.find((section) => section.key === key)!;
   }
@@ -407,6 +409,7 @@ export default function AdminDashboard({
           ) : null}
 
           {view === "news" ? <NewsEditor key={`news-${getSection("news_items").updated_at ?? "default"}`} section={getSection("news_items")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}
+          {view === "blog" ? <BlogEditor key={`blog-${getSection("blog_posts").updated_at ?? "default"}`} section={getSection("blog_posts")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}
           {view === "home_results" ? <CollectionEditor key={`home-results-${getSection("home_results").updated_at ?? "default"}`} kind="home_results" section={getSection("home_results")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}
           {view === "results" ? (
             <section className="admin-view-section">
