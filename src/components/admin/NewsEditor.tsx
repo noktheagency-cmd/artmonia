@@ -156,7 +156,7 @@ export default function NewsEditor({
               </footer>
             </>
           ) : (
-            <div className="collection-form-empty"><Newspaper /><h2>Redaktə üçün xəbər seçin</h2><p>Sol siyahıdan seçim edin və ya yeni xəbər əlavə edin.</p><button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button>{!items.length ? <button className="secondary-action" type="button" disabled={busy} onClick={() => onSave({ ...section, content: [] })}>{busy ? "Saxlanılır..." : "Boş siyahını saxla"}</button> : null}</div>
+            <div className="collection-form-empty"><Newspaper /><h2>Redaktə üçün xəbər seçin</h2><p>Sol siyahıdan seçim edin və ya yeni xəbər əlavə edin.</p><button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button>{!items.length ? <button className="secondary-action" type="button" disabled={busy} onClick={() => onSave({ ...section, is_published: sectionPublished, content: [] })}>{busy ? "Saxlanılır..." : "Boş siyahını saxla"}</button> : null}</div>
           )}
         </div>
       </div>

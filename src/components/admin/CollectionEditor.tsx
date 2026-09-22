@@ -184,7 +184,7 @@ export default function CollectionEditor({
               </footer>
             </>
           ) : (
-            <div className="collection-form-empty"><ImagePlus /><h2>Redaktə üçün məlumat seçin</h2><p>Sol siyahıdan seçim edin və ya yeni məlumat əlavə edin.</p><div><button className="secondary-action" type="button" onClick={addItem}><Plus /> {labels.add}</button>{items.length === 0 ? <button className="primary-action" type="button" disabled={busy} onClick={() => onSave({ ...section, content: [] })}>{busy ? "Saxlanılır..." : "Boş siyahını saxla"}</button> : null}</div></div>
+            <div className="collection-form-empty"><ImagePlus /><h2>Redaktə üçün məlumat seçin</h2><p>Sol siyahıdan seçim edin və ya yeni məlumat əlavə edin.</p><div><button className="secondary-action" type="button" onClick={addItem}><Plus /> {labels.add}</button>{items.length === 0 ? <button className="primary-action" type="button" disabled={busy} onClick={() => onSave({ ...section, is_published: sectionPublished, content: [] })}>{busy ? "Saxlanılır..." : "Boş siyahını saxla"}</button> : null}</div></div>
           )}
         </div>
       </div>
