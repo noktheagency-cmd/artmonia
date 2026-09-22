@@ -1,4 +1,5 @@
 export type CollectionEntry = {
+  published?: boolean;
   id: string;
   title: string;
   subtitle: string;

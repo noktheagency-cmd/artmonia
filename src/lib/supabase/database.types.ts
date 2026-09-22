@@ -14,6 +14,12 @@ export type Database = {
   }
   public: {
     Tables: {
+      site_public_content: {
+        Row: { key: string; content: Json; is_published: boolean; sort_order: number }
+        Insert: { key: string; content?: Json; is_published: boolean; sort_order?: number }
+        Update: { content?: Json; is_published?: boolean; sort_order?: number }
+        Relationships: []
+      }
       admin_users: {
         Row: {
           created_at: string

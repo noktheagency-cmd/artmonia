@@ -8,6 +8,7 @@ export const navItems = [
 ];
 
 export type NewsItem = {
+  published?: boolean;
   id: string;
   createdAt?: string;
   date: string;

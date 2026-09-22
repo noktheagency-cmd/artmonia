@@ -54,6 +54,7 @@ function parseItems(content: SiteSectionRecord["content"]): CollectionEntry[] {
     if (!item || typeof item !== "object" || Array.isArray(item) || typeof item.id !== "string") return [];
     return [{
       id: item.id,
+      published: item.published !== false,
       title: typeof item.title === "string" ? item.title : "",
       subtitle: typeof item.subtitle === "string" ? item.subtitle : "",
       description: typeof item.description === "string" ? item.description : "",
@@ -96,7 +97,7 @@ export default function CollectionEditor({
   const labels = copy[kind];
   const [items, setItems] = useState<CollectionEntry[]>(() => parseItems(section.content));
   const [selectedId, setSelectedId] = useState<string | null>(() => parseItems(section.content)[0]?.id ?? null);
-  const [published, setPublished] = useState(section.is_published);
+  const [sectionPublished, setSectionPublished] = useState(section.is_published);
   const selected = useMemo(() => items.find((item) => item.id === selectedId) ?? null, [items, selectedId]);
 
   function addItem() {
@@ -134,6 +135,7 @@ export default function CollectionEditor({
         <button className="primary-action" type="button" onClick={addItem}><Plus /> {labels.add}</button>
       </div>
 
+      <label className="collection-publish"><input type="checkbox" checked={sectionPublished} onChange={(event) => setSectionPublished(event.target.checked)} />Bütün bölmə saytda görünsün (saxladıqdan sonra)</label>
       <div className="collection-workspace">
         <aside className="collection-list-pane">
           <header><h2>{labels.list}</h2><span>{items.length}</span></header>
@@ -142,7 +144,7 @@ export default function CollectionEditor({
               {items.map((item, index) => (
                 <button key={item.id} type="button" className={item.id === selectedId ? "selected" : ""} onClick={() => setSelectedId(item.id)}>
                   <span className="collection-thumb">{kind === "home_results" ? <ResultPortrait student={item} /> : item.image ? <img src={item.image} alt="" /> : <ImagePlus />}</span>
-                  <span><strong>{item.title || labels.newTitle}</strong><small><i />{published ? "Dərc olunub" : "Qaralama"}</small></span>
+                  <span><strong>{item.title || labels.newTitle}</strong><small><i />{item.published !== false ? "Dərc olunub" : "Qaralama"}</small></span>
                   <ChevronRight />
                   <em>{index + 1}</em>
                 </button>
@@ -177,12 +179,12 @@ export default function CollectionEditor({
 
               <footer className="collection-form-actions">
                 <button className="collection-delete" type="button" onClick={removeSelected}><Trash2 /> {labels.delete}</button>
-                <label className="collection-publish"><input type="checkbox" checked={published} onChange={(event) => setPublished(event.target.checked)} /><span>{published ? "Dərc olunur" : "Qaralama"}</span></label>
-                <button className="primary-action" type="button" disabled={busy || !selected.title.trim()} onClick={() => onSave({ ...section, content: items, is_published: published })}>{busy ? "Saxlanılır..." : "Dəyişiklikləri saxla"}</button>
+                <label className="collection-publish"><input type="checkbox" checked={selected.published !== false} onChange={(event) => updateSelected({ published: event.target.checked })} /><span>{selected.published !== false ? "Bu kart dərc olunur" : "Bu kart qaralamadır"}</span></label>
+                <button className="primary-action" type="button" disabled={busy || !selected.title.trim()} onClick={() => onSave({ ...section, content: items, is_published: sectionPublished })}>{busy ? "Saxlanılır..." : "Dəyişiklikləri saxla"}</button>
               </footer>
             </>
           ) : (
-            <div className="collection-form-empty"><ImagePlus /><h2>Redaktə üçün məlumat seçin</h2><p>Sol siyahıdan seçim edin və ya yeni məlumat əlavə edin.</p><div><button className="secondary-action" type="button" onClick={addItem}><Plus /> {labels.add}</button>{items.length === 0 ? <button className="primary-action" type="button" disabled={busy} onClick={() => onSave({ ...section, content: [], is_published: published })}>{busy ? "Saxlanılır..." : "Boş siyahını saxla"}</button> : null}</div></div>
+            <div className="collection-form-empty"><ImagePlus /><h2>Redaktə üçün məlumat seçin</h2><p>Sol siyahıdan seçim edin və ya yeni məlumat əlavə edin.</p><div><button className="secondary-action" type="button" onClick={addItem}><Plus /> {labels.add}</button>{items.length === 0 ? <button className="primary-action" type="button" disabled={busy} onClick={() => onSave({ ...section, content: [] })}>{busy ? "Saxlanılır..." : "Boş siyahını saxla"}</button> : null}</div></div>
           )}
         </div>
       </div>

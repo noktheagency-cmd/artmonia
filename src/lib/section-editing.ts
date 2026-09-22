@@ -1,6 +1,15 @@
 import type { JsonValue } from "./admin-content";
 import { TESTIMONIAL_LIMIT, TESTIMONIAL_NAME_LIMIT, TESTIMONIAL_TEXT_LIMIT } from "../data/testimonials";
 
+// Preserve shape for consumers without leaking hidden values or restoring seeds.
+export function blankSection(value: JsonValue): JsonValue {
+  if (Array.isArray(value)) return [];
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, blankSection(child)]));
+  if (typeof value === "boolean") return false;
+  if (typeof value === "number") return 0;
+  return "";
+}
+
 // Retain an explicit empty published record: removing the row restores seed data.
 export function emptySectionContent(content: JsonValue): JsonValue | undefined {
   if (Array.isArray(content)) return [];

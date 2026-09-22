@@ -14,6 +14,7 @@ function parseItems(content: SiteSectionRecord["content"]): NewsItem[] {
     if (typeof item.id !== "string") return [];
     return [{
       id: item.id,
+      published: item.published !== false,
       createdAt: typeof item.createdAt === "string" ? item.createdAt : undefined,
       date: typeof item.date === "string" ? item.date : "",
       category: typeof item.category === "string" ? item.category : "",
@@ -60,7 +61,7 @@ export default function NewsEditor({
   );
   const [items, setItems] = useState<NewsItem[]>(initialItems);
   const [selectedId, setSelectedId] = useState<string | null>(initialItems[0]?.id ?? null);
-  const [published, setPublished] = useState(section.is_published);
+  const [sectionPublished, setSectionPublished] = useState(section.is_published);
   const selected = items.find((item) => item.id === selectedId) ?? null;
 
   function addItem() {
@@ -98,6 +99,7 @@ export default function NewsEditor({
         <button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button>
       </div>
 
+      <label className="collection-publish"><input type="checkbox" checked={sectionPublished} onChange={(event) => setSectionPublished(event.target.checked)} />Bütün xəbər bölməsi saytda görünsün (saxladıqdan sonra)</label>
       <div className="collection-workspace">
         <aside className="collection-list-pane">
           <header><h2>Xəbərlərin siyahısı</h2><span>{items.length}</span></header>
@@ -149,12 +151,12 @@ export default function NewsEditor({
               </div>
               <footer className="collection-form-actions">
                 <button className="collection-delete" type="button" onClick={removeSelected}><Trash2 /> Xəbəri sil</button>
-                <label className="collection-publish"><input type="checkbox" checked={published} onChange={(event) => setPublished(event.target.checked)} /><span>{published ? "Dərc olunur" : "Qaralama"}</span></label>
-                <button className="primary-action" type="button" disabled={busy || !selected.title.trim()} onClick={() => onSave({ ...section, content: items, is_published: published })}>{busy ? "Saxlanılır..." : "Dəyişiklikləri saxla"}</button>
+                <label className="collection-publish"><input type="checkbox" checked={selected.published !== false} onChange={(event) => updateSelected({ published: event.target.checked })} /><span>{selected.published !== false ? "Bu xəbər dərc olunur" : "Bu xəbər qaralamadır"}</span></label>
+                <button className="primary-action" type="button" disabled={busy || !selected.title.trim()} onClick={() => onSave({ ...section, content: items, is_published: sectionPublished })}>{busy ? "Saxlanılır..." : "Dəyişiklikləri saxla"}</button>
               </footer>
             </>
           ) : (
-            <div className="collection-form-empty"><Newspaper /><h2>Redaktə üçün xəbər seçin</h2><p>Sol siyahıdan seçim edin və ya yeni xəbər əlavə edin.</p><button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button>{!items.length ? <button className="secondary-action" type="button" disabled={busy} onClick={() => onSave({ ...section, content: [], is_published: published })}>{busy ? "Saxlanılır..." : "Boş siyahını saxla"}</button> : null}</div>
+            <div className="collection-form-empty"><Newspaper /><h2>Redaktə üçün xəbər seçin</h2><p>Sol siyahıdan seçim edin və ya yeni xəbər əlavə edin.</p><button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button>{!items.length ? <button className="secondary-action" type="button" disabled={busy} onClick={() => onSave({ ...section, content: [] })}>{busy ? "Saxlanılır..." : "Boş siyahını saxla"}</button> : null}</div>
           )}
         </div>
       </div>
