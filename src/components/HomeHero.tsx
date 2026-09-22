@@ -31,8 +31,46 @@ function ArrowUpRightIcon() {
 export default function HomeHero() {
   const [cardsOpen, setCardsOpen] = useState(false);
   const heroRef = useRef<HTMLElement | null>(null);
+  const mobileOpened = useRef(false);
   const heroAsset = videoExperience.hero;
   const copy = useSiteContentValue("home_page_copy", homePageCopy).hero;
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    let startY = 0;
+    let startX = 0;
+    let consuming = false;
+    let eligible = false;
+    const start = (event: TouchEvent) => {
+      eligible = window.matchMedia("(max-width: 760px)").matches && !mobileOpened.current && window.scrollY < 40 && event.touches.length === 1;
+      consuming = false;
+      startY = event.touches[0]?.clientY ?? 0;
+      startX = event.touches[0]?.clientX ?? 0;
+    };
+    const move = (event: TouchEvent) => {
+      if (event.touches.length !== 1) return;
+      const dy = startY - event.touches[0].clientY;
+      const dx = Math.abs(startX - event.touches[0].clientX);
+      if (eligible && dy > 8 && dy > dx) {
+        consuming = true;
+        mobileOpened.current = true;
+        setCardsOpen(true);
+      }
+      if (consuming && event.cancelable) event.preventDefault();
+    };
+    const end = () => { consuming = false; eligible = false; };
+    hero.addEventListener("touchstart", start, { passive: true });
+    hero.addEventListener("touchmove", move, { passive: false });
+    hero.addEventListener("touchend", end);
+    hero.addEventListener("touchcancel", end);
+    return () => {
+      hero.removeEventListener("touchstart", start);
+      hero.removeEventListener("touchmove", move);
+      hero.removeEventListener("touchend", end);
+      hero.removeEventListener("touchcancel", end);
+    };
+  }, []);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -66,6 +104,7 @@ export default function HomeHero() {
   }, []);
 
   function handlePointerMove(event: React.PointerEvent<HTMLElement>) {
+    if (event.pointerType !== "mouse") return;
     const rect = event.currentTarget.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 100;
     const y = ((event.clientY - rect.top) / rect.height) * 100;
@@ -117,7 +156,7 @@ export default function HomeHero() {
           }
         }}
         onBlur={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget)) setCardsOpen(false);
+          if (window.matchMedia(desktopHoverQuery).matches && !event.currentTarget.contains(event.relatedTarget)) setCardsOpen(false);
         }}
         onKeyDown={(event) => {
           if (event.key === "Escape") setCardsOpen(false);
@@ -149,7 +188,7 @@ export default function HomeHero() {
           aria-expanded={cardsOpen}
           onClick={(event) => {
             // Keep keyboard activation available; desktop pointer clicks do not toggle.
-            if (event.detail === 0 || !window.matchMedia(desktopHoverQuery).matches) {
+            if (event.detail === 0) {
               setCardsOpen((open) => !open);
             }
           }}

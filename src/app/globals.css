@@ -22512,6 +22512,21 @@ html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .s
   color: var(--brand-navy);
 }
 
+/* Remove the browser's transient blue touch highlight, keeping keyboard focus. */
+html { -webkit-tap-highlight-color: transparent; }
+@media (max-width: 760px) {
+  .teacher-atelier .teacher-poster-stage { display: flex !important; gap: 16px !important; overflow-x: auto !important; scroll-snap-type: x mandatory; padding: 8px 0 18px !important; align-items: stretch !important; }
+  .teacher-atelier .teacher-poster-stage .teacher-poster { flex: 0 0 82%; min-width: 0 !important; width: 82% !important; grid-template-columns: 1fr !important; grid-template-rows: 280px auto !important; transform: none !important; scroll-snap-align: start; }
+  .teacher-atelier .teacher-poster-image { height: 280px !important; }
+  .teacher-atelier .teacher-poster-caption { position: relative !important; inset: auto !important; padding: 18px !important; }
+  .site-header .mobile-nav { top: calc(100% + 10px); width: 100%; max-height: calc(100svh - 110px); border-radius: 20px; padding: 14px; background: #fff; box-shadow: 0 14px 32px rgb(25 8 84 / 12%); backdrop-filter: none; }
+  .site-header .mobile-nav > div > a { font: 500 16px/1.4 var(--sans, sans-serif); padding: 12px; border-radius: 10px; }
+  .site-header .mobile-nav .mobile-program-links { display: flex; flex-wrap: wrap; gap: 2px 12px; padding: 0 12px 10px; border: 0; }
+  .site-header .mobile-nav .mobile-program-links a { padding: 4px 0; font: 400 12px/1.5 var(--sans, sans-serif); opacity: .7; }
+  .site-header .mobile-nav .mobile-cta { justify-content: center; gap: 12px; padding: 12px 18px; background: #6929db; font-size: 14px; }
+  html.theme-dark .site-header .mobile-nav { background: #17112f; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-header,
   .site-header :is(a, button, .icon) {

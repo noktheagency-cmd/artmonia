@@ -46,6 +46,24 @@ export default function HomeNewsSection() {
     const rail = railRef.current;
     if (!rail || paused) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobile = window.matchMedia("(max-width: 760px)");
+    let touching = false;
+    const touchStart = () => { touching = true; };
+    const touchEnd = () => { touching = false; };
+    rail.addEventListener("touchstart", touchStart, { passive: true });
+    rail.addEventListener("touchend", touchEnd, { passive: true });
+    rail.addEventListener("touchcancel", touchEnd, { passive: true });
+    const interval = window.setInterval(() => {
+      if (!mobile.matches || reduced.matches || document.hidden || touching || rail.contains(document.activeElement)) return;
+      const first = rail.children[0] as HTMLElement;
+      const second = rail.children[1] as HTMLElement;
+      const repeat = rail.children[cycleItems.length] as HTMLElement;
+      if (!first || !second || !repeat) return;
+      const step = second.offsetLeft - first.offsetLeft;
+      const cycle = repeat.offsetLeft - first.offsetLeft;
+      if (rail.scrollLeft >= cycle - 2) rail.scrollLeft -= cycle;
+      rail.scrollTo({ left: (Math.round(rail.scrollLeft / step) + 1) * step, behavior: "smooth" });
+    }, 3000);
     let frame = 0;
     let previous = 0;
     let position = rail.scrollLeft;
@@ -56,7 +74,7 @@ export default function HomeNewsSection() {
       const first = rail.children[0] as HTMLElement | undefined;
       const repeat = rail.children[cycleItems.length] as HTMLElement | undefined;
       const cycle = first && repeat ? repeat.offsetLeft - first.offsetLeft : 0;
-      if (!reduced.matches && !document.hidden && cycle > 0) {
+      if (!mobile.matches && !reduced.matches && !document.hidden && cycle > 0) {
         if (Math.abs(rail.scrollLeft - position) > 2) position = rail.scrollLeft;
         position = (position + elapsed * 0.025) % cycle;
         rail.scrollLeft = position;
@@ -64,7 +82,13 @@ export default function HomeNewsSection() {
       frame = requestAnimationFrame(tick);
     }
     frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearInterval(interval);
+      rail.removeEventListener("touchstart", touchStart);
+      rail.removeEventListener("touchend", touchEnd);
+      rail.removeEventListener("touchcancel", touchEnd);
+    };
   }, [items, paused, cycleItems.length]);
 
   function scrollRail(direction: -1 | 1) {
