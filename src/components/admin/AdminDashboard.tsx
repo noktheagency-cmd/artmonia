@@ -35,6 +35,7 @@ import { defaultSections, type JsonValue, type SiteSectionRecord } from "@/lib/a
 import { logout } from "@/app/admin/actions";
 import { validateStudentWorks } from "@/lib/student-works";
 import { emptySectionContent, publicTestimonials, validateTestimonials } from "@/lib/section-editing";
+import { validateSection } from "@/lib/admin-validation";
 
 export type AdminMessage = {
   id: string;
@@ -115,6 +116,9 @@ export default function AdminDashboard({
   const [editing, setEditing] = useState<SiteSectionRecord | null>(null);
   const [editingMedia, setEditingMedia] = useState<MediaAsset | null>(null);
   const [profileName, setProfileName] = useState(adminName);
+  const [savedProfileName, setSavedProfileName] = useState(adminName);
+  const [moreMedia, setMoreMedia] = useState(initialMedia.length === 100);
+  const [moreMessages, setMoreMessages] = useState(initialMessages.length === 100);
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -140,7 +144,24 @@ export default function AdminDashboard({
     window.setTimeout(() => setNotice(""), 3200);
   }
 
+  async function loadMore(kind: "media" | "messages") {
+    setBusy(true);
+    try {
+      const table = kind === "media" ? "media_assets" : "contact_submissions";
+      const last = (kind === "media" ? media : messages).at(-1);
+      let query = createClient().from(table).select("*").order("created_at", { ascending: false }).order("id").limit(100);
+      if (last) query = query.or(`created_at.lt.${last.created_at},and(created_at.eq.${last.created_at},id.gt.${last.id})`);
+      const { data, error } = await query;
+      if (error) throw error;
+      if (kind === "media") { setMedia((current) => [...current, ...data as MediaAsset[]]); setMoreMedia(data.length === 100); }
+      else { setMessages((current) => [...current, ...data as AdminMessage[]]); setMoreMessages(data.length === 100); }
+    } catch { flash("Məlumatları yükləmək mümkün olmadı. Yenidən cəhd edin."); }
+    finally { setBusy(false); }
+  }
+
   async function saveSection(section: SiteSectionRecord) {
+    const invalid = validateSection(section);
+    if (invalid) { flash(invalid); return; }
     if (section.key === "student_testimonials") {
       const error = validateTestimonials(section.content);
       if (error) { flash(error); return; }
@@ -170,8 +191,11 @@ export default function AdminDashboard({
         };
 
         if (section.id) {
-          const { data, error } = await supabase.from("site_sections").update(payload).eq("id", section.id).select().single();
+          let query = supabase.from("site_sections").update(payload).eq("id", section.id);
+          if (section.updated_at) query = query.eq("updated_at", section.updated_at);
+          const { data, error } = await query.select().maybeSingle();
           if (error) throw error;
+          if (!data) throw new Error("Bu bölmə başqa sessiyada dəyişib. Səhifəni yeniləyib yenidən redaktə edin; məlumatların üzərinə yazılmadı.");
           saved = data as SiteSectionRecord;
         } else {
           const { data, error } = await supabase.from("site_sections").insert({ ...payload, created_by: userData.user.id }).select().single();
@@ -184,7 +208,7 @@ export default function AdminDashboard({
         ? current.map((item) => item.key === saved.key ? saved : item)
         : [...current, saved]);
       setEditing(null);
-      flash(configured ? "Dəyişikliklər saytda yayımlandı." : "Demo dəyişikliyi bu sessiyada saxlanıldı.");
+      flash(configured ? "Dəyişikliklər saxlanıldı. Dərc statusu tətbiq olundu." : "Demo dəyişikliyi bu sessiyada saxlanıldı.");
     } catch (error) {
       flash(error instanceof Error ? error.message : "Yadda saxlamaq mümkün olmadı.");
     } finally {
@@ -204,7 +228,7 @@ export default function AdminDashboard({
 
   async function updateMessage(message: AdminMessage, status: AdminMessage["status"]) {
     if (configured) {
-      const { error } = await createClient().from("contact_submissions").update({ status }).eq("id", message.id);
+      const { error } = await createClient().from("contact_submissions").update({ status }).eq("id", message.id).select("id").single();
       if (error) return flash(error.message);
     }
     setMessages((current) => current.map((item) => item.id === message.id ? { ...item, status } : item));
@@ -216,7 +240,7 @@ export default function AdminDashboard({
     setBusy(true);
     try {
       if (configured) {
-        const { error } = await createClient().from("contact_submissions").delete().eq("id", message.id);
+        const { error } = await createClient().from("contact_submissions").delete().eq("id", message.id).select("id").single();
         if (error) throw error;
       }
       setMessages((current) => current.filter((item) => item.id !== message.id));
@@ -235,6 +259,10 @@ export default function AdminDashboard({
     }
     if (file.size > 10 * 1024 * 1024) {
       flash("Fayl ölçüsü 10 MB-dan böyük ola bilməz.");
+      return null;
+    }
+    if (!["image/jpeg", "image/png", "image/webp", "image/gif", "video/mp4"].includes(file.type)) {
+      flash("Yalnız JPG, PNG, WEBP, GIF və MP4 faylları qəbul edilir.");
       return null;
     }
     setBusy(true);
@@ -277,9 +305,13 @@ export default function AdminDashboard({
     try {
       if (configured) {
         const supabase = createClient();
+        const { data: usage, error: usageError } = await supabase.from("site_sections").select("label,content");
+        if (usageError) throw usageError;
+        const usedBy = usage.filter((row) => JSON.stringify(row.content).includes(asset.public_url)).map((row) => row.label);
+        if (usedBy.length) throw new Error(`Fayl istifadə olunur: ${usedBy.join(", ")}. Əvvəl həmin bölmədə şəkli dəyişin və ya silin.`);
         const { error: storageError } = await supabase.storage.from("site-media").remove([asset.path]);
         if (storageError) throw storageError;
-        const { error } = await supabase.from("media_assets").delete().eq("id", asset.id);
+        const { error } = await supabase.from("media_assets").delete().eq("id", asset.id).select("id").single();
         if (error) throw error;
       }
       setMedia((current) => current.filter((item) => item.id !== asset.id));
@@ -322,9 +354,10 @@ export default function AdminDashboard({
         const supabase = createClient();
         const { data } = await supabase.auth.getUser();
         if (!data.user) throw new Error("Oturum tapılmadı.");
-        const { error } = await supabase.from("admin_users").update({ display_name: profileName.trim() }).eq("user_id", data.user.id);
+        const { error } = await supabase.from("admin_users").update({ display_name: profileName.trim() }).eq("user_id", data.user.id).select("display_name").single();
         if (error) throw error;
       }
+      setSavedProfileName(profileName.trim());
       flash("Admin adı yeniləndi.");
     } catch (error) {
       flash(error instanceof Error ? error.message : "Admin adını saxlamaq mümkün olmadı.");
@@ -374,7 +407,7 @@ export default function AdminDashboard({
           <button className="admin-menu-button" type="button" onClick={() => setSidebarOpen(true)} aria-label="Menyunu aç"><Menu /></button>
           <div className="admin-location"><strong>{nav.find((item) => item.id === view)?.label ?? "Parametrlər"}</strong><span>Sayt idarəetməsi</span></div>
           <Link className="admin-view-site" href="/" target="_blank"><Eye /> Sayta bax</Link>
-          <div className="admin-profile"><CircleUserRound /><span><strong>{profileName}</strong><small>Administrator</small></span></div>
+          <div className="admin-profile"><CircleUserRound /><span><strong>{savedProfileName}</strong><small>Administrator</small></span></div>
         </header>
 
         <main className="admin-content">
@@ -439,6 +472,8 @@ export default function AdminDashboard({
             </section>
           ) : null}
 
+          {view === "media" && moreMedia ? <button className="secondary-action" disabled={busy} onClick={() => void loadMore("media")}>Daha çox media yüklə</button> : null}
+          {view === "messages" && moreMessages ? <button className="secondary-action" disabled={busy} onClick={() => void loadMore("messages")}>Daha çox müraciət yüklə</button> : null}
           {view === "messages" ? (
             <section className="admin-view-section">
               <div className="admin-page-title"><div><h1>Mesajlar</h1><p>Qeydiyyat formasından gələn müraciətləri izləyin.</p></div></div>
@@ -479,7 +514,7 @@ export default function AdminDashboard({
           <div className="media-editor-dialog">
             <header><div><span>Media kitabxanası</span><h2>Fayl məlumatları</h2></div><button type="button" onClick={() => setEditingMedia(null)} aria-label="Bağla"><X /></button></header>
             <div className="media-editor-preview">{editingMedia.mime_type?.startsWith("video/") ? <video src={editingMedia.public_url} controls /> : <img src={editingMedia.public_url} alt={editingMedia.alt_text || editingMedia.name} />}</div>
-            <div className="media-editor-fields"><label className="admin-field"><span>Faylın görünən adı</span><input value={editingMedia.name} onChange={(event) => setEditingMedia({ ...editingMedia, name: event.target.value })} /></label><label className="admin-field"><span>Şəkil açıqlaması</span><textarea rows={3} value={editingMedia.alt_text} onChange={(event) => setEditingMedia({ ...editingMedia, alt_text: event.target.value })} /><small>Saytın əlçatanlığı və axtarış sistemləri üçün şəkli qısa təsvir edin.</small></label></div>
+            <div className="media-editor-fields"><label className="admin-field"><span>Faylın görünən adı</span><input value={editingMedia.name} onChange={(event) => setEditingMedia({ ...editingMedia, name: event.target.value })} /></label><label className="admin-field"><span>Kitabxanada şəkil açıqlaması</span><textarea rows={3} value={editingMedia.alt_text} onChange={(event) => setEditingMedia({ ...editingMedia, alt_text: event.target.value })} /><small>Kitabxanada faylı tanımaq üçün təsvir. Saytdakı şəkil təsvirini həmin kontentin redaktorunda dəyişin.</small></label></div>
             <footer><button type="button" className="secondary-action" onClick={() => setEditingMedia(null)}>Ləğv et</button><button type="button" className="primary-action" disabled={busy || !editingMedia.name.trim()} onClick={() => void saveMedia(editingMedia)}>{busy ? "Saxlanılır..." : "Yadda saxla"}</button></footer>
           </div>
         </div>

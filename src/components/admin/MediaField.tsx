@@ -35,6 +35,7 @@ export default function MediaField({
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
   const [libraryOpen, setLibraryOpen] = useState(false);
   const [dimensions, setDimensions] = useState({ source: "", width: 0, height: 0 });
   const acceptValue = accept === "image"
@@ -47,6 +48,11 @@ export default function MediaField({
 
   async function handleFile(file?: File) {
     if (!file) return;
+    setError("");
+    if (!acceptValue.split(",").includes(file.type)) {
+      setError(accept === "image" ? "Bu sahəyə yalnız şəkil əlavə edin." : "Uyğun formatlı fayl seçin.");
+      return;
+    }
     setUploading(true);
     try {
       const url = await onUpload(file);
@@ -59,6 +65,7 @@ export default function MediaField({
 
   return (
     <div className={`smart-media-field ${compact ? "compact" : ""}`}>
+      {error ? <p role="alert">{error}</p> : null}
       <input ref={inputRef} hidden type="file" accept={acceptValue} onChange={(event) => void handleFile(event.target.files?.[0])} />
       {value ? (
         <div className="smart-media-preview" style={previewRatio ? { minHeight: 0, maxHeight: "none", width: "100%", maxWidth: previewRatio !== "4 / 3" ? 240 : undefined, aspectRatio: previewRatio === "original" ? undefined : previewRatio } : undefined}>

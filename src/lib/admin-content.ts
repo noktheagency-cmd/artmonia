@@ -1,7 +1,6 @@
 import {
   contact,
   courses,
-  galleryImages,
   newsItems,
   painPoints
 } from "@/data/site";
@@ -54,7 +53,6 @@ const definitions = [
   ["courses", "Proqramlar · Kartlar və detail səhifələri", "Hər proqramın kartı, hero fotosu, auditoriya kartları, tədris bölmələri və müraciət mətnləri.", "website", courses.map(withProgramDetail)],
   ["contact", "Ana səhifə · Əlaqə", "Footer-də görünən telefon, e-poçt və ünvan", "settings", visibleContact],
   ["home_faq", "Ana səhifə · Suallar və cavablar", "Əlaqədən əvvəlki FAQ: başlığı, sualları və cavabları dəyişin, əlavə edin və sıralayın", "website", homeFaq],
-  ["gallery_images", "Ana səhifə · Bölmə şəkilləri", "Problem və transformasiya sahəsində görünən şəkillər", "content", galleryImages],
   ["academy_page_copy", "Akademiya səhifəsi mətnləri", "İnteryer, haqqımızda, yanaşma və footer mətnləri", "academy", academyPageCopy],
   ["interior_media", "İnteryer · Video və şəkillər", "Instagram reels solda, mətnlər sağda. Şəkillər desktopda 4-lü, 4:3 oval kəsimdə göstərilir. Reel dəyişəndə kəsimi saytda yoxlayın.", "academy", interiorMedia],
   ["application_page_copy", "Müraciət səhifəsi mətnləri", "Addımlar, proqram seçimləri, forma və nəticə mesajları", "academy", applicationPageCopy],

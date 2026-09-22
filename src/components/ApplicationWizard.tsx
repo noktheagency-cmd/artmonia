@@ -54,9 +54,10 @@ export default function ApplicationWizard() {
   const [submitError, setSubmitError] = useState("");
   const submittingRef = useRef(false);
   const copy = useSiteContentValue("application_page_copy", applicationPageCopy);
-  const interests = interestVisuals.map((visual, index) => ({
-    ...visual,
-    ...(copy.interests[index] ?? applicationPageCopy.interests[index])
+  const interests = copy.interests.map((item, index) => ({
+    icon: interestVisuals[index]?.icon ?? Sparkles,
+    ...item,
+    id: `interest-${index}`
   }));
 
   const selectedInterest = interests.find((item) => item.id === interest);
