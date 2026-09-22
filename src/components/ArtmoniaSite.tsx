@@ -702,7 +702,7 @@ function AuditPrivacyFooter() {
       <div ref={footerCtaRef} className="footer-top cinematic-footer-top scroll-block">
         <div className="footer-cinema-media">
           <CinematicVideo
-            poster={atelierAsset.poster}
+            poster={copy.image || atelierAsset.poster}
             src={atelierAsset.src}
             playbackRate={ctaEngaged ? 0.72 : 1}
           />

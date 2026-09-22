@@ -3,14 +3,15 @@
 .header h2 { margin: 0; font-family: var(--serif); font-size: clamp(36px, 4vw, 60px); font-weight: 500; }
 .header button { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border: 1px solid currentColor; border-radius: 50%; color: inherit; background: transparent; cursor: pointer; }
 .header button:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 4px; }
-.viewport { overflow: hidden; container-type: inline-size; }
-.track { display: flex; width: max-content; animation: travel linear infinite; }
+.viewport { overflow-x: auto; container-type: inline-size; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #9870da transparent; padding-bottom: 14px; }
+.viewport:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 4px; }
+.track { display: flex; width: max-content; }
 .track[data-paused="true"] { animation-play-state: paused; }
 .group { display: flex; flex: none; gap: 22px; list-style: none; margin: 0; padding: 0 22px 0 0; }
 .card { --paint: #9155d9; position: relative; isolation: isolate; overflow: hidden; box-sizing: border-box; width: calc((100cqw - 66px) / 4); min-height: 260px; padding: 24px; border-radius: 26px; background: #faf8f4; border: 1px solid #e9e2da; }
 .card:nth-child(4n + 2) { --paint: #df922c; }
 /* Scale the full card, including typography and padding, without changing its proportions. */
-.card { zoom: .9; }
+.card { zoom: .9; scroll-snap-align: start; }
 .card:nth-child(4n + 3) { --paint: #319c84; }
 .card:nth-child(4n + 4) { --paint: #ce608b; }
 .card::before, .card::after { content: ""; position: absolute; z-index: -1; pointer-events: none; }

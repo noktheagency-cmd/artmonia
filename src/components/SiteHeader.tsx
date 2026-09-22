@@ -5,7 +5,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 import { useSiteContentValue } from "@/components/SiteContentContext";
 import { globalCopy } from "@/data/site-copy";
@@ -47,6 +47,22 @@ function MenuIcon({ open }: { open: boolean }) {
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const closeOutside = (event: PointerEvent) => {
+      if (!headerRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        headerRef.current?.querySelector<HTMLButtonElement>(".menu-button")?.focus();
+      }
+    };
+    document.addEventListener("pointerdown", closeOutside);
+    document.addEventListener("keydown", escape);
+    return () => { document.removeEventListener("pointerdown", closeOutside); document.removeEventListener("keydown", escape); };
+  }, [open]);
   const pathname = usePathname();
   const copy = useSiteContentValue("global_copy", globalCopy);
   const navigation = navigationRoutes.map((route, index) => {
@@ -68,7 +84,7 @@ export default function SiteHeader() {
   };
 
   return (
-    <header className="site-header">
+    <header className="site-header" ref={headerRef}>
       <Link className="brand" href="/" aria-label="Artmonia ana səhifə">
         <img className="brand-logo brand-logo-light" src="/assets/artmonia-logo.webp" alt="Artmonia" />
         <img className="brand-logo brand-logo-dark" src="/assets/artmonia-logo-dark.webp" alt="" aria-hidden="true" />

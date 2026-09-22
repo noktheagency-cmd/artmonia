@@ -338,6 +338,9 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
       {id && <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="YouTube video üz qabığı" style={{ width: "100%", maxWidth: 360, aspectRatio: "16 / 9", objectFit: "cover", borderRadius: 12 }} />}
     </>;
   }
+  if (path === "home_page_copy.footer.image") {
+    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} accept="image" /><small>“Gözləmə, başla” bölməsinin şəkli. Buradan yeni şəkil yükləyə və ya kitabxanadan seçə bilərsiniz.</small></>;
+  }
   if (path === "home_page_copy.problem.image") {
     return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} accept="image" /><small>“Tanış gəlir?” bölməsinin mərkəzindəki xanımın şəkli. Şəffaf fonlu PNG və ya WEBP yükləyin; şəkil mövcud ölçüyə uyğun göstəriləcək.</small></>;
   }

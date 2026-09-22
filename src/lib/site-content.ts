@@ -41,6 +41,10 @@ function sanitizeSectionContent(key: string, content: JsonValue, rows: { key: st
   if (!content || typeof content !== "object" || Array.isArray(content)) return content;
 
   if (key === "home_page_copy") {
+    const footer = content.footer;
+    if (footer && typeof footer === "object" && !Array.isArray(footer)) {
+      content = { ...content, footer: { image: "/assets/artmonia-future-atelier-hd.webp", ...footer } };
+    }
     const problem = content.problem;
     if (problem && typeof problem === "object" && !Array.isArray(problem)) {
       content = { ...content, problem: { image: "/assets/problem-center-girl.webp", ...problem } };

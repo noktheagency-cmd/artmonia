@@ -72,6 +72,7 @@ export const homePageCopy = {
     ]
   },
   footer: {
+    image: "/assets/artmonia-future-atelier-hd.webp",
     title: "Gözləmə. Başla.",
     text: "Növbəti qrup tezliklə başlayır. Yerini indi ayır və rəsm səyahətinə başla.",
     cta: "Akademiyaya qoşul",
