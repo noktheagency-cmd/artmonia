@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/seo";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import "./globals.css";
 import "./studio-heading.css";
@@ -27,6 +28,12 @@ const themeInitializer = `
 `;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
+  },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   title: "Artmonia Academy | Sənətə sistemli başlanğıc",
   description:
     "Akademik rəsm, rəng, kompozisiya və portfolyo hazırlığı üçün mentor dəstəkli Artmonia Academy proqramları.",

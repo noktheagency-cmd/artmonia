@@ -135,7 +135,7 @@ export default function HomeNewsSection() {
                 <img
                   className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
                   src={image}
-                  alt=""
+                  alt={item.title}
                   loading={index < 4 ? "eager" : "lazy"}
                   decoding="async"
                 />
