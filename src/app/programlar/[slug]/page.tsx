@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { pageMetadata, breadcrumb, absoluteUrl, SITE_URL } from "@/lib/seo";
+import StructuredData from "@/components/StructuredData";
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Brush, GraduationCap, Images, Palette, ChevronDown } from "lucide-react";
@@ -28,7 +30,7 @@ async function findCourse(slug: string): Promise<Course | undefined> {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const course = await findCourse((await params).slug);
-  return course ? { title: `${course.title} | Artmonia Academy`, description: course.details || course.text } : { title: "Proqram tapılmadı | Artmonia Academy" };
+  return course ? pageMetadata(`${course.title} | Artmonia Academy`, course.text, `/programlar/${encodeURIComponent(slugFor(course.title))}`, course.detail.image || undefined) : { title: "Proqram tapılmadı | Artmonia Academy", robots: { index: false } };
 }
 
 export default async function ProgramDetail({ params }: { params: Promise<{ slug: string }> }) {
@@ -47,6 +49,10 @@ export default async function ProgramDetail({ params }: { params: Promise<{ slug
   const whatsappUrl = `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
   const audienceIcons = [Brush, GraduationCap, Images, Palette];
   return <SiteContentProvider content={content}><SiteHeader /><main className={styles.page}>
+    <StructuredData data={[
+      { "@context": "https://schema.org", "@type": "Course", name: course.title, description: course.text, url: absoluteUrl(`/programlar/${encodeURIComponent(slugFor(course.title))}`), inLanguage: "az", provider: { "@type": "EducationalOrganization", "@id": `${SITE_URL}/#organization`, name: "Artmonia Academy", url: SITE_URL } },
+      breadcrumb(course.title, `/programlar/${encodeURIComponent(slugFor(course.title))}`)
+    ]} />
     <section className={styles.hero} style={{ "--accent": course.color } as CSSProperties}>
       <Link className={styles.back} href="/#program">← {detail.backLabel}</Link>
       <div className={styles.copy}><span className={styles.eyebrow}>{course.duration}</span><h1>{course.title}</h1><p className={styles.lead}>{course.text}</p><a className={styles.cta} href={whatsappUrl} target="_blank" rel="noopener noreferrer">{detail.cta} <span>↗</span></a></div>
