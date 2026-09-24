@@ -47,7 +47,7 @@ function sanitizeSectionContent(key: string, content: JsonValue, rows: { key: st
     }
     const problem = content.problem;
     if (problem && typeof problem === "object" && !Array.isArray(problem)) {
-      content = { ...content, problem: { image: "/assets/problem-center-girl.webp", ...problem } };
+      content = { ...content, problem: { image: "/assets/mona-lisa-thinking.png", ...problem } };
     }
     return Object.fromEntries(
       Object.entries(content).filter(([contentKey]) => !removedHomeCopyKeys.has(contentKey))

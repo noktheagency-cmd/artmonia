@@ -41,7 +41,7 @@ export const homePageCopy = {
     readMore: "Ətraflı oxu"
   },
   problem: {
-    image: "/assets/problem-center-girl.webp",
+    image: "/assets/mona-lisa-thinking.png",
     label: "Problem",
     title: "Tanış gəlir?",
     text: "Artmonia-da hər xətt planla çəkilir, mentor rəyi ilə düzəlir və ardıcıl praktika ilə nəticəyə çevrilir.",
