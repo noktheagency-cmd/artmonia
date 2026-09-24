@@ -23,7 +23,6 @@ import HomeNewsSection from "@/components/HomeNewsSection";
 import HomeFaq from "@/components/HomeFaq";
 import HomeTestimonials from "@/components/HomeTestimonials";
 import HomeResultsSection from "@/components/HomeResultsSection";
-import BlogSection from "@/components/BlogSection";
 import HomeStudentWorks from "@/components/HomeStudentWorks";
 import HomeHero from "@/components/HomeHero";
 import CinematicVideo from "@/components/CinematicVideo";
@@ -805,7 +804,6 @@ function ArtmoniaSiteInner() {
         <HomeNewsSection />
         <HomeResultsSection />
         <HomeStudentWorks />
-        <BlogSection />
         <ProblemTransformation />
         <Programs />
         <TeachersAtelier />
