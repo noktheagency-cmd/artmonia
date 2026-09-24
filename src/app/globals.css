@@ -13699,9 +13699,10 @@ html.theme-dark .teacher-atelier-heading > p:last-child {
 .problem-question h2 {
   max-width: none;
   font-size: clamp(40px, 4.2vw, 64px) !important;
-  line-height: 0.96;
-  white-space: nowrap;
-  overflow-wrap: normal;
+  line-height: 1.04;
+  white-space: normal;
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 /* A tighter vertical rhythm between the main page sections. */
