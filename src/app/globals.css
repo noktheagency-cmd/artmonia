@@ -22533,3 +22533,57 @@ html { -webkit-tap-highlight-color: transparent; }
     transition: none !important;
   }
 }
+
+/* The problem orbit frames the transparent portrait with quiet, readable glass notes. */
+#problem .problem-orbit { min-height: 570px; }
+#problem .orbit-aura {
+  inset: 8%;
+  border: 1px solid rgba(105, 41, 219, .12);
+  background: radial-gradient(circle at 50% 52%, rgba(250, 219, 180, .35), rgba(247, 241, 255, .4) 47%, rgba(255, 255, 255, 0) 72%);
+  box-shadow: inset 0 0 80px rgba(255, 255, 255, .65);
+  animation-duration: 48s;
+}
+#problem .orbit-aura::before { inset: 8%; border-color: rgba(105, 41, 219, .16); }
+#problem .orbit-aura::after { inset: 23%; border: 1px solid rgba(105, 41, 219, .1); }
+#problem .thinking-figure {
+  width: clamp(260px, 28vw, 365px);
+  height: auto;
+  aspect-ratio: 1;
+  filter: drop-shadow(0 24px 30px rgba(41, 17, 54, .16));
+}
+#problem .real-girl-avatar {
+  top: 0;
+  clip-path: none;
+  object-fit: contain;
+  filter: none;
+}
+#problem .problem-shadow { bottom: -2%; width: 70%; height: 5%; opacity: .4; }
+#problem .orbit-wheel { animation-duration: 48s; }
+#problem .orbit-thought { --orbit-radius: clamp(170px, 18vw, 225px); }
+#problem .orbit-thought .thought-bubble {
+  width: clamp(124px, 11vw, 150px);
+  height: clamp(124px, 11vw, 150px);
+  padding: 18px;
+  border: 1px solid rgba(105, 41, 219, .18);
+  color: var(--brand-navy);
+  background: linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(247, 240, 255, .9));
+  box-shadow: 0 16px 40px rgba(24, 13, 71, .12), inset 0 1px 0 #fff;
+  backdrop-filter: blur(12px);
+  animation-duration: 48s;
+}
+#problem .orbit-thought:nth-child(2n) .thought-bubble { background: linear-gradient(145deg, #fffaf3, #fff0df); }
+#problem .orbit-thought:nth-child(3) .thought-bubble { background: linear-gradient(145deg, #f6f3ff, #e8e1ff); }
+#problem .thought-bubble p { color: var(--brand-navy); font-size: clamp(11px, .92vw, 13px); line-height: 1.32; font-weight: 600; }
+
+@media (max-width: 640px) {
+  #problem .problem-orbit { min-height: 480px; }
+  #problem .thinking-figure { width: min(57vw, 250px); }
+  #problem .orbit-thought { --orbit-radius: min(34vw, 140px); }
+  #problem .orbit-thought .thought-bubble { width: 102px; height: 102px; padding: 10px; }
+  #problem .thought-bubble p { font-size: 9px; line-height: 1.22; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #problem .orbit-aura, #problem .orbit-wheel, #problem .thought-bubble,
+  #problem .thinking-figure, #problem .real-girl-avatar, #problem .problem-shadow { animation: none; }
+}

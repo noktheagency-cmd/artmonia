@@ -192,7 +192,7 @@ function ProblemTransformation() {
         <div className="problem-orbit" aria-label="Artmonia problemlər karuseli">
           <div className="orbit-aura" />
           <div className="thinking-figure" aria-hidden="true">
-            {copy.image && <img className="question-avatar real-girl-avatar" src={copy.image} alt="" loading="lazy" decoding="async" />}
+            <img className="question-avatar real-girl-avatar" src="/assets/mona-lisa-thinking.png" alt="" loading="lazy" decoding="async" />
             <div className="problem-shadow" />
           </div>
           <div className="orbit-wheel">
