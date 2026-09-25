@@ -21603,6 +21603,17 @@ html.theme-dark .diagnostic-compact .quiz-window .quiz-options button.active > s
   margin-top: 28px;
 }
 
+.site-footer .footer-bottom a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.site-footer .footer-bottom a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
 html.theme-dark .site-footer {
   background:
     radial-gradient(circle at 86% 60%, rgba(168, 132, 255, 0.08), transparent 26%),

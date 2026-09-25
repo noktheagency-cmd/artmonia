@@ -662,7 +662,7 @@ function TeachersAtelier() {
   );
 }
 
-function AuditPrivacyFooter() {
+function AuditPrivacyFooter({ privacyPolicyPublished }: { privacyPolicyPublished: boolean }) {
   const dynamicContact = useSiteContentValue("contact", contact);
   const global = useSiteContentValue("global_copy", globalCopy);
   const copy = useSiteContentValue("home_page_copy", homePageCopy).footer;
@@ -785,13 +785,14 @@ function AuditPrivacyFooter() {
       </div>
       <div className="footer-bottom scroll-block" data-scroll-order="2">
         <span>{global.copyright}</span>
+        {privacyPolicyPublished ? <Link href="/mexfilik-siyaseti">Məxfilik siyasəti</Link> : null}
         <span className="footer-quote">{copy.quote}</span>
       </div>
     </footer>
   );
 }
 
-function ArtmoniaSiteInner() {
+function ArtmoniaSiteInner({ privacyPolicyPublished }: { privacyPolicyPublished: boolean }) {
   useTiltTargets();
   usePageScrollReveals();
 
@@ -810,15 +811,15 @@ function ArtmoniaSiteInner() {
         <HomeFaq />
         <HomeTestimonials />
       </main>
-      <AuditPrivacyFooter />
+      <AuditPrivacyFooter privacyPolicyPublished={privacyPolicyPublished} />
     </>
   );
 }
 
-export default function ArtmoniaSite({ content }: { content: SiteContentMap }) {
+export default function ArtmoniaSite({ content, privacyPolicyPublished = false }: { content: SiteContentMap; privacyPolicyPublished?: boolean }) {
   return (
     <SiteContentProvider content={content}>
-      <ArtmoniaSiteInner />
+      <ArtmoniaSiteInner privacyPolicyPublished={privacyPolicyPublished} />
     </SiteContentProvider>
   );
 }
