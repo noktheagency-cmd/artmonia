@@ -74,24 +74,24 @@
 .audienceCard:hover::after { transform: scale(1.35); }
 .audienceCardPhoto,
 .audienceCardPhoto:nth-child(even) {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  display: block;
   min-height: 0;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, .55);
-  background: color-mix(in srgb, var(--surface) 62%, transparent);
-  box-shadow: 0 14px 36px rgba(35, 20, 58, .12), inset 0 1px rgba(255, 255, 255, .72);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, .8);
+  background: linear-gradient(145deg, rgba(255, 255, 255, .7), rgba(170, 132, 220, .3));
+  box-shadow: 0 18px 44px rgba(54, 26, 92, .2), 0 0 0 1px rgba(105, 41, 219, .18), inset 0 1px rgba(255, 255, 255, .9);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  backdrop-filter: blur(18px) saturate(1.3);
   isolation: isolate;
 }
 .audienceCardPhoto::before {
   content: "";
   position: absolute;
   z-index: 2;
-  inset: 0;
-  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .2), inset 0 0 24px rgba(255, 255, 255, .3);
+  inset: 8px;
+  border: 1px solid rgba(255, 255, 255, .42);
+  border-radius: inherit;
+  box-shadow: inset 0 0 22px rgba(255, 255, 255, .34);
   pointer-events: none;
 }
 .audienceCardPhoto::after { display: none; }
@@ -101,15 +101,21 @@
   height: auto;
   display: block;
   object-fit: contain;
+  border-radius: inherit;
 }
 .audienceCardPhoto p {
-  z-index: 1;
-  width: 100%;
+  position: absolute;
+  z-index: 3;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  width: auto;
   margin: 0;
-  padding: 18px 20px;
-  color: var(--text);
-  background: color-mix(in srgb, var(--surface) 72%, transparent);
-  border-top: 1px solid rgba(255, 255, 255, .5);
+  padding: 0;
+  color: #fff;
+  background: none;
+  border: 0;
+  text-shadow: 0 2px 5px rgba(10, 5, 25, .95), 0 0 18px rgba(10, 5, 25, .85);
 }
 .learning { display: grid; grid-template-columns: 1fr 1.15fr; gap: 64px; align-items: start; padding-top: 120px; }
 .learning h2 { font-size: clamp(38px, 4.3vw, 60px); }
@@ -156,8 +162,9 @@
   .audience, .learning { padding: 64px 22px 0; }
   .audienceGrid { gap: 12px; }
   .audienceCard { padding: 24px 18px; }
-  .audienceCardPhoto, .audienceCardPhoto:nth-child(even) { min-height: 0; padding: 0; }
-  .audienceCardPhoto p { margin: 0; padding: 12px; }
+  .audienceCardPhoto, .audienceCardPhoto:nth-child(even) { min-height: 0; padding: 6px; }
+  .audienceCardPhoto::before { inset: 6px; }
+  .audienceCardPhoto p { right: 14px; bottom: 14px; left: 14px; margin: 0; padding: 0; }
   .audienceCard p { font-size: 15px; }
   .audienceCard > svg { margin-bottom: 20px; width: 32px; }
   .learning { grid-template-columns: 1fr; gap: 0; }
