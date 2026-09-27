@@ -95,7 +95,7 @@ export default function NewsEditor({
   return (
     <section className="collection-editor-view news-editor-view">
       <div className="admin-page-title collection-page-title">
-        <div><h1>Yeniliklər</h1><p>Ana səhifənin sonsuz lentində ən son əlavə olunan 10 xəbər, yenidən köhnəyə göstərilir; redaktə etmək xəbərin əlavə olunma vaxtını dəyişmir.</p></div>
+        <div><h1>Yeniliklər</h1><p>Ana səhifənin sonsuz lentində bütün dərc olunan xəbərlər yenidən köhnəyə göstərilir; redaktə etmək xəbərin əlavə olunma vaxtını dəyişmir.</p></div>
         <button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button>
       </div>
 
