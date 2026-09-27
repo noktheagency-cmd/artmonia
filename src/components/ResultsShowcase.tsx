@@ -21,7 +21,7 @@ export default function ResultsShowcase() {
           <div><span className="results-scene-kicker">{copy.storiesKicker}</span><h2 id="success-stories-title">{copy.storiesTitle}</h2></div>
           <p>{copy.storiesText}</p>
         </header>
-        <div className={styles.storyGallery}>
+        <div className={styles.storyGallery} role="region" tabIndex={0} aria-label="Uğur hekayələri videoları — üfüqi sürüşdürün">
           {stories.map((story, index) => {
             const id = youtubeId(story.video);
             const key = story.id || String(index);

@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
+import type { ReactNode } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import { SiteContentProvider } from "@/components/SiteContentContext";
 import { contact, type NewsItem } from "@/data/site";
@@ -9,6 +10,30 @@ import type { SiteContentMap } from "@/lib/site-content";
 import { globalCopy, newsPageCopy, type GlobalCopy, type NewsPageCopy } from "@/data/site-copy";
 import { formatNewsDate, getNewsImages } from "@/lib/news";
 import styles from "./NewsDetailPage.module.css";
+
+const linkPattern = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s<]+|www\.[^\s<]+)/g;
+
+function linkedText(text: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+  for (const match of text.matchAll(linkPattern)) {
+    const start = match.index;
+    const raw = match[2] ?? match[3];
+    const trailing = match[3] ? raw.match(/[.,!?;:)\]]+$/)?.[0] ?? "" : "";
+    const address = raw.slice(0, raw.length - trailing.length);
+    let url: URL;
+    try {
+      url = new URL(address.startsWith("www.") ? `https://${address}` : address);
+      if (url.protocol !== "https:" && url.protocol !== "http:") continue;
+    } catch { continue; }
+    parts.push(text.slice(cursor, start));
+    parts.push(<a className={styles.inlineLink} href={url.href} target="_blank" rel="noopener noreferrer" key={start}>{match[1] ?? address}</a>);
+    if (trailing) parts.push(trailing);
+    cursor = start + match[0].length;
+  }
+  parts.push(text.slice(cursor));
+  return parts;
+}
 
 function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
   return (
@@ -68,11 +93,11 @@ export default function NewsDetailPage({
                   <span>{item.category}</span>
                 </div>
                 <h1>{item.title}</h1>
-                <p>{item.excerpt}</p>
+                <p>{linkedText(item.excerpt)}</p>
               </header>
 
               <div className={styles.body}>
-                {item.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                {item.body.map((paragraph, index) => <p key={`${index}-${paragraph}`}>{linkedText(paragraph)}</p>)}
               </div>
               <a className={styles.whatsappLink} href={whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp ilə əlaqə saxla</a>
             </div>

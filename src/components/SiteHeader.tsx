@@ -12,7 +12,7 @@ import { globalCopy } from "@/data/site-copy";
 
 const navigationRoutes = [
   { href: "/#program", children: ["/#program"] },
-  { href: "/akademiya", children: ["/akademiya#interyer", "/akademiya#haqqimizda"] },
+  { href: "/akademiya", children: ["/akademiya#interyer", "/akademiya#haqqimizda", "/blog"] },
   { href: "/neticeler", children: ["/neticeler#ugur-hekayeleri", "/neticeler#telebe-neticeleri"] },
   { href: "/#teachers", children: [] },
   { href: "/#contact", children: [] }

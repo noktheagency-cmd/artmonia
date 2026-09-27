@@ -6,7 +6,7 @@ export const globalCopy = {
     },
     {
       label: "Akademiya",
-      children: ["İnteryer", "Haqqımızda"]
+      children: ["İnteryer", "Haqqımızda", "Blog"]
     },
     {
       label: "Nəticələr",
