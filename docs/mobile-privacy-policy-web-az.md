@@ -23,6 +23,10 @@ Tələbənin akademik məlumatlarına tələbənin özü, səlahiyyətinə uyğu
 
 Hesab, verilənlər bazası və fayllar üçün Supabase, akademik məlumatlar üçün Artmonia ERP, push bildirişləri üçün Expo və cihazın Apple və ya Google bildiriş xidmətləri istifadə olunur. Bu xidmətlərə funksiyaları yerinə yetirmək üçün zəruri məlumat ötürülə bilər.
 
+## Saytın analitikası
+
+Artmonia saytında Google Analytics istifadə olunur. Sayta baxış və səhifələrdən istifadə barədə texniki məlumatlar Google tərəfindən emal edilə bilər. Bu məlumatlardan saytın istifadəsini ölçmək üçün istifadə edirik.
+
 ## Saxlanma və silinmə
 
 Məlumatlar hesabın və tədris xidmətinin işləməsi, təhlükəsizlik və müraciətlərin araşdırılması üçün lazım olduğu müddətdə saxlanılır. Fərqli məlumat növləri və ehtiyat nüsxələri üçün müddətlər fərqlənə bilər. Hesab və ya məlumatların silinməsini, məlumatlara çıxışı və düzəlişi **artmoniaacademy@gmail.com** ünvanından tələb edə bilərsiniz. Müraciətdə hansı məlumatların silinə biləcəyini və saxlanması tələb olunan qeydlərin olub olmadığını sizə bildirəcəyik.
