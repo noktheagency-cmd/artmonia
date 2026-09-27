@@ -89,6 +89,12 @@
   color: var(--brand-purple);
 }
 
+.archiveAction { display: flex; justify-content: center; padding-top: 24px; }
+.archiveAction a { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 48px; padding: 12px 20px; border: 1px solid var(--brand-purple); border-radius: 999px; color: var(--brand-purple); background: rgba(255, 255, 255, .78); font-size: 14px; font-weight: 650; text-decoration: none; transition: color .2s, background-color .2s, transform .2s; }
+.archiveAction a:hover { color: #fff; background: var(--brand-purple); transform: translateY(-2px); }
+.archiveAction a:focus-visible { outline: 3px solid var(--brand-orange); outline-offset: 3px; }
+.archiveAction svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
 .scrollButtons {
   display: flex;
   gap: 8px;
