@@ -1,0 +1,100 @@
+{
+  "text": "Ana səhifə\nKurslar\nHaqqımızda\nNəticələr\nDaxil ol\nQeydiyyat\n→\nKURSLAR\nSənə uyğun kursu seç.\n\nÖdənişsiz dərslər və bütün kurslar burada bir yerdədir.\n\nHamısı\nÖdənişsiz\nBaşlanğıc\nOrta\nİrəli\nHamısı\nRəsm\nRəng\nPortret\nRəng · Başlanğıc · 1 dərs · Ödənişsiz\nRənglə ilk tanışlıq\n↗\n\nRəng, işıq və harmoniya\n\nRəsm · Başlanğıc · 1 dərs · Ödənişsiz\nRəsmin əsasları\n↗\n\nXətt, forma və müşahidə\n\nRəsm · Başlanğıc · 1 dərs\nAkademik rəsm\n↗\n\nXətt, forma və işıq-kölgədən başlayaraq möhkəm rəsm təməli qur.\n\nPortret · Orta · 1 dərs\nPortret\n↗\n\nİnsan üzünün quruluşunu və ifadəsini həssas xətlərlə təsvir et.\n\nRəng · Başlanğıc · 1 dərs\nRəngkarlıq\n↗\n\nRəngin dilini kəşf et və ilk əsərini öz əllərinlə yarat.\n\nRəng · İrəli · 1 dərs\nMənzərə rəsmi\n↗\n\nTəbiəti işıq, rəng və dərinlik hissi ilə kətana köçür.\n\n© 2026 Artmonia Academy\nMəxfilik siyasəti\nİstifadə şərtləri\nYaradıcı yolun buradan başlayır.",
+  "links": [
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Ana səhifə",
+      "href": "/"
+    },
+    {
+      "text": "Kurslar",
+      "href": "/kurslar"
+    },
+    {
+      "text": "Haqqımızda",
+      "href": "/haqqimizda"
+    },
+    {
+      "text": "Nəticələr",
+      "href": "/neticeler"
+    },
+    {
+      "text": "Daxil ol",
+      "href": "/daxil-ol"
+    },
+    {
+      "text": "Qeydiyyat\n→",
+      "href": "/qeydiyyat"
+    },
+    {
+      "text": "",
+      "href": "/daxil-ol"
+    },
+    {
+      "text": "Rəng · Başlanğıc · 1 dərs · Ödənişsiz\nRənglə ilk tanışlıq\n↗\n\nRəng, işıq və harmoniya",
+      "href": "/ders/2"
+    },
+    {
+      "text": "Rəsm · Başlanğıc · 1 dərs · Ödənişsiz\nRəsmin əsasları\n↗\n\nXətt, forma və müşahidə",
+      "href": "/ders/1"
+    },
+    {
+      "text": "Rəsm · Başlanğıc · 1 dərs\nAkademik rəsm\n↗\n\nXətt, forma və işıq-kölgədən başlayaraq möhkəm rəsm təməli qur.",
+      "href": "/kurs/akademik-resm"
+    },
+    {
+      "text": "Portret · Orta · 1 dərs\nPortret\n↗\n\nİnsan üzünün quruluşunu və ifadəsini həssas xətlərlə təsvir et.",
+      "href": "/kurs/portret"
+    },
+    {
+      "text": "Rəng · Başlanğıc · 1 dərs\nRəngkarlıq\n↗\n\nRəngin dilini kəşf et və ilk əsərini öz əllərinlə yarat.",
+      "href": "/kurs/rengkarliq"
+    },
+    {
+      "text": "Rəng · İrəli · 1 dərs\nMənzərə rəsmi\n↗\n\nTəbiəti işıq, rəng və dərinlik hissi ilə kətana köçür.",
+      "href": "/kurs/menzere-resmi"
+    },
+    {
+      "text": "Məxfilik siyasəti",
+      "href": "/mexfilik"
+    },
+    {
+      "text": "İstifadə şərtləri",
+      "href": "/sertler"
+    }
+  ],
+  "images": [
+    {
+      "alt": "Artmonia",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/artmonia-logo.webp"
+    },
+    {
+      "alt": "Rənglə ilk tanışlıq",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/lesson-watercolor.png"
+    },
+    {
+      "alt": "Rəsmin əsasları",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/lesson-drawing.png"
+    },
+    {
+      "alt": "Akademik rəsm",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/lesson-drawing.png"
+    },
+    {
+      "alt": "Portret",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/lesson-portrait.png"
+    },
+    {
+      "alt": "Rəngkarlıq",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/lesson-watercolor.png"
+    },
+    {
+      "alt": "Mənzərə rəsmi",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/lesson-landscape.png"
+    }
+  ],
+  "backgrounds": []
+}

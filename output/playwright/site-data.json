@@ -1,0 +1,90 @@
+{
+  "links": [
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Ana səhifə",
+      "href": "/"
+    },
+    {
+      "text": "Kurslar",
+      "href": "/kurslar"
+    },
+    {
+      "text": "Haqqımızda",
+      "href": "/haqqimizda"
+    },
+    {
+      "text": "Nəticələr",
+      "href": "/neticeler"
+    },
+    {
+      "text": "Daxil ol",
+      "href": "/daxil-ol"
+    },
+    {
+      "text": "Qeydiyyat\n→",
+      "href": "/qeydiyyat"
+    },
+    {
+      "text": "",
+      "href": "/daxil-ol"
+    },
+    {
+      "text": "Ödənişsiz dərsə bax\n→",
+      "href": "/kurslar"
+    },
+    {
+      "text": "Kursları kəşf et\n↗",
+      "href": "/kurslar"
+    },
+    {
+      "text": "Mobil tətbiqi yüklə ↗",
+      "href": "/tetbiq"
+    },
+    {
+      "text": "Bizi ziyarət edin\nArtmonia Academy",
+      "href": "https://www.google.com/maps/search/?api=1&query=Nizami+Cinema+Center%2C+Baku"
+    },
+    {
+      "text": "Xəritədə aç\n↗",
+      "href": "https://www.google.com/maps/search/?api=1&query=Nizami+Cinema+Center%2C+Baku"
+    },
+    {
+      "text": "+994 10 383 13 93",
+      "href": "tel:+994103831393"
+    },
+    {
+      "text": "artmoniaacademy@gmail.com",
+      "href": "mailto:artmoniaacademy@gmail.com"
+    },
+    {
+      "text": "Məxfilik siyasəti",
+      "href": "/mexfilik"
+    },
+    {
+      "text": "İstifadə şərtləri",
+      "href": "/sertler"
+    }
+  ],
+  "images": [
+    {
+      "alt": "Artmonia",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/artmonia-logo.webp"
+    },
+    {
+      "alt": "",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/lesson-landscape.png"
+    },
+    {
+      "alt": "Artmonia",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/artmonia-logo.webp"
+    },
+    {
+      "alt": "",
+      "src": "https://artmoniya-academy-web-production.up.railway.app/images/lesson-drawing.png"
+    }
+  ]
+}
