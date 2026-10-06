@@ -139,7 +139,7 @@ export default function NewsEditor({
                   <span>Kartın əsas şəkli (üz qabığı)</span>
                   <small>Ana səhifədə yalnız poster görünür; başlıq, açıqlama, tarix və kateqoriya detail səhifəsində saxlanır.</small>
                   <MediaField previewRatio="4 / 5" value={selected.image ?? ""} onChange={(image) => updateSelected({ image })} onUpload={onUpload} media={media} />
-                  <small>Poster ana səhifədə buradakı kimi 4:5 çərçivəyə kəsilmədən yerləşir (tövsiyə: 1080 × 1350 px), detaildə isə öz nisbətində görünür.</small>
+                  <small>Poster ana səhifədə 4:5 kartı tam doldurur; fərqli nisbətli şəkillərin kənarları kəsilə bilər (tövsiyə: 1080 × 1350 px). Detaildə şəkil öz nisbətində, kəsilmədən tam görünür.</small>
                 </div>
                 <div className="admin-field"><span>Detail səhifəsinin əlavə şəkilləri</span><small>Bu şəkillər yalnız “Ətraflı oxu” səhifəsində görünür. Kart şəklini dəyişmir.</small>
                   <div className="news-gallery-editor">

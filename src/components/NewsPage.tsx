@@ -64,11 +64,6 @@ export default function NewsPage({
             <p>{copy.intro}</p>
           </div>
 
-          <div className={styles.introArtwork} aria-hidden="true">
-            <span className={styles.sketchCircle} />
-            <img src="/assets/about-art-system.webp" alt="" />
-            <span className={styles.brushMark} />
-          </div>
         </header>
 
         <section className={styles.archive} id="yenilikler-arxivi" aria-label="Artmonia yenilikləri">
