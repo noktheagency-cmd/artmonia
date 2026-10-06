@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "create-video": "^4.0.532"
+  },
+  "_npx": {
+    "packages": [
+      "create-video@latest"
+    ]
+  }
+}

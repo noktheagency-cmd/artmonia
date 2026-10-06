@@ -95,7 +95,7 @@ export default function NewsEditor({
   return (
     <section className="collection-editor-view news-editor-view">
       <div className="admin-page-title collection-page-title">
-        <div><h1>Yeniliklər</h1><p>Ana səhifənin sonsuz lentində ən son əlavə olunan 10 xəbər, yenidən köhnəyə göstərilir; redaktə etmək xəbərin əlavə olunma vaxtını dəyişmir.</p></div>
+        <div><h1>Yeniliklər</h1><p>Ana səhifənin sonsuz lentində bütün dərc olunan xəbərlər yenidən köhnəyə göstərilir; redaktə etmək xəbərin əlavə olunma vaxtını dəyişmir.</p></div>
         <button className="primary-action" type="button" onClick={addItem}><Plus /> Yeni xəbər əlavə et</button>
       </div>
 
@@ -132,7 +132,7 @@ export default function NewsEditor({
                 <label className="admin-field"><span>Tarix</span><input type="date" value={selected.date} onChange={(event) => updateSelected({ date: event.target.value })} /></label>
                 <label className="admin-field wide"><span>Qısa mətn</span><textarea rows={3} value={selected.excerpt} onChange={(event) => updateSelected({ excerpt: event.target.value })} /></label>
                 <label className="admin-field wide"><span>WhatsApp keçidi</span><input type="url" placeholder="https://wa.me/994103831393" value={selected.whatsappUrl ?? ""} onChange={(event) => updateSelected({ whatsappUrl: event.target.value })} /><small>Boş saxlasanız, Əlaqə bölməsindəki telefon nömrəsi istifadə olunacaq. Məsələn: https://wa.me/994103831393</small></label>
-                <label className="admin-field wide"><span>Tam mətn</span><textarea rows={10} value={selected.body.join("\n\n")} onChange={(event) => updateSelected({ body: event.target.value.split(/\n\s*\n/).map((value) => value.trim()).filter(Boolean) })} /><small>Abzasları bir boş sətirlə ayırın.</small></label>
+                <label className="admin-field wide"><span>Tam mətn</span><textarea rows={10} value={selected.body.join("\n\n")} onChange={(event) => updateSelected({ body: event.target.value.split(/\n\s*\n/).map((value) => value.trim()).filter(Boolean) })} /><small>Abzasları bir boş sətirlə ayırın. URL-lər kliklənən keçidə çevrilir; keçidə ad vermək üçün [keçid mətni](https://example.com) yazın.</small></label>
               </div>
               <div className="news-media-fields">
                 <div className="admin-field">

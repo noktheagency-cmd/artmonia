@@ -1,7 +1,8 @@
 .anchorScene { scroll-margin-top: 112px; }
-.storyGallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-.videoCard { min-width: 0; align-self: start; overflow: hidden; border-radius: 20px; background: var(--theme-surface, #fff); }
-.videoFrame { position: relative; aspect-ratio: 16 / 9; min-height: 200px; background: #100c20; overflow: hidden; border-radius: 20px; }
+.storyGallery { display: flex; gap: 24px; min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #a884ff transparent; padding: 4px 2px 18px; }
+.storyGallery:focus-visible { outline: 2px solid #a884ff; outline-offset: 2px; }
+.videoCard { flex: 0 0 clamp(240px, 25vw, 300px); min-width: 0; align-self: start; overflow: hidden; scroll-snap-align: start; border-radius: 20px; background: var(--theme-surface, #fff); }
+.videoFrame { position: relative; aspect-ratio: 9 / 16; background: #100c20; overflow: hidden; border-radius: 20px; }
 .videoFrame iframe { display: block; width: 100%; height: 100%; position: absolute; inset: 0; border: 0; }
 .videoCover { width: 100%; height: 100%; position: absolute; inset: 0; display: block; border: 0; padding: 0; color: #fff; background: #100c20; cursor: pointer; text-align: left; }
 .videoCover:disabled { cursor: default; }
@@ -15,4 +16,4 @@
 .activeCaption { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; color: var(--theme-text, #170d3b); font-size: 14px; }
 .activeCaption strong { font-weight: 500; }
 .activeCaption a { color: inherit; text-underline-offset: 3px; }
-@media(max-width: 700px) { .storyGallery { grid-template-columns: 1fr; gap: 18px; } .videoCard, .videoFrame { border-radius: 16px; } .coverName { font-size: 18px; left: 18px; bottom: 16px; } }
+@media(max-width: 700px) { .storyGallery { gap: 18px; } .videoCard { flex-basis: min(76vw, 280px); } .videoCard, .videoFrame { border-radius: 16px; } .coverName { font-size: 18px; left: 18px; bottom: 16px; } }
