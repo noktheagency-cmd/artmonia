@@ -37,7 +37,7 @@ export default function HomeNewsSection() {
       const time = item.createdAt ? Date.parse(item.createdAt) : 0;
       return Number.isFinite(time) ? time : 0;
     };
-    return publishedItems.sort((a, b) => createdTime(b) - createdTime(a)).slice(0, 10);
+    return publishedItems.sort((a, b) => createdTime(b) - createdTime(a));
   }, [dynamicItems]);
   const cycleItems = items.length ? Array.from({ length: Math.ceil(5 / items.length) }, () => items).flat() : [];
   const loopItems = [...cycleItems, ...cycleItems];
@@ -143,6 +143,9 @@ export default function HomeNewsSection() {
             </Link>
           );
         })}
+      </div>
+      <div className={styles.archiveAction}>
+        <Link href="/yenilikler">Bütün yenilikləri aç <Arrow /></Link>
       </div>
     </section>
   );

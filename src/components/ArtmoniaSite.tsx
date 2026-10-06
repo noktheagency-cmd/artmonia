@@ -23,7 +23,6 @@ import HomeNewsSection from "@/components/HomeNewsSection";
 import HomeFaq from "@/components/HomeFaq";
 import HomeTestimonials from "@/components/HomeTestimonials";
 import HomeResultsSection from "@/components/HomeResultsSection";
-import BlogSection from "@/components/BlogSection";
 import HomeStudentWorks from "@/components/HomeStudentWorks";
 import HomeHero from "@/components/HomeHero";
 import CinematicVideo from "@/components/CinematicVideo";
@@ -193,7 +192,7 @@ function ProblemTransformation() {
         <div className="problem-orbit" aria-label="Artmonia problemlər karuseli">
           <div className="orbit-aura" />
           <div className="thinking-figure" aria-hidden="true">
-            {copy.image && <img className="question-avatar real-girl-avatar" src={copy.image} alt="" loading="lazy" decoding="async" />}
+            <img className="question-avatar real-girl-avatar" src="/assets/mona-lisa-thinking.png" alt="" loading="lazy" decoding="async" />
             <div className="problem-shadow" />
           </div>
           <div className="orbit-wheel">
@@ -663,7 +662,7 @@ function TeachersAtelier() {
   );
 }
 
-function AuditPrivacyFooter() {
+function AuditPrivacyFooter({ privacyPolicyPublished }: { privacyPolicyPublished: boolean }) {
   const dynamicContact = useSiteContentValue("contact", contact);
   const global = useSiteContentValue("global_copy", globalCopy);
   const copy = useSiteContentValue("home_page_copy", homePageCopy).footer;
@@ -786,13 +785,14 @@ function AuditPrivacyFooter() {
       </div>
       <div className="footer-bottom scroll-block" data-scroll-order="2">
         <span>{global.copyright}</span>
+        {privacyPolicyPublished ? <Link href="/mexfilik-siyaseti">Məxfilik siyasəti</Link> : null}
         <span className="footer-quote">{copy.quote}</span>
       </div>
     </footer>
   );
 }
 
-function ArtmoniaSiteInner() {
+function ArtmoniaSiteInner({ privacyPolicyPublished }: { privacyPolicyPublished: boolean }) {
   useTiltTargets();
   usePageScrollReveals();
 
@@ -805,22 +805,21 @@ function ArtmoniaSiteInner() {
         <HomeNewsSection />
         <HomeResultsSection />
         <HomeStudentWorks />
-        <BlogSection />
         <ProblemTransformation />
         <Programs />
         <TeachersAtelier />
         <HomeFaq />
         <HomeTestimonials />
       </main>
-      <AuditPrivacyFooter />
+      <AuditPrivacyFooter privacyPolicyPublished={privacyPolicyPublished} />
     </>
   );
 }
 
-export default function ArtmoniaSite({ content }: { content: SiteContentMap }) {
+export default function ArtmoniaSite({ content, privacyPolicyPublished = false }: { content: SiteContentMap; privacyPolicyPublished?: boolean }) {
   return (
     <SiteContentProvider content={content}>
-      <ArtmoniaSiteInner />
+      <ArtmoniaSiteInner privacyPolicyPublished={privacyPolicyPublished} />
     </SiteContentProvider>
   );
 }

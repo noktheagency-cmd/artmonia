@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { SITE_URL } from "@/lib/seo";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import "./globals.css";
@@ -54,7 +55,17 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitializer }} />
       </head>
-      <body>{children}<WhatsAppButton /></body>
+      <body>
+        {children}
+        <WhatsAppButton />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-4M20QTDSWQ" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-4M20QTDSWQ');`}
+        </Script>
+      </body>
     </html>
   );
 }

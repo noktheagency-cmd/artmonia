@@ -47,7 +47,6 @@
 .media { aspect-ratio: 4/3; border-radius: 28px; overflow: hidden; }
 .media img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .contentImage { display: block; width: 100%; height: auto; max-height: 320px; object-fit: cover; border-radius: 18px; margin: 16px 0; }
-.syllabus details + details { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 24px; }
 .cta, .secondaryCta { display: inline-flex; align-items: center; justify-content: space-between; gap: 24px; padding: 17px 26px; border-radius: 999px; background: #712bdb; color: #fff; font-weight: 700; text-decoration: none; transition: transform .25s, background .25s; }
 .cta { margin-top: 24px; }
 .cta:hover, .secondaryCta:hover { transform: translateY(-3px); background: #8540ed; }
@@ -72,20 +71,79 @@
 .audienceCard p { font-size: 18px; line-height: 1.5; margin: 0; position: relative; }
 .audienceCard:hover { transform: translateY(-8px); border-color: var(--purple); box-shadow: 0 20px 45px #180b3012; }
 .audienceCard:hover::after { transform: scale(1.35); }
+.audienceCardPhoto,
+.audienceCardPhoto:nth-child(even) {
+  display: block;
+  min-height: 0;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, .8);
+  background: linear-gradient(145deg, rgba(255, 255, 255, .7), rgba(170, 132, 220, .3));
+  box-shadow: 0 18px 44px rgba(54, 26, 92, .2), 0 0 0 1px rgba(105, 41, 219, .18), inset 0 1px rgba(255, 255, 255, .9);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  backdrop-filter: blur(18px) saturate(1.3);
+  isolation: isolate;
+}
+.audienceCardPhoto::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 8px;
+  border: 1px solid rgba(255, 255, 255, .42);
+  border-radius: inherit;
+  box-shadow: inset 0 0 22px rgba(255, 255, 255, .34);
+  pointer-events: none;
+}
+.audienceCardPhoto::after { display: none; }
+.audienceImage {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  border-radius: inherit;
+}
+.audienceCardPhoto p {
+  position: absolute;
+  z-index: 3;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  background: none;
+  border: 0;
+  text-shadow: 0 2px 5px rgba(10, 5, 25, .95), 0 0 18px rgba(10, 5, 25, .85);
+}
 .learning { display: grid; grid-template-columns: 1fr 1.15fr; gap: 64px; align-items: start; padding-top: 120px; }
 .learning h2 { font-size: clamp(38px, 4.3vw, 60px); }
 .learning em { display: block; }
 .artMark { color: var(--purple); opacity: .5; }
 .artMark svg { width: 120px; height: 120px; transform: rotate(-12deg); }
-.syllabus { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 30px; box-shadow: 12px 12px 0 var(--wash); }
-.syllabus summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; cursor: pointer; list-style: none; color: var(--text); font-size: 21px; padding: 8px 0; }
+.syllabus { min-width: 0; background: color-mix(in srgb, var(--surface) 88%, var(--wash)); border: 1px solid var(--line); border-radius: 26px; padding: 10px; box-shadow: 0 18px 48px rgba(32, 21, 54, .08); }
+.syllabus summary { display: flex; align-items: center; gap: 18px; cursor: pointer; list-style: none; color: var(--text); }
 .syllabus summary::-webkit-details-marker { display: none; }
+.syllabusTrigger { min-height: 82px; padding: 15px 18px; border-radius: 18px; background: linear-gradient(125deg, #57209e, #7833d0); color: #fff !important; transition: background .2s ease; }
+.syllabusTrigger:hover { background: linear-gradient(125deg, #6326b0, #8b45e1); }
+.syllabusIcon { display: grid; place-items: center; width: 46px; height: 46px; flex: 0 0 46px; border: 1px solid rgba(255,255,255,.34); border-radius: 14px; background: rgba(255,255,255,.13); }
+.syllabusIcon svg { width: 26px; height: 26px; }
+.syllabusTriggerText { display: grid; gap: 4px; min-width: 0; }
+.syllabusTriggerText small { color: rgba(255,255,255,.72); font-size: 10px; letter-spacing: .18em; }
+.syllabusTriggerText strong { font-size: clamp(18px, 2vw, 23px); font-weight: 600; }
+.syllabusTrigger .chevron { margin-left: auto; color: #fff; }
+.syllabusTopics { padding: 12px 12px 4px; }
+.syllabusTopics details + details { border-top: 1px solid var(--line); }
+.syllabusTopics summary { min-height: 62px; padding: 10px 4px; font-size: 17px; }
+.syllabusTopics summary strong { font-weight: 500; }
+.syllabusTopics summary .chevron { margin-left: auto; }
+.topicNumber { color: var(--purple); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
 .chevron { width: 24px; height: 24px; flex-shrink: 0; color: var(--purple); transition: transform .3s; }
-.syllabus details[open] .chevron { transform: rotate(180deg); }
-.topicList { border-top: 1px solid var(--line); margin-top: 24px; padding-top: 8px; }
-.topicList p { color: var(--muted); font-size: 17px; line-height: 1.8; padding-left: 20px; position: relative; }
-.topicList p::before { content: ""; position: absolute; left: 0; top: .7em; width: 5px; height: 14px; border-radius: 50%; transform: rotate(30deg); background: var(--purple); }
-.syllabus details[open] .topicList { animation: reveal .4s ease both; }
+.syllabus[open] > .syllabusTrigger .chevron, .syllabusTopics details[open] > summary .chevron { transform: rotate(180deg); }
+.topicList { padding: 0 4px 22px 24px; }
+.topicList img { display: block; width: 100%; height: auto; max-height: 420px; object-fit: contain; border-radius: 16px; background: var(--wash); }
+.topicList p { color: var(--muted); font-size: 16px; line-height: 1.7; margin: 16px 0 0; white-space: pre-line; }
+.syllabusTopics details[open] .topicList { animation: reveal .4s ease both; }
 .details { max-width: 1184px; margin: 110px auto 0; padding: 64px; border-radius: 48px 12px 48px 12px; background: var(--wash); border: 1px solid var(--line); display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 72px; position: relative; }
 .details .eyebrow { color: var(--purple); }
 .details h2 { margin-bottom: 22px; }
@@ -117,12 +175,18 @@
   .audience, .learning { padding: 64px 22px 0; }
   .audienceGrid { gap: 12px; }
   .audienceCard { padding: 24px 18px; }
+  .audienceCardPhoto, .audienceCardPhoto:nth-child(even) { min-height: 0; padding: 6px; }
+  .audienceCardPhoto::before { inset: 6px; }
+  .audienceCardPhoto p { right: 14px; bottom: 14px; left: 14px; margin: 0; padding: 0; }
   .audienceCard p { font-size: 15px; }
   .audienceCard > svg { margin-bottom: 20px; width: 32px; }
   .learning { grid-template-columns: 1fr; gap: 0; }
   .artMark { display: none; }
-  .syllabus { padding: 22px; box-shadow: 6px 6px 0 var(--wash); }
-  .syllabus summary { font-size: 18px; }
+  .syllabus { padding: 8px; }
+  .syllabusTrigger { min-height: 72px; padding: 12px; gap: 12px !important; }
+  .syllabusIcon { width: 40px; height: 40px; flex-basis: 40px; }
+  .syllabusTopics { padding: 8px 8px 2px; }
+  .syllabusTopics summary { font-size: 15px; }
   .details { grid-template-columns: 1fr; margin: 64px 22px 0; padding: 32px 24px; gap: 24px; }
 }
 @media (prefers-reduced-motion: reduce) {
