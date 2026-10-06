@@ -9,7 +9,7 @@ import { SiteContentProvider } from "@/components/SiteContentContext";
 import type { NewsItem } from "@/data/site";
 import type { SiteContentMap } from "@/lib/site-content";
 import { globalCopy, newsPageCopy, type GlobalCopy, type NewsPageCopy } from "@/data/site-copy";
-import { formatNewsDate, getNewsImages } from "@/lib/news";
+import { getNewsImages } from "@/lib/news";
 import styles from "./NewsPage.module.css";
 
 const ITEMS_PER_PAGE = 6;
@@ -100,20 +100,6 @@ export default function NewsPage({
                     />
                   </div>
 
-                  <div className={styles.cardContent}>
-                    <div className={styles.meta}>
-                      <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
-                      <span>{item.category}</span>
-                    </div>
-                    <h2>{item.title}</h2>
-                    <span className={styles.cardStroke} aria-hidden="true" />
-                    <p className={styles.excerpt}>{item.excerpt}</p>
-
-                    <span className={styles.readButton}>
-                      {copy.readMore}
-                      <Arrow />
-                    </span>
-                  </div>
                 </Link>
               );
             })}

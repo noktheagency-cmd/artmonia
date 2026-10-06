@@ -155,7 +155,7 @@
 
 .card {
   min-width: 0;
-  height: 615px;
+  height: auto;
   display: flex;
   flex-direction: column;
   border: 1px solid rgba(12, 2, 89, 0.15);
@@ -182,7 +182,7 @@
   height: 300px;
   display: grid;
   place-items: center;
-  margin: 12px 12px 0;
+  margin: 0;
   border-radius: 12px;
   background: #f2efe8;
   clip-path: none;
@@ -552,13 +552,12 @@
   }
 
   .card {
-    height: 565px;
+    height: auto;
   }
 
   .imageWrap {
     flex-basis: 270px;
     height: 270px;
-    aspect-ratio: 4 / 3;
   }
 
   .cardContent {
