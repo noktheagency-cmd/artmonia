@@ -653,7 +653,6 @@ function TeachersAtelier() {
           return (
           <Reveal key={`${teacher.name}-${index}`} className={`teacher-poster teacher-poster-${visual.tone}`} variant={index === 1 ? "boom" : index === 0 ? "from-left" : "from-right"}>
             <div className="teacher-poster-image"><img src={visual.image} alt={teacher.name} loading="lazy" decoding="async" /></div>
-            <div className="teacher-poster-caption"><span>{teacher.role}</span><strong>{teacher.name}</strong><p>{teacher.line}</p></div>
           </Reveal>
           );
         })}
