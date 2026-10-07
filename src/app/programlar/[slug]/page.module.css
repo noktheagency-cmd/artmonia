@@ -42,7 +42,14 @@
 .back:hover { color: #fff; transform: translateX(-4px); }
 .copy { min-width: 0; }
 .eyebrow { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; color: #cfc0df; }
-.copy h1 { font: clamp(50px, 6.8vw, 98px)/1 Georgia, serif; letter-spacing: -.045em; margin: 22px 0 28px; color: #fff; overflow-wrap: anywhere; }
+.copy h1 { font: clamp(50px, 6.8vw, 98px)/1 Georgia, serif; letter-spacing: -.045em; margin: 22px 0 28px; color: #fff; }
+.page :is(h1, h2, h3, p, dt, dd, summary, strong) {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+.page :is(h1, h2, h3) { text-wrap: balance; }
+.sectionHeading, .enrollCopy { min-width: 0; }
 .lead { color: #c1b9ca; font-size: clamp(17px, 1.6vw, 22px); line-height: 1.7; }
 .media { aspect-ratio: 4/3; border-radius: 28px; overflow: hidden; }
 .media img { width: 100%; height: 100%; display: block; object-fit: cover; }
@@ -170,7 +177,8 @@
   .page { padding-bottom: 48px; }
   .hero { padding: 120px 22px 52px; grid-template-columns: 1fr; gap: 28px; }
   .back { font-size: 13px; }
-  .copy h1 { font-size: clamp(44px, 12vw, 64px); }
+  .copy h1 { font-size: clamp(32px, 8.5vw, 52px); line-height: 1.08; }
+  .sectionHeading h2, .learning h2, .details h2 { font-size: clamp(26px, 7vw, 40px); line-height: 1.16; }
   .media { border-radius: 22px; }
   .audience, .learning { padding: 64px 22px 0; }
   .audienceGrid { gap: 12px; }
@@ -188,6 +196,10 @@
   .syllabusTopics { padding: 8px 8px 2px; }
   .syllabusTopics summary { font-size: 15px; }
   .details { grid-template-columns: 1fr; margin: 64px 22px 0; padding: 32px 24px; gap: 24px; }
+}
+@media (max-width: 420px) {
+  .audienceGrid { grid-template-columns: minmax(0, 1fr); }
+  .details { padding: 28px 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .page *, .page *::after { animation: none !important; transition: none !important; }
