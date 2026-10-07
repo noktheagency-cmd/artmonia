@@ -7,10 +7,9 @@ import { useRef } from "react";
 import { ArrowUpRight, Maximize2, X } from "lucide-react";
 import styles from "./ProgramCertificate.module.css";
 
-const certificateImage = "/assets/artmonia-certificate-sample.png";
-
-export default function ProgramCertificate() {
+export default function ProgramCertificate({ certificateImage }: { certificateImage: string }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  if (!certificateImage.trim()) return null;
 
   return (
     <section className={styles.section} aria-labelledby="certificate-title">

@@ -15,6 +15,7 @@ export function programDetailDefaults(course: { text: string; details: string; i
     ],
     learningLabel: "Proqramın məzmunu",
     learningTitle: "Hansı biliklərə hakim olacaqsan?",
+    certificateImage: "/assets/artmonia-certificate-sample.png",
     syllabus: [{ title: "Proqram haqqında", text: course.details || course.text, image: "" }],
     enrollLabel: "Sənin növbəti addımın",
     enrollTitle: "Başlamağa hazırsan?",
