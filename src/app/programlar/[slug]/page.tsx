@@ -42,6 +42,9 @@ export default async function ProgramDetail({ params }: { params: Promise<{ slug
   if (!storedCourse) notFound();
   const course = withProgramDetail(storedCourse);
   const detail = course.detail;
+  const studentResults = Array.isArray(detail.studentResults)
+    ? detail.studentResults.filter((student) => student && student.name?.trim() && student.image?.trim() && student.result?.trim())
+    : [];
   const savedContact = content.contact;
   const phone = savedContact && typeof savedContact === "object" && !Array.isArray(savedContact)
     && typeof savedContact.phone === "string" ? savedContact.phone : contact.phone;
@@ -62,6 +65,13 @@ export default async function ProgramDetail({ params }: { params: Promise<{ slug
     <section className={styles.audience}><div className={styles.sectionHeading}><span>{detail.audienceLabel}</span><h2>{detail.audienceTitle}</h2></div><div className={styles.audienceGrid}>{detail.audience.map((item, index) => { const Icon = audienceIcons[index % audienceIcons.length]; return <article className={`${styles.audienceCard} ${item.image ? styles.audienceCardPhoto : ""}`} key={index}>{item.image ? <img className={styles.audienceImage} src={item.image} alt="" /> : <Icon aria-hidden="true" strokeWidth={1.3} />}<p>{item.text}</p></article>; })}</div></section>
     <section className={styles.learning}><div className={styles.sectionHeading}><span>{detail.learningLabel}</span><h2>{detail.learningTitle}</h2></div><details className={styles.syllabus}><summary className={styles.syllabusTrigger}><span className={styles.syllabusIcon}><Palette strokeWidth={1.4} aria-hidden="true" /></span><span className={styles.syllabusTriggerText}><small>SİLLABUS</small><strong>Tədris proqramı</strong></span><ChevronDown className={styles.chevron} aria-hidden="true" /></summary><div className={styles.syllabusTopics}>{detail.syllabus.map((item, index) => <details key={index}><summary><span className={styles.topicNumber}>{String(index + 1).padStart(2, "0")}</span><strong>{item.title}</strong><ChevronDown className={styles.chevron} aria-hidden="true" /></summary><div className={styles.topicList}>{item.image && <img src={item.image} alt={item.title} loading="lazy" />}<p>{item.text}</p></div></details>)}</div></details></section>
     <ProgramCertificate certificateImage={detail.certificateImage} />
+    {studentResults.length > 0 && <section className={styles.programResults} aria-labelledby="program-results-title">
+      <div className={styles.sectionHeading}><span>{course.title}</span><h2 id="program-results-title">Bu proqramdan nəticə əldə edən tələbələr</h2></div>
+      <div className={styles.resultsGrid}>{studentResults.map((student, index) => <article className={styles.resultCard} key={`${student.name}-${index}`}>
+        <img src={student.image} alt={student.name} loading="lazy" />
+        <div><h3>{student.name}</h3><p>{student.result}</p></div>
+      </article>)}</div>
+    </section>}
     <section className={styles.details}><div className={styles.enrollCopy}><span className={styles.eyebrow}>{detail.enrollLabel}</span><h2>{detail.enrollTitle}</h2><p>{detail.enrollText}</p>{detail.enrollImage && <img className={styles.contentImage} src={detail.enrollImage} alt="" />}</div><div className={styles.enrollPanel}><dl className={styles.facts}><div><dt>{detail.durationLabel}</dt><dd>{course.duration}</dd></div><div><dt>{detail.priceLabel}</dt><dd>{course.price?.trim() || detail.priceFallback}</dd></div></dl><a className={styles.secondaryCta} href={whatsappUrl} target="_blank" rel="noopener noreferrer">{detail.enrollCta} <ArrowUpRight aria-hidden="true" /></a></div></section>
   </main></SiteContentProvider>;
 }
