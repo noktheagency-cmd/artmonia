@@ -22524,6 +22524,27 @@ html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .s
   color: var(--brand-navy);
 }
 
+/* Photo-only teacher cards: retain the complete uploaded image at every breakpoint. */
+.teacher-atelier .teacher-poster-stage .teacher-poster {
+  display: block !important;
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: start;
+}
+.teacher-atelier .teacher-poster-stage .teacher-poster-image {
+  height: auto !important;
+  aspect-ratio: auto !important;
+}
+.teacher-atelier .teacher-poster-stage .teacher-poster-image img {
+  display: block;
+  position: static;
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: auto;
+  object-fit: contain;
+  transform: none !important;
+}
+
 /* Remove the browser's transient blue touch highlight, keeping keyboard focus. */
 html { -webkit-tap-highlight-color: transparent; }
 @media (max-width: 760px) {
