@@ -19,6 +19,8 @@ const fieldLabels: Record<string, string> = {
   learningLabel: "Tədris bölməsinin üst etiketi",
   learningTitle: "Tədris bölməsinin başlığı",
   certificateImage: "Bu proqramın sertifikatı",
+  studentResults: "Bu proqramın tələbə nəticələri",
+  result: "Qısa nəticə mətni",
   syllabus: "Tədris bölməsi",
   enrollLabel: "Müraciət bölməsinin üst etiketi",
   enrollTitle: "Müraciət bölməsinin başlığı",
@@ -255,7 +257,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   if (fieldKey === "student_testimonials") return <TestimonialsEditor value={value} onChange={onChange} />;
   if (Array.isArray(value)) {
     const template = templateAtPath(path);
-    const arrayTemplate = Array.isArray(template) ? template[0] : undefined;
+    const arrayTemplate = fieldKey === "studentResults" ? { name: "", image: "", result: "" } : Array.isArray(template) ? template[0] : undefined;
     const isMediaGallery = fieldKey === "images" || (fieldKey === "gallery" && value.every((item) => typeof item === "string"));
     return (
       <div className={`json-array ${isMediaGallery ? "media-array" : ""}`}>

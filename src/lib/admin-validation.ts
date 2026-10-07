@@ -14,6 +14,15 @@ export function validateSection(section: SiteSectionRecord): string | undefined 
       const key = title.toLocaleLowerCase("az").replace(/[^\p{L}\p{N}]+/gu, "-");
       if (titles.has(key)) return "Proqram adları təkrarlanmamalıdır — hər proqramın ayrıca keçidi var.";
       titles.add(key);
+      const detail = value.detail;
+      if (detail && typeof detail === "object" && !Array.isArray(detail) && Array.isArray(detail.studentResults)) {
+        for (const student of detail.studentResults) {
+          if (!student || typeof student !== "object" || Array.isArray(student)
+            || !String(student.name ?? "").trim() || !String(student.image ?? "").trim() || !String(student.result ?? "").trim()) {
+            return `${title}: hər tələbə nəticəsində ad-soyad, foto və nəticə mətni tələb olunur.`;
+          }
+        }
+      }
     }
     if (section.key === "success_stories" && value.video && !youtubeId(String(value.video))) return `${index + 1}-ci hekayədə düzgün YouTube linki daxil edin və ya linki boş saxlayın.`;
   }
