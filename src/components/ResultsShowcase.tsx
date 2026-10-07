@@ -24,6 +24,7 @@ export default function ResultsShowcase() {
         <div className={styles.storyGallery} role="region" tabIndex={0} aria-label="Uğur hekayələri videoları — üfüqi sürüşdürün">
           {stories.map((story, index) => {
             const id = youtubeId(story.video);
+            const cover = story.poster?.trim() || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : "");
             const key = story.id || String(index);
             return (
               <article className={styles.videoCard} key={key}>
@@ -39,7 +40,7 @@ export default function ResultsShowcase() {
                     />
                   ) : (
                     <button className={styles.videoCover} type="button" disabled={!id} onClick={() => setActive(key)} aria-label={id ? `${story.name} — videonu oynat` : `${story.name} — video əlavə edilməyib`}>
-                      {(id || story.poster) && <img src={id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : story.poster} alt={story.alt || story.name} loading="lazy" />}
+                      {cover && <img src={cover} alt={story.alt || story.name} loading="lazy" />}
                       {id ? <span className={styles.youtubePlay} aria-hidden="true"><Play /></span> : <span className={styles.pending}>Video tezliklə</span>}
                       <strong className={styles.coverName}>{story.name}</strong>
                     </button>
