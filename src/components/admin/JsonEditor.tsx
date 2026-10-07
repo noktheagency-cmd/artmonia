@@ -18,6 +18,7 @@ const fieldLabels: Record<string, string> = {
   audienceTitle: "Auditoriya bölməsinin başlığı",
   learningLabel: "Tədris bölməsinin üst etiketi",
   learningTitle: "Tədris bölməsinin başlığı",
+  certificateImage: "Bu proqramın sertifikatı",
   syllabus: "Tədris bölməsi",
   enrollLabel: "Müraciət bölməsinin üst etiketi",
   enrollTitle: "Müraciət bölməsinin başlığı",
@@ -329,6 +330,9 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   }
 
   const text = value == null ? "" : String(value);
+  if (fieldKey === "certificateImage") {
+    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} accept="image" previewRatio="original" /><small>Yalnız bu proqram üçün sertifikat yükləyin və ya kitabxanadan seçin. Digər proqramlar dəyişməyəcək. Şəkil saytda kəsilmədən göstərilir. Şəkli silsəniz, bu proqramda sertifikat bölməsi görünməyəcək.</small></>;
+  }
   if (path.startsWith("success_stories.") && fieldKey === "video") {
     const id = youtubeId(text);
     return <>
