@@ -89,9 +89,11 @@
   .body h2 { font-size: 26px; }
   .portrait { height: 112px; }
   .portrait .mascot { width: 132px; height: 132px; }
-  .invite { left: 16px; bottom: 86px; width: 350px; }
+  .invite { left: 16px; bottom: max(20px, env(safe-area-inset-bottom)); width: 350px; max-width: none; transform-origin: bottom left; scale: .8; }
   .launcher { left: 16px; bottom: 20px; }
   .invite p { font-size: 19px; }
   .choices button { padding: 14px; font-size: 14px; }
 }
+@media (max-width: 380px) { .invite { scale: .7; } }
+@media (max-width: 350px) { .invite { scale: .63; } }
 @media (prefers-reduced-motion: reduce) { .entrance, .panel, .invite, .path li { animation: none; } .entrance { display: none; } }
