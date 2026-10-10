@@ -10,6 +10,7 @@ import { blogPosts } from "./blog";
 import { interiorMedia } from "@/data/interior-media";
 import { testimonials } from "@/data/testimonials";
 import { homeFaq } from "@/data/home-faq";
+import { moniDefaults } from "@/data/moni";
 import { studentWorks } from "@/data/student-works";
 import { withProgramDetail } from "./program-content";
 import { transformationDefaults } from "./transformation-content";
@@ -43,6 +44,7 @@ export type SiteSectionRecord = {
 };
 
 const definitions = [
+  ["moni_settings", "Moni · AI sənət köməkçisi", "Monini aktivləşdirin və qarşılama, sual, konsultasiya mətnlərini dəyişin. Proqram, qiymət və real tələbə nümunələri Proqramlar bölməsindən gəlir. API açarı yalnız Vercel-də saxlanılır.", "website", moniDefaults],
   ["blog_posts", "Blog", "Blog yazıları: başlıq, kateqoriya, tarix, müəllif, üz qabığı, mətn və dərc statusu", "content", blogPosts],
   ["student_works", "Ana səhifə · Tələbə işləri", "Nəticələrin altındakı qalereya. Nümunə şəkilləri real işlərlə əvəz edin. Kateqoriya adları filtrləri avtomatik yaradır; ad, proqram, şəkil və rəy dəyişdirilə bilər.", "website", studentWorks],
   ["student_testimonials", "Tələbə rəyləri", "FAQ-ın altında hərəkətli rəy kartları: ad-soyad və ya Anonim, maksimum 250 simvolluq rəy", "website", testimonials],

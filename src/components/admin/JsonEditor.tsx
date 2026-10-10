@@ -11,6 +11,14 @@ import { studentWorks } from "@/data/student-works";
 import { youtubeId } from "@/lib/youtube";
 
 const fieldLabels: Record<string, string> = {
+  enabled: "Aktivdir",
+  welcome: "Moninin qarşılama sualı",
+  startLabel: "Moniyə başlama düyməsi",
+  consultationLabel: "Konsultasiya düyməsi",
+  successMessage: "Müraciətdən sonrakı mesaj",
+  goalQuestion: "Məqsəd sualı",
+  levelQuestion: "Təcrübə sualı",
+  noteQuestion: "Əlavə qeyd sualı",
   courses: "Proqram",
   detail: "Detail səhifəsi",
   audience: "Kimlər üçündür — kartlar",

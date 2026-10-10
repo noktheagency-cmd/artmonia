@@ -174,7 +174,7 @@
 .message-copy > div { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .message-copy strong { font-size: 12px; }
 .message-copy time { color: var(--admin-muted); font-size: 9px; }
-.message-copy p { margin: 5px 0; overflow: hidden; color: #4e4b5e; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.message-copy p { margin: 5px 0; color: #4e4b5e; font-size: 11px; white-space: pre-line; overflow-wrap: anywhere; line-height: 1.6; }
 .message-copy span { color: var(--admin-muted); font-size: 9px; }
 .messages-list select { height: 35px; padding: 0 8px; border: 1px solid var(--admin-line); border-radius: 5px; background: #fff; font-size: 10px; }
 
