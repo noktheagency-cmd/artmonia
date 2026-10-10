@@ -8,16 +8,19 @@ import { ArrowLeft, ArrowRight, Check, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import { moniDefaults, moniGoals, moniLevels, type MoniPlan } from "@/data/moni";
 import MoniMascot from "./MoniMascot";
+import { readResume, saveResume, clearResume } from "./resume";
 import styles from "./MoniGuide.module.css";
 
 type Stage = "goal" | "level" | "note" | "loading" | "plan" | "contact" | "success";
 export default function MoniPanel({ copy, onClose }: { copy: typeof moniDefaults; onClose: () => void }) {
-  const [stage, setStage] = useState<Stage>("goal");
-  const [goal, setGoal] = useState("");
-  const [level, setLevel] = useState("");
-  const [note, setNote] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [plan, setPlan] = useState<MoniPlan | null>(null);
+  const [resume] = useState(readResume);
+  const [stage, setStage] = useState<Stage>(resume ? "plan" : "goal");
+  const [goal, setGoal] = useState(resume?.goal || "");
+  const [level, setLevel] = useState(resume?.level || "");
+  const [note, setNote] = useState(resume?.note || "");
+  const [consent, setConsent] = useState(!!resume);
+  const [plan, setPlan] = useState<MoniPlan | null>(resume?.plan || null);
+  useEffect(() => { clearResume(); }, []);
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
   const panel = useRef<HTMLElement>(null);
@@ -91,7 +94,7 @@ export default function MoniPanel({ copy, onClose }: { copy: typeof moniDefaults
           <label htmlFor="moni-note">Qeydin <span>(istəyə bağlı)</span></label>
           <textarea id="moni-note" value={note} onChange={(event) => setNote(event.target.value)} maxLength={500} rows={3} placeholder="Məsələn: işdən sonra özüm üçün rəsm öyrənmək istəyirəm." />
           <small>Ad, telefon və başqa şəxsi məlumat yazma.</small>
-          <label className={styles.consent}><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} required /><span>Seçimlərimin və qeydimin şəxsi plan üçün OpenRouter / Gemini AI ilə işlənməsinə razıyam.</span></label>
+          <label className={styles.consent}><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} required /><span>Məlumatlarımın fərdi plan üçün süni intellektlə işlənməsinə razıyam.</span></label>
           <button className={styles.primary} type="submit" disabled={!consent}>Sənət yolumu hazırla<ArrowRight size={18} /></button>
           <button type="button" className={styles.back} onClick={() => setStage("level")}><ArrowLeft size={16} />Geri</button>
         </form>}
@@ -99,7 +102,7 @@ export default function MoniPanel({ copy, onClose }: { copy: typeof moniDefaults
         {stage === "plan" && plan && <>
           <p>{plan.reason}</p>
           <ol className={styles.path}>{plan.steps.map((step, index) => <li key={index} style={{ animationDelay: `${index * 160}ms` }}><span>{index + 1}</span><strong>{step}</strong></li>)}</ol>
-          <article className={styles.course}><h3>{plan.course.title}</h3><p>{plan.course.text}</p><dl><div><dt>Müddət</dt><dd>{plan.course.duration || "Komandamızla dəqiqləşdirin"}</dd></div><div><dt>Qiymət</dt><dd>{plan.course.price || "Qiymət üçün əlaqə saxlayın"}</dd></div></dl><Link href={plan.course.href}>Proqramla tanış ol<ArrowRight size={15} /></Link></article>
+          <article className={styles.course}><h3>{plan.course.title}</h3><p>{plan.course.text}</p><dl><div><dt>Müddət</dt><dd>{plan.course.duration || "Komandamızla dəqiqləşdirin"}</dd></div><div><dt>Qiymət</dt><dd>{plan.course.price || "Qiymət üçün əlaqə saxlayın"}</dd></div></dl><Link href={plan.course.href} onClick={() => saveResume({ goal, level, note, plan })}>Proqramla tanış ol<ArrowRight size={15} /></Link></article>
           {plan.proof && <figure className={styles.proof}><img src={plan.proof.image} alt={`${plan.proof.name} — tələbə nəticəsi`} loading="lazy" /><figcaption><strong>{plan.proof.name}</strong><span>{plan.proof.result}</span></figcaption></figure>}
           <p className={styles.disclaimer}>Bu, seçimlərinə əsaslanan başlanğıc təklifidir. Uyğun proqramı və cədvəli konsultasiyada dəqiqləşdirəcəyik.</p>
           <button className={styles.primary} onClick={() => setStage("contact")}>{copy.consultationLabel}<ArrowRight size={18} /></button>

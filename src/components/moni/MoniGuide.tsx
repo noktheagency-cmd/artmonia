@@ -6,6 +6,7 @@ import { X } from "lucide-react";
 import { moniDefaults } from "@/data/moni";
 import { useSiteContentValue } from "@/components/SiteContentContext";
 import MoniMascot from "./MoniMascot";
+import { readResume } from "./resume";
 import styles from "./MoniGuide.module.css";
 
 const MoniPanel = dynamic(() => import("./MoniPanel"), { ssr: false });
@@ -20,6 +21,7 @@ export default function MoniGuide() {
   const trigger = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!copy.enabled) return;
+    if (readResume()) { setVisible(true); setOpen(true); return; }
     let timer: ReturnType<typeof setTimeout>;
     const target = sentinel.current;
     if (!target) return;
