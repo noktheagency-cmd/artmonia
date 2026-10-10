@@ -25,6 +25,7 @@ import HomeTestimonials from "@/components/HomeTestimonials";
 import HomeResultsSection from "@/components/HomeResultsSection";
 import HomeStudentWorks from "@/components/HomeStudentWorks";
 import HomeHero from "@/components/HomeHero";
+import MoniGuide from "@/components/moni/MoniGuide";
 import CinematicVideo from "@/components/CinematicVideo";
 import { SiteContentProvider, useSiteContentValue } from "@/components/SiteContentContext";
 import { videoExperience } from "@/data/videoExperience";
@@ -800,6 +801,7 @@ function ArtmoniaSiteInner({ privacyPolicyPublished }: { privacyPolicyPublished:
       <BrushField />
       <SiteHeader />
       <HomeHero />
+      <MoniGuide />
       <main>
         <HomeNewsSection />
         <HomeResultsSection />

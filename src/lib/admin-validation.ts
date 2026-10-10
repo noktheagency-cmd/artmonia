@@ -2,6 +2,13 @@ import type { SiteSectionRecord } from "./admin-content";
 import { youtubeId } from "./youtube";
 
 export function validateSection(section: SiteSectionRecord): string | undefined {
+  if (section.key === "moni_settings") {
+    const content = section.content;
+    if (!content || typeof content !== "object" || Array.isArray(content) || typeof content.enabled !== "boolean") return "Moni ayarları düzgün deyil.";
+    for (const key of ["welcome", "startLabel", "consultationLabel", "successMessage", "goalQuestion", "levelQuestion", "noteQuestion"]) {
+      if (typeof content[key] !== "string" || !content[key].trim() || content[key].length > 300) return "Moni mətnləri boş olmamalı və 300 simvolu keçməməlidir.";
+    }
+  }
   if (!Array.isArray(section.content)) return;
   const titles = new Set<string>();
   for (const [index, value] of section.content.entries()) {
