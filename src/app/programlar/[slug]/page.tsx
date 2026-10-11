@@ -17,7 +17,7 @@ import styles from "./page.module.css";
  * Next image domain allow-list. */
 /* eslint-disable @next/next/no-img-element */
 
-import { withProgramDetail, type Program } from "@/lib/program-content";
+import { withProgramDetail, matchingProgramResults, type Program } from "@/lib/program-content";
 
 type Course = Program;
 const slugFor = (title: string) => title.toLowerCase().replace(/\s+/g, "-");
@@ -42,9 +42,11 @@ export default async function ProgramDetail({ params }: { params: Promise<{ slug
   if (!storedCourse) notFound();
   const course = withProgramDetail(storedCourse);
   const detail = course.detail;
-  const studentResults = Array.isArray(detail.studentResults)
+  const customResults = Array.isArray(detail.studentResults)
     ? detail.studentResults.filter((student) => student && student.name?.trim() && student.image?.trim() && student.result?.trim())
     : [];
+  const studentResults = [...customResults, ...matchingProgramResults(course.title, detail.resultCategory, content.home_results)]
+    .filter((item, index, all) => all.findIndex((other) => other.image === item.image) === index);
   const savedContact = content.contact;
   const phone = savedContact && typeof savedContact === "object" && !Array.isArray(savedContact)
     && typeof savedContact.phone === "string" ? savedContact.phone : contact.phone;

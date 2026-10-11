@@ -28,6 +28,7 @@ const fieldLabels: Record<string, string> = {
   learningTitle: "Tədris bölməsinin başlığı",
   certificateImage: "Bu proqramın sertifikatı",
   studentResults: "Bu proqramın tələbə nəticələri",
+  resultCategory: "Nəticə kateqoriyası",
   result: "Qısa nəticə mətni",
   syllabus: "Tədris bölməsi",
   enrollLabel: "Müraciət bölməsinin üst etiketi",
@@ -312,9 +313,10 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   }
 
   if (value && typeof value === "object") {
+    const fields = /^courses\.\d+\.detail$/.test(path) ? { resultCategory: "", ...value } : value;
     return (
       <div className="json-object">
-        {Object.entries(path.startsWith("success_stories.") && "name" in value ? { video: "", ...value } : value).filter(([key]) => key !== "id" && key !== "createdAt" && !(path.startsWith("success_stories.") && ["summary", "duration", "quote", "note", "program"].includes(key)) && !(path === "home_page_copy.problem" && ["transformationLabel", "transformationTitle"].includes(key))).map(([key, child]) => (
+        {Object.entries(path.startsWith("success_stories.") && "name" in value ? { video: "", ...value } : fields).filter(([key]) => key !== "id" && key !== "createdAt" && !(path.startsWith("success_stories.") && ["summary", "duration", "quote", "note", "program"].includes(key)) && !(path === "home_page_copy.problem" && ["transformationLabel", "transformationTitle"].includes(key))).map(([key, child]) => (
           <div role="group" aria-labelledby={`${path}-${key}-label`} className={`json-field ${key === "id" ? "system-field" : ""}`} key={`${path}-${key}`}>
             <span id={`${path}-${key}-label`}>{path.startsWith("success_stories.") && key === "video" ? "YouTube video linki" : friendlyLabel(key)}{key === "id" ? <small>Avtomatik yaradılır, dəyişməyin</small> : null}</span>
             <JsonEditor
@@ -340,6 +342,9 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   }
 
   const text = value == null ? "" : String(value);
+  if (path.startsWith("courses.") && fieldKey === "resultCategory") {
+    return <><input value={text} onChange={(event) => onChange(event.target.value)} placeholder="Məsələn: Portret" /><small>Nəticələr bölməsindəki kateqoriya adını yazın. Həmin kateqoriyanın nəticələri sertifikatın altında avtomatik görünəcək. Boş saxlandıqda proqram adına uyğun kateqoriya istifadə olunur. Ayrıca əlavə etdiyiniz tələbə nəticələri də saxlanılır.</small></>;
+  }
   if (fieldKey === "certificateImage") {
     return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} accept="image" previewRatio="original" /><small>Yalnız bu proqram üçün sertifikat yükləyin və ya kitabxanadan seçin. Digər proqramlar dəyişməyəcək. Şəkil saytda kəsilmədən göstərilir. Şəkli silsəniz, bu proqramda sertifikat bölməsi görünməyəcək.</small></>;
   }
@@ -362,7 +367,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
     return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio="3 / 4" /><input aria-label="İş şəklinin ünvanı" placeholder="https://... və ya /assets/..." value={text} onChange={(event) => onChange(event.target.value)} /><small>Şəkli yükləyin, kitabxanadan seçin və ya mövcud şəklin ünvanını daxil edin.</small></>;
   }
   if (mediaKeys.has(fieldKey)) {
-    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio={path.startsWith("success_stories.") ? "16 / 9" : undefined} accept={fieldKey === "video" ? "video" : "image"} />{path.startsWith("success_stories.") && <small>YouTube linki əlavə ediləndə videonun öz üz qabığı görünür. Bu şəkil yalnız link olmayan kart üçün ehtiyatdır. Kart ölçüsü 16:9-dur.</small>}</>;
+    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio={path.startsWith("success_stories.") ? "16 / 9" : undefined} accept={fieldKey === "video" ? "video" : "image"} />{path.startsWith("success_stories.") && <small>Yüklədiyiniz üz qabığı videonun avtomatik şəklindən öncə göstərilir və kəsilmir. Şəkil əlavə etməsəniz, YouTube üz qabığı istifadə olunur.</small>}</>;
   }
   if (fieldKey === "color") return <div className="json-color-field"><input type="color" value={text || "#ffffff"} onChange={(event) => onChange(event.target.value)} /><input value={text} onChange={(event) => onChange(event.target.value)} /></div>;
   if (fieldKey === "date") return <input type="date" value={text} onChange={(event) => onChange(event.target.value)} />;
