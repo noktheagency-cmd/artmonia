@@ -313,9 +313,11 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   }
 
   if (value && typeof value === "object") {
-    const fields = /^courses\.\d+\.detail$/.test(path) ? { resultCategory: "", ...value } : value;
+    const isProgramDetail = /^courses\.\d+\.detail$/.test(path);
+    const fields = isProgramDetail ? Object.fromEntries(Object.entries({ resultCategory: "", ...value }).filter(([key]) => !["certificate", "certificateImage"].includes(key))) : value;
     return (
       <div className="json-object">
+        {isProgramDetail && <p>Sertifikatın şəklini və mətnlərini sol menyudakı “Sertifikatlar” bölməsindən dəyişin.</p>}
         {Object.entries(path.startsWith("success_stories.") && "name" in value ? { video: "", ...value } : fields).filter(([key]) => key !== "id" && key !== "createdAt" && !(path.startsWith("success_stories.") && ["summary", "duration", "quote", "note", "program"].includes(key)) && !(path === "home_page_copy.problem" && ["transformationLabel", "transformationTitle"].includes(key))).map(([key, child]) => (
           <div role="group" aria-labelledby={`${path}-${key}-label`} className={`json-field ${key === "id" ? "system-field" : ""}`} key={`${path}-${key}`}>
             <span id={`${path}-${key}-label`}>{path.startsWith("success_stories.") && key === "video" ? "YouTube video linki" : friendlyLabel(key)}{key === "id" ? <small>Avtomatik yaradılır, dəyişməyin</small> : null}</span>
