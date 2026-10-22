@@ -39,7 +39,7 @@ export default function MoniGuide() {
       if (logo) setOrigin({ x: logo.left + logo.width / 2 - 72, y: logo.bottom - 65 });
       setVisible(true);
       setIntro(true);
-      timer = setTimeout(() => setIntro(false), 3400);
+      timer = setTimeout(() => setIntro(false), 4700);
       });
       observer.disconnect();
       window.removeEventListener("scroll", reveal);
