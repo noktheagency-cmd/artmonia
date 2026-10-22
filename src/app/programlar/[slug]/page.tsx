@@ -7,6 +7,7 @@ import { ArrowUpRight, Brush, GraduationCap, Images, Palette, ChevronDown } from
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import ProgramCertificate from "@/components/ProgramCertificate";
+import { certificateFor } from "@/lib/certificates";
 import { SiteContentProvider } from "@/components/SiteContentContext";
 import { getPublishedContent } from "@/lib/site-content";
 import { contact, courses } from "@/data/site";
@@ -66,7 +67,7 @@ export default async function ProgramDetail({ params }: { params: Promise<{ slug
     </section>
     <section className={styles.audience}><div className={styles.sectionHeading}><span>{detail.audienceLabel}</span><h2>{detail.audienceTitle}</h2></div><div className={styles.audienceGrid}>{detail.audience.map((item, index) => { const Icon = audienceIcons[index % audienceIcons.length]; return <article className={`${styles.audienceCard} ${item.image ? styles.audienceCardPhoto : ""}`} key={index}>{item.image ? <img className={styles.audienceImage} src={item.image} alt="" /> : <Icon aria-hidden="true" strokeWidth={1.3} />}<p>{item.text}</p></article>; })}</div></section>
     <section className={styles.learning}><div className={styles.sectionHeading}><span>{detail.learningLabel}</span><h2>{detail.learningTitle}</h2></div><details className={styles.syllabus}><summary className={styles.syllabusTrigger}><span className={styles.syllabusIcon}><Palette strokeWidth={1.4} aria-hidden="true" /></span><span className={styles.syllabusTriggerText}><small>SİLLABUS</small><strong>Tədris proqramı</strong></span><ChevronDown className={styles.chevron} aria-hidden="true" /></summary><div className={styles.syllabusTopics}>{detail.syllabus.map((item, index) => <details key={index}><summary><span className={styles.topicNumber}>{String(index + 1).padStart(2, "0")}</span><strong>{item.title}</strong><ChevronDown className={styles.chevron} aria-hidden="true" /></summary><div className={styles.topicList}>{item.image && <img src={item.image} alt={item.title} loading="lazy" />}<p>{item.text}</p></div></details>)}</div></details></section>
-    <ProgramCertificate certificateImage={detail.certificateImage} />
+    <ProgramCertificate key={slug} program={slugFor(course.title)} certificate={certificateFor(detail)} />
     {studentResults.length > 0 && <section className={styles.programResults} aria-labelledby="program-results-title">
       <div className={styles.sectionHeading}><span>{course.title}</span><h2 id="program-results-title">Bu proqramdan nəticə əldə edən tələbələr</h2></div>
       <div className={styles.resultsGrid}>{studentResults.map((student, index) => <article className={styles.resultCard} key={`${student.name}-${index}`}>
