@@ -131,8 +131,8 @@
   top: clamp(445px, 50vh, 465px);
   left: 50%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 350px));
-  width: min(700px, calc(100% - 40px));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(800px, calc(100% - 40px));
   perspective: 1200px;
   transform: translateX(-50%);
   filter: drop-shadow(0 22px 24px rgba(32, 20, 91, 0.14));
@@ -203,8 +203,10 @@
 .card {
   position: relative;
   z-index: 3;
+  min-width: 0;
   min-height: 338px;
-  padding: 65px 50px 42px;
+  padding: 58px 48px 46px;
+  container-type: inline-size;
   border: 1px solid rgba(23, 11, 91, 0.22);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(248, 246, 254, 0.9));
   backdrop-filter: blur(18px) saturate(1.05);
@@ -332,7 +334,7 @@
 .cardLabel {
   margin: 0 0 15px;
   color: #5219b3;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -341,10 +343,18 @@
 .card h2 {
   margin: 0;
   font-family: var(--serif);
-  font-size: clamp(34px, 2.8vw, 43px);
+  font-size: calc(clamp(28px, 2.5vw, 36px) + 2px);
+  font-size: calc(clamp(24px, 11.5cqw, 36px) + 2px);
   font-weight: 500;
   letter-spacing: -0.035em;
-  line-height: 0.98;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.card h2, .cardLabel, .cardText {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 
 .cardRule {
@@ -359,7 +369,7 @@
   max-width: 250px;
   margin: 0;
   color: rgba(19, 7, 95, 0.76);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.55;
 }
 
@@ -522,11 +532,11 @@
 
   .card {
     min-height: 330px;
-    padding: 56px 34px 38px;
+    padding: 44px 32px 38px;
   }
 
   .card h2 {
-    font-size: clamp(31px, 4vw, 38px);
+    font-size: calc(clamp(24px, 11.5cqw, 32px) + 2px);
   }
 }
 
@@ -584,7 +594,7 @@
     margin-block: 28px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     width: min(320px, calc(100% - 64px));
-    aspect-ratio: 1;
+    min-height: 240px;
     perspective: 900px;
     filter: drop-shadow(0 18px 22px rgba(32, 20, 91, 0.12));
   }
@@ -941,12 +951,12 @@
 
 @media (max-width: 760px) {
   .pointerAura { display: none; }
-  .cards { width: min(360px, calc(100% - 32px)); }
-  .card { padding-inline: 12px; container-type: inline-size; }
-  .card h2 { max-width: 100%; font-size: clamp(13px, 3.5vw, 17px); font-size: clamp(13px, 11cqw, 19px); font-weight: 500; line-height: 1.16; letter-spacing: -.02em; text-wrap: balance; }
-  .cardLabel { margin-bottom: 7px; font-size: 7px; font-weight: 500; letter-spacing: .045em; line-height: 1.35; }
+  .cards { width: min(440px, calc(100% - 32px)); }
+  .card { padding: 28px clamp(14px, 4vw, 20px); }
+  .card h2 { max-width: 100%; font-size: calc(clamp(14px, 3.8vw, 20px) + 2px); font-size: calc(clamp(13px, 11.5cqw, 20px) + 2px); font-weight: 500; line-height: 1.16; letter-spacing: -.02em; text-wrap: balance; }
+  .cardLabel { margin-bottom: 10px; font-size: 10px; font-weight: 500; letter-spacing: .045em; line-height: 1.45; }
   .cardRule { width: 24px; margin: 10px 0 8px; }
-  .cardText { max-width: 100%; font-size: clamp(9px, 2.5vw, 10.5px); font-weight: 400; line-height: 1.4; }
+  .cardText { max-width: 100%; font-size: calc(clamp(9px, 2.5vw, 10.5px) + 2px); font-weight: 400; line-height: 1.4; }
   .card h2, .cardLabel, .cardText { overflow-wrap: normal; word-break: normal; hyphens: none; }
   .cardAction { cursor: default; }
 }
