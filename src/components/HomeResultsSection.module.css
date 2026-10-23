@@ -13,7 +13,7 @@
 .toggle:hover { color: var(--brand-orange); }
 .toggle:focus-visible, .viewport:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 4px; }
 .viewport { --gap: 22px; container-type: inline-size; overflow: hidden; }
-.track { display: flex; width: max-content; animation: travel 48s linear infinite; }
+.track { display: flex; width: max-content; animation: travel 67s linear infinite; }
 .track[data-paused="true"] { animation-play-state: paused; }
 .group { display: flex; flex: none; gap: var(--gap); margin: 0; padding: 0 var(--gap) 0 0; list-style: none; }
 .card { display: flex; flex-direction: column; flex: 0 0 auto; width: calc((100cqw - 4 * var(--gap)) / 5); overflow: hidden; border-radius: 22px; background: #fff; box-shadow: inset 0 0 0 1px rgb(26 21 50 / 9%); }
