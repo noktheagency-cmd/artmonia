@@ -15,7 +15,7 @@
 .controls button:disabled { opacity: .35; cursor: default; }
 .rail { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--line) transparent; padding: 4px 0 14px; }
 .card { flex: 0 0 calc((100% - 72px) / 5); min-width: 0; background: var(--paper); padding: 7px; border: 1px solid var(--line); border-radius: 12px; scroll-snap-align: start; }
-.card img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 7px; }
+.card img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: contain; border-radius: 7px; }
 .expanded { flex-wrap: wrap; overflow: visible; }
 .copy { padding: 14px 9px 12px; }
 .copy h3 { font: 600 14px/1.4 var(--sans); margin: 0 0 6px; overflow-wrap: anywhere; }
