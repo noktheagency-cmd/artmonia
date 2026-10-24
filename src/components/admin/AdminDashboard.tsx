@@ -29,6 +29,7 @@ import {
 import CollectionEditor from "./CollectionEditor";
 import NewsEditor from "./NewsEditor";
 import BlogEditor from "./BlogEditor";
+import CertificatesEditor from "./CertificatesEditor";
 import JsonEditor from "./JsonEditor";
 import { createClient } from "@/lib/supabase/client";
 import { defaultSections, type JsonValue, type SiteSectionRecord } from "@/lib/admin-content";
@@ -61,11 +62,12 @@ export type MediaAsset = {
   created_at: string;
 };
 
-type View = "dashboard" | "homepage" | "news" | "blog" | "home_results" | "results" | "awards" | "media" | "messages" | "settings";
+type View = "dashboard" | "homepage" | "certificates" | "news" | "blog" | "home_results" | "results" | "awards" | "media" | "messages" | "settings";
 
 const nav = [
   { id: "dashboard" as const, label: "Ana panel", icon: LayoutDashboard },
   { id: "homepage" as const, label: "Sayt məzmunu", icon: Home },
+  { id: "certificates" as const, label: "Sertifikatlar", icon: Award },
   { id: "news" as const, label: "Yeniliklər", icon: Newspaper },
   { id: "blog" as const, label: "Blog", icon: Newspaper },
   { id: "home_results" as const, label: "Ana səhifə · Nəticələr", icon: Medal },
@@ -134,7 +136,7 @@ export default function AdminDashboard({
     return homepageSections.filter((section) => `${section.label} ${section.description}`.toLocaleLowerCase("az").includes(query));
   }, [homepageSections, search]);
 
-  function getSection(key: "news_items" | "blog_posts" | "awards" | "home_results") {
+  function getSection(key: "news_items" | "blog_posts" | "awards" | "home_results" | "courses") {
     return sections.find((section) => section.key === key)
       ?? defaultSections.find((section) => section.key === key)!;
   }
@@ -444,6 +446,7 @@ export default function AdminDashboard({
           {view === "news" ? <NewsEditor key={`news-${getSection("news_items").updated_at ?? "default"}`} section={getSection("news_items")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}
           {view === "blog" ? <BlogEditor key={`blog-${getSection("blog_posts").updated_at ?? "default"}`} section={getSection("blog_posts")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}
           {view === "home_results" ? <CollectionEditor key={`home-results-${getSection("home_results").updated_at ?? "default"}`} kind="home_results" section={getSection("home_results")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}
+          {view === "certificates" ? <CertificatesEditor section={getSection("courses")} configured={configured} media={media} onUpload={uploadMedia} onSaved={(saved) => setSections((current) => current.map((item) => item.key === "courses" ? saved : item))} /> : null}
           {view === "results" ? (
             <section className="admin-view-section">
               <div className="admin-page-title"><div><h1>Nəticələr</h1><p>Ekranda görünən nəticə mətnlərini və uğur hekayələrini dəyişin.</p></div></div>
