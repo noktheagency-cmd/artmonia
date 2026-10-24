@@ -1,4 +1,5 @@
 import { courses } from "@/data/site";
+import { certificateDefaults } from "./certificates";
 
 export function programDetailDefaults(course: { text: string; details: string; image: string }) {
   return {
@@ -16,6 +17,7 @@ export function programDetailDefaults(course: { text: string; details: string; i
     learningLabel: "Proqramın məzmunu",
     learningTitle: "Hansı biliklərə hakim olacaqsan?",
     certificateImage: "/assets/artmonia-certificate-sample.png",
+    certificate: { ...certificateDefaults },
     resultCategory: "",
     studentResults: [] as { name: string; image: string; result: string }[],
     syllabus: [{ title: "Proqram haqqında", text: course.details || course.text, image: "" }],
