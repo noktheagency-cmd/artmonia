@@ -32,8 +32,13 @@ export default function HomeHero() {
   const [cardsOpen, setCardsOpen] = useState(false);
   const heroRef = useRef<HTMLElement | null>(null);
   const mobileOpened = useRef(false);
+  const hoverCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const heroAsset = videoExperience.hero;
   const copy = useSiteContentValue("home_page_copy", homePageCopy).hero;
+
+  useEffect(() => () => {
+    if (hoverCloseTimer.current) clearTimeout(hoverCloseTimer.current);
+  }, []);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -42,6 +47,23 @@ export default function HomeHero() {
     let startX = 0;
     let consuming = false;
     let eligible = false;
+    let consumingWheel = false;
+    let wheelIdleTimer: ReturnType<typeof setTimeout> | null = null;
+    const wheel = (event: WheelEvent) => {
+      if (event.ctrlKey || !window.matchMedia("(max-width: 760px)").matches) return;
+      if (!mobileOpened.current && window.scrollY < 40 && event.deltaY > 0 && Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+        mobileOpened.current = true;
+        consumingWheel = true;
+        setCardsOpen(true);
+      }
+      // Consume only the opening gesture, including its trackpad momentum.
+      // The next separate scroll continues down the page normally.
+      if (consumingWheel) {
+        if (event.cancelable) event.preventDefault();
+        if (wheelIdleTimer) clearTimeout(wheelIdleTimer);
+        wheelIdleTimer = setTimeout(() => { consumingWheel = false; }, 180);
+      }
+    };
     const start = (event: TouchEvent) => {
       eligible = window.matchMedia("(max-width: 760px)").matches && !mobileOpened.current && window.scrollY < 40 && event.touches.length === 1;
       consuming = false;
@@ -61,11 +83,14 @@ export default function HomeHero() {
     };
     const end = () => { consuming = false; eligible = false; };
     hero.addEventListener("touchstart", start, { passive: true });
+    hero.addEventListener("wheel", wheel, { passive: false });
     hero.addEventListener("touchmove", move, { passive: false });
     hero.addEventListener("touchend", end);
     hero.addEventListener("touchcancel", end);
     return () => {
       hero.removeEventListener("touchstart", start);
+      hero.removeEventListener("wheel", wheel);
+      if (wheelIdleTimer) clearTimeout(wheelIdleTimer);
       hero.removeEventListener("touchmove", move);
       hero.removeEventListener("touchend", end);
       hero.removeEventListener("touchcancel", end);
@@ -147,12 +172,14 @@ export default function HomeHero() {
         className={cardsOpen ? `${styles.cards} ${styles.cardsOpen}` : styles.cards}
         onPointerEnter={(event) => {
           if (event.pointerType === "mouse" && window.matchMedia(desktopHoverQuery).matches) {
+            if (hoverCloseTimer.current) clearTimeout(hoverCloseTimer.current);
             setCardsOpen(true);
           }
         }}
         onPointerLeave={(event) => {
           if (event.pointerType === "mouse" && window.matchMedia(desktopHoverQuery).matches) {
-            setCardsOpen(false);
+            if (hoverCloseTimer.current) clearTimeout(hoverCloseTimer.current);
+            hoverCloseTimer.current = setTimeout(() => setCardsOpen(false), 120);
           }
         }}
         onBlur={(event) => {
@@ -162,7 +189,7 @@ export default function HomeHero() {
           if (event.key === "Escape") setCardsOpen(false);
         }}
       >
-        <div className={styles.statueReveal} aria-hidden="true">
+        <div className={styles.statueReveal}>
           <Image
             className={styles.statue}
             src="/assets/artmonia-statue-transparent.png"
@@ -171,6 +198,18 @@ export default function HomeHero() {
             height={755}
             sizes="(max-width: 760px) 260px, 540px"
             priority
+          />
+          <button
+            className={styles.mobileStatueClose}
+            type="button"
+            aria-label="Heykəli bağla"
+            tabIndex={cardsOpen ? 0 : -1}
+            disabled={!cardsOpen}
+            onClick={() => {
+              if (!window.matchMedia("(max-width: 760px)").matches) return;
+              setCardsOpen(false);
+              mobileOpened.current = false;
+            }}
           />
         </div>
 
