@@ -181,9 +181,9 @@
   z-index: 7;
   top: 50%;
   left: 50%;
-  width: clamp(400px, 36vw, 520px);
+  width: clamp(470px, 42vw, 620px);
   opacity: 0;
-  filter: drop-shadow(0 22px 26px rgba(26, 10, 80, 0.24));
+  filter: drop-shadow(0 30px 36px rgba(26, 10, 80, 0.32));
   transform: translate(-50%, -50%) scale(0.48);
   transform-origin: 50% 50%;
   transition:
@@ -204,6 +204,10 @@
 }
 
 @media (max-width: 760px) {
+  .cardsOpen .statueReveal {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
   .cardsOpen .mobileStatueClose {
     position: absolute;
     inset: 0;
@@ -331,7 +335,7 @@
 
 .cardsOpen .statueReveal {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -82%) scale(1.1);
 }
 
 .cardsOpen .cardLeft {
@@ -425,7 +429,7 @@
 .revealCta {
   position: absolute;
   z-index: 8;
-  top: calc(50% + clamp(165px, 14vw, 205px));
+  top: calc(50% + 102px);
   left: 50%;
   display: inline-flex;
   width: 250px;
@@ -549,7 +553,7 @@
   }
 
   .statueReveal {
-    width: clamp(360px, 48vw, 440px);
+    width: clamp(420px, 58vw, 520px);
   }
 
   .card {
