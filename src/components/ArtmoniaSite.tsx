@@ -649,11 +649,13 @@ function TeachersAtelier() {
         <p>{copy.subtitle}</p>
       </Reveal>
       <div className="teacher-poster-stage">
-        {teacherPortraits.map((visual, index) => {
-          const teacher = copy.people[index] ?? homePageCopy.teachers.people[index];
+        {copy.people.map((teacher, index) => {
+          const visual = teacherPortraits[index % teacherPortraits.length];
+          const image = teacher.image ?? teacherPortraits[index]?.image;
+          if (!image) return null;
           return (
           <Reveal key={`${teacher.name}-${index}`} className={`teacher-poster teacher-poster-${visual.tone}`} variant={index === 1 ? "boom" : index === 0 ? "from-left" : "from-right"}>
-            <div className="teacher-poster-image"><img src={visual.image} alt={teacher.name} loading="lazy" decoding="async" /></div>
+            <div className="teacher-poster-image"><img src={image} alt={teacher.name} loading="lazy" decoding="async" /></div>
           </Reveal>
           );
         })}
