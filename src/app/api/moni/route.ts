@@ -7,8 +7,23 @@ export const runtime = "nodejs";
 export const maxDuration = 30;
 const failure = (error: string, status: number) => NextResponse.json({ error }, { status, headers: { "Cache-Control": "no-store" } });
 
+function isSameOrigin(request: Request) {
+  const origin = request.headers.get("origin");
+  if (!origin || origin === "null") return false;
+  const requestUrl = new URL(request.url);
+  const firstHeaderValue = (value: string | null) => value?.split(",")[0].trim();
+  const host = firstHeaderValue(request.headers.get("x-forwarded-host")) || request.headers.get("host") || requestUrl.host;
+  const protocol = firstHeaderValue(request.headers.get("x-forwarded-proto")) || requestUrl.protocol.slice(0, -1);
+  if (protocol !== "http" && protocol !== "https") return false;
+  try {
+    return new URL(origin).origin === new URL(`${protocol}://${host}`).origin;
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
-  if (request.headers.get("origin") !== new URL(request.url).origin) return failure("Sorğu qəbul edilmədi.", 403);
+  if (!isSameOrigin(request)) return failure("Sorğu qəbul edilmədi.", 403);
   if (!process.env.OPENROUTER_API_KEY) return failure("Moni hazırda dincəlir. Konsultasiya forması ilə davam edə bilərsən.", 503);
   const ip = request.headers.get("x-vercel-forwarded-for") || request.headers.get("x-forwarded-for") || "local";
   const key = createHash("sha256").update(ip).digest("hex");
