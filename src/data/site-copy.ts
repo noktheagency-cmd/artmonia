@@ -66,9 +66,9 @@ export const homePageCopy = {
     titleEnd: "çevirən insanlar.",
     subtitle: "Hər müəllim öz texnikası, müşahidəsi və fərqli tədris ritmi ilə sənə yol göstərir.",
     people: [
-      { name: "Vaqif Əsrər", role: "Peşəkar akademik müəllim", line: "Akademik təməl və beynəlxalq baxış." },
-      { name: "Əsmər Ramazanova", role: "Akademik müəllim", line: "Qara qələm, forma və intizam." },
-      { name: "Əminə Cəmaləddinova", role: "Həvəskar rəsm müəllimi", line: "Art terapiya ilə yaradıcı yol." }
+      { name: "Vaqif Əsrər", image: "/assets/teacher-vaqif.webp", role: "Peşəkar akademik müəllim", line: "Akademik təməl və beynəlxalq baxış." },
+      { name: "Əsmər Ramazanova", image: "/assets/teacher-esmer.webp", role: "Akademik müəllim", line: "Qara qələm, forma və intizam." },
+      { name: "Əminə Cəmaləddinova", image: "/assets/teacher-emine.webp", role: "Həvəskar rəsm müəllimi", line: "Art terapiya ilə yaradıcı yol." }
     ]
   },
   footer: {
