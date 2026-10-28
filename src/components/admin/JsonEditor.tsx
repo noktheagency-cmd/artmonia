@@ -12,6 +12,7 @@ import { youtubeId } from "@/lib/youtube";
 import { homePageCopy } from "@/data/site-copy";
 
 const fieldLabels: Record<string, string> = {
+  line: "Qısa açıqlama",
   enabled: "Aktivdir",
   welcome: "Moninin qarşılama sualı",
   startLabel: "Moniyə başlama düyməsi",
