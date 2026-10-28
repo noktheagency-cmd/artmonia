@@ -9,6 +9,7 @@ import { useState } from "react";
 import { newestWorks } from "@/lib/student-works";
 import { studentWorks } from "@/data/student-works";
 import { youtubeId } from "@/lib/youtube";
+import { homePageCopy } from "@/data/site-copy";
 
 const fieldLabels: Record<string, string> = {
   enabled: "Aktivdir",
@@ -265,6 +266,12 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
   if (path === "student_works.items" && Array.isArray(value)) return <StudentWorksEditor value={value} onChange={onChange} onUpload={onUpload} media={media} path={path} />;
   if (fieldKey === "student_testimonials") return <TestimonialsEditor value={value} onChange={onChange} />;
   if (Array.isArray(value)) {
+    if (path === "home_page_copy.teachers.people" && value.some((person) => person && typeof person === "object" && !Array.isArray(person) && !("image" in person))) {
+      const normalized = value.map((person, index) => person && typeof person === "object" && !Array.isArray(person)
+        ? { image: homePageCopy.teachers.people[index]?.image ?? "", ...person }
+        : person);
+      return <JsonEditor value={normalized} onChange={onChange} onUpload={onUpload} media={media} path={path} fieldKey={fieldKey} />;
+    }
     const template = templateAtPath(path);
     const arrayTemplate = fieldKey === "studentResults" ? { name: "", image: "", result: "" } : Array.isArray(template) ? template[0] : undefined;
     const isMediaGallery = fieldKey === "images" || (fieldKey === "gallery" && value.every((item) => typeof item === "string"));
@@ -314,7 +321,10 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
 
   if (value && typeof value === "object") {
     const isProgramDetail = /^courses\.\d+\.detail$/.test(path);
-    const fields = isProgramDetail ? Object.fromEntries(Object.entries({ resultCategory: "", ...value }).filter(([key]) => !["certificate", "certificateImage"].includes(key))) : value;
+    const teacherMatch = /^home_page_copy\.teachers\.people\.(\d+)$/.exec(path);
+    const fields = teacherMatch
+      ? { image: homePageCopy.teachers.people[Number(teacherMatch[1])]?.image ?? "", ...value }
+      : isProgramDetail ? Object.fromEntries(Object.entries({ resultCategory: "", ...value }).filter(([key]) => !["certificate", "certificateImage"].includes(key))) : value;
     return (
       <div className="json-object">
         {isProgramDetail && <p>Sertifikatın şəklini və mətnlərini sol menyudakı “Sertifikatlar” bölməsindən dəyişin.</p>}
