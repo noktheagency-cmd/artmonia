@@ -129,3 +129,23 @@
     padding-bottom: 96px;
   }
 }
+
+.updated { margin: 0 0 32px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.description { margin-bottom: 20px; }
+.contents { padding: 24px 28px; margin-bottom: 40px; border: 1px solid var(--line); border-radius: 20px; }
+.contents > p { margin: 0 0 16px; font-weight: 650; }
+.contents ol { margin: 0; padding-left: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; row-gap: 12px; }
+.contents li { padding-left: 4px; color: var(--muted); font-size: 14px; line-height: 1.65; }
+.contents a { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.sections section + section { margin-top: 40px; }
+.sections p + p { margin-top: 16px; }
+.contact { margin-top: 44px; padding: 28px; border: 1px solid var(--line); border-radius: 20px; }
+.contact h2 { margin: 0 0 16px; font-size: 20px; line-height: 1.5; }
+.contact p { margin: 8px 0 0; line-height: 1.7; }
+.contact a { text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.contents a:focus-visible, .contact a:focus-visible { outline: 2px solid var(--brand-purple); outline-offset: 5px; border-radius: 2px; }
+@media (max-width: 600px) {
+  .contents { padding: 22px 20px; }
+  .contents ol { grid-template-columns: minmax(0, 1fr); }
+  .contact { padding: 22px 20px; }
+}
