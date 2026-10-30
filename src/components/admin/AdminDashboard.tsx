@@ -1,4 +1,6 @@
 "use client";
+import MetadataEditor from "./MetadataEditor";
+
 
 /* Media previews may point to Supabase Storage or existing site assets. */
 /* eslint-disable @next/next/no-img-element */
@@ -62,7 +64,7 @@ export type MediaAsset = {
   created_at: string;
 };
 
-type View = "dashboard" | "homepage" | "certificates" | "news" | "blog" | "home_results" | "results" | "awards" | "media" | "messages" | "settings";
+type View = "metadata" | "dashboard" | "homepage" | "certificates" | "news" | "blog" | "home_results" | "results" | "awards" | "media" | "messages" | "settings";
 
 const nav = [
   { id: "dashboard" as const, label: "Ana panel", icon: LayoutDashboard },
@@ -73,6 +75,7 @@ const nav = [
   { id: "home_results" as const, label: "Ana səhifə · Nəticələr", icon: Medal },
   { id: "results" as const, label: "Nəticələr", icon: Medal },
   { id: "awards" as const, label: "Mükafatlar", icon: Award },
+  { id: "metadata" as const, label: "Metadata", icon: Search },
   { id: "media" as const, label: "Media", icon: ImageIcon },
   { id: "messages" as const, label: "Mesajlar", icon: Mail }
 ];
@@ -443,6 +446,7 @@ export default function AdminDashboard({
             </section>
           ) : null}
 
+          {view === "metadata" ? <MetadataEditor media={media} onUpload={uploadMedia} /> : null}
           {view === "news" ? <NewsEditor key={`news-${getSection("news_items").updated_at ?? "default"}`} section={getSection("news_items")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}
           {view === "blog" ? <BlogEditor key={`blog-${getSection("blog_posts").updated_at ?? "default"}`} section={getSection("blog_posts")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}
           {view === "home_results" ? <CollectionEditor key={`home-results-${getSection("home_results").updated_at ?? "default"}`} kind="home_results" section={getSection("home_results")} busy={busy} onSave={saveSection} onUpload={uploadMedia} media={media} /> : null}

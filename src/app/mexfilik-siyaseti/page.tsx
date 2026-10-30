@@ -2,16 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
 import { getApprovedMobilePrivacyPolicy } from "@/lib/mobile-privacy-policy";
+import { managedMetadata } from "@/lib/managed-metadata";
 import styles from "./policy.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const published = Boolean(await getApprovedMobilePrivacyPolicy());
-  return {
-    title: "Artmonia Mobile | Məxfilik siyasəti",
-    description: "Artmonia Mobile tətbiqinin məxfilik siyasəti.",
-    robots: { index: published, follow: published },
-    alternates: published ? { canonical: "/mexfilik-siyaseti" } : undefined,
-  };
+  const metadata = await managedMetadata("Artmonia Mobile | Məxfilik siyasəti", "Artmonia Mobile tətbiqinin məxfilik siyasəti.", "/mexfilik-siyaseti");
+  return published ? metadata : { ...metadata, robots: { index: false, follow: false }, alternates: undefined };
 }
 
 export default async function MobilePrivacyPolicyPage() {

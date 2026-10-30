@@ -1,0 +1,62 @@
+[
+  {
+    "description": "Akademik rəsm, rəngkarlıq, kompozisiya və portfolyo hazırlığı. Artmonia Academy proqramları, tələbə işləri və müraciət imkanları ilə tanış olun.",
+    "path": "/",
+    "title": "Artmonia Academy | Rəsm və sənət kursları",
+    "image": "/assets/studio-room.webp"
+  },
+  {
+    "description": "Artmonia Academy-nin interyeri, tədris yanaşması və sənət sistemi ilə tanış olun.",
+    "path": "/akademiya",
+    "title": "Akademiya | Artmonia Academy",
+    "image": "/assets/studio-room.webp"
+  },
+  {
+    "description": "Rəsm, rəng və yaradıcılıq haqqında yazılar.",
+    "path": "/blog",
+    "title": "Blog | Artmonia Academy",
+    "image": "/assets/studio-room.webp"
+  },
+  {
+    "description": "Artmonia onlayn kurslarında hesab, tədris məlumatları, saxlanma, məxfilik və hesabın silinməsi qaydaları.",
+    "path": "/mexfilik",
+    "title": "Məxfilik siyasəti | Artmonia Academy",
+    "image": "/assets/studio-room.webp"
+  },
+  {
+    "description": "Artmonia Academy icmasının mükafatları və nailiyyətləri.",
+    "path": "/mukafatlar",
+    "title": "Mükafatlar | Artmonia Academy",
+    "image": "/assets/studio-room.webp"
+  },
+  {
+    "description": "Artmonia Academy proqramını seçin və ilkin konsultasiya üçün müraciət edin.",
+    "path": "/muraciet",
+    "title": "Müraciət et | Artmonia Academy",
+    "image": "/assets/studio-room.webp"
+  },
+  {
+    "description": "Artmonia Academy tələbələrinin işləri və inkişaf nəticələri.",
+    "path": "/neticeler",
+    "title": "Nəticələr | Artmonia Academy",
+    "image": "/assets/studio-room.webp"
+  },
+  {
+    "description": "Artmonia Academy tələbələrinin rəsm, portret və rəngkarlıq işləri ilə tanış olun.",
+    "path": "/telebe-isleri",
+    "title": "Tələbə işləri | Artmonia Academy",
+    "image": "/assets/studio-room.webp"
+  },
+  {
+    "description": "Artmonia Academy-dən xəbərlər, yeni qruplar, elanlar və studiya görüşləri.",
+    "path": "/yenilikler",
+    "title": "Yeniliklər | Artmonia Academy",
+    "image": "/assets/studio-room.webp"
+  },
+  {
+    "description": "Artmonia Mobile tətbiqinin məxfilik siyasəti.",
+    "path": "/mexfilik-siyaseti",
+    "title": "Artmonia Mobile | Məxfilik siyasəti",
+    "image": "/assets/studio-room.webp"
+  }
+]
