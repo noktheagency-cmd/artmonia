@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { pageMetadata, breadcrumb, absoluteUrl, SITE_URL } from "@/lib/seo";
+import { managedMetadata } from "@/lib/managed-metadata";
+import { breadcrumb, absoluteUrl, SITE_URL } from "@/lib/seo";
 import StructuredData from "@/components/StructuredData";
 import type { CSSProperties } from "react";
 import Link from "next/link";
@@ -32,7 +33,7 @@ async function findCourse(slug: string): Promise<Course | undefined> {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const course = await findCourse((await params).slug);
-  return course ? pageMetadata(`${course.title} | Artmonia Academy`, course.text, `/programlar/${encodeURIComponent(slugFor(course.title))}`, course.detail.image || undefined) : { title: "Proqram tapılmadı | Artmonia Academy", robots: { index: false } };
+  return course ? managedMetadata(`${course.title} | Artmonia Academy`, course.text, `/programlar/${encodeURIComponent(slugFor(course.title))}`, course.detail.image || undefined) : { title: "Proqram tapılmadı | Artmonia Academy", robots: { index: false } };
 }
 
 export default async function ProgramDetail({ params }: { params: Promise<{ slug: string }> }) {

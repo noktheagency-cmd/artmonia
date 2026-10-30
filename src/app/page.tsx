@@ -1,10 +1,11 @@
 import ArtmoniaSite from "@/components/ArtmoniaSite";
 import { getPublishedContent } from "@/lib/site-content";
-import { pageMetadata, SITE_URL } from "@/lib/seo";
+import { managedMetadata } from "@/lib/managed-metadata";
+import { SITE_URL } from "@/lib/seo";
 import StructuredData from "@/components/StructuredData";
 import { getApprovedMobilePrivacyPolicy } from "@/lib/mobile-privacy-policy";
 
-export const metadata = pageMetadata("Artmonia Academy | Rəsm və sənət kursları", "Akademik rəsm, rəngkarlıq, kompozisiya və portfolyo hazırlığı. Artmonia Academy proqramları, tələbə işləri və müraciət imkanları ilə tanış olun.", "/");
+export async function generateMetadata() { return managedMetadata("Artmonia Academy | Rəsm və sənət kursları", "Akademik rəsm, rəngkarlıq, kompozisiya və portfolyo hazırlığı. Artmonia Academy proqramları, tələbə işləri və müraciət imkanları ilə tanış olun.", "/"); }
 
 export default async function Home() {
   const content = await getPublishedContent();

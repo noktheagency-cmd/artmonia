@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import NewsDetailPage from "@/components/NewsDetailPage";
 import { getPublishedContent } from "@/lib/site-content";
 import { isNewsItem, getNewsImages } from "@/lib/news";
-import { pageMetadata, breadcrumb, absoluteUrl, SITE_URL } from "@/lib/seo";
+import { managedMetadata } from "@/lib/managed-metadata";
+import { breadcrumb, absoluteUrl, SITE_URL } from "@/lib/seo";
 import StructuredData from "@/components/StructuredData";
 
 async function getNewsCollection() {
@@ -28,7 +29,7 @@ export async function generateMetadata({
 
   if (!item) return { title: "Xəbər tapılmadı | Artmonia Academy" };
 
-  return pageMetadata(`${item.title} | Artmonia Academy`, item.excerpt, `/yenilikler/${encodeURIComponent(item.id)}`, getNewsImages(item)[0], true);
+  return managedMetadata(`${item.title} | Artmonia Academy`, item.excerpt, `/yenilikler/${encodeURIComponent(item.id)}`, getNewsImages(item)[0], true);
 }
 
 export default async function NewsDetailRoute({

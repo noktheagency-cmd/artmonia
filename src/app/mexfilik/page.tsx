@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import { onlinePrivacyPolicy as policy } from "@/lib/online-privacy-policy";
-import { pageMetadata } from "@/lib/seo";
+import { managedMetadata } from "@/lib/managed-metadata";
+
 import styles from "./privacy.module.css";
 
-export const metadata: Metadata = pageMetadata(
+export async function generateMetadata() { return managedMetadata(
   "Məxfilik siyasəti | Artmonia Academy",
   "Artmonia onlayn kurslarında hesab, tədris məlumatları, saxlanma, məxfilik və hesabın silinməsi qaydaları.",
   "/mexfilik",
-);
+); }
 
 export default function PrivacyPage() {
   return (

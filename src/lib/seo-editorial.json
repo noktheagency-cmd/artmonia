@@ -1,0 +1,392 @@
+{
+  "/": {
+    "sourceTitle": "Artmonia Academy | Rəsm və sənət kursları",
+    "title": "Rəsm kursları və qabiliyyət hazırlığı | Artmonia Academy",
+    "description": "Artmonia Academy-də qara qələm, portret, rəngkarlıq və qabiliyyət imtahanına hazırlıq proqramlarını, tələbə işlərini və tədris yanaşmasını kəşf edin."
+  },
+  "/akademiya": {
+    "sourceTitle": "Akademiya | Artmonia Academy",
+    "title": "Akademiya və tədris mühiti | Artmonia Academy",
+    "description": "Artmonia Academy-nin studiya mühiti, interyeri və tədris yanaşması ilə tanış olun. Rəsm öyrənmək üçün yaradılan məkanı yaxından kəşf edin."
+  },
+  "/blog": {
+    "sourceTitle": "Blog | Artmonia Academy",
+    "title": "Rəsm və yaradıcılıq bloqu | Artmonia Academy",
+    "description": "Rəsm texnikaları, portret, rəngkarlıq və qabiliyyət imtahanına hazırlıq haqqında yazıları oxuyun. Artmonia bloqunda məşq üçün praktik fikirlər tapın."
+  },
+  "/mexfilik": {
+    "sourceTitle": "Məxfilik siyasəti | Artmonia Academy",
+    "title": "Onlayn kurslar: məxfilik siyasəti | Artmonia Academy",
+    "description": "Artmonia onlayn kurslarında hesab və tədris məlumatlarının istifadəsi, saxlanması, məxfiliyi və hesabın silinməsi qaydaları ilə tanış olun."
+  },
+  "/mukafatlar": {
+    "sourceTitle": "Mükafatlar | Artmonia Academy",
+    "title": "Mükafatlar və nailiyyətlər | Artmonia Academy",
+    "description": "Artmonia Academy-nin mükafat və nailiyyətləri ilə tanış olun. Akademiyanın sənət və tədris fəaliyyətini əks etdirən məlumatları və fotoları nəzərdən keçirin."
+  },
+  "/muraciet": {
+    "sourceTitle": "Müraciət et | Artmonia Academy",
+    "title": "Rəsm proqramına müraciət | Artmonia Academy",
+    "description": "Marağınıza uyğun Artmonia proqramını seçin və müraciət formasını doldurun. Rəsm təhsili və proqram seçimi ilə bağlı komanda ilə əlaqə yaradın."
+  },
+  "/neticeler": {
+    "sourceTitle": "Nəticələr | Artmonia Academy",
+    "title": "Tələbə nəticələri və uğur hekayələri | Artmonia Academy",
+    "description": "Artmonia tələbələrinin inkişaf nəticələrini və uğur hekayələrini kəşf edin. Rəsm təhsili və qabiliyyət hazırlığı yolundakı təcrübələri ilə tanış olun."
+  },
+  "/telebe-isleri": {
+    "sourceTitle": "Tələbə işləri | Artmonia Academy",
+    "title": "Tələbə işləri: rəsm və rəngkarlıq | Artmonia Academy",
+    "description": "Artmonia tələbələrinin qara qələm, portret və rəngkarlıq işlərini nəzərdən keçirin. Fərqli mövzu və texnikalarda hazırlanmış əsərləri qalereyada kəşf edin."
+  },
+  "/yenilikler": {
+    "sourceTitle": "Yeniliklər | Artmonia Academy",
+    "title": "Xəbərlər və yeni qruplar | Artmonia Academy",
+    "description": "Artmonia Academy-nin yeni qrupları, qeydiyyat elanları, studiya görüşləri və tələbə nailiyyətləri haqqında xəbərləri bir səhifədən izləyin."
+  },
+  "/mexfilik-siyaseti": {
+    "sourceTitle": "Artmonia Mobile | Məxfilik siyasəti",
+    "title": "Mobil tətbiqin məxfilik siyasəti | Artmonia Academy",
+    "description": "Artmonia Mobile tətbiqinin məxfilik siyasəti ilə tanış olun. Tətbiqdən istifadə zamanı şəxsi məlumatlarla bağlı qaydaları bu səhifədən oxuyun."
+  },
+  "/programlar/qabiliyyət-imtahanı-hazırlığı": {
+    "sourceTitle": "Qabiliyyət imtahanı hazırlığı | Artmonia Academy",
+    "title": "Qabiliyyət imtahanına hazırlıq | Artmonia Academy",
+    "description": "İncəsənət ixtisaslarına qəbul üçün qabiliyyət imtahanına hazırlıq proqramı ilə tanış olun. Tədris məzmununu, tələbə nəticələrini və müraciət imkanını öyrənin."
+  },
+  "/programlar/rəngkarlıq": {
+    "sourceTitle": "Rəngkarlıq | Artmonia Academy",
+    "title": "Rəngkarlıq kursu | Artmonia Academy",
+    "description": "Artmonia rəngkarlıq proqramında rəng, fırça və kompozisiya üzərində işləyin. Kursun məzmunu, müddəti və müraciət qaydaları ilə tanış olun."
+  },
+  "/programlar/portret-": {
+    "sourceTitle": "Portret  | Artmonia Academy",
+    "title": "Portret rəsm kursu | Artmonia Academy",
+    "description": "Artmonia portret proqramı ilə üz quruluşu, proporsiya və işıq-kölgəni öyrənin. Tədris məzmununu nəzərdən keçirin və kursa müraciət edin."
+  },
+  "/programlar/qara-qələm": {
+    "sourceTitle": "Qara qələm | Artmonia Academy",
+    "title": "Qara qələm kursu | Artmonia Academy",
+    "description": "Qara qələmlə rəsm çəkməyin təməl qaydalarını Artmonia proqramında öyrənin. Tədris məzmunu, kursun müddəti və müraciət imkanları ilə tanış olun."
+  },
+  "/yenilikler/yenilik-e84e7029-30eb-4aca-a9ce-03425f72a005": {
+    "sourceTitle": "Artmonia qəhrəmanları | Artmonia Academy",
+    "title": "Müəllimlər günündə Artmonia müəllimləri | Artmonia",
+    "description": "Müəllimlər günü münasibətilə Artmonia komandasını yaxından tanıyın. Tələbələrin sənət yolunda rol alan müəllimlərimizə həsr olunmuş paylaşımı izləyin."
+  },
+  "/yenilikler/yenilik-ea99be47-8c4f-4e6c-b077-70a91c637670": {
+    "sourceTitle": "O kimdir? | Artmonia Academy",
+    "title": "Artmonia-nın yeni personajı ilə tanışlıq | Artmonia",
+    "description": "Artmonia-nın yeni dostuna dair ilk ipuclarını kəşf edin. Akademiyanın yaradıcı personajı haqqında bu paylaşımın fotolarına və açıqlamasına baxın."
+  },
+  "/yenilikler/yenilik-6db25a85-76d3-4b34-ae4f-adc72812df6e": {
+    "sourceTitle": "Kreditlə ödəniş | Artmonia Academy",
+    "title": "Kurs ödənişində kredit imkanı | Artmonia",
+    "description": "Artmonia kurslarının ödənişi üçün təqdim olunan kredit imkanı haqqında elanı oxuyun. Şərtləri dəqiqləşdirmək üçün akademiyanın komandası ilə əlaqə saxlayın."
+  },
+  "/yenilikler/yenilik-7e01b7ef-7115-4544-b790-0dd76d3d7451": {
+    "sourceTitle": "Sıfırdan rəssamlıq öyrən | Artmonia Academy",
+    "title": "Qara qələm qruplarına qeydiyyat | Artmonia",
+    "description": "Rəsmə sıfırdan başlamaq istəyənlər üçün Artmonia-nın qara qələm qrupları haqqında elanı oxuyun. Proqram və qeydiyyat məlumatları ilə tanış olun."
+  },
+  "/yenilikler/yenilik-d43b0156-0282-472e-b9b0-a4e58e7d9c93": {
+    "sourceTitle": "Portretdə ustalaşmaq istəyirsən? | Artmonia Academy",
+    "title": "Portret bacarıqlarını inkişaf etdir | Artmonia",
+    "description": "Artmonia-nın portret tədrisinə həsr olunmuş elanını oxuyun. Portret çəkmə bacarığınızı inkişaf etdirmək üçün proqram və qeydiyyat məlumatlarını öyrənin."
+  },
+  "/yenilikler/yenilik-fb4964a1-034f-4170-9c70-2c7ef360a0fc": {
+    "sourceTitle": "3 ayın sonunda ilk yağlı boya əsərini divardan as | Artmonia Academy",
+    "title": "Yağlı boya ilə ilk əsərinə başla | Artmonia",
+    "description": "Rəngləri tanımaq, fırçanı idarə etmək və kompozisiya qurmaq üçün Artmonia-nın yağlı boya tədrisi haqqında elanına baxın. Qrup barədə məlumat alın."
+  },
+  "/yenilikler/yenilik-5d53b134-2fa0-4139-9a09-8eddaba9c0fe": {
+    "sourceTitle": "Portret qruplarına qeydiyyat açıldı | Artmonia Academy",
+    "title": "Portret qruplarına qeydiyyat açıldı | Artmonia",
+    "description": "Artmonia-nın 3 aylıq, 36 saatlıq portret dərslərinə dair elanı oxuyun. Üz quruluşundan işıq-kölgəyə qədər proqramın mövzuları ilə tanış olun."
+  },
+  "/yenilikler/yenilik-f94b9b34-1516-4410-b7a2-ec46723ab78c": {
+    "sourceTitle": "Qabiliyyətə qeydiyyat başladı | Artmonia Academy",
+    "title": "2027 qabiliyyət hazırlığına qeydiyyat | Artmonia",
+    "description": "2027-ci ilin qabiliyyət imtahanına hazırlaşanlar üçün Artmonia-da yeni qruplar haqqında məlumat alın. Hazırlıq və qeydiyyat elanını nəzərdən keçirin."
+  },
+  "/yenilikler/yenilik-9dfec18c-8301-4759-9d54-5ca26def8f63": {
+    "sourceTitle": "3 ay sonra öz portretini çəkə biləcəksən | Artmonia Academy",
+    "title": "Seçdiyin portreti çəkməyi öyrən | Artmonia",
+    "description": "Kataloqdan seçilən portret üzərində addım-addım işləməyə həsr olunmuş Artmonia elanını oxuyun. Portret proqramı və qeydiyyat imkanları ilə tanış olun."
+  },
+  "/yenilikler/yenilik-85dd31cf-621c-41c2-971a-3fe01b282ab1": {
+    "sourceTitle": "2027 Qabiliyyət İmtahanına Hazırlıq Xəritəsi | Artmonia Academy",
+    "title": "2027 qabiliyyət imtahanı: hazırlıq planı | Artmonia",
+    "description": "İxtisas seçimi, hazırkı rəsm səviyyəsi və məqsədli hazırlıq planı: Artmonia-nın 2027 qabiliyyət imtahanına hazırlıq xəritəsi ilə tanış olun."
+  },
+  "/yenilikler/yenilik-04ce288f-c063-4175-be02-6432061c14c4": {
+    "sourceTitle": "İmtahan Həyəcanına Yox, Öz İstedadına İnan! | Artmonia Academy",
+    "title": "Qabiliyyət imtahanında həyəcan və hazırlıq | Artmonia",
+    "description": "Qabiliyyət imtahanına hazırlıq zamanı həyəcan və özünəinam mövzusuna nəzər salın. Artmonia-nın sistemli məşqə dair paylaşımını oxuyun."
+  },
+  "/yenilikler/yenilik-8ace0cbe-b83e-48aa-94a0-e3546633c48a": {
+    "sourceTitle": "Vakansiyamız var! | Artmonia Academy",
+    "title": "Satış və ofis meneceri vakansiyası | Artmonia",
+    "description": "Artmonia Academy-də satış və ofis meneceri vakansiyası haqqında elanı oxuyun. Vəzifə və müraciətlə bağlı məlumatları akademiyadan dəqiqləşdirin."
+  },
+  "/yenilikler/yenilik-6a2e9f4a-89fe-4ff7-9b88-129f87dc5e07": {
+    "sourceTitle": "Nümunə qalereya — 5 əlavə şəkil | Artmonia Academy",
+    "title": "Nümunə qalereya — 5 əlavə şəkil | Artmonia",
+    "description": "Poster və beş əlavə şəklin düzülüşünü yoxlamaq üçün nümunə xəbər."
+  },
+  "/yenilikler/yenilik-964a80b5-b45b-4462-83f8-a70e5d59b852": {
+    "sourceTitle": "Uğurlar davam edir! | Artmonia Academy",
+    "title": "Uğurlar davam edir! | Artmonia",
+    "description": "Artmonia tələbələrinin qabiliyyət imtahanında əldə etdiyi nəticələrə baxın. Hazırlıq, davamlı məşq və müəllim dəstəyinə həsr olunmuş paylaşımı oxuyun."
+  },
+  "/yenilikler/yenilik-9870b706-35e3-4d97-bfe2-08c95d9028dc": {
+    "sourceTitle": "Tələbələrin uğuru | Artmonia Academy",
+    "title": "Tələbələrin uğuru | Artmonia",
+    "description": "Qabiliyyət imtahanına Artmonia ilə hazırlaşan tələbələrin uğurlarını kəşf edin. Tələbə nəticələrini əks etdirən bu paylaşımın fotolarına nəzər salın."
+  },
+  "/yenilikler/yenilik-c1acbfce-3417-4b6e-9884-cfe80b011fcb": {
+    "sourceTitle": "Tələbələrin uğurları | Artmonia Academy",
+    "title": "Tələbələrin uğurları | Artmonia",
+    "description": "Artmonia tələbələrinin qabiliyyət hazırlığı yolundakı nailiyyətləri ilə tanış olun. İmtahan nəticələrinə həsr olunmuş fotoları və açıqlamanı izləyin."
+  },
+  "/yenilikler/yay-qrupuna-on-qeydiyyat": {
+    "sourceTitle": "Yay qrupuna ön qeydiyyat başladı | Artmonia Academy",
+    "title": "Yay qrupuna ön qeydiyyat başladı | Artmonia",
+    "description": "Yay mövsümündə sənət yolçuluğunu bizimlə davam etdirmək istəyənlər üçün ön qeydiyyat açıqdır."
+  },
+  "/yenilikler/portfolio-hazirligi-yeni-qrup": {
+    "sourceTitle": "Portfolio hazırlığı üçün yeni qrup açılır | Artmonia Academy",
+    "title": "Portfolio hazırlığı üçün yeni qrup açılır | Artmonia",
+    "description": "Portfolio qurmaq və qəbul prosesinə hazırlaşmaq istəyənlər üçün fokuslanmış yeni qrup formalaşır."
+  },
+  "/yenilikler/aciq-studiya-gunu": {
+    "sourceTitle": "Açıq studiya günü: məkan və müəllimlərlə tanışlıq | Artmonia Academy",
+    "title": "Açıq studiya günü: məkan və müəllimlərlə tanışlıq | Artmonia",
+    "description": "Studiyanı kəşf edin, müəllimlərimizlə tanış olun və proqramlarla bağlı suallarınızı birbaşa cavablandıraq."
+  },
+  "/yenilikler/reng-harmoniyasi-ustad-dersi": {
+    "sourceTitle": "Rəng harmoniyası üzrə açıq ustad dərsi | Artmonia Academy",
+    "title": "Rəng harmoniyası üzrə açıq ustad dərsi | Artmonia",
+    "description": "Rəngləri daha inamlı seçmək və palitranı idarə etmək üçün praktiki görüş keçiririk."
+  },
+  "/yenilikler/portret-proporsiyalari-seminari": {
+    "sourceTitle": "Portretdə proporsiya və ifadə seminarı | Artmonia Academy",
+    "title": "Portretdə proporsiya və ifadə seminarı | Artmonia",
+    "description": "Üz quruluşunu düzgün analiz etmək və ifadəni itirmədən çəkmək üçün yeni seminar."
+  },
+  "/yenilikler/akrilik-texnikasi-workshop": {
+    "sourceTitle": "Akrilik texnikası ilə faktura workshop-u | Artmonia Academy",
+    "title": "Akrilik texnikası ilə faktura workshop-u | Artmonia",
+    "description": "Lay, faktura və sürətli rəng keçidləri ilə akrilikin imkanlarını birlikdə sınayırıq."
+  },
+  "/yenilikler/telebe-isleri-iyul-sergisi": {
+    "sourceTitle": "İyul tələbə işləri sərgisi açılır | Artmonia Academy",
+    "title": "İyul tələbə işləri sərgisi açılır | Artmonia",
+    "description": "Fərqli proqramlardan seçilən işləri bir araya gətirən yay sərgimiz ziyarətçilərə açılır."
+  },
+  "/yenilikler/kompozisiya-aciq-dersi": {
+    "sourceTitle": "Kompozisiyada ritm və balans açıq dərsi | Artmonia Academy",
+    "title": "Kompozisiyada ritm və balans açıq dərsi | Artmonia",
+    "description": "Baxışı idarə edən əsas kompozisiya qərarlarını qısa praktika ilə öyrənəcəyik."
+  },
+  "/yenilikler/reqemsal-senet-yeni-qrup": {
+    "sourceTitle": "Rəqəmsal sənət proqramında yeni qrup | Artmonia Academy",
+    "title": "Rəqəmsal sənət proqramında yeni qrup | Artmonia",
+    "description": "Rəqəmsal eskiz, rəng və işıq-kölgə üzərində qurulan praktik proqram üçün qəbul başlayıb."
+  },
+  "/blog/blog-56d36d4d-a892-486c-a84e-2b4238b8ffaf": {
+    "sourceTitle": "Nə çəkmək istəyirəm? Tələbə işlərindən rəngkarlığa açılan söhbət | Artmonia Blog",
+    "title": "Rəngkarlıqda mövzu seçimi | Artmonia Blog",
+    "description": "Mənzərə, portret və ya süjetli kompozisiya: mövzu seçimi rəngkarlıqda hansı sualları açır? Tələbə işlərinə baxaraq öz marağımızı necə kəşf edə bilərik?"
+  },
+  "/blog/blog-ac114b44-fe87-4aee-9b62-b55b59945e77": {
+    "sourceTitle": "Öz əsərinin yanında: tələbələrimizin yağlı boya işlərini paylaşırıq | Artmonia Blog",
+    "title": "Tələbələrimizin yağlı boya əsərləri | Artmonia Blog",
+    "description": "Tələbənin öz tablosu ilə bir kadrda olması diqqəti əsərin müəllifinə də yönəldir. Bu fotolar öyrənmə prosesi və görülən əməyə baxmaq üçün gözəl bir fürsətdir."
+  },
+  "/blog/blog-076811bd-11e4-4746-98a1-fc2c316a4305": {
+    "sourceTitle": "Bir tabloya bir az yaxından: tələbələrimizin yağlı boya işlərində işıq və rəng | Artmonia Blog",
+    "title": "Yağlı boya əsərlərində işıq və rəng | Artmonia Blog",
+    "description": "Tələbələrimizin yağlı boya işlərinə bu dəfə tələsmədən baxırıq: işıq, rəng münasibətləri və fırça izləri bir tablonun təsirini necə yaradır?"
+  },
+  "/blog/blog-61d034ad-6dd7-4f48-98b3-ca7931d10d69": {
+    "sourceTitle": "Süni intellekt və rəssamlıq: alət dəyişir, yaradıcı baxış qalır | Artmonia Blog",
+    "title": "Süni intellekt və rəssamlıq | Artmonia Blog",
+    "description": "Süni intellekt ideya axtarışında və rəng variantlarını sınamaqda kömək edə bilər. Rəssamın müşahidəsi, seçimləri və əl bacarığı isə əsərin əsasını təşkil edir."
+  },
+  "/blog/blog-50135f6b-9265-43ab-810b-6d6978215ffc": {
+    "sourceTitle": "Qızıl nisbət və Artmonia loqosu: dairədə gizlənən yaradıcılıq fəlsəfəsi | Artmonia Blog",
+    "title": "Qızıl nisbət və Artmonia loqosu | Artmonia Blog",
+    "description": "Artmonia loqosundakı sarı-narıncı dairə qızıl nisbətdən ilhamlanıb. φ nisbətinin kompozisiyaya verdiyi istiqaməti və bu ideyanın Artmonia-nın yaradıcılıq fəlsəfəsi ilə əlaqəsini kəşf edin."
+  },
+  "/blog/blog-237315ed-c16a-4b7a-b168-a1f5ffa4fb6c": {
+    "sourceTitle": "Rəsm əsərini sərgidə təqdim etməyə necə hazırlamaq olar? | Artmonia Blog",
+    "title": "Rəsm əsərini sərgidə təqdim etməyə necə hazırlamaq olar? | Artmonia Blog",
+    "description": "Əsərini sərgidə göstərmək istəyirsənsə, əvvəlcə işi səliqəli tamamla, düzgün işıqda fotoşəkilini çək və adı ilə qısa təqdimatını hazırla."
+  },
+  "/blog/blog-ad3ee3a1-2e43-4464-962e-d933303c379f": {
+    "sourceTitle": "Həvəskarlar üçün rəsm dərslərinə başlamaq: ilk addım nədir? | Artmonia Blog",
+    "title": "Həvəskarlar üçün rəsm dərslərinə başlamaq: ilk addım nədir? | Artmonia Blog",
+    "description": "Rəsmə marağın var, amma haradan başlayacağını bilmirsən? Həvəskar rəsm dərsində əvvəlcə məqsədini, təcrübəni və hansı mövzular sənə maraqlı olduğunu müəyyənləşdir."
+  },
+  "/blog/blog-9ce6b6e8-3b05-45f5-92aa-a972785ca824": {
+    "sourceTitle": "Rəsm qabiliyyət imtahanından əvvəl həyəcanı necə azaltmaq olar? | Artmonia Blog",
+    "title": "Rəsm qabiliyyət imtahanından əvvəl həyəcanı necə azaltmaq olar? | Artmonia Blog",
+    "description": "İmtahan günü həyəcanlanmaq adi haldır. Tanış tapşırıqları vaxtla məşq etmək və ləvazimatları əvvəlcədən hazırlamaq diqqəti işə qaytarmağa kömək edə bilər."
+  },
+  "/blog/blog-4b8e0c14-f84b-4f8e-8ea7-8eaabff51a39": {
+    "sourceTitle": "Rəsm kursu seçərkən proqramda nələrə baxmaq lazımdır? | Artmonia Blog",
+    "title": "Rəsm kursu seçərkən proqramda nələrə baxmaq lazımdır? | Artmonia Blog",
+    "description": "Rəsm kursu seçərkən əvvəlcədən nə öyrənəcəyini, məşqlərin necə qurulduğunu və işinə necə rəy veriləcəyini soruş."
+  },
+  "/blog/blog-ac5da18e-09e1-4113-9240-f3fa38bcc0f2": {
+    "sourceTitle": "Rəsm müəllimindən faydalı rəy almaq üçün nə soruşmalı? | Artmonia Blog",
+    "title": "Rəsm müəllimindən faydalı rəy almaq üçün nə soruşmalı? | Artmonia Blog",
+    "description": "“Necə alınıb?” sualının əvəzinə konkret hissəni göstər: proporsiya, kompozisiya, ton, yoxsa perspektiv. Dəqiq sual növbəti məşqi daha anlaşılan edir."
+  },
+  "/blog/blog-d591bd23-03e5-4561-911c-ac3789427787": {
+    "sourceTitle": "Qabiliyyət imtahanında tapşırığı çəkməzdən əvvəl necə planlamaq olar? | Artmonia Blog",
+    "title": "Qabiliyyət imtahanında tapşırığı çəkməzdən əvvəl necə planlamaq olar? | Artmonia Blog",
+    "description": "Tapşırığa başlamazdan əvvəl şərti sona qədər oxu. Nə çəkiləcəyini, kompozisiyada nəyin əsas olduğunu və vaxtı necə istifadə edəcəyini qısa planla."
+  },
+  "/blog/blog-a757b9b7-70fd-4d2b-8c73-e93f07319c88": {
+    "sourceTitle": "Rəssamlıq ixtisasını seçməzdən əvvəl nələri araşdırmaq lazımdır? | Artmonia Blog",
+    "title": "Rəssamlıq ixtisasını seçməzdən əvvəl nələri araşdırmaq lazımdır? | Artmonia Blog",
+    "description": "Rəssamlıq və təsviri sənət ixtisası seçərkən yalnız adlara baxma. İxtisasın dərslərini, qəbul qaydalarını və gələcəkdə işləmək istədiyin sahələri müqayisə et."
+  },
+  "/blog/blog-10e57e39-4ff5-4a5a-8cd8-48f9777de664": {
+    "sourceTitle": "Rəsm tapşırığını yarımçıq qoymamaq üçün işi hansı ardıcıllıqla qurmalı? | Artmonia Blog",
+    "title": "Rəsm tapşırığını yarımçıq qoymamaq üçün işi hansı ardıcıllıqla qurmalı? | Artmonia Blog",
+    "description": "Rəsmə başlayıb yarıda saxlayırsansa, işi kiçik mərhələlərə böl. Əvvəl bütöv forma, sonra ton və yalnız sonda seçilmiş detallar."
+  },
+  "/blog/blog-da1e286d-9137-49f3-807a-32ec240b6ac4": {
+    "sourceTitle": "Qabiliyyət imtahanında rəsm üçün vaxtı necə bölüşdürmək olar? | Artmonia Blog",
+    "title": "Qabiliyyət imtahanında rəsm üçün vaxtı necə bölüşdürmək olar? | Artmonia Blog",
+    "description": "İmtahanda vaxtı düzgün bölmək üçün əvvəlcə tapşırığı oxu, əsas formaları qur və yalnız sonra detallara keç. Vaxtaşırı işinə bütöv bax."
+  },
+  "/blog/blog-fba12f6b-8138-4fda-bf17-624af8fb8c10": {
+    "sourceTitle": "Rəsmdə proporsiyanı necə yoxlamaq olar? İmtahana hazırlaşanlar üçün | Artmonia Blog",
+    "title": "Rəsmdə proporsiyanı necə yoxlamaq olar? İmtahana hazırlaşanlar üçün | Artmonia Blog",
+    "description": "Oxşarlıq və düzgün forma çox vaxt xırda detallardan yox, böyük ölçülərin münasibətindən başlayır. Rəsmdə proporsiyanı sadə müqayisələrlə yoxla."
+  },
+  "/blog/blog-41fb346a-0335-4c8b-8c81-e9ef815853cd": {
+    "sourceTitle": "Rəsm qabiliyyət imtahanında kompozisiyanı necə qurmaq olar? | Artmonia Blog",
+    "title": "Rəsm qabiliyyət imtahanında kompozisiyanı necə qurmaq olar? | Artmonia Blog",
+    "description": "Kağıza başlamazdan əvvəl obyektlərin ölçüsünə və vərəqdə tutacağı yerə bax. Sadə kompozisiya yoxlaması işi sonradan yenidən qurmaq ehtiyacını azaldır."
+  },
+  "/blog/blog-a710d6eb-0b9d-47db-842b-1f45ea0336d2": {
+    "sourceTitle": "Rəsm qabiliyyət imtahanına hazırlaşmaq üçün gündəlik məşq planı | Artmonia Blog",
+    "title": "Rəsm qabiliyyət imtahanına hazırlaşmaq üçün gündəlik məşq planı | Artmonia Blog",
+    "description": "Qabiliyyət imtahanına hazırlaşmaq üçün hər gün saatlarla çəkmək şərt deyil. Müntəzəm, məqsədli məşq və çəkdiyin işə sonradan baxmaq daha faydalı başlanğıcdır."
+  },
+  "/blog/blog-190f8d4e-813a-4d6e-8b20-b3aecba3fba4": {
+    "sourceTitle": "Rəssamlıqdan necə gəlir əldə etmək olar? Əsəri sifarişə çevirməyin yolları | Artmonia Blog",
+    "title": "Rəssamlıqdan necə gəlir əldə etmək olar? Əsəri sifarişə çevirməyin yolları | Artmonia Blog",
+    "description": "Rəssamlıqdan gəlir qazanmaq təkcə yaxşı rəsm çəkmək deyil. Portfel, aydın qiymət və sifarişçi ilə anlaşma da rol oynayır."
+  },
+  "/blog/blog-7e5e5326-8e0c-4b48-9f13-114578cbb1a7": {
+    "sourceTitle": "Rəsm məşqində səhvləri necə görüb düzəltmək olar? | Artmonia Blog",
+    "title": "Rəsm məşqində səhvləri necə görüb düzəltmək olar? | Artmonia Blog",
+    "description": "Rəsmdə nəyinsə alınmadığını hiss edəndə hər şeyi silib yenidən başlama. Uzaqdan bax, ən böyük fərqi tap və bir düzəlişdən başla."
+  },
+  "/blog/blog-9fe0afb9-5201-440a-baf9-ce5b31554a6f": {
+    "sourceTitle": "Gips fiqurdan rəsm çəkərkən nəyə fikir verməli? | Artmonia Blog",
+    "title": "Gips fiqurdan rəsm çəkərkən nəyə fikir verməli? | Artmonia Blog",
+    "description": "Gips fiqur çəkmək forma, ölçü və işıq-kölgəni müşahidə etmək üçün yaxşı məşqdir. Əvvəl silueti və böyük nisbətləri qur, sonra tonlara keç."
+  },
+  "/blog/blog-514b0711-e17c-4f67-92b2-92df98244d5c": {
+    "sourceTitle": "Canlı fiqur rəsminə necə başlamaq olar? | Artmonia Blog",
+    "title": "Canlı fiqur rəsminə necə başlamaq olar? | Artmonia Blog",
+    "description": "Canlı fiqur çəkərkən xırda detallara tələsmə. Əvvəl pozanın istiqamətini, baş və gövdənin münasibətini, sonra böyük formaları yüngül xətlərlə qur."
+  },
+  "/blog/blog-6a7e7e55-f24d-4123-8ba7-89746d68084a": {
+    "sourceTitle": "Rəsm çəkərkən işıq formanın görünüşünü necə dəyişir? | Artmonia Blog",
+    "title": "Rəsm çəkərkən işıq formanın görünüşünü necə dəyişir? | Artmonia Blog",
+    "description": "Eyni əşya fərqli işıqda başqa cür görünə bilər. İşığın istiqamətini və kölgənin düşdüyü yeri izləmək formanın həcmini rəsmdə göstərməyə kömək edir."
+  },
+  "/blog/blog-32b6f2f2-178f-4441-a3d2-39e18c7a92ff": {
+    "sourceTitle": "Portret rəsminə baxanda nisbət və tonları necə görmək olar? | Artmonia Blog",
+    "title": "Portret rəsminə baxanda nisbət və tonları necə görmək olar? | Artmonia Blog",
+    "description": "Portretə baxanda hər detalı eyni vaxtda çəkməyə çalışma. Əvvəl üzün ümumi ölçülərini müqayisə et, sonra işıq və kölgənin böyük sahələrini tap."
+  },
+  "/blog/blog-8215bc2e-9d3e-42c1-a15e-18de920d008b": {
+    "sourceTitle": "H, HB və B qrafit qələmlərin fərqi nədir? | Artmonia Blog",
+    "title": "H, HB və B qrafit qələmlərin fərqi nədir? | Artmonia Blog",
+    "description": "Qələm üzərindəki H və B işarələri qurğuşunun sərtliyi və xəttin tonuna təsir edir. Məşqə başlamaq üçün bir neçə fərqli sərtlikdə qələmi sınamaq kifayətdir."
+  },
+  "/blog/blog-b8523c11-a36b-44a6-ab59-e5ef4aeaab90": {
+    "sourceTitle": "Molbert qarşısında rəsm məşqi: canlı müşahidəyə 5 addım | Artmonia Blog",
+    "title": "Molbert qarşısında rəsm məşqi: canlı müşahidəyə 5 addım | Artmonia Blog",
+    "description": "Canlı modeldən və ya əşyadan rəsm çəkəndə yalnız kontura baxma. Böyük formaları, aralarındakı məsafəni və işığın düşdüyü istiqaməti də müşahidə et."
+  },
+  "/blog/blog-8d2a5556-f4e5-4296-80e9-d206c897b4ee": {
+    "sourceTitle": "Portret məşqini 3 mərhələyə necə bölmək olar? | Artmonia Blog",
+    "title": "Portret məşqini 3 mərhələyə necə bölmək olar? | Artmonia Blog",
+    "description": "Portret çəkərkən əvvəl böyük formaya və nisbətlərə bax, sonra işıq-kölgəni qur, ən sonda detallara keç. Bu ardıcıllıq işi yoxlamağı asanlaşdırır."
+  },
+  "/blog/blog-4d50e519-9b6d-4752-be82-3dfe6c46cca5": {
+    "sourceTitle": "Rəsm bacarığı necə inkişaf edir? | Artmonia Blog",
+    "title": "Rəsm bacarığı necə inkişaf edir? | Artmonia Blog",
+    "description": "Rəsm bacarığı bir gündə yaranmır. Qısa, müntəzəm məşqlər və gördüyün işə diqqətlə baxmaq inkişafına kömək edir."
+  },
+  "/blog/blog-9a110432-cb6c-4496-acfa-842611bce5ff": {
+    "sourceTitle": "Rəsm dərsində birlikdə öyrənmək nə verir? | Artmonia Blog",
+    "title": "Rəsm dərsində birlikdə öyrənmək nə verir? | Artmonia Blog",
+    "description": "Birlikdə rəsm öyrənəndə başqalarının yanaşmasını görür, sual verib öz işinə başqa gözlə baxa bilərsən."
+  },
+  "/blog/blog-a636dcc5-4a02-40df-9009-5fd3a580cc14": {
+    "sourceTitle": "Rəsmini paylaşmazdan əvvəl: əsəri necə təqdim etməli? | Artmonia Blog",
+    "title": "Rəsmini paylaşmazdan əvvəl: əsəri necə təqdim etməli? | Artmonia Blog",
+    "description": "Bir əsəri paylaşmaq istəyirsən? Təmiz işıqda çək, kadrı düz qur və işin hekayəsini bir cümlə ilə yaz. Kiçik hazırlıq rəsmi daha aydın göstərir."
+  },
+  "/blog/blog-194e7192-a73d-4622-adf8-50f82842cd1e": {
+    "sourceTitle": "Rəsm dərsində uşağa necə kömək etməli? | Artmonia Blog",
+    "title": "Rəsm dərsində uşağa necə kömək etməli? | Artmonia Blog",
+    "description": "Rəsm çəkən uşağa kömək etmək istəyirsənsə, qələmi onun əlindən alma. Kiçik bir ipucu ver, növbəti addımı özü tapsın."
+  },
+  "/blog/blog-39ded21d-c918-425d-9d2c-e0a11d6286ff": {
+    "sourceTitle": "Uşağın rəsmə marağını necə dəstəkləmək olar? | Artmonia Blog",
+    "title": "Uşağın rəsmə marağını necə dəstəkləmək olar? | Artmonia Blog",
+    "description": "Uşağın rəsmə marağını dəstəkləmək üçün əvvəlcə nəticəni yox, çəkərkən göstərdiyi marağı gör. Ona sual ver, vaxt və material ver, seçimlərini özü etsin."
+  },
+  "/blog/blog-60684556-8d9b-4846-81f4-7f2fc50ca9c1": {
+    "sourceTitle": "Eskizə necə başlamaq olar? 5 sadə addım | Artmonia Blog",
+    "title": "Eskizə necə başlamaq olar? 5 sadə addım | Artmonia Blog",
+    "description": "Eskizdə hər xətti mükəmməl çəkməyə çalışma. Əvvəlcə əsas formanı, istiqaməti və böyük nisbətləri yüngül xətlərlə qeyd et."
+  },
+  "/blog/blog-5dec176b-d6b4-47e6-94e8-10d68dc4e55d": {
+    "sourceTitle": "Studiyada rəsm üçün iş yerini necə hazırlamaq olar? | Artmonia Blog",
+    "title": "Studiyada rəsm üçün iş yerini necə hazırlamaq olar? | Artmonia Blog",
+    "description": "Molbertin yeri, işıq və modelə olan məsafə rəsm məşqini rahatlaşdırır. Studiyada başlamazdan əvvəl bu sadə detalları yoxla."
+  },
+  "/blog/blog-2f38c355-c20c-41ad-9995-88bd674ef04c": {
+    "sourceTitle": "Rəngləri qarışdırıram, amma istədiyim çalar alınmır — nə edim? | Artmonia Blog",
+    "title": "Rəngləri qarışdırıram, amma istədiyim çalar alınmır — nə edim? | Artmonia Blog",
+    "description": "Rəngləri qarışdıranda çalar gözlədiyin kimi alınmır? Boyanı az-az əlavə et, fırçanı təmiz saxla və qarışığı kətana çəkməzdən əvvəl sına."
+  },
+  "/blog/blog-31faa790-d9f7-46d7-865f-a99639bb2f22": {
+    "sourceTitle": "Portret çəkməyə haradan başlamaq olar? | Artmonia Blog",
+    "title": "Portret çəkməyə haradan başlamaq olar? | Artmonia Blog",
+    "description": "Portret çəkməyə əvvəlcə başın ümumi formasını, meylini və əsas nisbətləri yüngül xətlərlə qurmaqla başla. Detallara sonra keç."
+  },
+  "/blog/portrete-ilk-addim": {
+    "sourceTitle": "Portret çəkməzdən əvvəl sifətdə nələrə baxmalı? | Artmonia Blog",
+    "title": "Portret çəkməzdən əvvəl sifətdə nələrə baxmalı? | Artmonia Blog",
+    "description": "Portretə başlamazdan əvvəl bir az müşahidə et: başın meyli, üzün ümumi forması və işıq-kölgə çox şeyi göstərir."
+  },
+  "/blog/rengleri-anlamaq": {
+    "sourceTitle": "Rəngləri anlamaq | Artmonia Blog",
+    "title": "Rəngləri anlamaq | Artmonia Blog",
+    "description": "Rənglərin duyğuları ifadə etməkdə rolunu kəşf edin. Artmonia bloqunda rəngləri tanımaq və yaradıcılıqda istifadəsini düşünmək üçün bu yazını oxuyun."
+  },
+  "/blog/yaradiciliq-ucun-mekan": {
+    "sourceTitle": "Yaradıcılıq üçün məkan | Artmonia Blog",
+    "title": "Yaradıcılıq üçün məkan | Artmonia Blog",
+    "description": "Rahat və düşünülmüş iş mühitinin yaradıcılığa təsirinə nəzər salın. Artmonia bloqunda rəsm üçün məkan və diqqət mövzusuna həsr olunmuş yazını oxuyun."
+  },
+  "/blog/eskiz-verdisi": {
+    "sourceTitle": "Eskiz vərdişi | Artmonia Blog",
+    "title": "Eskiz vərdişi | Artmonia Blog",
+    "description": "Gündəlik eskiz məşqləri ilə müşahidə bacarığınızı inkişaf etdirməyin yollarını öyrənin. Kiçik işləri müntəzəm rəsm vərdişinə çevirmək üçün yazını oxuyun."
+  }
+}
