@@ -1,10 +1,11 @@
-import { pageMetadata } from "@/lib/seo";
+import { managedMetadata } from "@/lib/managed-metadata";
+
 import ApplicationWizard from "@/components/ApplicationWizard";
 import SiteHeader from "@/components/SiteHeader";
 import { SiteContentProvider } from "@/components/SiteContentContext";
 import { getPublishedContent } from "@/lib/site-content";
 
-export const metadata = pageMetadata("Müraciət et | Artmonia Academy", "Artmonia Academy proqramını seçin və ilkin konsultasiya üçün müraciət edin.", "/muraciet");
+export async function generateMetadata() { return managedMetadata("Müraciət et | Artmonia Academy", "Artmonia Academy proqramını seçin və ilkin konsultasiya üçün müraciət edin.", "/muraciet"); }
 
 export default async function ApplicationPage() {
   const content = await getPublishedContent();

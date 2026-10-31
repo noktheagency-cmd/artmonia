@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
-import { pageMetadata, absoluteUrl, breadcrumb, SITE_URL } from "@/lib/seo";
+import { managedMetadata } from "@/lib/managed-metadata";
+import { absoluteUrl, breadcrumb, SITE_URL } from "@/lib/seo";
 import StructuredData from "@/components/StructuredData";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const content = await getPublishedContent();
   const post = publishedBlog(content.blog_posts).find((entry) => entry.id === slug);
-  return post ? pageMetadata(`${post.title} | Artmonia Blog`, post.excerpt, `/blog/${encodeURIComponent(post.id)}`, post.image || undefined, true) : { title: "Yazı tapılmadı", robots: { index: false } };
+  return post ? managedMetadata(`${post.title} | Artmonia Blog`, post.excerpt, `/blog/${encodeURIComponent(post.id)}`, post.image || undefined, true) : { title: "Yazı tapılmadı", robots: { index: false } };
 }
 export default async function BlogDetail({ params }: Props) {
   const { slug } = await params;
