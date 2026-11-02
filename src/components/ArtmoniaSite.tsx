@@ -6,6 +6,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Image from "next/image";
 import { X } from "lucide-react";
 import programStyles from "./Programs.module.css";
 import Link from "next/link";
@@ -128,25 +129,36 @@ function Reveal({
 }
 
 function BrushField() {
-  const [pos, setPos] = useState({ x: 50, y: 50 });
+  const fieldRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const field = fieldRef.current;
+    if (!field) return;
+    let frame = 0;
+    let x = 50;
+    let y = 50;
     const onMove = (event: PointerEvent) => {
-      setPos({ x: (event.clientX / window.innerWidth) * 100, y: (event.clientY / window.innerHeight) * 100 });
+      if (event.pointerType !== "mouse") return;
+      x = (event.clientX / window.innerWidth) * 100;
+      y = (event.clientY / window.innerHeight) * 100;
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        field.style.setProperty("--mx", `${x.toFixed(1)}%`);
+        field.style.setProperty("--my", `${y.toFixed(1)}%`);
+      });
     };
     window.addEventListener("pointermove", onMove);
-    return () => window.removeEventListener("pointermove", onMove);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("pointermove", onMove);
+    };
   }, []);
 
   return (
     <div
+      ref={fieldRef}
       className="brush-field"
-      style={
-        {
-          "--mx": `${pos.x}%`,
-          "--my": `${pos.y}%`
-        } as React.CSSProperties
-      }
       aria-hidden="true"
     >
       <div className="brush-orbit orbit-one" />
@@ -193,7 +205,7 @@ function ProblemTransformation() {
         <div className="problem-orbit" aria-label="Artmonia problemlər karuseli">
           <div className="orbit-aura" />
           <div className="thinking-figure" aria-hidden="true">
-            <img className="question-avatar real-girl-avatar" src="/assets/mona-lisa-thinking.png" alt="" loading="lazy" decoding="async" />
+            <Image className="question-avatar real-girl-avatar" src="/assets/mona-lisa-thinking.png" alt="" width={1254} height={1254} sizes="(max-width: 640px) 60vw, 365px" loading="lazy" />
             <div className="problem-shadow" />
           </div>
           <div className="orbit-wheel">

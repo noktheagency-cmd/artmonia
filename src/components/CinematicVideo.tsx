@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import styles from "./CinematicVideo.module.css";
 
@@ -106,19 +107,22 @@ export default function CinematicVideo({
   return (
     <div
       ref={frameRef}
-      className={`${styles.frame} ${mobilePoster ? styles.hasMobilePoster : ""} ${isReady ? styles.ready : ""} ${className}`}
+      className={`${styles.frame} ${isReady ? styles.ready : ""} ${className}`}
       aria-hidden="true"
     >
-      <div
-        className={styles.poster}
-        style={{ backgroundImage: `url("${poster}")` }}
-      />
-      {mobilePoster ? (
-        <div
-          className={`${styles.poster} ${styles.mobilePoster}`}
-          style={{ backgroundImage: `url("${mobilePoster}")` }}
+      <picture className={styles.poster}>
+        {mobilePoster ? <source srcSet={mobilePoster} media="(max-width: 760px)" /> : null}
+        <Image
+          src={poster}
+          alt=""
+          fill
+          sizes="100vw"
+          quality={85}
+          loading={eager ? "eager" : "lazy"}
+          fetchPriority={eager ? "high" : "auto"}
+          decoding="async"
         />
-      ) : null}
+      </picture>
       {shouldRenderVideo ? (
         <video
           ref={videoRef}

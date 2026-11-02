@@ -27,6 +27,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   color: var(--ink);
@@ -72,6 +76,9 @@ textarea {
 }
 
 .brush-field {
+  --mx: 50%;
+  --my: 50%;
+
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -14935,14 +14942,13 @@ html.theme-dark .price-calculator-result a {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
-  object-position: center 32%;
-  transition: transform 900ms cubic-bezier(.16,1,.3,1), filter 500ms ease;
+  object-fit: contain;
+  object-position: center;
+  transition: filter 500ms ease;
 }
 
 .student-result-card:hover .student-result-media img {
   filter: saturate(1.06) contrast(1.02);
-  transform: scale(1.055) rotate(-.28deg);
 }
 
 .student-result-card:hover .student-result-media::after {

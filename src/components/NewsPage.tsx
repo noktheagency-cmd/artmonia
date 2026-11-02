@@ -4,12 +4,14 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
+import Image from "next/image";
 import SiteHeader from "@/components/SiteHeader";
 import { SiteContentProvider } from "@/components/SiteContentContext";
 import type { NewsItem } from "@/data/site";
 import type { SiteContentMap } from "@/lib/site-content";
 import { globalCopy, newsPageCopy, type GlobalCopy, type NewsPageCopy } from "@/data/site-copy";
 import { getNewsImages } from "@/lib/news";
+import { canOptimizeImage } from "@/lib/image-optimization";
 import styles from "./NewsPage.module.css";
 
 const ITEMS_PER_PAGE = 6;
@@ -86,13 +88,26 @@ export default function NewsPage({
                   key={item.id}
                 >
                   <div className={styles.imageWrap}>
-                    {/* Admin images can come from different providers, so a native image is intentional. */}
-                    <img
-                      className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
-                      src={image}
-                      alt={item.title}
-                      loading={index < 3 ? "eager" : "lazy"}
-                    />
+                    {canOptimizeImage(image) ? (
+                      <Image
+                        className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
+                        src={image}
+                        alt={item.title}
+                        fill
+                        sizes="(max-width: 760px) 90vw, (max-width: 1200px) 45vw, 30vw"
+                        quality={80}
+                        loading={index === 0 ? "eager" : "lazy"}
+                        fetchPriority={index === 0 ? "high" : "auto"}
+                      />
+                    ) : (
+                      <img
+                        className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
+                        src={image}
+                        alt={item.title}
+                        loading={index === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                      />
+                    )}
                   </div>
 
                 </Link>

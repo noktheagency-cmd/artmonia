@@ -3,9 +3,6 @@
   --hero-pointer-y: 48%;
   --hero-shift-x: 0px;
   --hero-shift-y: 0px;
-  --hero-scroll: 0;
-  --hero-scroll-shift: 0px;
-  --hero-scroll-scale: 1.02;
 
   position: relative;
   z-index: 1;
@@ -23,8 +20,8 @@
   overflow: hidden;
   background: #f5f2fb;
   transform:
-    translate3d(var(--hero-shift-x), calc(var(--hero-shift-y) - var(--hero-scroll-shift)), 0)
-    scale(var(--hero-scroll-scale));
+    translate3d(var(--hero-shift-x), var(--hero-shift-y), 0)
+    scale(1.02);
   transition: filter 700ms ease, transform 160ms linear;
   will-change: filter, transform;
 }

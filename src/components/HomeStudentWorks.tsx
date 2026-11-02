@@ -3,9 +3,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, ArrowRight, Pencil, Palette, UserRound } from "lucide-react";
 import { useSiteContentValue } from "./SiteContentContext";
 import { studentWorks } from "@/data/student-works";
+import { canOptimizeImage } from "@/lib/image-optimization";
 import { newestWorks } from "@/lib/student-works";
 import styles from "./HomeStudentWorks.module.css";
 
@@ -51,7 +53,18 @@ export default function HomeStudentWorks({ archive = false }: { archive?: boolea
         {!archive && <div className={styles.controls}><button type="button" aria-label="Əvvəlki işlər" disabled={progress === 0} onClick={() => scroll(-1)}><ArrowLeft /></button><button type="button" aria-label="Növbəti işlər" onClick={() => scroll(1)}><ArrowRight /></button></div>}
       </div>
       <div ref={rail} className={archive ? styles.archiveGrid : styles.rail} tabIndex={0} role="region" aria-label="Tələbə işləri qalereyası" onScroll={(event) => { const e = event.currentTarget; const max = e.scrollWidth - e.clientWidth; setProgress(max > 0 ? e.scrollLeft / max : 0); }}>
-        {visible.map((item) => <article className={styles.card} key={item.id}><img src={item.image} alt={`${item.name} — ${item.program}`} loading="lazy" /><div className={styles.copy}><h3>{item.name}</h3><p>{item.program}</p>{item.quote && <blockquote>{item.quote}</blockquote>}</div></article>)}
+        {visible.map((item) => (
+          <article className={styles.card} key={item.id}>
+            <div className={styles.imageFrame}>
+              {canOptimizeImage(item.image) ? (
+                <Image src={item.image} alt={`${item.name} — ${item.program}`} fill sizes="(max-width: 600px) 73vw, (max-width: 1000px) 33vw, 20vw" quality={90} loading="lazy" />
+              ) : (
+                <img src={item.image} alt={`${item.name} — ${item.program}`} loading="lazy" decoding="async" />
+              )}
+            </div>
+            <div className={styles.copy}><h3>{item.name}</h3><p>{item.program}</p>{item.quote && <blockquote>{item.quote}</blockquote>}</div>
+          </article>
+        ))}
       </div>
       {!archive && <div className={styles.progress} aria-hidden="true"><span style={{ transform: `translateX(${progress * 300}%)` }} /></div>}
       {(category || archive) && <p className={styles.status} role="status">{filtered.length} iş{category ? ` · ${category}` : ""}</p>}
