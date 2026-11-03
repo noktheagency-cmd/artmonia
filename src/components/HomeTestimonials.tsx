@@ -20,6 +20,12 @@ export default function HomeTestimonials() {
             <p>{review.text.trim().slice(0, TESTIMONIAL_TEXT_LIMIT)}</p>
           </li>)}
         </ul>
+        <ul className={styles.group} aria-hidden="true">
+          {reviews.map((review, index) => <li className={styles.card} key={`duplicate-${review.id}-${index}`}>
+            <h3>{review.anonymous || !review.name?.trim() ? "Anonim" : review.name.trim().slice(0, TESTIMONIAL_NAME_LIMIT)}</h3>
+            <p>{review.text.trim().slice(0, TESTIMONIAL_TEXT_LIMIT)}</p>
+          </li>)}
+        </ul>
       </div>
     </div>
   </section>;

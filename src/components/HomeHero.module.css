@@ -967,3 +967,45 @@
   .card h2, .cardLabel, .cardText { overflow-wrap: normal; word-break: normal; hyphens: none; }
   .cardAction { cursor: default; }
 }
+
+@media (max-width: 360px) {
+  .hero { padding-bottom: 78px; }
+
+  .cards {
+    --paper-open-distance: 58px;
+    width: calc(100% - 32px);
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    margin-block: 10px;
+  }
+
+  .card,
+  .cardLeft,
+  .cardRight {
+    min-height: 108px;
+    padding: 12px 15px;
+    border: 1px solid rgba(23, 11, 91, 0.22);
+    border-radius: 20px;
+  }
+
+  .card::before,
+  .card::after { display: none; }
+  .cardLabel { margin-bottom: 4px; font-size: 8px; letter-spacing: 0.14em; }
+  .card h2 { font-size: 18px; line-height: 1.04; }
+  .cardRule { margin: 6px 0 5px; }
+  .cardText { font-size: 11px; line-height: 1.4; }
+
+  .statueReveal { width: min(180px, 56vw); }
+  .cards.cardsOpen .statueReveal { transform: translate(-50%, -50%) scale(1.04); }
+
+  .cards.cardsOpen .cardLeft {
+    border-bottom-color: rgba(23, 11, 91, 0.22);
+    transform: translate3d(0, -54px, 18px) rotateX(3deg) scale(0.94);
+  }
+
+  .cards.cardsOpen .cardRight {
+    border-top-color: rgba(23, 11, 91, 0.22);
+    transform: translate3d(0, 54px, 18px) rotateX(-3deg) scale(0.94);
+  }
+}

@@ -5,20 +5,19 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Pause, Play } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { newsItems } from "@/data/site";
 import { homePageCopy } from "@/data/site-copy";
 import { useSiteContentValue } from "@/components/SiteContentContext";
 import { getNewsImages, isNewsItem } from "@/lib/news";
 import { canOptimizeImage } from "@/lib/image-optimization";
+import { useResultAos } from "./useResultAos";
 import styles from "./HomeNewsSection.module.css";
 
-function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
+function Arrow() {
   return (
     <svg
       aria-hidden="true"
-      className={direction === "left" ? styles.arrowLeft : undefined}
       viewBox="0 0 24 24"
     >
       <path d="M5 12h13" />
@@ -29,7 +28,6 @@ function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
 
 export default function HomeNewsSection() {
   const railRef = useRef<HTMLDivElement | null>(null);
-  const [paused, setPaused] = useState(false);
   const dynamicItems = useSiteContentValue("news_items", newsItems);
   const copy = useSiteContentValue("home_page_copy", homePageCopy).news;
   const items = useMemo(() => {
@@ -43,10 +41,11 @@ export default function HomeNewsSection() {
   }, [dynamicItems]);
   const cycleItems = items.length ? Array.from({ length: Math.ceil(5 / items.length) }, () => items).flat() : [];
   const loopItems = [...cycleItems, ...cycleItems];
+  const sectionRef = useResultAos<HTMLElement>(items.map((item) => item.id).join("|"));
 
   useEffect(() => {
     const rail = railRef.current;
-    if (!rail || paused) return;
+    if (!rail) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const mobile = window.matchMedia("(max-width: 760px)");
     let touching = false;
@@ -141,31 +140,13 @@ export default function HomeNewsSection() {
       rail.removeEventListener("touchend", touchEnd);
       rail.removeEventListener("touchcancel", touchEnd);
     };
-  }, [items, paused, cycleItems.length]);
-
-  function scrollRail(direction: -1 | 1) {
-    const rail = railRef.current;
-    if (!rail) return;
-    rail.scrollBy({ left: direction * rail.clientWidth * 0.78, behavior: "auto" });
-  }
+  }, [items, cycleItems.length]);
 
   return (
-    <section className={`${styles.section} scroll-section`} id="academy" aria-labelledby="home-news-title">
-      <div className={styles.heading}>
+    <section ref={sectionRef} className={`${styles.section} scroll-section`} id="academy" aria-labelledby="home-news-title">
+      <div className={`${styles.heading} ${styles.aosTarget}`} data-aos="fade-up">
         <div>
           <h2 id="home-news-title">{copy.title}</h2>
-        </div>
-
-        <div className={styles.headingActions}>
-          <div className={styles.scrollButtons} aria-label="Xəbər relsini idarə et">
-            <button type="button" onClick={() => setPaused(!paused)} aria-label={paused ? "Xəbər lentini davam etdir" : "Xəbər lentini dayandır"} aria-pressed={paused}>{paused ? <Play size={18} aria-hidden="true" /> : <Pause size={18} aria-hidden="true" />}</button>
-            <button type="button" onClick={() => scrollRail(-1)} aria-label="Əvvəlki xəbərlər">
-              <Arrow direction="left" />
-            </button>
-            <button type="button" onClick={() => scrollRail(1)} aria-label="Növbəti xəbərlər">
-              <Arrow />
-            </button>
-          </div>
         </div>
       </div>
 
@@ -176,39 +157,47 @@ export default function HomeNewsSection() {
 
           return (
             <Link
-              className={styles.card}
+              className={`${styles.card} ${styles.aosTarget}`}
+              data-aos="fade-up"
               href={`/yenilikler/${encodeURIComponent(item.id)}`}
               aria-label={`${item.title} xəbərini ətraflı oxu`}
               key={`${item.id}-${index}`}
               aria-hidden={index >= items.length ? true : undefined}
               tabIndex={index >= items.length ? -1 : undefined}
             >
-              <span className={styles.image}>
-                {canOptimizeImage(image) ? (
-                  <Image
-                    className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
-                    src={image}
-                    alt={item.title}
-                    fill
-                    sizes="(max-width: 760px) 82vw, 24vw"
-                    quality={80}
-                    loading="lazy"
-                  />
-                ) : (
-                  <img
-                    className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
-                    src={image}
-                    alt={item.title}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                )}
+              <span className={styles.imageFrame}>
+                <span className={styles.image}>
+                  {canOptimizeImage(image) ? (
+                    <Image
+                      className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
+                      src={image}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 760px) 82vw, 24vw"
+                      quality={80}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <img
+                      className={`${styles.imageMain} ${isResultPoster ? styles.resultPoster : ""}`}
+                      src={image}
+                      alt={item.title}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                </span>
+                <span className={styles.caption}>
+                  <small>{item.category || "Atelye qeydləri"}</small>
+                  <strong>{item.title}</strong>
+                  <i aria-hidden="true" />
+                </span>
               </span>
             </Link>
           );
         })}
       </div>
-      <div className={styles.archiveAction}>
+      <div className={`${styles.archiveAction} ${styles.aosTarget}`} data-aos="fade-up">
         <Link href="/yenilikler">Bütün yenilikləri aç <Arrow /></Link>
       </div>
     </section>

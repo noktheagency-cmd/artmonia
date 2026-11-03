@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { SITE_URL } from "@/lib/seo";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import PaintBrushCursor from "@/components/PaintBrushCursor";
 import "./globals.css";
 import "./studio-heading.css";
 
@@ -58,6 +59,7 @@ export default function RootLayout({
       <body>
         {children}
         <WhatsAppButton />
+        <PaintBrushCursor />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-4M20QTDSWQ" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`window.dataLayer = window.dataLayer || [];

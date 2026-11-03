@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useResultAos } from "@/components/useResultAos";
 import { useSiteContentValue } from "@/components/SiteContentContext";
 import { academyPageCopy, globalCopy } from "@/data/site-copy";
 import styles from "./AcademyPage.module.css";
@@ -22,19 +22,17 @@ export default function AcademyPage() {
   const global = useSiteContentValue("global_copy", globalCopy);
   const media = useSiteContentValue("interior_media", interiorMedia);
   const reelId = media.reelUrl?.match(/^https:\/\/(?:www\.)?instagram\.com\/reel\/([\w-]+)\/?(?:[?#].*)?$/)?.[1];
-  const railRef = useRef<HTMLDivElement>(null);
-  const scrollGallery = (direction: number) => {
-    const rail = railRef.current;
-    if (rail) rail.scrollBy({ left: direction * rail.clientWidth * 0.8, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
-  };
+  const interiorImages = media.images.filter(Boolean);
+  const aosKey = [copy.pageTitle, copy.interiorTitle, copy.aboutTitle, copy.aboutParagraphs.length, copy.principles.length, interiorImages.length].join("|");
+  const pageRef = useResultAos<HTMLElement>(aosKey);
 
   return (
-    <main className={styles.page}>
+    <main className={styles.page} ref={pageRef}>
       <section className={styles.interior} id="interyer" aria-labelledby="academy-title">
         <div className={styles.gridTexture} aria-hidden="true" />
         <div className={styles.galleryShell}>
           <div className={styles.interiorFeature}>
-            {reelId && <div className={styles.videoCrop}>
+            {reelId && <div className={`${styles.videoCrop} ${styles.aosTarget}`} data-aos="fade-right">
               <div className={styles.videoStage}>
                 <iframe
                   src={`https://www.instagram.com/reel/${reelId}/embed/`}
@@ -45,38 +43,57 @@ export default function AcademyPage() {
                 />
               </div>
             </div>}
-          <header className={styles.galleryHeading}>
+          <header className={`${styles.galleryHeading} ${styles.aosTarget}`} data-aos="fade-up">
             <h1 id="academy-title">{copy.pageTitle} · {copy.interiorTitle}</h1>
             <p className={styles.sectionLead}>{copy.interiorLead}</p>
             <p className={styles.galleryIntro}>{copy.interiorText}</p>
           </header>
           </div>
-          <div className={styles.galleryControls} aria-label="İnteryer qalereyasını idarə et">
-            <button type="button" onClick={() => scrollGallery(-1)} aria-label="Əvvəlki şəkil"><span className={styles.previousArrow}><ArrowIcon /></span></button>
-            <button type="button" onClick={() => scrollGallery(1)} aria-label="Növbəti şəkil"><ArrowIcon /></button>
-          </div>
-          <div className={styles.galleryRail} ref={railRef} tabIndex={0} role="region" aria-label="İnteryer şəkilləri — üfüqi sürüşdürün">
-            {media.images.filter(Boolean).map((image, index) => (
-              <figure className={styles.galleryCard} key={`${image}-${index}`}>
-                <div className={styles.galleryImage}>
-                  <Image src={image} alt={`${copy.interiorTitle} — ${index + 1}`} fill priority={index === 0} sizes="(max-width: 480px) 80vw, (max-width: 760px) 50vw, 25vw" />
+          <div className={`${styles.galleryRail} ${styles.aosTarget}`} data-aos="fade-up" tabIndex={0} role="region" aria-roledescription="carousel" aria-label="İnteryer qalereyası">
+            <div className={styles.galleryTrack}>
+              {[0, 1].map((groupIndex) => (
+                <div className={styles.galleryGroup} key={groupIndex} aria-hidden={groupIndex === 1}>
+                  {interiorImages.map((image, index) => (
+                    <figure className={styles.galleryCard} key={`${groupIndex}-${image}-${index}`}>
+                      <div className={styles.galleryImage}>
+                        <Image src={image} alt={groupIndex === 0 ? `${copy.interiorTitle} — ${index + 1}` : ""} fill priority={groupIndex === 0 && index === 0} sizes="(max-width: 480px) 80vw, (max-width: 760px) 50vw, 25vw" />
+                      </div>
+                    </figure>
+                  ))}
                 </div>
-              </figure>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       <section className={styles.about} id="haqqimizda" aria-labelledby="about-title">
         <div className={styles.aboutShell}>
-          <div className={styles.aboutCopy}>
+          <div className={`${styles.aboutCopy} ${styles.aosTarget}`} data-aos="fade-right">
+            <p className={styles.aboutEyebrow}>ARTMONIA ACADEMY</p>
             <h2 id="about-title">{copy.aboutTitle}</h2>
             <p className={styles.aboutLead}>{copy.aboutLead}</p>
-            <p className={styles.aboutStatement}>{copy.aboutStatement}</p>
-            <div className={styles.aboutText}>
-              {copy.aboutParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            </div>
+            <Link className={styles.aboutCta} href="/muraciet">
+              {copy.applicationCta} <ArrowIcon />
+            </Link>
+          </div>
 
+          <figure className={`${styles.aboutFigure} ${styles.aosTarget}`} data-aos="fade-left">
+            <Image
+              src="/assets/about-art-system.webp"
+              alt="Artmonia Academy-də klassik heykəl üzərində akademik rəsm çəkən tələbə"
+              fill
+              sizes="(max-width: 900px) 100vw, 62vw"
+            />
+          </figure>
+
+          <div className={`${styles.aboutDetailsContent} ${styles.aosTarget}`} data-aos="fade-up">
+            <div className={styles.aboutEditorial}>
+              <p className={styles.aboutStatement}>{copy.aboutStatement}</p>
+              <div className={styles.aboutText}>
+                {copy.aboutParagraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              </div>
+            </div>
             <div className={styles.principles}>
               <h3>{copy.principlesTitle}</h3>
               {copy.principles.map((item) => (
@@ -86,24 +103,11 @@ export default function AcademyPage() {
                 </div>
               ))}
             </div>
-
-            <Link className={styles.aboutCta} href="/muraciet">
-              {copy.applicationCta} <ArrowIcon />
-            </Link>
           </div>
-
-          <figure className={styles.aboutFigure}>
-            <Image
-              src="/assets/about-art-system.webp"
-              alt="Artmonia Academy-də klassik heykəl üzərində akademik rəsm çəkən tələbə"
-              fill
-              sizes="(max-width: 900px) 100vw, 62vw"
-            />
-          </figure>
         </div>
       </section>
 
-      <footer className={styles.footer}>
+      <footer className={`${styles.footer} ${styles.aosTarget}`} data-aos="fade-up">
         <span>{global.copyright}</span>
         <div>
           <Link href="/akademiya#interyer">{copy.footerLinks[0]}</Link>

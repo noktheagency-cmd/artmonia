@@ -7,7 +7,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { Brush, X } from "lucide-react";
 import programStyles from "./Programs.module.css";
 import Link from "next/link";
 import {
@@ -94,7 +94,7 @@ function Reveal({
   id?: string;
   onPointerMove?: React.PointerEventHandler<HTMLDivElement>;
   style?: React.CSSProperties;
-  variant?: "from-left" | "from-right" | "from-bottom" | "from-top" | "boom" | "flip";
+  variant?: "from-left" | "from-right" | "from-bottom" | "from-top" | "boom" | "flip" | "soft";
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -224,7 +224,7 @@ function ProblemTransformation() {
           <p>{copy.text}</p>
         </div>
       </Reveal>
-      <Reveal className="atelier-panel" variant="boom">
+      <Reveal className="atelier-panel" variant="soft">
         <div className="sketch-result-board scroll-sketch" aria-label="Artmonia rəsm materialları">
           {benefits.image && <img src={benefits.image} alt={benefits.alt} loading="lazy" decoding="async" />}
           <div className="board-wash" />
@@ -268,14 +268,6 @@ function ProblemTransformation() {
       </Reveal>
     </section>
   );
-}
-
-function programColorStyle(color?: string): React.CSSProperties {
-  if (!color || !/^#[0-9a-f]{6}$/i.test(color)) return {};
-  const rgb = [1, 3, 5].map((offset) => parseInt(color.slice(offset, offset + 2), 16) / 255)
-    .map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
-  const luminance = rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722;
-  return { "--course-color": color, "--course-ink": luminance > 0.179 ? "#170d3b" : "#ffffff" } as React.CSSProperties;
 }
 
 function Programs() {
@@ -332,12 +324,12 @@ function Programs() {
               key={course.title}
               className={programStyles.card}
               variant="from-bottom"
-              style={{ "--step": index, ...programColorStyle(course.color) } as React.CSSProperties}
+              style={{ "--step": index, "--stagger": `${Math.min(index, 5) * 100}ms` } as React.CSSProperties}
             >
               <Link className={programStyles.select} href={`/programlar/${encodeURIComponent(course.title.toLowerCase().replace(/\s+/g, "-"))}`} aria-label={`${course.title} — ${copy.selectCta}`}>
                 <span className={programStyles.top}>
                   <span className={programStyles.duration}>{course.duration}</span>
-                  <span className={programStyles.arrow}><ArrowIcon /></span>
+                  <span className={programStyles.arrow}><Brush aria-hidden="true" strokeWidth={1.8} /></span>
                 </span>
                 <span className={programStyles.media}>
                   <img src={course.image} alt="" loading="lazy" decoding="async" />
@@ -668,6 +660,11 @@ function TeachersAtelier() {
           return (
           <Reveal key={`${teacher.name}-${index}`} className={`teacher-poster teacher-poster-${visual.tone}`} variant={index === 1 ? "boom" : index === 0 ? "from-left" : "from-right"}>
             <div className="teacher-poster-image"><img src={image} alt={teacher.name} loading="lazy" decoding="async" /></div>
+            <div className="teacher-poster-caption">
+              <span>{teacher.role || "Müəllim heyəti"}</span>
+              {teacher.line ? <p>{teacher.line}</p> : null}
+              <i aria-hidden="true" />
+            </div>
           </Reveal>
           );
         })}
@@ -710,9 +707,74 @@ function AuditPrivacyFooter({ privacyPolicyPublished }: { privacyPolicyPublished
     };
   }, []);
 
+  useEffect(() => {
+    const panel = footerCtaRef.current;
+    if (!panel) return;
+
+    let cancelled = false;
+    let revertAnimation = () => {};
+
+    void Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([gsapModule, scrollTriggerModule]) => {
+      if (cancelled) return;
+
+      const gsap = gsapModule.gsap;
+      gsap.registerPlugin(scrollTriggerModule.ScrollTrigger);
+      const media = gsap.matchMedia();
+
+      media.add("(prefers-reduced-motion: no-preference) and (min-width: 761px)", () => {
+        const stage = panel.parentElement;
+        const contactPanel = panel.nextElementSibling;
+
+        if (!(stage instanceof HTMLElement) || !(contactPanel instanceof HTMLElement)) return;
+
+        const context = gsap.context(() => {
+          const timeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: stage,
+              start: "top top",
+              end: () => `+=${Math.round(window.innerHeight * 1.25)}`,
+              pin: stage,
+              pinSpacing: true,
+              // Keep the panels locked to the wheel position so reverse scrolling can't trail behind.
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          timeline
+            .to(panel, {
+              yPercent: -25,
+              opacity: 0.36,
+              scale: 0.985,
+              transformOrigin: "50% 0%",
+              force3D: true,
+              ease: "none",
+            }, 0)
+            .fromTo(contactPanel, { yPercent: 100 }, {
+              yPercent: 0,
+              force3D: true,
+              ease: "none",
+            }, 0);
+        }, panel);
+
+        return () => context.revert();
+      });
+
+      revertAnimation = () => media.revert();
+    }).catch(() => {
+      // Keep the contact area in normal document flow if GSAP cannot initialize.
+    });
+
+    return () => {
+      cancelled = true;
+      revertAnimation();
+    };
+  }, []);
+
   return (
-    <footer className="site-footer scroll-section" id="contact">
-      <div ref={footerCtaRef} className="footer-top cinematic-footer-top scroll-block">
+    <footer className="site-footer" id="contact">
+      <div className="footer-scroll-stage">
+      <div ref={footerCtaRef} className="footer-top cinematic-footer-top">
         <div className="footer-cinema-media">
           <CinematicVideo
             poster={copy.image || atelierAsset.poster}
@@ -741,7 +803,8 @@ function AuditPrivacyFooter({ privacyPolicyPublished }: { privacyPolicyPublished
           <span>{copy.longitude}</span>
         </div>
       </div>
-      <div className="footer-contact-map scroll-block" data-scroll-order="1">
+      <div className="footer-contact-layer">
+      <div className="footer-contact-map" data-scroll-order="1">
         <div className="footer-map-frame">
           <iframe
             title="Artmonia Academy xəritədə"
@@ -796,6 +859,8 @@ function AuditPrivacyFooter({ privacyPolicyPublished }: { privacyPolicyPublished
             <i aria-hidden="true" />
           </div>
         </address>
+      </div>
+      </div>
       </div>
       <div className="footer-bottom scroll-block" data-scroll-order="2">
         <span>{global.copyright}</span>

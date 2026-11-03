@@ -1,5 +1,5 @@
-import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
+import CollectionIntro from "@/components/CollectionIntro";
 import ResultsShowcase from "@/components/ResultsShowcase";
 import ResultsGrid from "@/components/ResultsGrid";
 import StudentResultCard from "@/components/StudentResultCard";
@@ -27,18 +27,7 @@ export default async function CollectionPage({ type }: CollectionPageProps) {
     <SiteContentProvider content={siteContent}>
       <SiteHeader />
       <main className={`collection-page collection-page--${type}`}>
-        <section className="collection-intro" aria-labelledby="collection-title">
-          <div className="collection-intro-title">
-            <h1 id="collection-title">{pageCopy.title}</h1>
-            <span aria-hidden="true" />
-          </div>
-          <div className="collection-intro-copy">
-            <p>{pageCopy.description}</p>
-            <Link className="collection-back collection-back--intro" href="/">
-              <span aria-hidden="true">←</span> {copy.backHome}
-            </Link>
-          </div>
-        </section>
+        <CollectionIntro title={pageCopy.title} description={pageCopy.description} backHome={copy.backHome} animate={type === "results"} />
 
         <section className="collection-content" aria-label={`${pageCopy.title} siyahısı`}>
           {type === "results" ? (
