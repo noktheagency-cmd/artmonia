@@ -1,7 +1,8 @@
 .anchorScene { scroll-margin-top: 112px; }
 .storyGallery { min-width: 0; max-width: 100%; overflow: hidden; padding: 4px 2px 18px; }
 .storyGallery:focus-visible { outline: 2px solid #a884ff; outline-offset: 2px; }
-.storyTrack { display: flex; width: max-content; animation: story-gallery-travel 36s linear infinite; will-change: transform; }
+.storyTrack { display: flex; width: max-content; animation: story-gallery-travel 36s linear infinite; animation-play-state: paused; }
+.storyGallery[data-animation-visible] .storyTrack { animation-play-state: running; }
 .storyTrack[data-single="true"] { animation: none; }
 .storyGallery:hover .storyTrack, .storyGallery:focus-within .storyTrack, .storyTrack[data-playing="true"] { animation-play-state: paused; }
 .storyGroup { display: flex; flex: none; gap: 26px; padding-right: 26px; }

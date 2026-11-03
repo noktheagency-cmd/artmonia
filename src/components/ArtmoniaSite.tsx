@@ -710,6 +710,7 @@ function AuditPrivacyFooter({ privacyPolicyPublished }: { privacyPolicyPublished
   useEffect(() => {
     const panel = footerCtaRef.current;
     if (!panel) return;
+    if (!window.matchMedia("(prefers-reduced-motion: no-preference) and (min-width: 761px)").matches) return;
 
     let cancelled = false;
     let revertAnimation = () => {};

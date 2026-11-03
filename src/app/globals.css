@@ -979,13 +979,10 @@ h3 {
 .reveal {
   opacity: 0;
   transform: translate3d(0, 44px, 0);
-  filter: blur(10px);
   transition:
     opacity 900ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    filter 900ms ease;
+    transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
   transition-delay: var(--stagger, 0ms);
-  will-change: transform, opacity, filter;
 }
 
 .reveal.from-left {
@@ -1015,7 +1012,6 @@ h3 {
 
 .reveal.soft {
   transform: translate3d(0, 18px, 0) scale(.99);
-  filter: blur(2px);
   transition-duration: 1350ms;
   transition-timing-function: cubic-bezier(.22, 1, .36, 1);
 }
@@ -1023,7 +1019,6 @@ h3 {
 .reveal.is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1) rotate(0deg) rotateX(0deg);
-  filter: blur(0);
 }
 
 .reveal.from-left.is-visible,
@@ -1034,7 +1029,6 @@ h3 {
 .reveal.flip.is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0) scale(1) rotate(0deg) rotateX(0deg);
-  filter: blur(0);
 }
 
 .split-band {
@@ -13969,7 +13963,6 @@ html.theme-dark .price-calculator-result a {
     opacity 1100ms cubic-bezier(0.2, 0.75, 0.2, 1),
     transform 1100ms cubic-bezier(0.2, 0.75, 0.2, 1);
   transition-delay: var(--scroll-delay, 0ms);
-  will-change: opacity, transform;
 }
 
 #problem.scroll-section {

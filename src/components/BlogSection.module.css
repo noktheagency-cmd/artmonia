@@ -44,7 +44,8 @@
 .actions { display: flex; align-items: center; gap: 12px; }
 .pause { width: 48px; height: 48px; padding: 0; flex-shrink: 0; }
 .viewport { container-type: inline-size; overflow: hidden; }
-.track { display: flex; width: max-content; animation: blogTravel 48s linear infinite; }
+.track { display: flex; width: max-content; animation: blogTravel 48s linear infinite; animation-play-state: paused; }
+.viewport[data-animation-visible] .track { animation-play-state: running; }
 .track[data-paused="true"], .track:focus-within { animation-play-state: paused; }
 .group { display: flex; flex: none; gap: 22px; padding-right: 22px; }
 .group .card { flex: 0 0 auto; width: calc((100cqw - 66px) / 4); }
@@ -129,7 +130,7 @@
 :global(html.theme-dark) .article .lead { color: var(--theme-text); background: linear-gradient(90deg, rgba(242, 142, 20, .12), rgba(105, 41, 242, .1)); }
 :global(html.theme-dark) .article .body { color: var(--theme-text); }
 :global(html.theme-dark) .coverPanel { border-color: var(--theme-border); background: var(--theme-surface); box-shadow: 0 20px 52px rgba(0, 0, 0, .28), inset 0 1px rgba(255,255,255,.08); }
-.aosTarget[data-aos-ready] { opacity: 0; transition: opacity 680ms cubic-bezier(.2,.7,.2,1), transform 680ms cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
+.aosTarget[data-aos-ready] { opacity: 0; transition: opacity 680ms cubic-bezier(.2,.7,.2,1), transform 680ms cubic-bezier(.2,.7,.2,1); }
 .aosTarget[data-aos="fade-up"][data-aos-ready] { transform: translate3d(0, 24px, 0); }
 .aosTarget[data-aos="fade-right"][data-aos-ready] { transform: translate3d(-26px, 0, 0); }
 .aosTarget[data-aos-ready][data-aos-visible] { opacity: 1; transform: translate3d(0, 0, 0); }

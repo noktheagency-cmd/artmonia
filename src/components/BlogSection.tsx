@@ -6,6 +6,7 @@ import { ArrowRight, Pause, Play } from "lucide-react";
 import { useState } from "react";
 import { useSiteContentValue } from "./SiteContentContext";
 import { useResultAos } from "./useResultAos";
+import { useAnimationVisibility } from "./useAnimationVisibility";
 import { publishedBlog } from "@/lib/blog";
 import styles from "./BlogSection.module.css";
 
@@ -18,11 +19,12 @@ export default function BlogSection({ archive = false }: { archive?: boolean }) 
   const loop = latest.length ? Array.from({ length: Math.ceil(4 / latest.length) }, () => latest).flat() : [];
   const aosKey = `${archive}:${visible}:${posts.map((post) => post.id).join("|")}`;
   const sectionRef = useResultAos<HTMLElement>(aosKey);
+  const animationRef = useAnimationVisibility<HTMLDivElement>();
   if (!posts.length && !archive) return null;
   const Heading = archive ? "h1" : "h2";
   return <section ref={sectionRef} className={`${styles.section} ${archive ? styles.archive : ""}`} id="blog" aria-labelledby="blog-title">
     <header className={`${styles.heading} ${archive ? styles.aosTarget : ""}`} data-aos={archive ? "fade-up" : undefined}><div><Heading id="blog-title">Blog</Heading></div><div className={styles.actions}><Link className={styles.button} href={archive ? "/" : "/blog"}>{archive ? "Ana səhifə" : "Bütün yazılar"}<ArrowRight size={20} /></Link>{!archive ? <button className={`${styles.button} ${styles.pause}`} type="button" aria-label={paused ? "Blog lentini davam etdir" : "Blog lentini dayandır"} aria-pressed={paused} onClick={() => setPaused((value) => !value)}>{paused ? <Play size={18} /> : <Pause size={18} />}</button> : null}</div></header>
-    {!posts.length ? <p>Yeni yazılar tezliklə burada olacaq.</p> : <div className={archive ? undefined : styles.viewport}>
+    {!posts.length ? <p>Yeni yazılar tezliklə burada olacaq.</p> : <div ref={archive ? undefined : animationRef} className={archive ? undefined : styles.viewport}>
       <div className={archive ? styles.grid : styles.track} data-paused={paused}>
       {(archive ? [posts.slice(0, visible)] : [loop, loop]).map((group, copy) => <div className={archive ? styles.archiveGroup : styles.group} key={copy} aria-hidden={copy === 1 ? true : undefined}>
       {group.map((post, index) => <article className={`${styles.card} ${archive ? styles.aosTarget : ""}`} data-aos={archive ? "fade-up" : undefined} key={`${post.id}-${index}`} aria-hidden={!archive && index >= latest.length ? true : undefined}>

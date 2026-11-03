@@ -9,6 +9,7 @@ import { useSiteContentValue } from "./SiteContentContext";
 import { successStories, type SuccessStoryEntry } from "@/data/collections";
 import { collectionsPageCopy } from "@/data/site-copy";
 import { youtubeId } from "@/lib/youtube";
+import { useAnimationVisibility } from "./useAnimationVisibility";
 
 export default function ResultsShowcase() {
   const dynamicStories = useSiteContentValue<SuccessStoryEntry[]>("success_stories", successStories);
@@ -16,6 +17,7 @@ export default function ResultsShowcase() {
   const stories = Array.isArray(dynamicStories) ? dynamicStories : [];
   const copies = stories.length > 1 ? [0, 1] : [0];
   const [active, setActive] = useState<string | null>(null);
+  const animationRef = useAnimationVisibility<HTMLDivElement>();
   const sectionRef = useResultAos<HTMLDivElement>(stories.map((story, index) => story.id || String(index)).join("|"));
 
   return (
@@ -25,7 +27,7 @@ export default function ResultsShowcase() {
           <div><span className="results-scene-kicker">{copy.storiesKicker}</span><h2 id="success-stories-title">{copy.storiesTitle}</h2></div>
           <p>{copy.storiesText}</p>
         </header>
-        <div className={styles.storyGallery} role="region" tabIndex={0} aria-roledescription="carousel" aria-label="Uğur hekayələri videoları">
+        <div ref={animationRef} className={styles.storyGallery} role="region" tabIndex={0} aria-roledescription="carousel" aria-label="Uğur hekayələri videoları">
           <div className={styles.storyTrack} data-playing={active !== null} data-single={stories.length < 2} style={{ animationDuration: `${Math.max(24, stories.length * 8)}s` }}>
             {copies.map((copy) => (
               <div className={styles.storyGroup} key={copy} aria-hidden={copy === 1 ? true : undefined}>

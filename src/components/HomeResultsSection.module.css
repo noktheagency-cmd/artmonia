@@ -16,8 +16,12 @@
 .aosTarget:nth-child(4n)[data-aos-ready] { transition-delay: 180ms; }
 .viewport:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 4px; }
 .viewport { --gap: 22px; container-type: inline-size; overflow: hidden; }
-.track { display: flex; width: max-content; animation: travel 160s linear infinite; will-change: transform; }
+.track { display: flex; width: max-content; animation: travel 160s linear infinite; animation-play-state: paused; }
+.viewport[data-animation-visible] .track { animation-play-state: running; }
 .viewport:hover .track, .viewport:focus-within .track { animation-play-state: paused; }
+.allResultsLink { display: flex; width: fit-content; align-items: center; gap: 10px; margin: 24px auto 0; padding: 10px 16px; border: 1px solid color-mix(in srgb, var(--brand-purple) 22%, white); border-radius: 999px; color: var(--brand-navy); background: rgba(255,255,255,.78); font: 600 13px/1.2 var(--sans, sans-serif); text-decoration: none; transition: border-color 180ms ease, background-color 180ms ease; }
+.allResultsLink:hover { border-color: var(--brand-purple); background: white; }
+.allResultsLink span { color: var(--brand-purple); font-size: 17px; }
 .group { display: flex; flex: none; gap: var(--gap); margin: 0; padding: 0 var(--gap) 0 0; list-style: none; }
 .card { --card-accent: var(--brand-purple); position: relative; isolation: isolate; display: flex; flex-direction: column; flex: 0 0 auto; width: calc((100cqw - 3.5 * var(--gap)) / 4.5); min-height: 510px; overflow: hidden; padding: 13px; border: 1px solid color-mix(in srgb, var(--card-accent) 22%, white); border-radius: 28px 28px 34px 22px; background: radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--card-accent) 13%, transparent), transparent 36%), linear-gradient(155deg, #fff 8%, color-mix(in srgb, var(--card-accent) 6%, white) 100%); box-shadow: 0 12px 32px rgba(29, 18, 70, .08), inset 0 1px rgba(255,255,255,.9); }
 .card::before { position: absolute; z-index: 0; top: -46px; right: -36px; width: 148px; height: 126px; border-radius: 51% 49% 68% 32% / 40% 42% 58% 60%; background: color-mix(in srgb, var(--card-accent) 14%, transparent); content: ""; transform: rotate(-18deg); pointer-events: none; }
@@ -72,6 +76,7 @@
   .caption h3 { font-size: 17px; }
   .caption p { font-size: 10px; }
 }
+@media (prefers-reduced-motion: reduce) { .track { animation: none; } }
 @media (prefers-reduced-motion: reduce) {
   .viewport { overflow-x: auto; }
   .track { animation: none; }

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { CollectionEntry } from "@/data/collections";
 import { useSiteContentValue } from "./SiteContentContext";
 import ResultPortrait from "./ResultPortrait";
 import ResultCategories, { resultCategory } from "./ResultCategories";
 import { useResultAos } from "./useResultAos";
+import { useAnimationVisibility } from "./useAnimationVisibility";
 import styles from "./HomeResultsSection.module.css";
 
 export default function HomeResultsSection() {
@@ -13,8 +15,10 @@ export default function HomeResultsSection() {
   const content = useSiteContentValue<CollectionEntry[]>("home_results", []);
   const allStudents = Array.isArray(content) ? content.filter((student) => student && typeof student.title === "string") : [];
   const activeCategory = category && allStudents.some((item) => resultCategory(item) === category) ? category : null;
-  const students = activeCategory ? allStudents.filter((item) => resultCategory(item) === activeCategory) : allStudents;
+  const filteredStudents = activeCategory ? allStudents.filter((item) => resultCategory(item) === activeCategory) : allStudents;
+  const students = filteredStudents.slice(0, 12);
   const sectionRef = useResultAos<HTMLElement>(`${activeCategory ?? "all"}:${students.length}`);
+  const animationRef = useAnimationVisibility<HTMLDivElement>();
   // Fill each loop even when only one or two results remain. Never restore deleted seed records.
   const loopStudents = students.length ? Array.from({ length: Math.max(1, Math.ceil(6 / students.length)) }, () => students).flat() : [];
   if (!students.length) return null;
@@ -27,7 +31,7 @@ export default function HomeResultsSection() {
         </div>
       </div>
       <ResultCategories className={styles.aosTarget} dataAos items={allStudents} selected={activeCategory} onSelect={setCategory} />
-      <div key={activeCategory} className={`${styles.viewport} ${styles.aosTarget}`} data-aos="fade-up" tabIndex={0} aria-label={`${students.length} tələbə nəticəsi`}>
+      <div ref={animationRef} key={activeCategory} className={`${styles.viewport} ${styles.aosTarget}`} data-aos="fade-up" tabIndex={0} aria-label={`${filteredStudents.length} tələbə nəticəsi`}>
         <div className={styles.track}>
           {[0, 1].map((copy) => (
             <ul className={styles.group} key={copy} aria-hidden={copy === 1 ? true : undefined}>
@@ -47,6 +51,7 @@ export default function HomeResultsSection() {
           ))}
         </div>
       </div>
+      <Link className={styles.allResultsLink} href="/neticeler">Bütün nəticələrə bax <span aria-hidden="true">↗</span></Link>
     </section>
   );
 }
