@@ -37,16 +37,36 @@ function ChevronIcon() {
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="menu-svg">
-      <path className={open ? "line line-one open" : "line line-one"} d="M4 7h16" />
-      <path className={open ? "line line-two open" : "line line-two"} d="M4 12h16" />
-      <path className={open ? "line line-three open" : "line line-three"} d="M4 17h16" />
+    <svg aria-hidden="true" viewBox="0 0 48 48" className={open ? "menu-palette is-open" : "menu-palette"}>
+      <path className="menu-palette-body" d="M23.8 4.5C13 4.5 4.5 12.1 4.5 21.7c0 9.1 7.1 16.1 16.8 16.1h3.2c2.5 0 4.2-2.2 3.5-4.5-.6-2 .9-3.8 3-3.8h3.1c5.5 0 9.4-3.6 9.4-8.6 0-9.3-8.9-16.4-19.7-16.4Z" />
+      <circle cx="14" cy="19" r="2.4" fill="#8960ca" />
+      <circle cx="21" cy="13" r="2.4" fill="#d59342" />
+      <circle cx="29" cy="14" r="2.4" fill="#55a294" />
+      <circle cx="35" cy="20" r="2.4" fill="#c47791" />
+      <circle className="menu-palette-thumb" cx="14" cy="29" r="3.2" />
     </svg>
   );
 }
 
+function childHref(parentHref: string, label: string) {
+  const slug = label.trim().toLowerCase()
+    .replace(/[ə]/g, "e")
+    .replace(/[ı]/g, "i")
+    .replace(/[ş]/g, "s")
+    .replace(/[ç]/g, "c")
+    .replace(/[ğ]/g, "g")
+    .replace(/[ö]/g, "o")
+    .replace(/[ü]/g, "u")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  if (!slug) return parentHref;
+  const basePath = parentHref.split("#")[0] || "/";
+  return `${basePath}#${slug}`;
+}
+
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const headerRef = useRef<HTMLElement>(null);
   useEffect(() => {
     if (!open) return;
@@ -63,24 +83,61 @@ export default function SiteHeader() {
     document.addEventListener("keydown", escape);
     return () => { document.removeEventListener("pointerdown", closeOutside); document.removeEventListener("keydown", escape); };
   }, [open]);
+
+  useEffect(() => {
+    const sectionIds = navigationRoutes
+      .map((route) => route.href.split("#")[1])
+      .filter((id): id is string => Boolean(id));
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => section instanceof HTMLElement);
+    if (!sections.length) return;
+
+    const syncActiveSection = () => {
+      const marker = window.innerHeight * 0.5;
+      const current = sections.find((section) => {
+        const bounds = section.getBoundingClientRect();
+        return bounds.top <= marker && bounds.bottom >= marker;
+      });
+      if (current) setActiveSection(current.id);
+    };
+
+    const observer = new IntersectionObserver(syncActiveSection, { rootMargin: "-45% 0px -45% 0px" });
+    sections.forEach((section) => observer.observe(section));
+    window.addEventListener("resize", syncActiveSection);
+    syncActiveSection();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", syncActiveSection);
+    };
+  }, []);
+
   const pathname = usePathname();
   const copy = useSiteContentValue("global_copy", globalCopy);
   const navigation = navigationRoutes.map((route, index) => {
     const item = copy.navigation[index] ?? globalCopy.navigation[index];
-    const fallbackItem = globalCopy.navigation[index];
+    const childLabels = Array.isArray(item.children)
+      ? item.children.filter((label): label is string => typeof label === "string" && Boolean(label.trim()))
+      : [];
+    const children = childLabels.map((label, childIndex) => ({
+      href: route.children[childIndex] ?? childHref(route.href, label),
+      label
+    })).filter((child) => child.href !== route.href);
     return {
       label: item.label,
       href: route.href,
-      children: route.children.map((href, childIndex) => ({
-        href,
-        label: item.children[childIndex] ?? fallbackItem.children[childIndex]
-      }))
+      children,
+      hasDropdown: childLabels.length > 1 && children.length > 0
     };
   });
 
   const isActive = (href: string) => {
+    if (href.includes("#")) {
+      const [path = "/", section = ""] = href.split("#");
+      return pathname === (path || "/") && activeSection === section;
+    }
     if (href === "/") return pathname === "/";
-    return !href.includes("#") && pathname === href;
+    return pathname === href;
   };
 
   return (
@@ -92,7 +149,7 @@ export default function SiteHeader() {
 
       <nav className="desktop-nav" aria-label="Əsas naviqasiya">
         {navigation.map((item) =>
-          item.children.length ? (
+          item.hasDropdown ? (
             <div className="nav-program-menu" key={item.label}>
               <Link
                 className={isActive(item.href) ? "nav-program-trigger is-active" : "nav-program-trigger"}
@@ -144,11 +201,11 @@ export default function SiteHeader() {
 
       <nav id="mobile-navigation" className={open ? "mobile-nav open" : "mobile-nav"} aria-label="Mobil naviqasiya">
         {navigation.map((item) => (
-          <div className={item.children.length ? "mobile-program-group" : undefined} key={item.label}>
+          <div className={item.hasDropdown ? "mobile-program-group" : undefined} key={item.label}>
             <Link href={item.href} onClick={() => setOpen(false)}>
               {item.label}
             </Link>
-            {item.children.length ? (
+            {item.hasDropdown ? (
               <div className="mobile-program-links">
                 {item.children.map((child) => (
                   <Link href={child.href} key={child.href} onClick={() => setOpen(false)}>

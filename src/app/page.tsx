@@ -8,8 +8,11 @@ import { getApprovedMobilePrivacyPolicy } from "@/lib/mobile-privacy-policy";
 export async function generateMetadata() { return managedMetadata("Artmonia Academy | Rəsm və sənət kursları", "Akademik rəsm, rəngkarlıq, kompozisiya və portfolyo hazırlığı. Artmonia Academy proqramları, tələbə işləri və müraciət imkanları ilə tanış olun.", "/"); }
 
 export default async function Home() {
-  const content = await getPublishedContent();
-  const privacyPolicyPublished = Boolean(await getApprovedMobilePrivacyPolicy());
+  const [content, approvedPrivacyPolicy] = await Promise.all([
+    getPublishedContent(),
+    getApprovedMobilePrivacyPolicy(),
+  ]);
+  const privacyPolicyPublished = Boolean(approvedPrivacyPolicy);
   const contact = content.contact;
   const info = contact && typeof contact === "object" && !Array.isArray(contact) ? contact : {};
   return <><StructuredData data={{ "@context": "https://schema.org", "@graph": [

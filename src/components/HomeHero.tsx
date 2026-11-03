@@ -30,102 +30,12 @@ function ArrowUpRightIcon() {
 
 export default function HomeHero() {
   const [cardsOpen, setCardsOpen] = useState(false);
-  const heroRef = useRef<HTMLElement | null>(null);
-  const mobileOpened = useRef(false);
   const hoverCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const heroAsset = videoExperience.hero;
   const copy = useSiteContentValue("home_page_copy", homePageCopy).hero;
 
   useEffect(() => () => {
     if (hoverCloseTimer.current) clearTimeout(hoverCloseTimer.current);
-  }, []);
-
-  useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero) return;
-    let startY = 0;
-    let startX = 0;
-    let consuming = false;
-    let eligible = false;
-    let consumingWheel = false;
-    let wheelIdleTimer: ReturnType<typeof setTimeout> | null = null;
-    const wheel = (event: WheelEvent) => {
-      if (event.ctrlKey || !window.matchMedia("(max-width: 760px)").matches) return;
-      if (!mobileOpened.current && window.scrollY < 40 && event.deltaY > 0 && Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
-        mobileOpened.current = true;
-        consumingWheel = true;
-        setCardsOpen(true);
-      }
-      // Consume only the opening gesture, including its trackpad momentum.
-      // The next separate scroll continues down the page normally.
-      if (consumingWheel) {
-        if (event.cancelable) event.preventDefault();
-        if (wheelIdleTimer) clearTimeout(wheelIdleTimer);
-        wheelIdleTimer = setTimeout(() => { consumingWheel = false; }, 180);
-      }
-    };
-    const start = (event: TouchEvent) => {
-      eligible = window.matchMedia("(max-width: 760px)").matches && !mobileOpened.current && window.scrollY < 40 && event.touches.length === 1;
-      consuming = false;
-      startY = event.touches[0]?.clientY ?? 0;
-      startX = event.touches[0]?.clientX ?? 0;
-    };
-    const move = (event: TouchEvent) => {
-      if (event.touches.length !== 1) return;
-      const dy = startY - event.touches[0].clientY;
-      const dx = Math.abs(startX - event.touches[0].clientX);
-      if (eligible && dy > 8 && dy > dx) {
-        consuming = true;
-        mobileOpened.current = true;
-        setCardsOpen(true);
-      }
-      if (consuming && event.cancelable) event.preventDefault();
-    };
-    const end = () => { consuming = false; eligible = false; };
-    hero.addEventListener("touchstart", start, { passive: true });
-    hero.addEventListener("wheel", wheel, { passive: false });
-    hero.addEventListener("touchmove", move, { passive: false });
-    hero.addEventListener("touchend", end);
-    hero.addEventListener("touchcancel", end);
-    return () => {
-      hero.removeEventListener("touchstart", start);
-      hero.removeEventListener("wheel", wheel);
-      if (wheelIdleTimer) clearTimeout(wheelIdleTimer);
-      hero.removeEventListener("touchmove", move);
-      hero.removeEventListener("touchend", end);
-      hero.removeEventListener("touchcancel", end);
-    };
-  }, []);
-
-  useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero) return;
-
-    let animationFrame = 0;
-
-    const updateScroll = () => {
-      animationFrame = 0;
-      const rect = hero.getBoundingClientRect();
-      const progress = Math.min(Math.max(-rect.top / Math.max(rect.height, 1), 0), 1);
-      hero.style.setProperty("--hero-scroll", progress.toFixed(4));
-      hero.style.setProperty("--hero-scroll-shift", `${(progress * 24).toFixed(2)}px`);
-      hero.style.setProperty("--hero-scroll-scale", (1.02 + progress * 0.045).toFixed(4));
-    };
-
-    const requestUpdate = () => {
-      if (animationFrame) return;
-      animationFrame = window.requestAnimationFrame(updateScroll);
-    };
-
-    updateScroll();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-
-    return () => {
-      if (animationFrame) window.cancelAnimationFrame(animationFrame);
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-    };
   }, []);
 
   function handlePointerMove(event: React.PointerEvent<HTMLElement>) {
@@ -141,7 +51,6 @@ export default function HomeHero() {
 
   return (
     <section
-      ref={heroRef}
       className={cardsOpen ? `${styles.hero} ${styles.heroActive}` : styles.hero}
       aria-labelledby="home-hero-title"
       onPointerMove={handlePointerMove}
@@ -208,7 +117,6 @@ export default function HomeHero() {
             onClick={() => {
               if (!window.matchMedia("(max-width: 760px)").matches) return;
               setCardsOpen(false);
-              mobileOpened.current = false;
             }}
           />
         </div>
@@ -226,10 +134,7 @@ export default function HomeHero() {
           aria-label={cardsOpen ? "Kartları bağla" : "Kartları aç"}
           aria-expanded={cardsOpen}
           onClick={(event) => {
-            // Keep keyboard activation available; desktop pointer clicks do not toggle.
-            if (event.detail === 0) {
-              setCardsOpen((open) => !open);
-            }
+            setCardsOpen((open) => !open);
           }}
         >
         </button>

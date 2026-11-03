@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
+import BlogDetailAos from "@/components/BlogDetailAos";
 import { SiteContentProvider } from "@/components/SiteContentContext";
 import { getPublishedContent } from "@/lib/site-content";
 import { publishedBlog } from "@/lib/blog";
@@ -30,13 +31,17 @@ export default async function BlogDetail({ params }: Props) {
       { "@context": "https://schema.org", "@type": "BlogPosting", headline: post.title, description: post.excerpt, image: post.image ? absoluteUrl(post.image) : undefined, datePublished: /^\d{4}-\d{2}-\d{2}$/.test(post.date) ? post.date : undefined, inLanguage: "az", mainEntityOfPage: absoluteUrl(`/blog/${encodeURIComponent(post.id)}`), author: post.author ? { "@type": "Person", name: post.author } : undefined, publisher: { "@type": "EducationalOrganization", "@id": `${SITE_URL}/#organization`, name: "Artmonia Academy", url: SITE_URL } },
       breadcrumb(post.title, `/blog/${encodeURIComponent(post.id)}`, { name: "Blog", path: "/blog" })
     ]} />
-    <Link className={styles.button} href="/blog"><ArrowLeft size={18} /> Bütün yazılar</Link>
-    <div className={`${styles.detailLayout} ${!post.image ? styles.textOnly : ""}`}>
-    {post.image ? <div className={styles.coverPanel}><img className={styles.cover} src={post.image} alt={post.imageAlt || post.title} /></div> : null}
-    <div className={styles.detailCopy}>
-    <div className={styles.meta}><span>{post.category}</span><time dateTime={post.date}>{formatNewsDate(post.date)}</time>{post.author ? <span>{post.author}</span> : null}</div>
-    <h1>{post.title}</h1><p className={styles.lead}>{post.excerpt}</p>
-    <div className={styles.body}>{post.body.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
-    </div></div>
+    <BlogDetailAos refreshKey={`${post.id}:${post.body.length}`}>
+      <Link className={`${styles.button} ${styles.aosTarget}`} data-aos="fade-up" href="/blog"><ArrowLeft size={18} /> Bütün yazılar</Link>
+      <div className={`${styles.detailLayout} ${!post.image ? styles.textOnly : ""}`}>
+        {post.image ? <div className={`${styles.coverPanel} ${styles.aosTarget}`} data-aos="fade-right"><img className={styles.cover} src={post.image} alt={post.imageAlt || post.title} /></div> : null}
+        <div className={styles.detailCopy}>
+          <div className={`${styles.meta} ${styles.aosTarget}`} data-aos="fade-up"><span>{post.category}</span><time dateTime={post.date}>{formatNewsDate(post.date)}</time>{post.author ? <span>{post.author}</span> : null}</div>
+          <h1 className={styles.aosTarget} data-aos="fade-up">{post.title}</h1>
+          <p className={`${styles.lead} ${styles.aosTarget}`} data-aos="fade-up">{post.excerpt}</p>
+          <div className={styles.body}>{post.body.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => <p className={styles.aosTarget} data-aos="fade-up" key={index}>{paragraph}</p>)}</div>
+        </div>
+      </div>
+    </BlogDetailAos>
   </article></main></SiteContentProvider>;
 }
