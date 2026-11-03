@@ -22971,6 +22971,36 @@ html:not(.theme-dark):is(.cinematic-journey-active, .cinematic-footer-active) .s
   isolation: isolate;
 }
 
+.site-footer .footer-scroll-track {
+  position: relative;
+  height: 225svh;
+  min-height: 1630px;
+}
+
+.site-footer .footer-scroll-stage {
+  position: sticky;
+  top: 0;
+}
+
+.site-legal-footer {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-legal-footer .footer-bottom {
+  width: 100%;
+  max-width: none;
+  min-height: 42px;
+  margin: 0;
+  padding: 28px 32px 16px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+}
+
 .site-footer .footer-top.cinematic-footer-top {
   position: absolute;
   inset: 0;
@@ -23026,6 +23056,11 @@ html.theme-dark .site-footer .footer-contact-layer {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-footer .footer-scroll-track {
+    height: auto;
+    min-height: 0;
+  }
+
   .site-footer .footer-top.cinematic-footer-top {
     position: relative;
     height: auto;
@@ -23033,6 +23068,7 @@ html.theme-dark .site-footer .footer-contact-layer {
   }
 
   .site-footer .footer-scroll-stage {
+    position: relative;
     height: auto;
     min-height: 0;
   }
@@ -23052,7 +23088,13 @@ html.theme-dark .site-footer .footer-contact-layer {
 }
 
 @media (max-width: 760px) {
+  .site-footer .footer-scroll-track {
+    height: auto;
+    min-height: 0;
+  }
+
   .site-footer .footer-scroll-stage {
+    position: relative;
     height: auto;
     min-height: 0;
   }
