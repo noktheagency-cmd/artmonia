@@ -725,18 +725,16 @@ function AuditPrivacyFooter({ privacyPolicyPublished }: { privacyPolicyPublished
       media.add("(prefers-reduced-motion: no-preference) and (min-width: 761px)", () => {
         const stage = panel.parentElement;
         const contactPanel = panel.nextElementSibling;
+        const track = stage?.parentElement;
 
-        if (!(stage instanceof HTMLElement) || !(contactPanel instanceof HTMLElement)) return;
+        if (!(stage instanceof HTMLElement) || !(contactPanel instanceof HTMLElement) || !(track instanceof HTMLElement)) return;
 
         const context = gsap.context(() => {
           const timeline = gsap.timeline({
             scrollTrigger: {
-              trigger: stage,
+              trigger: track,
               start: "top top",
               end: () => `+=${Math.round(window.innerHeight * 1.25)}`,
-              pin: stage,
-              pinSpacing: true,
-              // Keep the panels locked to the wheel position so reverse scrolling can't trail behind.
               scrub: true,
               invalidateOnRefresh: true,
             },
@@ -773,7 +771,9 @@ function AuditPrivacyFooter({ privacyPolicyPublished }: { privacyPolicyPublished
   }, []);
 
   return (
-    <footer className="site-footer" id="contact">
+    <>
+    <section className="site-footer" id="contact">
+      <div className="footer-scroll-track">
       <div className="footer-scroll-stage">
       <div ref={footerCtaRef} className="footer-top cinematic-footer-top">
         <div className="footer-cinema-media">
@@ -863,12 +863,16 @@ function AuditPrivacyFooter({ privacyPolicyPublished }: { privacyPolicyPublished
       </div>
       </div>
       </div>
+      </div>
+    </section>
+    <footer className="site-legal-footer">
       <div className="footer-bottom scroll-block" data-scroll-order="2">
         <span>{global.copyright}</span>
         {privacyPolicyPublished ? <Link href="/mexfilik-siyaseti">Məxfilik siyasəti</Link> : null}
         <span className="footer-quote">{copy.quote}</span>
       </div>
     </footer>
+    </>
   );
 }
 
