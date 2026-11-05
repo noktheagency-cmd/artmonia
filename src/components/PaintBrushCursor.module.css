@@ -1,43 +1,12 @@
-.paintLayer,
-.cursor {
+.paintLayer {
   position: fixed;
   inset: 0 auto auto 0;
   pointer-events: none;
-}
-
-.paintLayer {
   z-index: 9998;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-}
-
-.cursor {
-  z-index: 9999;
-  width: 42px;
-  height: 42px;
-  opacity: 0;
-  transform: translate3d(-100px, -100px, 0);
-  transition: opacity 140ms ease, transform 70ms cubic-bezier(.2, .75, .3, 1);
-  will-change: transform;
-}
-
-.visible { opacity: 1; }
-
-.cursor svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  transform: rotate(90deg);
-  transform-origin: center;
-  filter: drop-shadow(0 3px 4px rgba(55, 34, 79, .2));
-}
-
-.brushHead {
-  transform-box: fill-box;
-  transform-origin: 84% 20%;
-  transform: scale(.94);
+  contain: strict;
 }
 
 .stain {
@@ -48,17 +17,6 @@
   scale: .25;
   animation: stain-flow 850ms cubic-bezier(.18, .7, .28, 1) forwards;
   filter: drop-shadow(0 1px 1px rgba(65, 42, 73, .14));
-}
-
-.brushStroke {
-  position: absolute;
-  display: block;
-  opacity: 0;
-  background: linear-gradient(90deg, #f28e14 0%, #9a61ec 48%, #6b35d8 100%);
-  clip-path: polygon(0 52%, 12% 31%, 30% 42%, 47% 0, 63% 33%, 79% 17%, 100% 45%, 94% 78%, 73% 58%, 55% 100%, 36% 66%, 17% 86%, 0 70%);
-  transform-origin: center;
-  animation: brushstroke-flow 560ms cubic-bezier(.2,.72,.25,1) forwards;
-  filter: drop-shadow(0 1px 2px rgba(77, 42, 141, .16));
 }
 
 .stain svg,
@@ -99,13 +57,6 @@
   100% { opacity: 0; translate: var(--stain-x) var(--stain-y); scale: .68; }
 }
 
-@keyframes brushstroke-flow {
-  0% { opacity: 0; transform: rotate(var(--stroke-angle)) scaleX(.12) scaleY(.72); }
-  20% { opacity: .9; transform: rotate(var(--stroke-angle)) scaleX(.86) scaleY(1); }
-  58% { opacity: .76; transform: rotate(var(--stroke-angle)) scaleX(1) scaleY(1); }
-  100% { opacity: 0; transform: rotate(var(--stroke-angle)) scaleX(1.08) scaleY(.65) translateY(2px); }
-}
-
 @keyframes circle-flow {
   0% { opacity: 0; transform: scale(.52) rotate(-12deg); }
   18% { opacity: 1; transform: scale(.82) rotate(0deg); }
@@ -121,9 +72,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cursor { transition: none; }
   .stain,
-  .brushStroke,
   .circleStain,
   .circleBlob { animation-duration: 1ms; animation-delay: 0ms; }
 }

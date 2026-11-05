@@ -41,7 +41,7 @@ body {
 html.paint-cursor-enabled,
 html.paint-cursor-enabled body,
 html.paint-cursor-enabled body :is(a, button, [role="button"], select, summary, [tabindex]:not([tabindex="-1"])) {
-  cursor: none !important;
+  cursor: url("/assets/paint-brush-cursor.svg") 3 4, auto !important;
 }
 
 html.paint-cursor-enabled body :is(input, textarea, [contenteditable="true"]) {
