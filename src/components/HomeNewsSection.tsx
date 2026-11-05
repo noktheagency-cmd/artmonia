@@ -14,6 +14,8 @@ import { canOptimizeImage } from "@/lib/image-optimization";
 import { useResultAos } from "./useResultAos";
 import styles from "./HomeNewsSection.module.css";
 
+const NEWS_SCROLL_SPEED = 55; // Pixels per second.
+
 function Arrow() {
   return (
     <svg
@@ -57,31 +59,43 @@ export default function HomeNewsSection() {
     rail.addEventListener("touchend", touchEnd, { passive: true });
     rail.addEventListener("touchcancel", touchEnd, { passive: true });
 
-    const interval = window.setInterval(() => {
-      if (!visible || reduced.matches || document.hidden || touching || rail.contains(document.activeElement)) return;
-      const first = rail.children[0] as HTMLElement | undefined;
-      const second = rail.children[1] as HTMLElement | undefined;
-      const repeat = rail.children[cycleItems.length] as HTMLElement | undefined;
-      if (!first || !second || !repeat) return;
-      const step = second.offsetLeft - first.offsetLeft;
-      const cycle = repeat.offsetLeft - first.offsetLeft;
-      if (step <= 0 || cycle <= 0) return;
-      let current = Math.round(rail.scrollLeft / step);
-      if (current >= cycleItems.length) {
-        current %= cycleItems.length;
-        const equivalent = rail.children[current] as HTMLElement;
-        rail.scrollTo({ left: equivalent.offsetLeft - first.offsetLeft, behavior: "instant" });
+    const first = rail.children[0];
+    const repeat = rail.children[cycleItems.length];
+    let cycle = 0;
+    const measureCycle = () => {
+      cycle = repeat.getBoundingClientRect().left - first.getBoundingClientRect().left;
+    };
+    measureCycle();
+    const resizeObserver = new ResizeObserver(measureCycle);
+    resizeObserver.observe(rail);
+
+    let frame = 0;
+    let previousTime: number | undefined;
+    let position = rail.scrollLeft;
+    let lastScrollLeft = position;
+    const tick = (time: number) => {
+      if (cycle <= 0 || !visible || reduced.matches || document.hidden || touching || rail.contains(document.activeElement)) {
+        previousTime = undefined;
+      } else {
+        const scrollLeft = rail.scrollLeft;
+        if (scrollLeft !== lastScrollLeft) position = scrollLeft;
+        const elapsed = Math.min(time - (previousTime ?? time), 50);
+        position = (position + NEWS_SCROLL_SPEED * elapsed / 1000) % cycle;
+        rail.scrollLeft = position;
+        lastScrollLeft = rail.scrollLeft;
+        previousTime = time;
       }
-      const next = rail.children[current + 1] as HTMLElement;
-      rail.scrollTo({ left: next.offsetLeft - first.offsetLeft, behavior: "smooth" });
-    }, 3000);
+      frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
 
     const visibilityObserver = "IntersectionObserver" in window ? new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
     }) : null;
     visibilityObserver?.observe(rail);
     return () => {
-      window.clearInterval(interval);
+      window.cancelAnimationFrame(frame);
+      resizeObserver.disconnect();
       visibilityObserver?.disconnect();
       rail.removeEventListener("touchstart", touchStart);
       rail.removeEventListener("touchend", touchEnd);
