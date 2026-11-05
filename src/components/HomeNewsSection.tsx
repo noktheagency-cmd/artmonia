@@ -5,7 +5,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { newsItems } from "@/data/site";
 import { homePageCopy } from "@/data/site-copy";
 import { useSiteContentValue } from "@/components/SiteContentContext";
@@ -28,6 +28,7 @@ function Arrow() {
 
 export default function HomeNewsSection() {
   const railRef = useRef<HTMLDivElement | null>(null);
+  const [paused, setPaused] = useState(false);
   const dynamicItems = useSiteContentValue("news_items", newsItems);
   const copy = useSiteContentValue("home_page_copy", homePageCopy).news;
   const items = useMemo(() => {
@@ -39,29 +40,25 @@ export default function HomeNewsSection() {
     };
     return publishedItems.sort((a, b) => createdTime(b) - createdTime(a));
   }, [dynamicItems]);
-  const cycleItems = items.length ? Array.from({ length: Math.ceil(5 / items.length) }, () => items).flat() : [];
-  const loopItems = [...cycleItems, ...cycleItems];
+  const canRotate = items.length > 1;
+  const cycleItems = canRotate ? Array.from({ length: Math.ceil(5 / items.length) }, () => items).flat() : items;
+  const loopItems = canRotate ? [...cycleItems, ...cycleItems] : cycleItems;
   const sectionRef = useResultAos<HTMLElement>(items.map((item) => item.id).join("|"));
 
   useEffect(() => {
     const rail = railRef.current;
-    if (!rail) return;
+    if (!rail || !canRotate || paused) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     let touching = false;
-    let hovering = false;
-    let visible = false;
+    let visible = !("IntersectionObserver" in window);
     const touchStart = () => { touching = true; };
     const touchEnd = () => { touching = false; };
-    const pointerEnter = (event: PointerEvent) => { hovering = event.pointerType === "mouse"; };
-    const pointerLeave = () => { hovering = false; };
     rail.addEventListener("touchstart", touchStart, { passive: true });
     rail.addEventListener("touchend", touchEnd, { passive: true });
     rail.addEventListener("touchcancel", touchEnd, { passive: true });
-    rail.addEventListener("pointerenter", pointerEnter);
-    rail.addEventListener("pointerleave", pointerLeave);
 
     const interval = window.setInterval(() => {
-      if (!visible || reduced.matches || document.hidden || touching || hovering || rail.contains(document.activeElement)) return;
+      if (!visible || reduced.matches || document.hidden || touching || rail.contains(document.activeElement)) return;
       const first = rail.children[0] as HTMLElement | undefined;
       const second = rail.children[1] as HTMLElement | undefined;
       const repeat = rail.children[cycleItems.length] as HTMLElement | undefined;
@@ -69,27 +66,28 @@ export default function HomeNewsSection() {
       const step = second.offsetLeft - first.offsetLeft;
       const cycle = repeat.offsetLeft - first.offsetLeft;
       if (step <= 0 || cycle <= 0) return;
-      // Jump to the identical first copy before advancing the next card.
-      if (rail.scrollLeft >= cycle - 2) {
-        rail.scrollTo({ left: rail.scrollLeft % cycle, behavior: "instant" });
+      let current = Math.round(rail.scrollLeft / step);
+      if (current >= cycleItems.length) {
+        current %= cycleItems.length;
+        const equivalent = rail.children[current] as HTMLElement;
+        rail.scrollTo({ left: equivalent.offsetLeft - first.offsetLeft, behavior: "instant" });
       }
-      rail.scrollTo({ left: (Math.round(rail.scrollLeft / step) + 1) * step, behavior: "smooth" });
+      const next = rail.children[current + 1] as HTMLElement;
+      rail.scrollTo({ left: next.offsetLeft - first.offsetLeft, behavior: "smooth" });
     }, 3000);
 
-    const visibilityObserver = new IntersectionObserver(([entry]) => {
+    const visibilityObserver = "IntersectionObserver" in window ? new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
-    }, { threshold: 0.1 });
-    visibilityObserver.observe(rail);
+    }) : null;
+    visibilityObserver?.observe(rail);
     return () => {
       window.clearInterval(interval);
-      visibilityObserver.disconnect();
+      visibilityObserver?.disconnect();
       rail.removeEventListener("touchstart", touchStart);
       rail.removeEventListener("touchend", touchEnd);
       rail.removeEventListener("touchcancel", touchEnd);
-      rail.removeEventListener("pointerenter", pointerEnter);
-      rail.removeEventListener("pointerleave", pointerLeave);
     };
-  }, [items, cycleItems.length]);
+  }, [canRotate, cycleItems.length, paused]);
 
   return (
     <section ref={sectionRef} className={`${styles.section} scroll-section`} id="academy" aria-labelledby="home-news-title">
@@ -97,17 +95,22 @@ export default function HomeNewsSection() {
         <div>
           <h2 id="home-news-title">{copy.title}</h2>
         </div>
+        {canRotate && (
+          <button type="button" className={styles.rotationControl} onClick={() => setPaused(!paused)}>
+            {paused ? "Davam et" : "Dayandır"}
+          </button>
+        )}
       </div>
 
       <div className={styles.rail} ref={railRef} aria-label="Son yeniliklər">
         {loopItems.map((item, index) => {
-          const image = getNewsImages(item, index)[0];
+          const image = getNewsImages(item, index % items.length)[0];
           const isResultPoster = image.includes("/assets/news-clean/");
 
           return (
             <Link
-              className={`${styles.card} ${styles.aosTarget}`}
-              data-aos="fade-up"
+              className={styles.card}
+              data-variant={(index % cycleItems.length) % 4}
               href={`/yenilikler/${encodeURIComponent(item.id)}`}
               aria-label={`${item.title} xəbərini ətraflı oxu`}
               key={`${item.id}-${index}`}
