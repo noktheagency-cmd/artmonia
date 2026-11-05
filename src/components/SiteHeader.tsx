@@ -68,6 +68,7 @@ export default function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const headerRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
   useEffect(() => {
     if (!open) return;
     const closeOutside = (event: PointerEvent) => {
@@ -85,6 +86,8 @@ export default function SiteHeader() {
   }, [open]);
 
   useEffect(() => {
+    setActiveSection("");
+    if (pathname !== "/") return;
     const sectionIds = navigationRoutes
       .map((route) => route.href.split("#")[1])
       .filter((id): id is string => Boolean(id));
@@ -93,26 +96,60 @@ export default function SiteHeader() {
       .filter((section): section is HTMLElement => section instanceof HTMLElement);
     if (!sections.length) return;
 
+    let trackedHash = "";
+    let targetSeen = false;
+    let frame = 0;
     const syncActiveSection = () => {
       const marker = window.innerHeight * 0.5;
       const current = sections.find((section) => {
         const bounds = section.getBoundingClientRect();
         return bounds.top <= marker && bounds.bottom >= marker;
       });
-      if (current) setActiveSection(current.id);
+      setActiveSection(current?.id ?? "");
+
+      const hash = window.location.hash;
+      if (hash !== trackedHash) {
+        trackedHash = hash;
+        targetSeen = false;
+      }
+      const target = sections.find((section) => `#${section.id}` === hash);
+      if (!target) return;
+      const bounds = target.getBoundingClientRect();
+      const headerBottom = headerRef.current?.getBoundingClientRect().bottom ?? 0;
+      const visible = bounds.top < window.innerHeight && bounds.bottom > headerBottom;
+      // Preserve incoming deep links until navigation has reached their section.
+      if (visible) targetSeen = true;
+      else if (targetSeen) {
+        window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
+        trackedHash = "";
+        targetSeen = false;
+      }
+    };
+    const scheduleSync = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        syncActiveSection();
+      });
     };
 
     const observer = new IntersectionObserver(syncActiveSection, { rootMargin: "-45% 0px -45% 0px" });
     sections.forEach((section) => observer.observe(section));
     window.addEventListener("resize", syncActiveSection);
+    window.addEventListener("scroll", scheduleSync, { passive: true });
+    window.addEventListener("hashchange", syncActiveSection);
+    window.addEventListener("popstate", syncActiveSection);
     syncActiveSection();
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", syncActiveSection);
+      window.removeEventListener("scroll", scheduleSync);
+      window.removeEventListener("hashchange", syncActiveSection);
+      window.removeEventListener("popstate", syncActiveSection);
+      window.cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [pathname]);
 
-  const pathname = usePathname();
   const copy = useSiteContentValue("global_copy", globalCopy);
   const navigation = navigationRoutes.map((route, index) => {
     const item = copy.navigation[index] ?? globalCopy.navigation[index];
