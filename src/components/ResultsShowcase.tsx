@@ -1,6 +1,7 @@
 "use client";
 
 import { Play, X } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 import styles from "./ResultsShowcase.module.css";
 import homeStyles from "./HomeResultsSection.module.css";
@@ -9,7 +10,10 @@ import { useSiteContentValue } from "./SiteContentContext";
 import { successStories, type SuccessStoryEntry } from "@/data/collections";
 import { collectionsPageCopy } from "@/data/site-copy";
 import { youtubeId } from "@/lib/youtube";
+import { canOptimizeImage } from "@/lib/image-optimization";
 import { useAnimationVisibility } from "./useAnimationVisibility";
+
+const coverSizes = "(max-width: 420px) 82vw, (max-width: 700px) 320px, (max-width: 1180px) 25vw, 265px";
 
 export default function ResultsShowcase() {
   const dynamicStories = useSiteContentValue<SuccessStoryEntry[]>("success_stories", successStories);
@@ -35,6 +39,8 @@ export default function ResultsShowcase() {
                 {stories.map((story, index) => {
                   const id = youtubeId(story.video);
                   const cover = story.poster?.trim() || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : "");
+                  const loading = instance === 0 && index < 4 ? "eager" : "lazy";
+                  const coverAlt = story.alt || story.name;
                   const key = `${instance}-${story.id || index}`;
                   return (
                     <article className={styles.videoCard} key={key}>
@@ -50,7 +56,13 @@ export default function ResultsShowcase() {
                           />
                         ) : (
                           <button className={styles.videoCover} type="button" disabled={!id} tabIndex={instance === 1 ? -1 : undefined} onClick={() => setActive(key)} aria-label={id ? `${story.name} — videonu oynat` : `${story.name} — video əlavə edilməyib`}>
-                            {cover && <img src={cover} alt={story.alt || story.name} loading="lazy" />}
+                            {cover && (canOptimizeImage(cover) ? (
+                              <Image src={cover} alt={coverAlt} fill sizes={coverSizes} loading={loading} fetchPriority="low" />
+                            ) : (
+                              // External covers may use hosts outside the Next.js image allowlist.
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={cover} alt={coverAlt} loading={loading} fetchPriority="low" decoding="async" />
+                            ))}
                             {id ? <span className={styles.youtubePlay} aria-hidden="true"><Play /></span> : <span className={styles.pending}>Video tezliklə</span>}
                           </button>
                         )}
