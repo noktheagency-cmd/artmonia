@@ -5,6 +5,7 @@
   width: min(100%, 1160px);
   margin-inline: auto;
   grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   gap: 24px;
 }
 
@@ -21,13 +22,11 @@
   --course-color: color-mix(in srgb, var(--brand-purple) 4%, white);
 }
 
-/* Row 1: narrow + wide; row 2: wide + narrow. */
+/* Alternate narrow/wide pairs; an unpaired card keeps its positional width. */
 .card:nth-child(4n + 1) { grid-column: span 4; z-index: 1; }
 .card:nth-child(4n + 2) { grid-column: span 6; z-index: 2; --course-color: color-mix(in srgb, var(--brand-orange) 5%, white); }
 .card:nth-child(4n + 3) { grid-column: span 6; z-index: 1; --course-color: color-mix(in srgb, var(--brand-orange) 5%, white); }
 .card:nth-child(4n + 4) { grid-column: span 4; z-index: 2; }
-/* A lone final card fills its row until a matching card is added. */
-.card:last-child:nth-child(odd) { grid-column: 1 / -1; z-index: 2; }
 
 .select {
   appearance: none;
@@ -144,7 +143,7 @@
 }
 
 @media (max-width: 1050px) {
-  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; gap: 18px; }
   .card:nth-child(n) { grid-column: auto; z-index: auto; }
   .select { grid-template-columns: minmax(90px, .72fr) minmax(0, 1.28fr) 34px; gap: 8px 10px; padding: 18px; }
   .arrow { width: 34px; height: 34px; }
