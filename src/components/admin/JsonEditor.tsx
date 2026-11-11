@@ -379,7 +379,7 @@ export default function JsonEditor({ value, onChange, onUpload, media, path = "c
     return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio="3 / 4" /><input aria-label="İş şəklinin ünvanı" placeholder="https://... və ya /assets/..." value={text} onChange={(event) => onChange(event.target.value)} /><small>Şəkli yükləyin, kitabxanadan seçin və ya mövcud şəklin ünvanını daxil edin.</small></>;
   }
   if (mediaKeys.has(fieldKey)) {
-    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio={path.startsWith("success_stories.") ? "16 / 9" : undefined} accept={fieldKey === "video" ? "video" : "image"} />{path.startsWith("success_stories.") && <small>Yüklədiyiniz üz qabığı videonun avtomatik şəklindən öncə göstərilir və kəsilmir. Şəkil əlavə etməsəniz, YouTube üz qabığı istifadə olunur.</small>}</>;
+    return <><MediaField value={text} onChange={onChange} onUpload={onUpload} media={media} previewRatio={path.startsWith("success_stories.") ? "4 / 5" : undefined} accept={fieldKey === "video" ? "video" : "image"} />{path.startsWith("success_stories.") && <small>Tövsiyə olunan ölçü: 1080 × 1350 px (4:5). Bu nisbətdə yüklənən kapak şəkli karta tam uyğun görünür. Fərqli nisbətdə şəkillərin kənarları kəsilə bilər. Şəkil əlavə etməsəniz, YouTube üz qabığı istifadə olunur.</small>}</>;
   }
   if (fieldKey === "color") return <div className="json-color-field"><input type="color" value={text || "#ffffff"} onChange={(event) => onChange(event.target.value)} /><input value={text} onChange={(event) => onChange(event.target.value)} /></div>;
   if (fieldKey === "date") return <input type="date" value={text} onChange={(event) => onChange(event.target.value)} />;

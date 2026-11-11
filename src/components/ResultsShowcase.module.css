@@ -1,31 +1,30 @@
 .anchorScene { scroll-margin-top: 112px; }
-.storyGallery { min-width: 0; max-width: 100%; overflow: hidden; padding: 4px 2px 18px; }
+.storyGallery { min-width: 0; max-width: 100%; overflow: hidden; padding: 4px 2px 18px; container-type: inline-size; }
 .storyGallery:focus-visible { outline: 2px solid #a884ff; outline-offset: 2px; }
-.storyTrack { display: flex; width: max-content; animation: story-gallery-travel 36s linear infinite; animation-play-state: paused; }
+/* Identical groups make the continuous loop seamless. */
+/* Keep a stable center while the selected card grows in both directions. */
+.storyTrack { height: calc((100cqw - 60px) / 4 * 16 / 9 + 72px); display: flex; width: max-content; animation: story-travel 40s linear infinite; animation-play-state: paused; }
 .storyGallery[data-animation-visible] .storyTrack { animation-play-state: running; }
+.storyGallery .storyTrack[data-playing="true"] { animation-play-state: paused; }
 .storyTrack[data-single="true"] { animation: none; }
-.storyGallery:hover .storyTrack, .storyGallery:focus-within .storyTrack, .storyTrack[data-playing="true"] { animation-play-state: paused; }
-.storyGroup { display: flex; flex: none; gap: 26px; padding-right: 26px; }
-.videoCard { flex: 0 0 clamp(300px, 28vw, 380px); min-width: 0; align-self: start; overflow: hidden; border: 1px solid rgba(105, 41, 242, .14); border-radius: 26px 26px 32px 20px; background: var(--theme-surface, #fff); box-shadow: 0 14px 34px rgba(29, 18, 70, .09); }
-.videoFrame { position: relative; aspect-ratio: 9 / 16; background: #100c20; overflow: hidden; border-radius: 20px; }
+.storyGroup { display: flex; flex: none; gap: 20px; padding-right: 20px; align-items: center; }
+@keyframes story-travel { to { transform: translateX(-50%); } }
+.videoCard { flex: 0 0 calc((100cqw - 60px) / 4); width: calc((100cqw - 60px) / 4); min-width: 0; scroll-snap-align: start; overflow: hidden; border: 1px solid rgba(105, 41, 242, .14); border-radius: 20px; background: var(--theme-surface, #fff); box-shadow: 0 8px 22px rgba(29, 18, 70, .07); }
+.videoFrame { position: relative; height: 0; padding-bottom: 125%; background: #100c20; overflow: hidden; transition: padding-bottom 600ms cubic-bezier(.22, 1, .36, 1); }
+.videoFrame[data-open="true"] { padding-bottom: 177.7778%; }
+.closeVideo { display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0; padding: 7px; border: 0; border-radius: 8px; background: rgba(105,41,242,.08); color: inherit; cursor: pointer; font: inherit; }
 .videoFrame iframe { display: block; width: 100%; height: 100%; position: absolute; inset: 0; border: 0; }
 .videoCover { width: 100%; height: 100%; position: absolute; inset: 0; display: block; border: 0; padding: 0; color: #fff; background: #100c20; cursor: pointer; text-align: left; }
 .videoCover:disabled { cursor: default; }
 .videoCover::after { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.75)); pointer-events: none; }
-.videoCover img { width: 100%; height: 100%; object-fit: contain; }
+.videoCover img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .youtubePlay { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); z-index: 1; display: grid; place-items: center; width: 64px; height: 44px; border-radius: 12px; background: #f03; color: #fff; }
 .youtubePlay svg { width: 23px; height: 23px; fill: currentColor; }
 .videoCover:focus-visible { outline: 3px solid #a884ff; outline-offset: -4px; }
-.coverName { position: absolute; z-index: 1; left: 22px; right: 22px; bottom: 20px; font-size: 20px; font-weight: 500; line-height: 1.3; }
 .pending { position: absolute; z-index: 1; top: 16px; left: 18px; background: rgba(0,0,0,.7); padding: 6px 10px; border-radius: 8px; font-size: 12px; }
 .activeCaption { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; color: var(--theme-text, #170d3b); font-size: 14px; }
-.activeCaption strong { font-weight: 500; }
-.activeCaption a { color: inherit; text-underline-offset: 3px; }
-@keyframes story-gallery-travel { to { transform: translateX(-50%); } }
-@media(max-width: 700px) { .storyGroup { gap: 18px; padding-right: 18px; } .videoCard { flex-basis: min(88vw, 360px); } .videoCard, .videoFrame { border-radius: 20px; } .coverName { font-size: 18px; left: 18px; bottom: 16px; } }
-@media(prefers-reduced-motion: reduce) {
-  .storyGallery { overflow-x: auto; scrollbar-width: none; }
-  .storyGallery::-webkit-scrollbar { display: none; }
-  .storyTrack { animation: none; }
-  .storyGroup[aria-hidden="true"] { display: none; }
-}
+.activeCaption { min-height: 64px; box-sizing: border-box; }
+.activeCaption strong { font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
+
+@media(max-width: 700px) { .storyTrack { height: calc(min(82cqw, 320px) * 16 / 9 + 72px); } .storyGroup { gap: 16px; padding-right: 16px; } .videoCard { flex-basis: min(82cqw, 320px); width: min(82cqw, 320px); } .activeCaption { padding: 12px; } }
+@media(prefers-reduced-motion: reduce) { .videoFrame { transition: none; } .storyTrack { animation: none; } .storyGallery { overflow-x: auto; scrollbar-width: none; } .storyGroup:nth-child(2) { display: none; } }
