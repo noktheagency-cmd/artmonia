@@ -5,7 +5,7 @@ import MetadataEditor from "./MetadataEditor";
 /* Media previews may point to Supabase Storage or existing site assets. */
 /* eslint-disable @next/next/no-img-element */
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   Award,
@@ -115,6 +115,9 @@ export default function AdminDashboard({
   adminName: string;
 }) {
   const [view, setView] = useState<View>("dashboard");
+  useEffect(() => {
+    if (window.location.hash === "#metadata") setView("metadata");
+  }, []);
   const [sections, setSections] = useState(initialSections);
   const [messages, setMessages] = useState(initialMessages);
   const [media, setMedia] = useState(initialMedia);
