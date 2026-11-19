@@ -7,6 +7,8 @@ import MetadataEditor from "./MetadataEditor";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { adminHref, type AdminView as View } from "@/lib/admin-routes";
 import {
   Award,
   Check,
@@ -64,7 +66,6 @@ export type MediaAsset = {
   created_at: string;
 };
 
-type View = "metadata" | "dashboard" | "homepage" | "certificates" | "news" | "blog" | "home_results" | "results" | "awards" | "media" | "messages" | "settings";
 
 const nav = [
   { id: "dashboard" as const, label: "Ana panel", icon: LayoutDashboard },
@@ -106,18 +107,25 @@ export default function AdminDashboard({
   initialMessages,
   initialMedia,
   configured,
-  adminName
+  adminName,
+  view,
+  previewMode = false
 }: {
+  view: View;
+  previewMode?: boolean;
   initialSections: SiteSectionRecord[];
   initialMessages: AdminMessage[];
   initialMedia: MediaAsset[];
   configured: boolean;
   adminName: string;
 }) {
-  const [view, setView] = useState<View>("dashboard");
+  const router = useRouter();
+  const hrefFor = (next: View) => `${adminHref(next)}${previewMode ? "?demo=1" : ""}`;
   useEffect(() => {
-    if (window.location.hash === "#metadata") setView("metadata");
-  }, []);
+    if (view === "dashboard" && window.location.hash === "#metadata") {
+      router.replace(`${adminHref("metadata")}${previewMode ? "?demo=1" : ""}`);
+    }
+  }, [view, previewMode, router]);
   const [sections, setSections] = useState(initialSections);
   const [messages, setMessages] = useState(initialMessages);
   const [media, setMedia] = useState(initialMedia);
@@ -374,11 +382,6 @@ export default function AdminDashboard({
     }
   }
 
-  function selectView(next: View) {
-    setView(next);
-    setSidebarOpen(false);
-  }
-
   const dashboardLinks: Array<{ view: View; icon: typeof Home; title: string; text: string; count?: string }> = [
     { view: "home_results", icon: Medal, title: "Ana səhifə · Nəticələr", text: "Hərəkətli lentdəki tələbə fotoları, ad-soyad və nəticə cümlələri", count: `${countCollection(getSection("home_results"))} tələbə` },
     { view: "homepage", icon: Home, title: "Sayt məzmunu", text: "Başlıqlar, kurslar, müəllimlər və əlaqə məlumatları", count: `${homepageSections.length} bölmə` },
@@ -398,14 +401,14 @@ export default function AdminDashboard({
         </div>
         <nav>
           {nav.map((item) => (
-            <button key={item.id} type="button" className={view === item.id ? "active" : ""} onClick={() => selectView(item.id)}>
+            <Link key={item.id} href={hrefFor(item.id)} prefetch={false} aria-current={view === item.id ? "page" : undefined} className={view === item.id ? "active" : ""} onClick={() => setSidebarOpen(false)}>
               <item.icon /><span>{item.label}</span>
               {item.id === "messages" && unread ? <b>{unread}</b> : null}
-            </button>
+            </Link>
           ))}
         </nav>
         <div className="admin-sidebar-bottom">
-          <button type="button" className={view === "settings" ? "active" : ""} onClick={() => selectView("settings")}><Settings /> Parametrlər</button>
+          <Link href={hrefFor("settings")} prefetch={false} aria-current={view === "settings" ? "page" : undefined} className={view === "settings" ? "active" : ""} onClick={() => setSidebarOpen(false)}><Settings /> Parametrlər</Link>
           <Link href="/" target="_blank"><Eye /> Sayta bax</Link>
         </div>
       </aside>
@@ -423,11 +426,11 @@ export default function AdminDashboard({
             <section className="dashboard-hub">
               <div className="admin-page-title"><div><h1>Nəyi dəyişmək istəyirsiniz?</h1><p>Saytda görünən səhifəni seçin. Hər məlumat öz yerindədir.</p></div></div>
               <div className="dashboard-hub-list">
-                {dashboardLinks.map((item) => <button key={item.view} type="button" onClick={() => selectView(item.view)}>
+                {dashboardLinks.map((item) => <Link key={item.view} href={hrefFor(item.view)} prefetch={false}>
                   <span className="dashboard-hub-icon"><item.icon /></span>
                   <span className="dashboard-hub-copy"><strong>{item.title}</strong><small>{item.text}</small></span>
                   <em>{item.count}</em><ChevronRight />
-                </button>)}
+                </Link>)}
               </div>
             </section>
           ) : null}
