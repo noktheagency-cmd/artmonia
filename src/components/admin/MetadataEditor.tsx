@@ -1,5 +1,5 @@
 "use client";
-import { Search, Share2, Settings2, FileText, RefreshCw, Save, ExternalLink, ChevronDown, CheckCircle2 } from "lucide-react";
+import { Search, Share2, Settings2, FileText, RefreshCw, Save, ExternalLink, ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { emptySeo, type PageSeo, type SeoPage } from "@/lib/page-seo";
 import { SITE_URL } from "@/lib/seo";
@@ -12,7 +12,7 @@ export default function MetadataEditor({ media, onUpload }: { media: MediaLibrar
   const [draft, setDraft] = useState<PageSeo>(emptySeo);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
-  const [pickerOpen, setPickerOpen] = useState(false);
+  const [editorOpen, setEditorOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const [noticeError, setNoticeError] = useState(false);
@@ -68,24 +68,21 @@ export default function MetadataEditor({ media, onUpload }: { media: MediaLibrar
   const previewTitle = draft.title || page?.defaults?.title || page?.title || "";
   const previewDescription = draft.description || page?.defaults?.description || page?.description || "";
   const previewImage = draft.image || page?.defaults?.image || page?.image;
-  return <section className="admin-view-section metadata-workspace">
-    <div className="admin-page-title"><div><h1>Səhifə ayarları</h1><p>Sağdan səhifəni seçin, solda məlumatlarını dəyişin.</p></div><button className="secondary-action" disabled={busy} onClick={() => void load()}><RefreshCw size={16} /> Yenilə</button></div>
+  return <section className="admin-view-section metadata-workspace metadata-catalog-workspace">
+    <div className="admin-page-title"><div><span className="metadata-eyebrow">SAYTIN GÖRÜNÜRLÜYÜ</span><h1>SEO və paylaşım</h1><p>{editorOpen ? "Seçilmiş səhifənin axtarış və paylaşım məlumatlarını hazırlayın." : "Bütün səhifələr bir yerdə. Dəyişmək istədiyiniz səhifəni açın."}</p></div><button className="secondary-action" disabled={busy} onClick={() => void load()}><RefreshCw size={16} /> Yenilə</button></div>
     {notice && <p role={noticeError ? "alert" : "status"} className={`metadata-notice ${noticeError ? "is-error" : "is-success"}`}>{notice}</p>}
     {!data ? <div className="metadata-loading" role="status">{busy ? "Səhifələr yüklənir…" : "Siyahını yeniləyərək təkrar cəhd edin."}</div> : <div className="metadata-layout">
-      <aside className="metadata-pages">
-        <button type="button" className="metadata-picker-toggle" aria-expanded={pickerOpen} aria-controls="metadata-picker" onClick={() => setPickerOpen(!pickerOpen)}><FileText size={19}/><span><small>SƏHİFƏ SEÇİMİ</small><strong>{shortTitle(page?.title || "Səhifə seçin")}</strong></span><ChevronDown size={18}/></button>
-        <div id="metadata-picker" className={`metadata-picker-content ${pickerOpen ? "is-open" : ""}`}>
-          <div className="metadata-list-heading"><FileText size={19}/><strong>Səhifələr</strong><span>{data.pages.length}</span></div>
-          <label className="admin-field"><span>Səhifə axtar</span><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Ad və ya ünvan yazın" /></label>
-          <label className="admin-field metadata-category"><span>Bölmə</span><select value={category} onChange={event => setCategory(event.target.value)}>{categories.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}</select></label>
-          <p className="metadata-list-count">{filtered.length} səhifə</p>
-          <div className="metadata-page-list">{filtered.map(item => <button type="button" disabled={busy} aria-current={selected === item.path ? "page" : undefined} className={selected === item.path ? "active" : ""} key={item.path} onClick={() => {
-            if (dirty && !window.confirm("Saxlanmamış dəyişikliklər ləğv olunsun?")) return;
-            setSelected(item.path); setDraft({ ...emptySeo, ...item.defaults, ...data.overrides[item.path] }); setDirty(false); setResetConfirm(false); setNotice(""); setPickerOpen(false);
-          }}><strong>{shortTitle(item.title)}</strong><small title={item.path}>{item.path}</small><small className={`metadata-badge ${data.overrides[item.path] ? "custom" : ""}`}>{data.overrides[item.path] ? "Əl ilə düzəldilib" : "Avtomatik məlumat"}</small></button>)}{!filtered.length && <p className="metadata-empty">Uyğun səhifə tapılmadı. Axtarışı və ya filtri dəyişin.</p>}</div>
-        </div>
-      </aside>
-      {page && <form onSubmit={event => { event.preventDefault(); void save(); }} className="metadata-form">
+      {!editorOpen ? <div className="metadata-catalog">
+        <div className="metadata-catalog-toolbar"><label className="metadata-catalog-search"><Search size={18}/><input aria-label="Səhifə axtar" value={query} onChange={event => setQuery(event.target.value)} placeholder="Səhifə adı və ya ünvanı ilə axtarın…"/></label><label className="metadata-catalog-filter"><span>Bölmə</span><select value={category} onChange={event => setCategory(event.target.value)}>{categories.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}</select></label></div>
+        <div className="metadata-catalog-caption"><strong>{filtered.length} səhifə</strong><span>Başlıq, açıqlama və paylaşım məlumatları</span></div>
+        <div className="metadata-table-wrap"><table className="metadata-table"><thead><tr><th>Səhifə</th><th>Bölmə</th><th>Məlumat mənbəyi</th><th><span className="metadata-sr-only">Əməliyyat</span></th></tr></thead><tbody>{filtered.map(item => <tr key={item.path}><td><div className="metadata-page-cell"><span className="metadata-file-icon"><FileText size={19}/></span><div><strong>{shortTitle(item.title)}</strong><small>{item.path}</small></div></div></td><td>{categories.find(category => category.id === categoryOf(item.path))?.label}</td><td><span className={`metadata-source ${data.overrides[item.path] ? "custom" : ""}`}><span/>{data.overrides[item.path] ? "Əl ilə düzəldilib" : "Avtomatik"}</span></td><td><button type="button" className="metadata-open-page" disabled={busy} aria-label={`${shortTitle(item.title)} — redaktə et`} onClick={() => {
+          setSelected(item.path); setDraft({ ...emptySeo, ...item.defaults, ...data.overrides[item.path] }); setDirty(false); setResetConfirm(false); setNotice(""); setEditorOpen(true);
+        }}>Redaktə et <ArrowRight size={16}/></button></td></tr>)}</tbody></table></div>
+        {!filtered.length && <div className="metadata-catalog-empty"><Search size={28}/><h2>Səhifə tapılmadı</h2><p>Başqa ad yazın və ya bölmə filtrini dəyişin.</p><button type="button" className="secondary-action" onClick={() => { setQuery(""); setCategory("all"); }}>Filtrləri təmizlə</button></div>}
+      </div> : page && <div className="metadata-editor-stage"><button type="button" className="metadata-back" disabled={busy} onClick={() => {
+        if (dirty && !window.confirm("Saxlanmamış dəyişikliklər ləğv olunsun?")) return;
+        setEditorOpen(false); setDirty(false); setNotice(""); setResetConfirm(false);
+      }}><ArrowLeft size={17}/> Bütün səhifələrə qayıt</button><form key={selected} onSubmit={event => { event.preventDefault(); void save(); }} className="metadata-form">
         <header className="metadata-form-heading"><div><span className="metadata-eyebrow">REDAKTƏ EDİLƏN SƏHİFƏ</span><h2>{shortTitle(page.title)}</h2><p className="metadata-path">{selected}</p></div><a href={selected} target="_blank" rel="noreferrer" aria-label="Səhifəyə bax" title="Səhifəyə bax"><ExternalLink size={18}/></a></header>
         <p className="metadata-hint">Başlıq və açıqlama Google axtarışında görünür. Boş sahələr səhifənin məlumatlarından avtomatik tamamlanır.</p>
         <fieldset disabled={busy}>
@@ -96,7 +93,7 @@ export default function MetadataEditor({ media, onUpload }: { media: MediaLibrar
         </fieldset>
         {resetConfirm && <div role="alert" className="metadata-notice"><p>Yalnız bu səhifənin əl ilə daxil edilmiş SEO ayarları silinəcək. Səhifənin məzmunu dəyişməyəcək.</p><div className="metadata-actions"><button disabled={busy} type="button" className="primary-action" onClick={() => void save(true)}>Bəli, avtomatik məlumatı bərpa et</button><button type="button" className="secondary-action" onClick={() => setResetConfirm(false)}>Ləğv et</button></div></div>}
         <footer className="metadata-savebar"><span role="status" className={dirty ? "is-dirty" : ""}><CheckCircle2 size={16}/>{dirty ? "Saxlanmamış dəyişiklik var" : "Bütün dəyişikliklər saxlanılıb"}</span><div className="metadata-actions"><button disabled={busy || (!data.overrides[selected] && !dirty)} className="secondary-action" type="button" onClick={() => setResetConfirm(true)}>Avtomatikə qaytar</button><button disabled={busy || !dirty} className="primary-action" type="submit"><Save size={16}/>{busy ? "Gözləyin…" : "Saxla"}</button></div></footer>
-      </form>}
+      </form></div>}
     </div>}
   </section>;
 }
